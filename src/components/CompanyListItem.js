@@ -11,8 +11,8 @@ const CompanyListItemContainer = styled.li`
   width: 80px;
 `;
 
-export const CompanyListItem = ({ company, onHover }) => (
-  <CompanyListItemContainer onMouseEnter={onHover}>
+export const CompanyListItem = ({ company }) => (
+  <CompanyListItemContainer>
     <Link to={`/company/${company.name}`}>{company.name}</Link>
   </CompanyListItemContainer>
 );

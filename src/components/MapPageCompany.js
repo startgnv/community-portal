@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+
 export const MapPageCompany = ({
   history: { goBack },
   company: { name } = {}
@@ -16,3 +17,5 @@ export const MapPageCompany = ({
     </div>
   );
 };
+
+export default MapPageCompany;
