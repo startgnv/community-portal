@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createGlobalStyle } from 'styled-components/macro';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -15,39 +15,16 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const startups = [
-  { name: 'admiral', latitude: 29.6499279, longitude: -82.3327508 },
-  { name: 'feathr', latitude: 29.6507837, longitude: -82.3310367 },
-  { name: 'shadow', latitude: 29.6500853, longitude: -82.3235237 }
-];
-
-export const App = () => {
-  const [companies, setCompanies] = useState(startups);
-
-  return (
-    <>
-      <Router>
-        <Switch>
-          <Route
-            exact
-            path={['/company/:company', '/']}
-            render={props => <MapPage {...props} companies={companies} />}
-          />
-          <Route
-            path="/admin"
-            render={props => (
-              <AdminPage
-                {...props}
-                companies={companies}
-                onUpdate={setCompanies}
-              />
-            )}
-          />
-        </Switch>
-      </Router>
-      <GlobalStyle />
-    </>
-  );
-};
+export const App = () => (
+  <>
+    <Router>
+      <Switch>
+        <Route exact path={['/company/:company', '/']} component={MapPage} />
+        <Route path="/admin" component={AdminPage} />
+      </Switch>
+    </Router>
+    <GlobalStyle />
+  </>
+);
 
 export default App;

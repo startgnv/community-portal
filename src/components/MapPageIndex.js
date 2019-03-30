@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import CompanyList from './CompanyList';
 import CompanyListItem from './CompanyListItem';
-export const MapPageIndex = ({ onFocusChange = () => {}, companies = [] }) => {
+
+export const MapPageIndex = ({ companies = [] }) => {
   const [filterText, setFilterText] = useState('');
-  const filteredStartups = companies.filter(e =>
+
+  const filteredCompanies = companies.filter(e =>
     e.name.toLowerCase().includes(filterText.toLowerCase())
   );
+
   return (
     <div>
       <input
@@ -18,14 +21,12 @@ export const MapPageIndex = ({ onFocusChange = () => {}, companies = [] }) => {
           max-width: 50%;
         `}
       >
-        {filteredStartups.map(company => (
-          <CompanyListItem
-            company={company}
-            onHover={() => onFocusChange(company)}
-            key={company.name}
-          />
+        {filteredCompanies.map(company => (
+          <CompanyListItem company={company} key={company.id} />
         ))}
       </CompanyList>
     </div>
   );
 };
+
+export default MapPageIndex;
