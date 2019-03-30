@@ -8,7 +8,7 @@ import { LinearProgress } from '@material-ui/core';
 export const AdminLogin = ({
   location: { state: { from } = { from: { pathname: '/admin' } } }
 }) => {
-  const [user, initialising, error] = useAuthState(auth);
+  const [user, initialising] = useAuthState(auth);
 
   if (user) {
     return <Redirect to={from} />;
