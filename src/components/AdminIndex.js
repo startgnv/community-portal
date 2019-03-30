@@ -53,10 +53,7 @@ export const AdminIndex = () => {
     companiesList = (
       <List>
         {companies.docs.map(doc => {
-          const {
-            name,
-            coordinates: { latitude, longitude } = {}
-          } = doc.data();
+          const { name } = doc.data();
           return (
             <ListItem key={doc.id} divider button>
               <ListItemText>
@@ -82,7 +79,7 @@ export const AdminIndex = () => {
     jobsList = (
       <List>
         {jobs.docs.map(doc => {
-          const { title, companyID } = doc.data();
+          const { title } = doc.data();
           return (
             <ListItem key={doc.id} divider button>
               <ListItemText>

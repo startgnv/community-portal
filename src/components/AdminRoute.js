@@ -1,13 +1,21 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useDocumentOnce } from 'react-firebase-hooks/firestore';
+import { LinearProgress } from '@material-ui/core';
 
 export const AdminRoute = ({ component: Component, ...rest }) => {
-  const [user, initialising, error] = useAuthState(auth);
+  const [user, initialising] = useAuthState(auth);
+  const [value, loading] = useDocumentOnce(
+    user && user.email ? db.doc(`admins/${user.email}`) : null
+  );
 
-  if (error) {
-    return error;
+  if (initialising || loading) {
+    return <LinearProgress />;
+  }
+  if (user && (!value || !value.exists)) {
+    return 'You are not an admin!';
   }
 
   return (
