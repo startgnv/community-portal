@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
+import styled from 'styled-components/macro';
 
 import { Marker } from 'react-map-gl';
 
@@ -8,9 +9,19 @@ import MapContainer from './MapContainer';
 import { MapPageCompany } from './MapPageCompany';
 import { MapPageIndex } from './MapPageIndex';
 
+import Header from './Header';
+import Sidebar from './Sidebar';
+
+const MapPageContainer = styled.div`
+  .main-content {
+    height: calc(100vh - 70px);
+    clear: both;
+  }
+`;
+
 const defaultCenter = {
-  latitude: 29.651634,
-  longitude: -82.384829
+  latitude: 29.6499279,
+  longitude: -82.3327508
 };
 
 export const MapPage = ({
@@ -34,46 +45,51 @@ export const MapPage = ({
     });
 
   return (
-    <>
-      <MapContainer
-        viewport={viewport}
-        onViewportChange={viewport => setViewport(viewport)}
-      >
-        {companies.map(({ name, latitude, longitude }) => (
-          <Marker key={name} longitude={longitude} latitude={latitude}>
-            <MapPin />
-          </Marker>
-        ))}
-      </MapContainer>
-      <Route
-        exact
-        path="/"
-        component={props => (
-          <MapPageIndex
-            {...props}
-            companies={companies}
-            onFocusChange={onFocusChange}
+    <MapPageContainer>
+      <Header />
+      <div className="main-content">
+        <Sidebar>
+          <Route
+            exact
+            path="/"
+            component={props => (
+              <MapPageIndex
+                {...props}
+                companies={companies}
+                onFocusChange={onFocusChange}
+              />
+            )}
           />
-        )}
-      />
-      <Route
-        exact
-        path="/company/:company"
-        component={({
-          match: {
-            params: { company }
-          },
-          match,
-          ...props
-        }) => (
-          <MapPageCompany
-            {...props}
-            match={match}
-            company={companies.find(({ name }) => company === name)}
+          <Route
+            exact
+            path="/company/:company"
+            component={({
+              match: {
+                params: { company }
+              },
+              match,
+              ...props
+            }) => (
+              <MapPageCompany
+                {...props}
+                match={match}
+                company={companies.find(({ name }) => company === name)}
+              />
+            )}
           />
-        )}
-      />
-    </>
+        </Sidebar>
+        <MapContainer
+          viewport={viewport}
+          onViewportChange={viewport => setViewport(viewport)}
+        >
+          {companies.map(({ name, latitude, longitude }) => (
+            <Marker key={name} longitude={longitude} latitude={latitude}>
+              <MapPin />
+            </Marker>
+          ))}
+        </MapContainer>
+      </div>
+    </MapPageContainer>
   );
 };
 

@@ -1,38 +1,39 @@
 import React from 'react';
-import useWindowSize from '@rehooks/window-size';
 import ReactMapGL from 'react-map-gl';
+import styled from 'styled-components/macro';
+
+const MapContainerContainer = styled.div`
+  height: 100%;
+  overflow: hidden;
+`;
 
 export const MapContainer = ({
   children,
   viewport = {},
   onViewportChange = () => {}
 }) => {
-  const { innerHeight, innerWidth } = useWindowSize();
-
   return (
-    <ReactMapGL
-      {...viewport}
-      mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        position: 'fixed',
-        zIndex: -1,
-        top: 0,
-        alignItems: 'center'
-      }}
-      dragPan={false}
-      touchZoom={false}
-      dragRotate={false}
-      doubleClickZoom={false}
-      touchRotate={false}
-      onViewportChange={onViewportChange}
-      width={innerWidth}
-      height={innerHeight}
-      zoom={14}
-    >
-      {children}
-    </ReactMapGL>
+    <MapContainerContainer>
+      <ReactMapGL
+        {...viewport}
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          overflow: 'hidden'
+        }}
+        touchZoom={false}
+        dragRotate={false}
+        doubleClickZoom={false}
+        onViewportChange={onViewportChange}
+        width={'100%'}
+        height={'100%'}
+        zoom={14}
+      >
+        {children}
+      </ReactMapGL>
+    </MapContainerContainer>
   );
 };
 
