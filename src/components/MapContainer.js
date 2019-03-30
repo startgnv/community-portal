@@ -8,7 +8,6 @@ export const MapContainer = ({
   onViewportChange = () => {}
 }) => {
   const { innerHeight, innerWidth } = useWindowSize();
-  console.log(process.env);
 
   return (
     <ReactMapGL
