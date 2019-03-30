@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { createGlobalStyle } from 'styled-components/macro';
 
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import MapPage from './MapPage';
 import AdminPage from './AdminPage';
 
 const GlobalStyle = createGlobalStyle`
+  html,
   body {
     margin: 0;
+    padding: 0;
+    overflow: hidden;
   }
 `;
 
@@ -41,8 +44,6 @@ export const App = () => {
             )}
           />
         </Switch>
-        <Link to="/admin">Admin</Link>
-        <Link to="/">Home</Link>
       </Router>
       <GlobalStyle />
     </>

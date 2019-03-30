@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 import { Marker } from 'react-map-gl';
@@ -13,6 +14,12 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 
 const MapPageContainer = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
   .main-content {
     height: calc(100vh - 70px);
     clear: both;
@@ -77,6 +84,8 @@ export const MapPage = ({
               />
             )}
           />
+          <Link to="/admin">Admin</Link>
+          <Link to="/">Home</Link>
         </Sidebar>
         <MapContainer
           viewport={viewport}
