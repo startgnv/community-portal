@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components/macro';
 
 const CompanyListContainer = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  width: 300px;
+  padding: 0;
+  margin: 0 0 30px;
+  overflow: hidden;
 `;
 
 export const CompanyList = ({ children, className }) => (

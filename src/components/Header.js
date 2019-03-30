@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom';
 import logo from '../assets/images/logo.svg';
 
 const HeaderContainer = styled.div`
@@ -24,7 +23,7 @@ const HeaderContainer = styled.div`
 export const Header = ({ className }) => (
   <HeaderContainer className={className}>
     <a className="logo-link" href="http://startupgnv.com" target="_blank">
-      <img className="logo" src={logo} />
+      <img className="logo" src={logo} alt="logo" />
     </a>
   </HeaderContainer>
 );
