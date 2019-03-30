@@ -1,25 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { NewCompanyForm } from './NewCompanyForm';
+import { Route } from 'react-router-dom';
+import { AdminCompanyPage } from './AdminCompanyPage';
+import { AdminIndex } from './AdminIndex';
 
-export const AdminPage = ({ onUpdate = () => {}, companies = [] }) => {
-  const onSubmit = company => {
-    onUpdate([...companies, company]);
-  };
-
-  return (
-    <div>
-      <NewCompanyForm onSubmit={onSubmit} />
-      <ul>
-        {companies.map(({ name, latitude, longitude }) => (
-          <li key={name}>
-            <Link to={`/admin/companies/${name}`}>{name}</Link>{' '}
-            {`-${latitude}-${longitude}`}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+export const AdminPage = () => (
+  <>
+    <Route exact path="/admin" component={AdminIndex} />
+    <Route
+      exact
+      path="/admin/companies/:company"
+      component={AdminCompanyPage}
+    />
+  </>
+);
 
 export default AdminPage;
