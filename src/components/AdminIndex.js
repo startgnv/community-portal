@@ -30,7 +30,7 @@ export const AdminIndex = () => {
           } = doc.data();
           return (
             <li key={doc.id}>
-              <Link to={`/admin/companies/${name}`}>{name}</Link>
+              <Link to={`/admin/companies/${doc.id}`}>{name}</Link>
               {`-${latitude}-${longitude}`}
             </li>
           );

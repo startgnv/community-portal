@@ -11,7 +11,7 @@ export const AdminPage = () => (
     <Route exact path="/admin/login" component={AdminLogin} />
     <AdminRoute
       exact
-      path="/admin/companies/:company"
+      path="/admin/companies/:companyID"
       component={AdminCompanyPage}
     />
   </>
