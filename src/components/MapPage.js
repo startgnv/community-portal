@@ -90,8 +90,14 @@ export const MapPage = ({
           {companies
             .filter(({ coordinates }) => coordinates)
             .map(({ name, coordinates: { latitude, longitude } }) => (
-              <Marker key={name} longitude={longitude} latitude={latitude}>
-                <MapPin />
+              <Marker
+                key={name}
+                longitude={longitude}
+                latitude={latitude}
+                offsetLeft={-15}
+                offsetTop={-30}
+              >
+                <MapPin size="30" />
               </Marker>
             ))}
         </MapContainer>
