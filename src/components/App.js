@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import MapPage from './MapPage';
 import AdminPage from './AdminPage';
+import AdminRoute from './AdminRoute';
+import AdminLogin from './AdminLogin';
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -25,7 +27,8 @@ export const App = () => (
           path={['/company/:company', '/job/:jobId', '/']}
           component={MapPage}
         />
-        <Route path="/admin" component={AdminPage} />
+        <Route exact path="/admin/login" component={AdminLogin} />
+        <AdminRoute path="/admin" component={AdminPage} />
       </Switch>
     </Router>
     <GlobalStyle />
