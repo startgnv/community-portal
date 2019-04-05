@@ -94,10 +94,10 @@ export const MapPage = ({
                 key={name}
                 longitude={longitude}
                 latitude={latitude}
-                offsetLeft={-15}
-                offsetTop={-30}
+                offsetLeft={-18}
+                offsetTop={-36}
               >
-                <MapPin size="30" />
+                <MapPin size="36" />
               </Marker>
             ))}
         </MapContainer>
