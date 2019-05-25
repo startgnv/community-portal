@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import CompanyList from './CompanyList';
-import CompanyListItem from './CompanyListItem';
+import JobList from './JobList';
+import JobListItem from './JobListItem';
 
-export const MapPageIndex = ({ companies = [] }) => {
+export const MapPageIndex = ({ jobs = [] }) => {
   const [filterText, setFilterText] = useState('');
 
-  const filteredCompanies = companies.filter(e =>
-    e.name.toLowerCase().includes(filterText.toLowerCase())
+  const filteredJobs = jobs.filter(e =>
+    e.title.toLowerCase().includes(filterText.toLowerCase())
   );
 
   return (
@@ -16,15 +16,11 @@ export const MapPageIndex = ({ companies = [] }) => {
         value={filterText}
         onChange={e => setFilterText(e.target.value)}
       />
-      <CompanyList
-        css={`
-          max-width: 50%;
-        `}
-      >
-        {filteredCompanies.map(company => (
-          <CompanyListItem company={company} key={company.id} />
+      <JobList>
+        {filteredJobs.map(job => (
+          <JobListItem job={job} key={job.id} />
         ))}
-      </CompanyList>
+      </JobList>
     </div>
   );
 };

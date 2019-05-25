@@ -12,6 +12,7 @@ import Loading from './Loading';
 import MapPin from './MapPin';
 import MapContainer from './MapContainer';
 import MapPageCompany from './MapPageCompany';
+import MapPageJob from './MapPageJob';
 import MapPageIndex from './MapPageIndex';
 
 import Header from './Header';
@@ -40,17 +41,30 @@ export const MapPage = ({
     params: { company }
   }
 }) => {
-  const { error, loading, value } = useCollection(db.collection('companies'));
+  const {
+    error: companiesError,
+    loading: companiesLoading,
+    value: companiesValue
+  } = useCollection(db.collection('companies'));
+  const {
+    error: jobsError,
+    loading: jobsLoading,
+    value: jobsValue
+  } = useCollection(db.collection('jobs'));
   const [viewport, setViewport] = useState(currentCompany || defaultCenter);
 
-  if (error) {
+  if (companiesError || jobsError) {
     return <Error />;
   }
-  if (loading) {
+  if (companiesLoading || jobsLoading) {
     return <Loading />;
   }
 
-  const companies = value.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  const companies = companiesValue.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
+  const jobs = jobsValue.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   const currentCompany = companies.find(({ name }) => name === company);
 
   return (
@@ -61,7 +75,9 @@ export const MapPage = ({
           <Route
             exact
             path="/"
-            render={props => <MapPageIndex {...props} companies={companies} />}
+            render={props => (
+              <MapPageIndex {...props} companies={companies} jobs={jobs} />
+            )}
           />
           <Route
             exact
@@ -79,6 +95,28 @@ export const MapPage = ({
                 company={companies.find(({ name }) => company === name)}
               />
             )}
+          />
+          <Route
+            exact
+            path="/job/:jobId"
+            component={({
+              match: {
+                params: { jobId }
+              },
+              match,
+              ...props
+            }) => {
+              const job = jobs.find(({ id }) => jobId === id);
+              const company = companies.find(({ id }) => id === job.companyID);
+              return (
+                <MapPageJob
+                  {...props}
+                  match={match}
+                  job={job}
+                  company={company}
+                />
+              );
+            }}
           />
           <Link to="/admin">Admin</Link>
           <Link to="/">Home</Link>

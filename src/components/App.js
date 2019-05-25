@@ -19,7 +19,11 @@ export const App = () => (
   <>
     <Router>
       <Switch>
-        <Route exact path={['/company/:company', '/']} component={MapPage} />
+        <Route
+          exact
+          path={['/company/:company', '/job/:jobId', '/']}
+          component={MapPage}
+        />
         <Route path="/admin" component={AdminPage} />
       </Switch>
     </Router>
