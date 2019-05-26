@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-export const NewJobForm = ({ companies = [], onSubmit = () => {} }) => {
+export const NewJobForm = ({
+  companies = [],
+  onSubmit = () => {},
+  jobCategories = []
+}) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [companyID, setCompanyID] = useState('');

@@ -5,6 +5,9 @@ import { firestore } from 'firebase/app';
 import { NewCompanyForm } from './NewCompanyForm';
 import { NewJobForm } from './NewJobForm';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 export const AdminIndex = () => {
   const {
@@ -22,20 +25,22 @@ export const AdminIndex = () => {
     companiesList = <span>ERROR Loading Companies</span>;
   } else {
     companiesList = (
-      <ul>
+      <List>
         {companies.docs.map(doc => {
           const {
             name,
             coordinates: { latitude, longitude } = {}
           } = doc.data();
           return (
-            <li key={doc.id}>
-              <Link to={`/admin/companies/${name}`}>{name}</Link>
-              {`-${latitude}-${longitude}`}
-            </li>
+            <ListItem key={doc.id} divider>
+              <ListItemText>
+                <Link to={`/admin/companies/${name}`}>{name}</Link>
+                {`-${latitude}-${longitude}`}
+              </ListItemText>
+            </ListItem>
           );
         })}
-      </ul>
+      </List>
     );
   }
   let jobsList;
@@ -45,16 +50,18 @@ export const AdminIndex = () => {
     jobsList = <span>ERROR Loading Jobs</span>;
   } else {
     jobsList = (
-      <ul>
+      <List>
         {jobs.docs.map(doc => {
           const { title, companyID } = doc.data();
           return (
-            <li key={doc.id}>
-              <Link to={`/admin/jobs/${title}`}>{title}</Link> - {companyID}
-            </li>
+            <ListItem key={doc.id} divider>
+              <ListItemText>
+                <Link to={`/admin/jobs/${title}`}>{title}</Link> - {companyID}
+              </ListItemText>
+            </ListItem>
           );
         })}
-      </ul>
+      </List>
     );
   }
   const onNewCompanySubmit = ({ name, latitude, longitude }) => {
