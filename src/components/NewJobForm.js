@@ -1,9 +1,23 @@
 import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+
+const useStyles = makeStyles(theme => ({
+  textField: {
+    display: 'block',
+    marginBottom: '20px',
+    minWidth: '160px'
+  }
+}));
+
 export const NewJobForm = ({
   companies = [],
   onSubmit = () => {},
   jobCategories = []
 }) => {
+  const classes = useStyles();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [companyID, setCompanyID] = useState('');
@@ -18,33 +32,49 @@ export const NewJobForm = ({
   };
   return (
     <form onSubmit={onFormSubmit}>
-      <input
-        type="text"
+      <TextField
+        className={classes.textField}
         value={title}
         onChange={e => setTitle(e.target.value)}
-        placeholder="Job Title"
+        variant="outlined"
+        label="Job Title"
       />
-      <textarea
+      <TextField
+        className={classes.textField}
+        label="Description"
         onChange={e => setDescription(e.target.value)}
-        placeholder="Description"
+        value={description}
+        variant="outlined"
+        multiline
+      />
+      <TextField
+        className={classes.textField}
+        select
+        label="Company"
+        value={companyID}
+        onChange={e => setCompanyID(e.target.value)}
+        variant="outlined"
+        helperText="Select Company"
       >
-        {description}
-      </textarea>
-      <select value={companyID} onChange={e => setCompanyID(e.target.value)}>
-        <option value="">Select Company</option>
         {companies.map(company => {
           const { name } = company.data();
-          return <option value={company.id}>{name}</option>;
+          return (
+            <MenuItem key={company.id} value={company.id}>
+              {name}
+            </MenuItem>
+          );
         })}
-      </select>
-      <input
-        type="text"
+      </TextField>
+      <TextField
+        className={classes.textField}
+        label="Application URL"
         value={applyUrl}
         onChange={e => setApplyUrl(e.target.value)}
-        placeholder="Application URL"
+        variant="outlined"
       />
-
-      <button type="submit">Submit</button>
+      <Button color="primary" type="submit" variant="contained">
+        Submit
+      </Button>
     </form>
   );
 };

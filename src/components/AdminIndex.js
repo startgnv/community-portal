@@ -1,20 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { db } from '../firebase';
 import { firestore } from 'firebase/app';
 import { NewCompanyForm } from './NewCompanyForm';
 import { NewJobForm } from './NewJobForm';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Modal from '@material-ui/core/Modal';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 
+const useStyles = makeStyles(theme => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  paper: {
+    width: 400,
+    backgroundColor: 'white',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(4),
+    outline: 'none'
+  }
+}));
+
 export const AdminIndex = () => {
+  const classes = useStyles();
   const {
     loading: companiesLoading,
     error: companiesError,
@@ -23,6 +42,9 @@ export const AdminIndex = () => {
   const { loading: jobsLoading, error: jobsError, value: jobs } = useCollection(
     db.collection('jobs')
   );
+  const [showNewCompanyModal, setShowNewCompanyModal] = useState(false);
+  const [showNewJobModal, setShowNewJobModal] = useState(false);
+
   let companiesList;
   if (companiesLoading) {
     companiesList = <span>Loading Companies...</span>;
@@ -94,18 +116,36 @@ export const AdminIndex = () => {
   };
   return (
     <div>
-      <h3>Create Company</h3>
-      <NewCompanyForm onSubmit={onNewCompanySubmit} />
-
-      <h3>Create Job</h3>
-      {companies && companies.docs && (
-        <NewJobForm onSubmit={onNewJobSubmit} companies={companies.docs} />
-      )}
-
+      <Modal
+        className={classes.modal}
+        open={showNewCompanyModal}
+        onClose={() => setShowNewCompanyModal(false)}
+      >
+        <Paper className={classes.paper}>
+          <h3>Create Company</h3>
+          <NewCompanyForm onSubmit={onNewCompanySubmit} />
+        </Paper>
+      </Modal>
+      <Modal
+        className={classes.modal}
+        open={showNewJobModal}
+        onClose={() => setShowNewJobModal(false)}
+      >
+        <Paper className={classes.paper}>
+          <h3>Create Job</h3>
+          {companies && companies.docs && (
+            <NewJobForm onSubmit={onNewJobSubmit} companies={companies.docs} />
+          )}
+        </Paper>
+      </Modal>
       <Grid container>
         <Grid item>
           <h3>Companies</h3>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setShowNewCompanyModal(true)}
+          >
             <AddIcon />
             Add Company
           </Button>
@@ -113,7 +153,11 @@ export const AdminIndex = () => {
         </Grid>
         <Grid item>
           <h3>Jobs</h3>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setShowNewJobModal(true)}
+          >
             <AddIcon />
             Add Job
           </Button>
