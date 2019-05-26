@@ -5,9 +5,14 @@ import { firestore } from 'firebase/app';
 import { NewCompanyForm } from './NewCompanyForm';
 import { NewJobForm } from './NewJobForm';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
 
 export const AdminIndex = () => {
   const {
@@ -32,10 +37,14 @@ export const AdminIndex = () => {
             coordinates: { latitude, longitude } = {}
           } = doc.data();
           return (
-            <ListItem key={doc.id} divider>
+            <ListItem key={doc.id} divider button>
               <ListItemText>
-                <Link to={`/admin/companies/${name}`}>{name}</Link>
-                {`-${latitude}-${longitude}`}
+                {name}
+                <Link to={`/admin/companies/${doc.id}/edit`}>
+                  <IconButton>
+                    <EditIcon />
+                  </IconButton>
+                </Link>
               </ListItemText>
             </ListItem>
           );
@@ -54,9 +63,14 @@ export const AdminIndex = () => {
         {jobs.docs.map(doc => {
           const { title, companyID } = doc.data();
           return (
-            <ListItem key={doc.id} divider>
+            <ListItem key={doc.id} divider button>
               <ListItemText>
-                <Link to={`/admin/jobs/${title}`}>{title}</Link> - {companyID}
+                {title}
+                <Link to={`/admin/jobs/${doc.id}/edit`}>
+                  <IconButton>
+                    <EditIcon />
+                  </IconButton>
+                </Link>
               </ListItemText>
             </ListItem>
           );
@@ -88,11 +102,24 @@ export const AdminIndex = () => {
         <NewJobForm onSubmit={onNewJobSubmit} companies={companies.docs} />
       )}
 
-      <h3>Companies</h3>
-      {companiesList}
-
-      <h3>Jobs</h3>
-      {jobsList}
+      <Grid container>
+        <Grid item>
+          <h3>Companies</h3>
+          <Button variant="contained" color="primary">
+            <AddIcon />
+            Add Company
+          </Button>
+          {companiesList}
+        </Grid>
+        <Grid item>
+          <h3>Jobs</h3>
+          <Button variant="contained" color="primary">
+            <AddIcon />
+            Add Job
+          </Button>
+          {jobsList}
+        </Grid>
+      </Grid>
     </div>
   );
 };
