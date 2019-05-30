@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components/macro';
 
 const SidebarContainer = styled.div`
-  float: right;
   width: 460px;
+  height: 100%;
+  float: right;
   background: white;
   box-sizing: border-box;
   padding: 20px;
+  overflow: auto;
 `;
 
 export const Sidebar = ({ children, className }) => (

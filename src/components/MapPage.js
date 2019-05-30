@@ -51,12 +51,17 @@ export const MapPage = ({
     loading: jobsLoading,
     value: jobsValue
   } = useCollection(db.collection('jobs'));
+  const {
+    error: categoriesError,
+    loading: categoriesLoading,
+    value: categoriesValue
+  } = useCollection(db.collection('jobCategories'));
   const [viewport, setViewport] = useState(currentCompany || defaultCenter);
 
-  if (companiesError || jobsError) {
+  if (companiesError || jobsError || categoriesError) {
     return <Error />;
   }
-  if (companiesLoading || jobsLoading) {
+  if (companiesLoading || jobsLoading || categoriesLoading) {
     return <Loading />;
   }
 
@@ -65,6 +70,10 @@ export const MapPage = ({
     ...doc.data()
   }));
   const jobs = jobsValue.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  const categories = categoriesValue.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
   const currentCompany = companies.find(({ name }) => name === company);
 
   return (
@@ -76,7 +85,12 @@ export const MapPage = ({
             exact
             path="/"
             render={props => (
-              <MapPageIndex {...props} companies={companies} jobs={jobs} />
+              <MapPageIndex
+                {...props}
+                companies={companies}
+                jobs={jobs}
+                categories={categories}
+              />
             )}
           />
           <Route
@@ -92,7 +106,7 @@ export const MapPage = ({
               <MapPageCompany
                 {...props}
                 match={match}
-                company={companies.find(({ name }) => company === name)}
+                company={companies.find(({ slug }) => company === slug)}
               />
             )}
           />
@@ -118,8 +132,6 @@ export const MapPage = ({
               );
             }}
           />
-          <Link to="/admin">Admin</Link>
-          <Link to="/">Home</Link>
         </Sidebar>
         <MapContainer
           viewport={viewport}
