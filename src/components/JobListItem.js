@@ -112,7 +112,7 @@ export const JobListItem = ({
         {title}
       </Link>
       <div>
-        <Link className="company" to={`/company/${company.slug}`}>
+        <Link className="company" to={`/company/${company.id}`}>
           {company.name}
         </Link>
       </div>

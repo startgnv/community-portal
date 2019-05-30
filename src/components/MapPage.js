@@ -90,10 +90,10 @@ export const MapPage = ({
           />
           <Route
             exact
-            path="/company/:company"
+            path="/company/:companyID"
             component={({
               match: {
-                params: { company }
+                params: { companyID }
               },
               match,
               ...props
@@ -101,7 +101,7 @@ export const MapPage = ({
               <MapPageCompany
                 {...props}
                 match={match}
-                company={companies.find(({ slug }) => company === slug)}
+                company={companies.find(({ id }) => companyID === id)}
               />
             )}
           />
