@@ -4,10 +4,12 @@ import { auth } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 export const AdminRoute = ({ component: Component, ...rest }) => {
-  const { initialising, user } = useAuthState(auth);
-  if (initialising) {
-    return <Route {...rest} render={props => <div>Loading...</div>} />;
+  const [user, initialising, error] = useAuthState(auth);
+
+  if (error) {
+    return error;
   }
+
   return (
     <Route
       {...rest}
