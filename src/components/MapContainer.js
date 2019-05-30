@@ -23,13 +23,13 @@ export const MapContainer = ({
           alignItems: 'center',
           overflow: 'hidden'
         }}
-        touchZoom={false}
+        touchZoom={true}
         dragRotate={false}
         doubleClickZoom={false}
         onViewportChange={onViewportChange}
         width={'100%'}
         height={'100%'}
-        zoom={14}
+        scrollZoom={true}
       >
         {children}
       </ReactMapGL>

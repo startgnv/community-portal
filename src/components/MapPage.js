@@ -32,8 +32,9 @@ const MapPageContainer = styled.div`
 `;
 
 const defaultCenter = {
-  latitude: 29.6499279,
-  longitude: -82.3327508
+  latitude: 29.6607805656048,
+  longitude: -82.380708628568,
+  zoom: 11
 };
 
 export const MapPage = ({
