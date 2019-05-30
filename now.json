@@ -16,5 +16,8 @@
   "env": {
     "REACT_APP_MAPBOX_KEY": "@cp-mapbox",
     "REACT_APP_FIREBASE": "@cp-firebase"
+  },
+  "github": {
+    "enabled": false
   }
 }
