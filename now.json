@@ -14,7 +14,7 @@
       { "src": "/(.*)", "headers": {"cache-control": "s-maxage=0"}, "dest": "/index.html" }
   ],
   "env": {
-      "REACT_APP_MAPBOX_KEY": "@cp-mapbox",
-      "REACT_APP_FIREBASE": "@cp-firebase"
+    "REACT_APP_MAPBOX_KEY": "@cp-mapbox",
+    "REACT_APP_FIREBASE": "@cp-firebase"
   }
 }
