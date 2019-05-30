@@ -8,7 +8,6 @@ import { Marker } from 'react-map-gl';
 
 import { db } from '../firebase';
 import Error from './Error';
-import Loading from './Loading';
 import MapPin from './MapPin';
 import MapContainer from './MapContainer';
 import MapPageCompany from './MapPageCompany';
@@ -17,6 +16,7 @@ import MapPageIndex from './MapPageIndex';
 
 import Header from './Header';
 import Sidebar from './Sidebar';
+import { LinearProgress } from '@material-ui/core';
 
 const MapPageContainer = styled.div`
   position: fixed;
@@ -42,28 +42,22 @@ export const MapPage = ({
     params: { company }
   }
 }) => {
-  const {
-    error: companiesError,
-    loading: companiesLoading,
-    value: companiesValue
-  } = useCollection(db.collection('companies'));
-  const {
-    error: jobsError,
-    loading: jobsLoading,
-    value: jobsValue
-  } = useCollection(db.collection('jobs'));
-  const {
-    error: categoriesError,
-    loading: categoriesLoading,
-    value: categoriesValue
-  } = useCollection(db.collection('jobCategories'));
+  const [companiesValue, companiesLoading, companiesError] = useCollection(
+    db.collection('companies')
+  );
+  const [jobsValue, jobsLoading, jobsError] = useCollection(
+    db.collection('jobs')
+  );
+  const [categoriesValue, categoriesLoading, categoriesError] = useCollection(
+    db.collection('jobCategories')
+  );
   const [viewport, setViewport] = useState(currentCompany || defaultCenter);
 
   if (companiesError || jobsError || categoriesError) {
     return <Error />;
   }
   if (companiesLoading || jobsLoading || categoriesLoading) {
-    return <Loading />;
+    return <LinearProgress />;
   }
 
   const companies = companiesValue.docs.map(doc => ({

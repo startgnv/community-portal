@@ -9,11 +9,7 @@ export const AdminPage = () => (
   <>
     <AdminRoute exact path="/admin" component={AdminIndex} />
     <Route exact path="/admin/login" component={AdminLogin} />
-    <AdminRoute
-      exact
-      path="/admin/companies/:company"
-      component={AdminCompanyPage}
-    />
+    <AdminRoute path="/admin/companies/:company" component={AdminCompanyPage} />
   </>
 );
 

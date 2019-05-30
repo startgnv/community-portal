@@ -16,6 +16,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Modal from '@material-ui/core/Modal';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
+import { LinearProgress } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -34,22 +35,20 @@ const useStyles = makeStyles(theme => ({
 
 export const AdminIndex = () => {
   const classes = useStyles();
-  const {
-    loading: companiesLoading,
-    error: companiesError,
-    value: companies
-  } = useCollection(db.collection('companies'));
-  const { loading: jobsLoading, error: jobsError, value: jobs } = useCollection(
-    db.collection('jobs')
+  const [companies, companiesLoading, companiesError] = useCollection(
+    db.collection('companies')
   );
+  const [jobs, jobsLoading, jobsError] = useCollection(db.collection('jobs'));
   const [showNewCompanyModal, setShowNewCompanyModal] = useState(false);
   const [showNewJobModal, setShowNewJobModal] = useState(false);
 
   let companiesList;
   if (companiesLoading) {
-    companiesList = <span>Loading Companies...</span>;
+    companiesList = <LinearProgress />;
   } else if (companiesError) {
-    companiesList = <span>ERROR Loading Companies</span>;
+    companiesList = (
+      <LinearProgress value="75" variant="determinate" color="secondary" />
+    );
   } else {
     companiesList = (
       <List>
