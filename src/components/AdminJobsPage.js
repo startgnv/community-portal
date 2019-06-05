@@ -57,7 +57,6 @@ export const AdminJobsPage = () => {
             <List>
               {jobs.map(({ title, categories = [], id }, i) => (
                 <ListItem
-                  button
                   component={NavLink}
                   to={`/admin/jobs/${id}`}
                   activeClassName={classes.activeJob}

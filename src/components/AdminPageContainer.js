@@ -97,7 +97,6 @@ export const AdminPageContainer = ({ children, backTo = '', location }) => {
           <Divider />
           <List>
             <ListItem
-              button
               component={NavLink}
               to="/admin"
               exact
@@ -106,7 +105,6 @@ export const AdminPageContainer = ({ children, backTo = '', location }) => {
               <ListItemText>Home</ListItemText>
             </ListItem>
             <ListItem
-              button
               component={NavLink}
               to="/admin/companies"
               activeClassName={classes.active}
@@ -114,7 +112,6 @@ export const AdminPageContainer = ({ children, backTo = '', location }) => {
               <ListItemText>Companies</ListItemText>
             </ListItem>
             <ListItem
-              button
               component={NavLink}
               to="/admin/jobs"
               activeClassName={classes.active}
@@ -122,7 +119,6 @@ export const AdminPageContainer = ({ children, backTo = '', location }) => {
               <ListItemText>Jobs</ListItemText>
             </ListItem>
             <ListItem
-              button
               component={NavLink}
               to="/admin/settings"
               activeClassName={classes.active}
