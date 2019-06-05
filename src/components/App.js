@@ -24,7 +24,7 @@ export const App = () => (
       <Switch>
         <Route
           exact
-          path={['/company/:companyID', '/job/:jobId', '/']}
+          path={['/company/:company', '/job/:jobId', '/']}
           component={MapPage}
         />
         <Route exact path="/admin/login" component={AdminLogin} />
