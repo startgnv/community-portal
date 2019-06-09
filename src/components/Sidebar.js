@@ -7,7 +7,6 @@ const SidebarContainer = styled.div`
   float: right;
   background: white;
   box-sizing: border-box;
-  padding: 20px;
   overflow: auto;
 `;
 

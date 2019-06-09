@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -97,13 +98,22 @@ export const MapPage = ({
               },
               match,
               ...props
-            }) => (
-              <MapPageCompany
-                {...props}
-                match={match}
-                company={companies.find(({ slug }) => company === slug)}
-              />
-            )}
+            }) => {
+              const companyMatch = companies.find(
+                ({ slug }) => company === slug
+              );
+              const filteredJobs = _.filter(jobs, job => {
+                return job.companyID === companyMatch.id;
+              });
+              return (
+                <MapPageCompany
+                  {...props}
+                  match={match}
+                  company={companyMatch}
+                  jobs={filteredJobs}
+                />
+              );
+            }}
           />
           <Route
             exact
@@ -134,9 +144,9 @@ export const MapPage = ({
         >
           {companies
             .filter(({ coordinates }) => coordinates)
-            .map(({ name, coordinates: { latitude, longitude } }) => (
+            .map(({ name, coordinates: { latitude, longitude }, slug }) => (
               <Marker key={name} longitude={longitude} latitude={latitude}>
-                <MapPin height={36} />
+                <MapPin linkTo={'/company/' + slug} height={36} />
               </Marker>
             ))}
         </MapContainer>

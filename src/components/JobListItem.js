@@ -100,13 +100,16 @@ const JobListItemContainer = styled.li`
 export const JobListItem = ({
   job: { id, title = 'No Title', description = 'No Description' } = {},
   categories = [],
-  company = {}
+  company = {},
+  showLogo = true
 }) => (
   <JobListItemContainer>
-    <img
-      className="company-img"
-      src={companyLogos[company.slug] || feathrLogo}
-    />
+    {showLogo && (
+      <img
+        className="company-img"
+        src={companyLogos[company.slug] || feathrLogo}
+      />
+    )}
     <div className="info">
       <Link className="title" to={`/job/${id}`}>
         {title}

@@ -1,7 +1,12 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
+import styled from 'styled-components/macro';
 import JobList from './JobList';
 import JobListItem from './JobListItem';
+
+const MapPageIndexContainer = styled.div`
+  padding: 20px;
+`;
 
 export const MapPageIndex = ({
   jobs = [],
@@ -15,7 +20,7 @@ export const MapPageIndex = ({
   );
 
   return (
-    <div>
+    <MapPageIndexContainer>
       {/*
         <input
           type="text"
@@ -43,7 +48,7 @@ export const MapPageIndex = ({
           );
         })}
       </JobList>
-    </div>
+    </MapPageIndexContainer>
   );
 };
 
