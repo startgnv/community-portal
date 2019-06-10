@@ -14,8 +14,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { makeStyles } from '@material-ui/core';
 
-import { db } from '../firebase';
+import { storage, db } from '../firebase';
 import AdminPageContainer from './AdminPageContainer';
+import UploadAvatar from './UploadAvatar';
 
 const useStyles = makeStyles({
   container: {
@@ -53,7 +54,7 @@ const AdminCompanyPage = ({
                 alignItems="center"
                 justify="center"
               >
-                <Avatar />
+                <UploadAvatar companyID={companyID} />
                 <Typography variant="h4">{company.name}</Typography>
                 {company.id}
               </Grid>
