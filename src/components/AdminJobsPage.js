@@ -46,7 +46,11 @@ export const AdminJobsPage = () => {
   });
 
   if (loading) {
-    return <LinearProgress />;
+    return (
+      <AdminPageContainer>
+        <LinearProgress />
+      </AdminPageContainer>
+    );
   }
 
   return (
