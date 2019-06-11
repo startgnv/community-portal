@@ -23,7 +23,7 @@ export const UploadAvatar = ({
   const [progress, setProgress] = useState(0);
   const [imageReady, setImageReady] = useState(false);
   const urlRef = useRef(storage.ref(`companyLogos/${companyID}`));
-  const [downloadURL, setDownloadURL] = useState('');
+  const [downloadURL, setDownloadURL] = useState();
   const classes = useStyles({ size });
   const uploadRef = useRef();
   const uploadEl = uploadRef.current;
@@ -36,11 +36,16 @@ export const UploadAvatar = ({
         setImageReady(true);
         setProgress(0);
       };
+    } else if (downloadURL === '') {
+      setImageReady(true);
     }
   }, [downloadURL]);
 
   useEffect(() => {
-    urlRef.current.getDownloadURL().then(setDownloadURL);
+    urlRef.current
+      .getDownloadURL()
+      .then(setDownloadURL)
+      .catch(() => setDownloadURL(''));
   }, []);
 
   const changeHandler = useCallback(() => {
