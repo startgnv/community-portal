@@ -5,14 +5,14 @@ import AdminCompanyPage from './AdminCompanyPage';
 import AdminCompaniesPage from './AdminCompaniesPage';
 import AdminIndex from './AdminIndex';
 import AdminJobsPage from './AdminJobsPage';
+import AdminNewCompanyPage from './AdminNewCompanyPage';
 
-const AdminJobPage = () => 'A job';
-const AdminJobEditPage = () => 'Editing A job';
 const AdminSettingsPage = () => 'Settings';
 
 export const AdminPage = () => (
   <Switch>
     <Route exact path="/admin/companies" component={AdminCompaniesPage} />
+    <Route exact path="/admin/companies/new" component={AdminNewCompanyPage} />
     <Route
       exact
       path="/admin/companies/:companyID"
