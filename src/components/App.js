@@ -10,6 +10,7 @@ import AboutPage from './AboutPage';
 import AdminPage from './AdminPage';
 import AdminRoute from './AdminRoute';
 import AdminLogin from './AdminLogin';
+import Header from './Header';
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -30,17 +31,17 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const mapRoutes = ['/company/:company', '/job/:jobId', '/', '/companies'];
+const publicRoutes = [...mapRoutes, '/about'];
+
 export const App = () => (
   <>
     <ThemeProvider theme={theme}>
       <>
         <Router>
+          <Route exact path={publicRoutes} component={Header} />
           <Switch>
-            <Route
-              exact
-              path={['/company/:company', '/job/:jobId', '/', '/companies']}
-              component={MapPage}
-            />
+            <Route exact path={mapRoutes} component={MapPage} />
             <Route exact path="/about" component={AboutPage} />
             <Route exact path="/admin/login" component={AdminLogin} />
             <AdminRoute path="/admin" component={AdminPage} />

@@ -8,6 +8,9 @@ export default {
   uiBorder: '#DAE0E3',
   uiBackground: '#F1F1F4',
 
+  // structure
+  headerHeight: '70px',
+
   // buttons
   buttonSizes: {
     small: {

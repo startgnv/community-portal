@@ -22,7 +22,7 @@ import { LinearProgress } from '@material-ui/core';
 
 const MapPageContainer = styled.div`
   position: fixed;
-  top: 0;
+  top: ${({ theme }) => theme.headerHeight};
   right: 0;
   bottom: 0;
   left: 0;
@@ -75,7 +75,6 @@ export const MapPage = ({
 
   return (
     <MapPageContainer>
-      <Header />
       <div className="main-content">
         <Sidebar>
           <Route

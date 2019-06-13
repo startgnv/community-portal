@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import logo from '../assets/images/logo.svg';
 
 const HeaderContainer = styled.div`
-  height: 70px;
+  height: ${({ theme }) => theme.headerHeight};
   padding: 20px;
   text-align: center;
   background: black;

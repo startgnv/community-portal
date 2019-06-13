@@ -7,7 +7,6 @@ const AboutPageContainer = styled.div``;
 const AboutPage = () => {
   return (
     <AboutPageContainer>
-      <Header />
       <div className="main-content">
         <h1>About</h1>
         <p>
