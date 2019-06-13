@@ -1,18 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Redirect } from 'react-router-dom';
+import SidebarHeader from './SidebarHeader';
 import JobList from './JobList';
 import JobListItem from './JobListItem';
 
 const MapPageCompanyContainer = styled.div`
-  .header {
-    position: relative;
-    height: 200px;
-    background-image: url(${props => props.coverImg});
-    background-size: cover;
-    background-position: center;
-  }
-
   .logo {
     position: absolute;
     width: 120px;
@@ -42,15 +35,10 @@ export const MapPageCompany = ({
     return <Redirect to="/" />;
   }
   return (
-    <MapPageCompanyContainer coverImg={coverImg}>
-      <div className="header">
-        <button type="button" onClick={goBack}>
-          Back
-        </button>
-        <img className="logo" src={logoImg} />
-      </div>
+    <MapPageCompanyContainer>
+      <SidebarHeader coverImg={coverImg} mainImg={logoImg} />
       <div className="content">
-        <h2 className="company-name">{name}</h2>
+        <h1 className="company-name">{name}</h1>
         <p className="description">{description}</p>
         <h2>Jobs</h2>
         <JobList showTitle={false}>
