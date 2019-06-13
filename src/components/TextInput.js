@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { darken } from 'polished';
 
 const TextInputContainer = styled.div`
   width: ${({ fullWidth }) => (fullWidth ? '100%' : '200px')};

@@ -6,6 +6,7 @@ import theme from './theme';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import MapPage from './MapPage';
+import AboutPage from './AboutPage';
 import AdminPage from './AdminPage';
 import AdminRoute from './AdminRoute';
 import AdminLogin from './AdminLogin';
@@ -37,9 +38,10 @@ export const App = () => (
           <Switch>
             <Route
               exact
-              path={['/company/:company', '/job/:jobId', '/']}
+              path={['/company/:company', '/job/:jobId', '/', '/companies']}
               component={MapPage}
             />
+            <Route exact path="/about" component={AboutPage} />
             <Route exact path="/admin/login" component={AdminLogin} />
             <AdminRoute path="/admin" component={AdminPage} />
           </Switch>

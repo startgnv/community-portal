@@ -14,6 +14,7 @@ import MapContainer from './MapContainer';
 import MapPageCompany from './MapPageCompany';
 import MapPageJob from './MapPageJob';
 import MapPageIndex from './MapPageIndex';
+import MapPageCompanies from './MapPageCompanies';
 
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -88,6 +89,14 @@ export const MapPage = ({
                 categories={categories}
               />
             )}
+          />
+          <Route
+            exact
+            path="/companies"
+            component={({ match, ...props }) => {
+              console.warn('OKAY');
+              return <MapPageCompanies {...props} companies={companies} />;
+            }}
           />
           <Route
             exact
