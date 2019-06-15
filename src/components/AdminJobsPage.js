@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  useCollectionData,
-  useDocumentDataOnce
-} from 'react-firebase-hooks/firestore';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { NavLink, Link, Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -11,33 +8,24 @@ import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import ListItemText from '@material-ui/core/ListItemText';
 import AddIcon from '@material-ui/icons/Add';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 import { db } from '../firebase';
 import AdminPageContainer from './AdminPageContainer';
 import AdminNewJobForm from './AdminNewJobForm';
-import { List, ListItem } from '@material-ui/core';
+import AdminJobCard from './AdminJobCard';
 
-const useStyles = makeStyles(them => ({
+const useStyles = makeStyles(theme => ({
   activeJob: {
     backgroundColor: 'blue'
+  },
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2)
   }
 }));
-
-const AdminJobCard = ({
-  match: {
-    params: { jobID }
-  }
-}) => {
-  const [job, loading] = useDocumentDataOnce(db.doc(`jobs/${jobID}`), {
-    idField: 'id'
-  });
-
-  if (loading) {
-    return <LinearProgress />;
-  }
-
-  return <div>{job.title}</div>;
-};
 
 export const AdminJobsPage = () => {
   const classes = useStyles();
@@ -82,7 +70,12 @@ export const AdminJobsPage = () => {
           </Switch>
         </Grid>
       </Grid>
-      <Fab color="primary" component={Link} to="/admin/jobs/new">
+      <Fab
+        className={classes.fab}
+        color="primary"
+        component={Link}
+        to="/admin/jobs/new"
+      >
         <AddIcon />
       </Fab>
     </AdminPageContainer>
