@@ -14,7 +14,9 @@ export const AdminHeader = ({ backTo, ...props }) => (
           <BackIcon />
         </IconButton>
       )}
-      <Typography variant="h6">StartupGNV</Typography>
+      <Typography color="inherit" variant="h6">
+        StartupGNV
+      </Typography>
     </Toolbar>
   </AppBar>
 );
