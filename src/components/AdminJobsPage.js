@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import ListItemText from '@material-ui/core/ListItemText';
+import Hidden from '@material-ui/core/Hidden';
 import AddIcon from '@material-ui/icons/Add';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -27,11 +28,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const AdminJobsPage = () => {
+export const AdminJobsPage = ({ match: { isExact } }) => {
   const classes = useStyles();
   const [jobs, loading] = useCollectionData(db.collection('jobs'), {
     idField: 'id'
   });
+
+  const backTo = isExact ? undefined : `/admin/jobs`;
 
   if (loading) {
     return (
@@ -42,27 +45,29 @@ export const AdminJobsPage = () => {
   }
 
   return (
-    <AdminPageContainer>
+    <AdminPageContainer backTo={backTo}>
       <Grid container>
-        <Grid item md={4} xs={12}>
-          <Paper>
-            <List>
-              {jobs.map(({ title, categories = [], id }, i) => (
-                <ListItem
-                  component={NavLink}
-                  to={`/admin/jobs/${id}`}
-                  activeClassName={classes.activeJob}
-                  key={i}
-                >
-                  <ListItemText
-                    primary={title}
-                    secondary={categories.join(', ')}
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </Paper>
-        </Grid>
+        <Hidden mdDown={!isExact}>
+          <Grid item md={4} xs={12}>
+            <Paper>
+              <List>
+                {jobs.map(({ title, categories = [], id }, i) => (
+                  <ListItem
+                    component={NavLink}
+                    to={`/admin/jobs/${id}`}
+                    activeClassName={classes.activeJob}
+                    key={i}
+                  >
+                    <ListItemText
+                      primary={title}
+                      secondary={categories.join(', ')}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </Paper>
+          </Grid>
+        </Hidden>
         <Grid item md xs={12}>
           <Switch>
             <Route exact path="/admin/jobs/new" component={AdminJobForm} />
