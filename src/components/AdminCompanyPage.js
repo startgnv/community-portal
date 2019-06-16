@@ -1,26 +1,23 @@
 import React from 'react';
-import {
-  useDocumentDataOnce,
-  useCollectionData
-} from 'react-firebase-hooks/firestore';
-import { Link } from 'react-router-dom';
+import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core';
 
-import { storage, db } from '../firebase';
+import { db } from '../firebase';
 import AdminPageContainer from './AdminPageContainer';
 import UploadAvatar from './UploadAvatar';
+import UploadCoverImage from './UploadCoverImage';
 
 const useStyles = makeStyles({
-  container: {
-    marginTop: '30px'
+  avatar: {
+    transform: 'translate(30px, -70px)',
+    position: 'absolute',
+    '& .img': {
+      border: '2px solid white'
+    }
   }
 });
 
@@ -33,10 +30,6 @@ const AdminCompanyPage = ({
     db.doc(`companies/${companyID}`),
     { idField: 'id' }
   );
-  const [jobs = [], loadingJobs] = useCollectionData(
-    db.collection('jobs').where('companyID', '==', companyID),
-    { idField: 'id' }
-  );
 
   const classes = useStyles();
 
@@ -45,36 +38,19 @@ const AdminCompanyPage = ({
       {loading && <LinearProgress />}
       {company && (
         <>
-          <Grid container justify="space-between">
+          <Grid container justify="center">
             <Grid item md={6} xs={12}>
-              <Grid
-                container
-                className={classes.container}
-                direction="column"
-                alignItems="center"
-                justify="center"
-              >
-                <UploadAvatar companyID={companyID} />
-                <Typography variant="h4">{company.name}</Typography>
-                {company.id}
-              </Grid>
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <Card>
-                <CardContent>
-                  <List>
-                    {jobs.map(({ title, id }, i) => (
-                      <ListItem
-                        button
-                        component={Link}
-                        to={`/admin/jobs/${id}`}
-                      >
-                        {title}
-                      </ListItem>
-                    ))}
-                  </List>
-                </CardContent>
-              </Card>
+              <Box m={2} boxShadow={3}>
+                <UploadCoverImage companyID={companyID} />
+                <UploadAvatar
+                  className={classes.avatar}
+                  companyID={companyID}
+                />
+                <Box mt={5} m={2}>
+                  <Typography variant="h4">{company.name}</Typography>
+                  {company.id}
+                </Box>
+              </Box>
             </Grid>
           </Grid>
         </>

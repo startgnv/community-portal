@@ -1,31 +1,28 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { storage } from '../firebase';
-import Avatar from '@material-ui/core/Avatar';
-import { makeStyles, Box } from '@material-ui/core';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
-  avatar: {
-    width: ({ size }) => size,
-    height: ({ size }) => size,
-    background: 'black',
-    '&> img:hover': {
+  img: {
+    display: 'block',
+    width: '100%',
+    paddingBottom: '30%',
+    backgroundImage: ({ downloadURL }) => `url(${downloadURL})`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor: 'black',
+    '&:hover': {
       opacity: 0.5
     }
   }
 }));
 
-export const UploadAvatar = ({
-  companyID = '',
-  size = 100,
-  className,
-  ...avatarProps
-}) => {
+export const UploadCoverImage = ({ companyID = '', ...imgProps }) => {
   const [progress, setProgress] = useState(0);
   const [imageReady, setImageReady] = useState(false);
-  const urlRef = useRef(storage.ref(`companyLogos/${companyID}`));
+  const urlRef = useRef(storage.ref(`companyCovers/${companyID}`));
   const [downloadURL, setDownloadURL] = useState();
-  const classes = useStyles({ size });
+  const classes = useStyles({ downloadURL });
   const uploadRef = useRef();
   const uploadEl = uploadRef.current;
 
@@ -71,37 +68,16 @@ export const UploadAvatar = ({
   }, [uploadEl, changeHandler]);
 
   return (
-    <div className={className}>
-      <Box
-        borderRadius="50%"
-        border="3px solid white"
-        display="inline-block"
-        boxShadow={3}
-        bgcolor="white"
-      >
-        {imageReady && (
-          <Avatar
-            className={classes.avatar}
-            {...avatarProps}
-            src={downloadURL}
-            onClick={e => uploadRef.current.click()}
-          />
-        )}
-        {!imageReady && (
-          <CircularProgress
-            size={size}
-            thickness={1}
-            color="black"
-            variant={
-              progress < 100 && progress > 0 ? 'static' : 'indeterminate'
-            }
-            value={progress}
-          />
-        )}
-        <input type="file" hidden ref={uploadRef} />
-      </Box>
-    </div>
+    <>
+      <div
+        className={classes.img}
+        {...imgProps}
+        onClick={e => uploadRef.current.click()}
+      />
+
+      <input type="file" hidden ref={uploadRef} />
+    </>
   );
 };
 
-export default UploadAvatar;
+export default UploadCoverImage;
