@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+import { Link } from 'react-router-dom';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import {
   makeStyles,
@@ -47,7 +48,7 @@ const AdminJobCard = ({
   const [job = {}, loading] = useDocumentDataOnce(db.doc(`jobs/${jobID}`), {
     idField: 'id'
   });
-  const [company = {}] = useDocumentDataOnce(
+  const [company, loadingCompany] = useDocumentDataOnce(
     db.doc(`companies/${job.companyID}`)
   );
   const [coverImgURL] = useDownloadURL(
@@ -66,13 +67,13 @@ const AdminJobCard = ({
         subheader={
           <AdminJobSubheader
             category={job.category}
-            company={company.name}
+            company={company ? company.name : undefined}
             salary={job.salary}
             applyURL={job.applyURL}
           />
         }
         action={
-          <IconButton>
+          <IconButton component={Link} to={`/admin/jobs/${jobID}/edit`}>
             <EditIcon />
           </IconButton>
         }

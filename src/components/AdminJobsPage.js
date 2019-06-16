@@ -13,7 +13,7 @@ import ListItem from '@material-ui/core/ListItem';
 
 import { db } from '../firebase';
 import AdminPageContainer from './AdminPageContainer';
-import AdminNewJobForm from './AdminNewJobForm';
+import AdminJobForm from './AdminJobForm';
 import AdminJobCard from './AdminJobCard';
 
 const useStyles = makeStyles(theme => ({
@@ -65,8 +65,13 @@ export const AdminJobsPage = () => {
         </Grid>
         <Grid item md xs={12}>
           <Switch>
-            <Route exact path="/admin/jobs/new" component={AdminNewJobForm} />
-            <Route path="/admin/jobs/:jobID" component={AdminJobCard} />
+            <Route exact path="/admin/jobs/new" component={AdminJobForm} />
+            <Route exact path="/admin/jobs/:jobID" component={AdminJobCard} />
+            <Route
+              exact
+              path="/admin/jobs/:jobID/edit"
+              component={AdminJobForm}
+            />
           </Switch>
         </Grid>
       </Grid>
