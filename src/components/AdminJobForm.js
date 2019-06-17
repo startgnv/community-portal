@@ -39,7 +39,7 @@ export const AdminJobForm = ({
   const [savingSuccess, setSavingSuccess] = useState(false);
   const [savingError, setSavingError] = useState(false);
 
-  const doc = useRef(db.collection('jobs').doc(jobID));
+  const doc = useRef(db.collection('jobs').doc(...(jobID ? [jobID] : [])));
   const [loadingJob, setLoadingJob] = useState(!!jobID);
   useEffect(() => {
     if (jobID) {

@@ -45,7 +45,7 @@ const useStyles = makeStyles({
   }
 });
 
-const AdminCompanyListItem = ({ id, name }) => {
+const AdminCompanyListItem = ({ id, name, address }) => {
   const classes = useStyles();
   return (
     <Card>
@@ -56,7 +56,10 @@ const AdminCompanyListItem = ({ id, name }) => {
             to={`/admin/companies/${id}`}
             className={classes.listItemActionArea}
           >
-            <CardHeader title={name} subheader="15323 Lake Magdalelv bld" />
+            <CardHeader
+              title={name}
+              subheader={typeof address === 'string' ? address : ''}
+            />
           </CardActionArea>
           <CardActions>
             <Button

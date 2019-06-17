@@ -10,15 +10,21 @@ const promiseOptions = value =>
     .then(res => res.json())
     .then(({ features }) =>
       features.map(({ place_name, center }) => ({
-        value: place_name,
-        label: place_name,
         place_name,
         center
       }))
     );
 
 export const GeocodingInput = props => {
-  return <Select {...props} cacheOptions loadOptions={promiseOptions} />;
+  return (
+    <Select
+      {...props}
+      cacheOptions={true}
+      getOptionValue={({ center }) => center}
+      getOptionLabel={({ place_name }) => place_name}
+      loadOptions={promiseOptions}
+    />
+  );
 };
 
 export default GeocodingInput;
