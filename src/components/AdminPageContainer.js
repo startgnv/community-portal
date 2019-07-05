@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, createContext, useContext, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import Hidden from '@material-ui/core/Hidden';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -17,19 +18,47 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 import AdminHeader from './AdminHeader';
 
-const drawerWidth = 300;
+export const AdminContainerContext = createContext({
+  setBackTo: () => {}
+});
+
+export const useAdminContainer = ({ backTo, loading }) => {
+  const { setBackTo, setLoading } = useContext(AdminContainerContext);
+
+  useEffect(() => {
+    setBackTo(backTo);
+    setLoading(loading);
+
+    return () => {
+      setBackTo();
+      setLoading(false);
+    };
+  }, [setBackTo, setLoading, backTo, loading]);
+};
+
+const drawerWidth = 250;
 
 const useStyles = makeStyles(theme => ({
   active: {
-    backgroundColor: 'green'
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10
   },
   bottomNav: {
     position: 'fixed',
-    bottom: 0
+    bottom: 0,
+    width: '100%',
+    zIndex: 10000
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0
+  },
+  drawerList: {
+    padding: 10,
+    '& a:visited, & a:hover, & a:active': {
+      color: theme.palette.text.primary,
+      fontWeight: 800
+    }
   },
   header: {
     marginLeft: drawerWidth,
@@ -38,8 +67,14 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1
   },
+  loading: {
+    position: 'fixed',
+    width: '100%'
+  },
   root: {
-    display: 'flex'
+    display: 'flex',
+    backgroundColor: '#fcfcfc',
+    height: '100vh'
   },
   toolbarBuffer: theme.mixins.toolbar
 }));
@@ -48,8 +83,19 @@ export const BottomNavigationLink = props => (
   <BottomNavigationAction component={Link} {...props} to={props.value} />
 );
 
-export const AdminPageContainer = ({ children, backTo = '', location }) => {
+const ListItemLink = ({ label, ...props }) => (
+  <ListItem component={NavLink} {...props}>
+    <ListItemText color="text.primary" fontWeight="200">
+      {label}
+    </ListItemText>
+  </ListItem>
+);
+
+export const AdminPageContainer = ({ children, location }) => {
   const classes = useStyles();
+  const [backTo, setBackTo] = useState('');
+  const [loading, setLoading] = useState(false);
+
   return (
     <div className={classes.root}>
       <Hidden mdUp>
@@ -86,7 +132,6 @@ export const AdminPageContainer = ({ children, backTo = '', location }) => {
       </Hidden>
 
       <Hidden smDown>
-        <AdminHeader backTo={backTo} className={classes.header} />
         <Drawer
           className={classes.drawer}
           classes={{ paper: classes.drawer }}
@@ -95,43 +140,50 @@ export const AdminPageContainer = ({ children, backTo = '', location }) => {
         >
           <div className={classes.toolbarBuffer} />
           <Divider />
-          <List>
-            <ListItem
-              component={NavLink}
+          <List className={classes.drawerList}>
+            <ListItemLink
               to="/admin"
               exact
               activeClassName={classes.active}
-            >
-              <ListItemText>Home</ListItemText>
-            </ListItem>
-            <ListItem
-              component={NavLink}
+              label="Home"
+            />
+            <ListItemLink
               to="/admin/companies"
               activeClassName={classes.active}
-            >
-              <ListItemText>Companies</ListItemText>
-            </ListItem>
-            <ListItem
-              component={NavLink}
+              label="Companies"
+            />
+            <ListItemLink
               to="/admin/jobs"
               activeClassName={classes.active}
-            >
-              <ListItemText>Jobs</ListItemText>
-            </ListItem>
-            <ListItem
-              component={NavLink}
+              label="Jobs"
+            />
+            <ListItemLink
               to="/admin/settings"
               activeClassName={classes.active}
-            >
-              <ListItemText>Settings</ListItemText>
-            </ListItem>
+              label="Settings"
+            />
           </List>
         </Drawer>
       </Hidden>
 
       <div className={classes.content}>
-        <div className={classes.toolbarBuffer} />
-        {children}
+        <Hidden mdUp>
+          <div className={classes.toolbarBuffer} />
+        </Hidden>
+        {loading && <LinearProgress classes={{ root: classes.loading }} />}
+
+        <AdminContainerContext.Provider
+          value={{
+            setBackTo,
+            setLoading
+          }}
+        >
+          {children}
+        </AdminContainerContext.Provider>
+
+        <Hidden mdUp>
+          <div className={classes.toolbarBuffer} />
+        </Hidden>
       </div>
     </div>
   );

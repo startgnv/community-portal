@@ -1,21 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useDownloadURL } from 'react-firebase-hooks/storage';
 import { makeStyles } from '@material-ui/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Fab from '@material-ui/core/Fab';
 import Container from '@material-ui/core/Container';
 import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
-import CardMedia from '@material-ui/core/CardMedia';
-import { CardActionArea, Hidden } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
 
-import AdminPageContainer from './AdminPageContainer';
-import { db } from '../firebase';
+import { useAdminContainer } from './AdminPageContainer';
+import AdminListCard from './AdminListCard';
+import { db, storage } from '../firebase';
 
 const useStyles = makeStyles({
   fab: {
@@ -29,81 +26,55 @@ const useStyles = makeStyles({
   progress: {
     display: 'block',
     margin: 'auto'
-  },
-  listItemMap: {
-    backgroundColor: 'black',
-    height: '200px'
-  },
-  listItemContent: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    flexGrow: 1
-  },
-  listItemActionArea: {
-    flexGrow: 1
   }
 });
 
-const AdminCompanyListItem = ({ id, name, address }) => {
-  const classes = useStyles();
+const AdminCompanyListItem = ({ id, name }) => {
+  const [logoURL] = useDownloadURL(storage.ref(`companyLogos/${id}`));
+  const [coverURL] = useDownloadURL(storage.ref(`companyCovers/${id}`));
+
   return (
-    <Card>
-      <Grid container justify="space-between">
-        <Grid item className={classes.listItemContent}>
-          <CardActionArea
-            component={Link}
-            to={`/admin/companies/${id}`}
-            className={classes.listItemActionArea}
-          >
-            <CardHeader
-              title={name}
-              subheader={typeof address === 'string' ? address : ''}
-            />
-          </CardActionArea>
-          <CardActions>
-            <Button
-              size="small"
-              color="primary"
-              component={Link}
-              to={`/admin/companies/${id}/jobs`}
-            >
-              View Postings
-            </Button>
-          </CardActions>
-        </Grid>
-        <Hidden mdDown>
-          <Grid item md={4}>
-            <CardMedia className={classes.listItemMap}>hey</CardMedia>
-          </Grid>
-        </Hidden>
-      </Grid>
-    </Card>
+    <AdminListCard
+      coverSrc={coverURL}
+      logoSrc={logoURL}
+      label={name}
+      linkTo={`/admin/companies/${id}`}
+    />
   );
 };
 
 export const AdminCompaniesPage = () => {
   const classes = useStyles();
-  const [companies, loading, error] = useCollectionData(
+  const [search, setSearch] = useState('');
+  const [companies = [], loading, error] = useCollectionData(
     db.collection('companies'),
     { idField: 'id' }
   );
 
+  useAdminContainer({ loading });
+
   return (
-    <AdminPageContainer>
+    <>
       <Container className={classes.container} maxWidth="lg">
-        {loading && <CircularProgress className={classes.progress} />}
-        {companies && (
-          <>
-            <Grid container spacing={2}>
-              {companies.map(company => (
-                <Grid item md={6} xs={12}>
-                  <AdminCompanyListItem {...company} key={company.id} />
-                </Grid>
-              ))}
-            </Grid>
-          </>
-        )}
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              type="search"
+              fullWidth
+              margin="normal"
+              label="Search Companies"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+            />
+          </Grid>
+          {companies
+            .filter(({ name }) => name.includes(search))
+            .map(company => (
+              <Grid item md={4} xs={12}>
+                <AdminCompanyListItem {...company} key={company.id} />
+              </Grid>
+            ))}
+        </Grid>
         {error && (
           <CircularProgress
             value="75"
@@ -121,7 +92,7 @@ export const AdminCompaniesPage = () => {
       >
         <AddIcon />
       </Fab>
-    </AdminPageContainer>
+    </>
   );
 };
 

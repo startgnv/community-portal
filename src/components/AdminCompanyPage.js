@@ -2,7 +2,6 @@ import React from 'react';
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
@@ -10,7 +9,7 @@ import { makeStyles } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { db } from '../firebase';
-import AdminPageContainer from './AdminPageContainer';
+import { useAdminContainer } from './AdminPageContainer';
 import UploadAvatar from './UploadAvatar';
 import UploadCoverImage from './UploadCoverImage';
 
@@ -36,32 +35,32 @@ const AdminCompanyPage = ({
 
   const classes = useStyles();
 
+  const backTo = '/admin/companies';
+  useAdminContainer({ backTo, loading });
+
+  if (!company || loading) {
+    return false;
+  }
+
   return (
-    <AdminPageContainer backTo="/admin/companies">
-      {loading && <LinearProgress />}
-      {company && (
-        <>
-          <Grid container justify="center">
-            <Grid item md={6} xs={12}>
-              <UploadCoverImage companyID={companyID} />
-              <UploadAvatar className={classes.avatar} companyID={companyID} />
-              <Box display="flex" flexDirection="row-reverse">
-                <IconButton
-                  component={Link}
-                  to={`/admin/companies/${companyID}/edit`}
-                >
-                  <EditIcon />
-                </IconButton>
-              </Box>
-              <Box m={2}>
-                <Typography variant="h4">{company.name}</Typography>
-                {company.id}
-              </Box>
-            </Grid>
-          </Grid>
-        </>
-      )}
-    </AdminPageContainer>
+    <Grid container justify="center">
+      <Grid item md={8} xs={12}>
+        <UploadCoverImage companyID={companyID} />
+        <UploadAvatar className={classes.avatar} companyID={companyID} />
+        <Box display="flex" flexDirection="row-reverse">
+          <IconButton
+            component={Link}
+            to={`/admin/companies/${companyID}/edit`}
+          >
+            <EditIcon />
+          </IconButton>
+        </Box>
+        <Box m={2}>
+          <Typography variant="h4">{company.name}</Typography>
+          {company.id}
+        </Box>
+      </Grid>
+    </Grid>
   );
 };
 

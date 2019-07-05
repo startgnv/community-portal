@@ -18,8 +18,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const UploadCoverImage = ({ companyID = '', ...imgProps }) => {
-  const [progress, setProgress] = useState(0);
-  const [imageReady, setImageReady] = useState(false);
+  const [, /* progress */ setProgress] = useState(0);
+  const [, /* imageReady */ setImageReady] = useState(false);
   const urlRef = useRef(storage.ref(`companyCovers/${companyID}`));
   const [downloadURL, setDownloadURL] = useState();
   const classes = useStyles({ downloadURL });

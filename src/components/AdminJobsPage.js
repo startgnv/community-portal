@@ -1,85 +1,95 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { NavLink, Link, Route, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
-import ListItemText from '@material-ui/core/ListItemText';
-import Hidden from '@material-ui/core/Hidden';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 
 import { db } from '../firebase';
-import AdminPageContainer from './AdminPageContainer';
-import AdminJobForm from './AdminJobForm';
-import AdminJobCard from './AdminJobCard';
+import { useAdminContainer } from './AdminPageContainer';
+import AdminListCard from './AdminListCard';
 
 const useStyles = makeStyles(theme => ({
-  activeJob: {
-    backgroundColor: 'blue'
-  },
   fab: {
     position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2)
+  },
+  container: {
+    marginTop: '20px'
+  },
+  progress: {
+    display: 'block',
+    margin: 'auto'
   }
 }));
 
 export const AdminJobsPage = ({ match: { isExact } }) => {
   const classes = useStyles();
-  const [jobs, loading] = useCollectionData(db.collection('jobs'), {
-    idField: 'id'
-  });
+  const [search, setSearch] = useState('');
+  const [jobs = [], loadingJobs, errorJobs] = useCollectionData(
+    db.collection('jobs'),
+    {
+      idField: 'id'
+    }
+  );
+  const [companies = [], loadingCompanies, errorCompanies] = useCollectionData(
+    db.collection('companies'),
+    {
+      idField: 'id'
+    }
+  );
 
-  const backTo = isExact ? undefined : `/admin/jobs`;
+  useAdminContainer({ loading: loadingJobs || loadingCompanies });
 
-  if (loading) {
-    return (
-      <AdminPageContainer>
-        <LinearProgress />
-      </AdminPageContainer>
-    );
-  }
+  const companiesByID = companies.reduce(
+    (memo, company) => ({
+      [company.id]: company,
+      ...memo
+    }),
+    {}
+  );
 
   return (
-    <AdminPageContainer backTo={backTo}>
-      <Grid container>
-        <Hidden mdDown={!isExact}>
-          <Grid item md={4} xs={12}>
-            <Paper>
-              <List>
-                {jobs.map(({ title, categories = [], id }, i) => (
-                  <ListItem
-                    component={NavLink}
-                    to={`/admin/jobs/${id}`}
-                    activeClassName={classes.activeJob}
-                    key={i}
-                  >
-                    <ListItemText
-                      primary={title}
-                      secondary={categories.join(', ')}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </Paper>
-          </Grid>
-        </Hidden>
-        <Grid item md xs={12}>
-          <Switch>
-            <Route exact path="/admin/jobs/new" component={AdminJobForm} />
-            <Route exact path="/admin/jobs/:jobID" component={AdminJobCard} />
-            <Route
-              exact
-              path="/admin/jobs/:jobID/edit"
-              component={AdminJobForm}
+    <>
+      <Container className={classes.container} maxWidth="lg">
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              type="search"
+              fullWidth
+              margin="normal"
+              label="Search Jobs"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
             />
-          </Switch>
+          </Grid>
+          {jobs
+            .filter(({ title }) => title.includes(search))
+            .map(job => (
+              <Grid item md={4} xs={12}>
+                <AdminListCard
+                  company={companiesByID[job.companyID]}
+                  label={job.title}
+                  linkTo={`/admin/jobs/${job.id}`}
+                  key={job.id}
+                />
+              </Grid>
+            ))}
         </Grid>
-      </Grid>
+        {(errorJobs || errorCompanies) && (
+          <CircularProgress
+            value="75"
+            variant="determinate"
+            color="secondary"
+          />
+        )}
+      </Container>
+
       <Fab
         className={classes.fab}
         color="primary"
@@ -88,7 +98,7 @@ export const AdminJobsPage = ({ match: { isExact } }) => {
       >
         <AddIcon />
       </Fab>
-    </AdminPageContainer>
+    </>
   );
 };
 

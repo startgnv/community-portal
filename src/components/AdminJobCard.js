@@ -10,10 +10,10 @@ import {
   CardMedia,
   IconButton
 } from '@material-ui/core';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { db, storage } from '../firebase';
+import { useAdminContainer } from './AdminPageContainer';
 
 const useStyles = makeStyles(theme => ({
   jobCard: {
@@ -45,18 +45,28 @@ const AdminJobCard = ({
   }
 }) => {
   const classes = useStyles();
-  const [job = {}, loading] = useDocumentDataOnce(db.doc(`jobs/${jobID}`), {
+  let [job, loading] = useDocumentDataOnce(db.doc(`jobs/${jobID}`), {
     idField: 'id'
   });
+
   const [company, loadingCompany] = useDocumentDataOnce(
-    db.doc(`companies/${job.companyID}`)
+    job && db.doc(`companies/${job.companyID}`)
   );
   const [coverImgURL] = useDownloadURL(
-    storage.ref(`companyCovers/${job.companyID}`)
+    job && storage.ref(`companyCovers/${job.companyID}`)
   );
 
-  if (loading) {
-    return <LinearProgress />;
+  useAdminContainer({
+    loading: loading || loadingCompany,
+    backTo: '/admin/jobs'
+  });
+
+  if (loading || loadingCompany) {
+    return false;
+  }
+
+  if (job === null) {
+    return 'Job does not exist';
   }
 
   return (

@@ -11,6 +11,7 @@ import AdminPage from './AdminPage';
 import AdminRoute from './AdminRoute';
 import AdminLogin from './AdminLogin';
 import Header from './Header';
+import { CssBaseline } from '@material-ui/core';
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -36,6 +37,7 @@ const publicRoutes = [...mapRoutes, '/about'];
 
 export const App = () => (
   <>
+    <CssBaseline />
     <ThemeProvider theme={theme}>
       <>
         <Router>

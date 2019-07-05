@@ -1,20 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import AdminPageContainer from './AdminPageContainer';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import { makeStyles } from '@material-ui/core';
+import FormLabel from '@material-ui/core/FormLabel';
+import Grid from '@material-ui/core/Grid';
 
 import firebase, { db, storage } from '../firebase';
 import GeocodingInput from './GeocodingInput';
-
-const useStyles = makeStyles(theme => ({
-  form: {
-    width: 300,
-    display: 'flex',
-    flexDirection: 'column'
-  }
-}));
+import { useAdminContainer } from './AdminPageContainer';
+import FormCardPage from './FormCardPage';
 
 export const AdminEditCompanyPage = ({
   match: {
@@ -31,7 +24,6 @@ export const AdminEditCompanyPage = ({
   const [loading, setLoading] = useState(false);
   const logoUploadRef = useRef();
   const coverUploadRef = useRef();
-  const classes = useStyles();
 
   const logoChangeHandler = useCallback(() => {
     const file = logoUploadRef.current.files.item(0);
@@ -55,27 +47,25 @@ export const AdminEditCompanyPage = ({
 
   useEffect(() => {
     if (logoUploadRef.current) {
-      logoUploadRef.current.addEventListener('change', logoChangeHandler);
-      return () =>
-        logoUploadRef.current.removeEventListener('change', logoChangeHandler);
+      const ref = logoUploadRef.current;
+      ref.addEventListener('change', logoChangeHandler);
+      return () => ref.removeEventListener('change', logoChangeHandler);
     }
-  }, []);
+  }, [logoChangeHandler]);
 
   useEffect(() => {
     if (coverUploadRef.current) {
-      coverUploadRef.current.addEventListener('change', coverChangeHandler);
-      return () =>
-        coverUploadRef.current.removeEventListener(
-          'change',
-          coverChangeHandler
-        );
+      const ref = coverUploadRef.current;
+      ref.addEventListener('change', coverChangeHandler);
+      return () => ref.removeEventListener('change', coverChangeHandler);
     }
-  }, []);
+  }, [coverChangeHandler]);
 
   const doc = useRef(
     db.collection('companies').doc(...(companyID ? [companyID] : []))
   );
   const [loadingCompany, setLoadingCompany] = useState(!!companyID);
+
   useEffect(() => {
     if (companyID) {
       doc.current.get().then(snapshot => {
@@ -93,6 +83,11 @@ export const AdminEditCompanyPage = ({
       });
     }
   }, [companyID]);
+
+  useAdminContainer({
+    loading: loading || loadingCompany,
+    backTo: '/admin/companies'
+  });
 
   const onSubmit = e => {
     e.preventDefault();
@@ -131,61 +126,78 @@ export const AdminEditCompanyPage = ({
   };
 
   return (
-    <AdminPageContainer backTo="/admin/companies">
-      <form onSubmit={onSubmit} className={classes.form}>
-        <label>
-          Cover
+    <FormCardPage title="Company Details" onSubmit={onSubmit}>
+      <Grid container spacing={2} direction="column">
+        <Grid item>
+          <FormLabel>Cover</FormLabel>
           <input type="file" ref={coverUploadRef} />
-        </label>
-        {cover && (
-          <img
-            style={{ height: 'auto', width: 'auto', maxWidth: 300 }}
-            src={cover}
-          />
-        )}
-        <label>
-          Logo
+          {cover && (
+            <img
+              alt={`${name} cover`}
+              style={{ height: 'auto', width: 'auto', maxWidth: 300 }}
+              src={cover}
+            />
+          )}
+        </Grid>
+        <Grid item>
+          <FormLabel>Logo</FormLabel>
           <input type="file" ref={logoUploadRef} />
-        </label>
-        {logo && (
-          <img
-            style={{ height: 'auto', width: 'auto', maxWidth: 300 }}
-            src={logo}
-          />
-        )}
+          {logo && (
+            <img
+              alt={`${name} logo to upload`}
+              style={{ height: 'auto', width: 'auto', maxWidth: 300 }}
+              src={logo}
+            />
+          )}
+        </Grid>
 
-        <TextField
-          value={name}
-          label="Company Name"
-          onChange={e => setName(e.target.value)}
-        />
-        <TextField
-          value={slug}
-          label="Slug for readable URLs"
-          onChange={e => setSlug(e.target.value)}
-        />
-        <GeocodingInput
-          placeholder="Address"
-          isClearable
-          hideSelectedOptions={false}
-          inputValue={inputAddress}
-          onInputChange={(val, { action, ...other }) => {
-            if (action !== 'input-blur' && action !== 'menu-close') {
-              setInputAddress(val);
-            }
-          }}
-          defaultOptions={[address]}
-          onChange={(val, { action }) => {
-            if (action === 'select-option') {
-              setAddress(val);
-            }
-          }}
-        />
-        <Button type="submit">{companyID ? 'Save' : 'Create'}</Button>
-        {loading && <LinearProgress />}
+        <Grid item>
+          <TextField
+            value={name}
+            label="Company Name"
+            variant="outlined"
+            onChange={e => setName(e.target.value)}
+            fullWidth
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            value={slug}
+            fullWidth
+            variant="outlined"
+            label="Slug for readable URLs"
+            onChange={e => setSlug(e.target.value)}
+          />
+        </Grid>
+        <Grid item>
+          <FormLabel>Address</FormLabel>
+          <GeocodingInput
+            placeholder="Address"
+            isClearable
+            hideSelectedOptions={false}
+            inputValue={inputAddress}
+            onInputChange={(val, { action, ...other }) => {
+              if (action !== 'input-blur' && action !== 'menu-close') {
+                setInputAddress(val);
+              }
+            }}
+            defaultOptions={[address]}
+            onChange={(val, { action }) => {
+              if (action === 'select-option') {
+                setAddress(val);
+              }
+            }}
+          />
+        </Grid>
+        <Grid item container justify="flex-end">
+          <Button variant="text">Cancel</Button>
+          <Button variant="contained" color="primary" type="submit">
+            {companyID ? 'Save' : 'Create'}
+          </Button>
+        </Grid>
         {success && 'Success!'}
-      </form>
-    </AdminPageContainer>
+      </Grid>
+    </FormCardPage>
   );
 };
 
