@@ -29,20 +29,6 @@ const useStyles = makeStyles({
   }
 });
 
-const AdminCompanyListItem = ({ id, name }) => {
-  const [logoURL] = useDownloadURL(storage.ref(`companyLogos/${id}`));
-  const [coverURL] = useDownloadURL(storage.ref(`companyCovers/${id}`));
-
-  return (
-    <AdminListCard
-      coverSrc={coverURL}
-      logoSrc={logoURL}
-      label={name}
-      linkTo={`/admin/companies/${id}`}
-    />
-  );
-};
-
 export const AdminCompaniesPage = () => {
   const classes = useStyles();
   const [search, setSearch] = useState('');
@@ -68,10 +54,16 @@ export const AdminCompaniesPage = () => {
             />
           </Grid>
           {companies
-            .filter(({ name }) => name.includes(search))
-            .map(company => (
+            .filter(({ name = '' }) => name.includes(search))
+            .map(({ name, id, coverImg, logoImg }) => (
               <Grid item md={4} xs={12}>
-                <AdminCompanyListItem {...company} key={company.id} />
+                <AdminListCard
+                  key={id}
+                  coverSrc={coverImg}
+                  logoSrc={logoImg}
+                  label={name}
+                  linkTo={`/admin/companies/${id}`}
+                />
               </Grid>
             ))}
         </Grid>

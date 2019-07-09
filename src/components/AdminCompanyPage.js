@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -28,25 +28,40 @@ const AdminCompanyPage = ({
     params: { companyID }
   }
 }) => {
-  const [company, loading] = useDocumentDataOnce(
-    db.doc(`companies/${companyID}`),
-    { idField: 'id' }
-  );
+  const [
+    { name = 'UNNAMED COMPANY', coverImg = '', logoImg = '' } = {},
+    loading
+  ] = useDocumentData(db.doc(`companies/${companyID}`), {
+    idField: 'companyID'
+  });
 
   const classes = useStyles();
 
   const backTo = '/admin/companies';
   useAdminContainer({ backTo, loading });
 
-  if (!company || loading) {
+  if (loading) {
     return false;
   }
 
+  console.log('rendering again', coverImg);
   return (
     <Grid container justify="center">
       <Grid item md={8} xs={12}>
-        <UploadCoverImage companyID={companyID} />
-        <UploadAvatar className={classes.avatar} companyID={companyID} />
+        <UploadCoverImage
+          src={coverImg}
+          onUploadComplete={coverImg => {
+            console.log('uploaded', coverImg);
+            db.doc(`companies/${companyID}`).update({ coverImg });
+          }}
+        />
+        <UploadAvatar
+          src={logoImg}
+          className={classes.avatar}
+          onUploadComplete={logoImg =>
+            db.doc(`companies/${companyID}`).update({ logoImg })
+          }
+        />
         <Box display="flex" flexDirection="row-reverse">
           <IconButton
             component={Link}
@@ -56,8 +71,7 @@ const AdminCompanyPage = ({
           </IconButton>
         </Box>
         <Box m={2}>
-          <Typography variant="h4">{company.name}</Typography>
-          {company.id}
+          <Typography variant="h4">{name}</Typography>
         </Box>
       </Grid>
     </Grid>

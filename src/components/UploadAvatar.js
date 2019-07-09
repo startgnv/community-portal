@@ -18,35 +18,36 @@ const useStyles = makeStyles(theme => ({
 export const UploadAvatar = ({
   companyID = '',
   size = 100,
+  src = '',
   className,
+  onUploadComplete = () => {},
   ...avatarProps
 }) => {
   const [progress, setProgress] = useState(0);
   const [imageReady, setImageReady] = useState(false);
   const urlRef = useRef(storage.ref(`companyLogos/${companyID}`));
-  const [downloadURL, setDownloadURL] = useState();
   const classes = useStyles({ size });
   const uploadRef = useRef();
   const uploadEl = uploadRef.current;
 
   useEffect(() => {
-    if (downloadURL) {
+    if (src) {
       const img = new Image();
-      img.src = downloadURL;
+      img.src = src;
       img.onload = () => {
         setImageReady(true);
         setProgress(0);
       };
-    } else if (downloadURL === '') {
+    } else if (src === '') {
       setImageReady(true);
     }
-  }, [downloadURL]);
+  }, [src]);
 
   useEffect(() => {
     urlRef.current
       .getDownloadURL()
-      .then(setDownloadURL)
-      .catch(() => setDownloadURL(''));
+      .then(onUploadComplete)
+      .catch(() => onUploadComplete(''));
   }, []);
 
   const changeHandler = useCallback(() => {
@@ -60,7 +61,7 @@ export const UploadAvatar = ({
       setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
     });
 
-    task.then(() => urlRef.current.getDownloadURL()).then(setDownloadURL);
+    task.then(() => urlRef.current.getDownloadURL()).then(onUploadComplete);
   }, []);
 
   useEffect(() => {
@@ -83,7 +84,7 @@ export const UploadAvatar = ({
           <Avatar
             className={classes.avatar}
             {...avatarProps}
-            src={downloadURL}
+            src={src}
             onClick={e => uploadRef.current.click()}
           />
         )}

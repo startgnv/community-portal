@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     display: 'block',
     width: '100%',
     paddingBottom: '30%',
-    backgroundImage: ({ downloadURL }) => `url(${downloadURL})`,
+    backgroundImage: ({ src }) => `url(${src})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundColor: 'black',
@@ -17,39 +17,34 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const UploadCoverImage = ({ companyID = '', ...imgProps }) => {
+export const UploadCoverImage = ({
+  src,
+  companyID = '',
+  onUploadComplete = () => {},
+  ...imgProps
+}) => {
   const [, /* progress */ setProgress] = useState(0);
   const [, /* imageReady */ setImageReady] = useState(false);
-  const urlRef = useRef(storage.ref(`companyCovers/${companyID}`));
-  const [downloadURL, setDownloadURL] = useState();
-  const classes = useStyles({ downloadURL });
+  const classes = useStyles({ src });
   const uploadRef = useRef();
-  const uploadEl = uploadRef.current;
 
   useEffect(() => {
-    if (downloadURL) {
+    if (src) {
       const img = new Image();
-      img.src = downloadURL;
+      img.src = src;
       img.onload = () => {
         setImageReady(true);
         setProgress(0);
       };
-    } else if (downloadURL === '') {
+    } else if (src === '') {
       setImageReady(true);
     }
-  }, [downloadURL]);
-
-  useEffect(() => {
-    urlRef.current
-      .getDownloadURL()
-      .then(setDownloadURL)
-      .catch(() => setDownloadURL(''));
-  }, []);
+  }, [src]);
 
   const changeHandler = useCallback(() => {
     const file = uploadRef.current.files.item(0);
 
-    const task = urlRef.current.put(file);
+    const task = storage.ref(`companyCovers/${companyID}`).put(file);
     setProgress(0);
     setImageReady(false);
 
@@ -57,15 +52,16 @@ export const UploadCoverImage = ({ companyID = '', ...imgProps }) => {
       setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
     });
 
-    task.then(() => urlRef.current.getDownloadURL()).then(setDownloadURL);
+    task.then(({ ref }) => ref.getDownloadURL()).then(onUploadComplete);
   }, []);
 
   useEffect(() => {
-    if (uploadEl) {
+    if (uploadRef.current) {
+      const uploadEl = uploadRef.current;
       uploadEl.addEventListener('change', changeHandler);
       return () => uploadEl.removeEventListener('change', changeHandler);
     }
-  }, [uploadEl, changeHandler]);
+  }, [uploadRef.current]);
 
   return (
     <>

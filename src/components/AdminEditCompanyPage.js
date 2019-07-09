@@ -12,7 +12,8 @@ import FormCardPage from './FormCardPage';
 export const AdminEditCompanyPage = ({
   match: {
     params: { companyID }
-  }
+  },
+  history
 }) => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState({});
@@ -71,10 +72,9 @@ export const AdminEditCompanyPage = ({
       doc.current.get().then(snapshot => {
         const company = snapshot.data();
         setName(company.name);
-        const center = [
-          company.coordinates.latitude,
-          company.coordinates.longitude
-        ];
+        const center = company.coordinates
+          ? [company.coordinates.latitude, company.coordinates.longitude]
+          : null;
         setAddress({ place_name: company.address, center });
         setInputAddress(company.address);
         setSlug(company.slug);
@@ -94,34 +94,47 @@ export const AdminEditCompanyPage = ({
     setLoading(true);
     setSuccess(false);
 
-    doc.current
-      .set({
-        name,
-        slug,
-        address: address.place_name,
-        coordinates: new firebase.firestore.GeoPoint(
-          ...address.center.reverse()
+    const imgUploads = [];
+    if (coverUploadRef.current.files[0]) {
+      const coverRes = storage
+        .ref(`companyCovers/${doc.current.id}`)
+        .put(coverUploadRef.current.files[0]);
+      imgUploads.push(coverRes);
+    } else {
+      imgUploads.push(undefined);
+    }
+    if (logoUploadRef.current.files[0]) {
+      const logoRes = storage
+        .ref(`companyLogos/${doc.current.id}`)
+        .put(logoUploadRef.current.files[0]);
+      imgUploads.push(logoRes);
+    } else {
+      imgUploads.push(undefined);
+    }
+    Promise.all(imgUploads)
+      .then(res =>
+        Promise.all(
+          res.map(({ ref } = {}) => (ref ? ref.getDownloadURL() : null))
         )
-      })
-      .then(() => {
-        const results = [];
-        if (coverUploadRef.current.files[0]) {
-          const coverRes = storage
-            .ref(`companyCovers/${doc.current.id}`)
-            .put(coverUploadRef.current.files[0]);
-          results.push(coverRes);
-        }
-        if (logoUploadRef.current.files[0]) {
-          const logoRes = storage
-            .ref(`companyLogos/${doc.current.id}`)
-            .put(logoUploadRef.current.files[0]);
-          results.push(logoRes);
-        }
-        return results;
-      })
+      )
+      .then(([coverImg, logoImg]) =>
+        doc.current.update({
+          name,
+          slug,
+          address: address.place_name || null,
+          coordinates: address.center
+            ? new firebase.firestore.GeoPoint(...address.center.reverse())
+            : null,
+          coverImg,
+          logoImg
+        })
+      )
       .then(() => {
         setSuccess(true);
         setLoading(false);
+        setTimeout(() => {
+          history.goBack();
+        }, 800);
       });
   };
 
@@ -190,12 +203,22 @@ export const AdminEditCompanyPage = ({
           />
         </Grid>
         <Grid item container justify="flex-end">
-          <Button variant="text">Cancel</Button>
-          <Button variant="contained" color="primary" type="submit">
-            {companyID ? 'Save' : 'Create'}
+          <Button
+            disabled={success || loading}
+            variant="text"
+            onClick={history.goBack}
+          >
+            Cancel
+          </Button>
+          <Button
+            disabled={success || loading}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            {success ? 'Saved' : companyID ? 'Save' : 'Create'}
           </Button>
         </Grid>
-        {success && 'Success!'}
       </Grid>
     </FormCardPage>
   );
