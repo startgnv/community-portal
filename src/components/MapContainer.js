@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactMapGL from 'react-map-gl';
 import styled from 'styled-components/macro';
 
@@ -7,11 +7,14 @@ const MapContainerContainer = styled.div`
   overflow: hidden;
 `;
 
-export const MapContainer = ({
-  children,
-  viewport = {},
-  onViewportChange = () => {}
-}) => {
+const defaultCenter = {
+  latitude: 29.6607805656048,
+  longitude: -82.380708628568,
+  zoom: 11
+};
+
+export const MapContainer = ({ children }) => {
+  const [viewport, setViewport] = useState(defaultCenter);
   return (
     <MapContainerContainer>
       <ReactMapGL
@@ -26,7 +29,7 @@ export const MapContainer = ({
         touchZoom={true}
         dragRotate={false}
         doubleClickZoom={false}
-        onViewportChange={onViewportChange}
+        onViewportChange={setViewport}
         width={'100%'}
         height={'100%'}
         scrollZoom={true}

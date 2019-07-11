@@ -34,12 +34,6 @@ const MapPageContainer = styled.div`
   }
 `;
 
-const defaultCenter = {
-  latitude: 29.6607805656048,
-  longitude: -82.380708628568,
-  zoom: 11
-};
-
 export const MapPage = ({
   match: {
     params: { company }
@@ -54,7 +48,6 @@ export const MapPage = ({
   const [categoriesValue, categoriesLoading, categoriesError] = useCollection(
     db.collection('jobCategories')
   );
-  const [viewport, setViewport] = useState(currentCompany || defaultCenter);
 
   if (companiesError || jobsError || categoriesError) {
     return <Error />;
@@ -72,7 +65,6 @@ export const MapPage = ({
     id: doc.id,
     ...doc.data()
   }));
-  const currentCompany = companies.find(({ name }) => name === company);
 
   return (
     <MapPageContainer>
@@ -148,10 +140,7 @@ export const MapPage = ({
             }}
           />
         </Sidebar>
-        <MapContainer
-          viewport={viewport}
-          onViewportChange={viewport => setViewport(viewport)}
-        >
+        <MapContainer>
           {companies
             .filter(({ coordinates }) => coordinates)
             .map(({ name, coordinates: { latitude, longitude }, slug }) => (
