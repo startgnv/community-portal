@@ -101,35 +101,32 @@ export const JobListItem = ({
   job: { id, title = 'No Title', description = 'No Description' } = {},
   categories = [],
   company = {},
-  showLogo = true
+  showCompanyInfo = true
 }) => (
   <JobListItemContainer>
-    {showLogo && (
-      <img
-        className="company-img"
-        src={companyLogos[company.slug] || feathrLogo}
-      />
-    )}
-    <div className="info">
-      <Link className="title" to={`/job/${id}`}>
-        {title}
-      </Link>
-      <div>
-        <Link className="company" to={`/company/${company.slug}`}>
-          {company.name}
-        </Link>
+    <Link className="title" to={`/job/${id}`}>
+      {showCompanyInfo && <img className="company-img" src={company.logoImg} />}
+      <div className="info">
+        <span className="title">{title}</span>
+        {showCompanyInfo && (
+          <div>
+            <Link className="company" to={`/company/${company.slug}`}>
+              {company.name}
+            </Link>
+          </div>
+        )}
+        {categories.length > 0 && (
+          <ul className="tags">
+            {categories.map(category => (
+              <li className="tag" key={category.id}>
+                {category.name}
+              </li>
+            ))}
+          </ul>
+        )}
+        <p className="description">{description}</p>
       </div>
-      {categories.length > 0 && (
-        <ul className="tags">
-          {categories.map(category => (
-            <li className="tag" key={category.id}>
-              {category.name}
-            </li>
-          ))}
-        </ul>
-      )}
-      <p className="description">{description}</p>
-    </div>
+    </Link>
   </JobListItemContainer>
 );
 

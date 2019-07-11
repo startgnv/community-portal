@@ -19,7 +19,7 @@ export const CompanyList = ({
 }) => {
   return (
     <CompanyListContainer className={className}>
-      {showTitle && <h3 className="list-title">Jobs ({companyCount})</h3>}
+      {showTitle && <h3 className="list-title">Companies ({companyCount})</h3>}
       {children}
     </CompanyListContainer>
   );

@@ -15,6 +15,7 @@ import MapPageCompany from './MapPageCompany';
 import MapPageJob from './MapPageJob';
 import MapPageIndex from './MapPageIndex';
 import MapPageCompanies from './MapPageCompanies';
+import JobsFilter from './JobsFilter';
 
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -76,6 +77,7 @@ export const MapPage = ({
   return (
     <MapPageContainer>
       <div className="main-content">
+        <JobsFilter />
         <Sidebar>
           <Route
             exact

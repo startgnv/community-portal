@@ -166,6 +166,7 @@ export const MapPageJob = ({
             </span>
           )}
         </div>
+        <h2>Benefits</h2>
       </div>
     </MapPageJobContainer>
   );

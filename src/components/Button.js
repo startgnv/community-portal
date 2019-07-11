@@ -32,6 +32,7 @@ export const Button = ({
   className,
   fullWidth = false,
   size = 'medium',
+  style = '',
   onClick = () => {}
 }) => {
   return (

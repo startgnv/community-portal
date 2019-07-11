@@ -43,10 +43,11 @@ export const MapPageCompany = ({
         <h2>Jobs</h2>
         <JobList showTitle={false}>
           {jobs.map(job => (
-            <JobListItem job={job} key={job.id} showLogo={false} />
+            <JobListItem job={job} key={job.id} showCompanyInfo={false} />
           ))}
         </JobList>
-        <h2>Benefits</h2>
+        <h2>Culture</h2>
+        <h2>Photos</h2>
       </div>
     </MapPageCompanyContainer>
   );
