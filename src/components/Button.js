@@ -34,6 +34,10 @@ const ButtonContainer = styled.button`
     .btn-label {
       color: ${({ theme }) => theme.textMedium};
     }
+
+    &:hover {
+      background-color: ${({ theme }) => theme.uiBackground};
+    }
   }
 `;
 
