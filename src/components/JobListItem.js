@@ -4,17 +4,21 @@ import { Link } from 'react-router-dom';
 import JobCategories from './JobCategories';
 
 const JobListItemContainer = styled.li`
-  display: flex;
-  padding: 10px 10px 10px 13px;
   list-style-type: none;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  transition: 250ms;
 
-  &:hover {
-    background-color: #eee;
-    cursor: pointer;
+  .container-link {
+    display: flex;
+    padding: 10px 10px 10px 13px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: 250ms;
+    text-decoration: none;
+
+    &:hover {
+      background-color: #eee;
+      cursor: pointer;
+    }
   }
 
   .company-img {
@@ -38,7 +42,6 @@ const JobListItemContainer = styled.li`
     display: block;
     font-size: 16px;
     color: #333;
-    text-decoration: none;
     line-height: 22px;
   }
 
@@ -75,10 +78,11 @@ export const JobListItem = ({
     categories
   } = {},
   company = {},
-  showCompanyInfo = true
+  showCompanyInfo = true,
+  showDescription = true
 }) => (
   <JobListItemContainer>
-    <Link className="title" to={`/job/${id}`}>
+    <Link className="container-link" to={`/job/${id}`}>
       {showCompanyInfo && <img className="company-img" src={company.logoImg} />}
       <div className="info">
         <span className="title">{title}</span>
@@ -91,10 +95,10 @@ export const JobListItem = ({
         )}
         {categories && categories.length > 0 && (
           <CategoriesContainer>
-            <JobCategories categories={categories} size="small" />
+            <JobCategories categories={categories} size="small" limit={2} />
           </CategoriesContainer>
         )}
-        <p className="description">{description}</p>
+        {showDescription && <p className="description">{description}</p>}
       </div>
     </Link>
   </JobListItemContainer>

@@ -47,11 +47,20 @@ const Tags = ({ tags, limit, className = '', size = 'medium' }) => {
   const tagClassNames = classnames({
     [size]: true
   });
+  let renderTags = tags;
+  let plusTag;
+  if (limit) {
+    renderTags = tags.slice(0, limit);
+    if (limit < tags.length) {
+      plusTag = <Tag className={tagClassNames}>+{tags.length - limit}</Tag>;
+    }
+  }
   return (
     <TagsContainer className={className}>
-      {tags.map(({ name }) => (
+      {renderTags.map(({ name }, i) => (
         <Tag className={tagClassNames}>{name}</Tag>
       ))}
+      {plusTag}
     </TagsContainer>
   );
 };
