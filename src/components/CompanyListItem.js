@@ -1,18 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
-import feathrLogo from '../assets/images/companyLogos/feathr.png';
-import exactechLogo from '../assets/images/companyLogos/exactech.png';
-import admiralLogo from '../assets/images/companyLogos/admiral.png';
-import infotechLogo from '../assets/images/companyLogos/infotech.png';
-import ieLogo from '../assets/images/companyLogos/infinite-energy.png';
-const companyLogos = {
-  feathr: feathrLogo,
-  exactech: exactechLogo,
-  admiral: admiralLogo,
-  'info-tech': infotechLogo,
-  'infinite-energy': ieLogo
-};
 
 const CompanyListItemContainer = styled.li`
   display: flex;
@@ -55,17 +43,12 @@ const CompanyListItemContainer = styled.li`
 `;
 
 export const CompanyListItem = ({
-  company: { name, slug = '' } = {},
+  company: { name, slug = '', logoImg = '' } = {},
   company,
   showLogo = true
 }) => (
   <CompanyListItemContainer>
-    {showLogo && (
-      <img
-        className="company-img"
-        src={companyLogos[company.slug] || feathrLogo}
-      />
-    )}
+    {showLogo && <img className="company-img" src={logoImg} />}
     <div className="info">
       <Link className="name" to={`/company/${slug}`}>
         {name}

@@ -75,7 +75,6 @@ export const MapPage = ({
             exact
             path="/companies"
             component={({ match, ...props }) => {
-              console.warn('OKAY');
               return <MapPageCompanies {...props} companies={companies} />;
             }}
           />

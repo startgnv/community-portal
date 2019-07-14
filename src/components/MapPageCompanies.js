@@ -11,9 +11,10 @@ export const MapPageCompanies = ({ companies = [] }) => {
   return (
     <MapPageComapniesContainer>
       <CompanyList companyCount={companies.length}>
-        {companies.map(company => (
-          <CompanyListItem company={company} />
-        ))}
+        {companies.map(company => {
+          console.warn(company);
+          return <CompanyListItem company={company} />;
+        })}
       </CompanyList>
     </MapPageComapniesContainer>
   );

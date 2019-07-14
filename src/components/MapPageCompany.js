@@ -26,9 +26,22 @@ const MapPageCompanyContainer = styled.div`
   }
 `;
 
+const CompanyLink = styled.div`
+  margin-bottom: 10px;
+
+  a {
+    color: ${({ theme }) => theme.textMedium};
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
 export const MapPageCompany = ({
   history: { goBack },
-  company: { name, logoImg, coverImg = '', description = '' } = {},
+  company: { name, logoImg, coverImg = '', description = '', url = '' } = {},
   jobs = []
 }) => {
   if (!name) {
@@ -39,6 +52,11 @@ export const MapPageCompany = ({
       <SidebarHeader coverImg={coverImg} mainImg={logoImg} />
       <div className="content">
         <h1 className="company-name">{name}</h1>
+        <CompanyLink>
+          <a href={url} target="_blank">
+            View Website
+          </a>
+        </CompanyLink>
         <p className="description">{description}</p>
         <h2>Jobs</h2>
         <JobList showTitle={false}>
