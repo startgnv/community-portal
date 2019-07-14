@@ -3,19 +3,19 @@ import styled from 'styled-components/macro';
 import Header from './Header';
 import PageContent from './PageContent';
 
-const AboutPageContainer = styled.div``;
+const WhyGainesvilleContainer = styled.div``;
 
-const AboutPage = () => {
+const WhyGainesvillePage = () => {
   return (
-    <AboutPageContainer>
+    <WhyGainesvilleContainer>
       <PageContent>
-        <h1>About</h1>
+        <h1>Why Gainesville?</h1>
         <p>
           Here we can list info about sponsors, startupGNV, have a FAQ, etc.
         </p>
       </PageContent>
-    </AboutPageContainer>
+    </WhyGainesvilleContainer>
   );
 };
 
-export default AboutPage;
+export default WhyGainesvillePage;

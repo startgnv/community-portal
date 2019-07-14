@@ -25,7 +25,7 @@ const HeaderContainer = styled.div`
   .navigation {
     margin: 0;
     padding: 0;
-    float: left;
+    float: right;
 
     li {
       display: inline-block;
@@ -34,10 +34,11 @@ const HeaderContainer = styled.div`
     .nav-link {
       display: block;
       height: 30px;
-      padding: 0 10px;
+      padding: 0 20px;
       color: white;
       text-decoration: none;
       line-height: 30px;
+      font-weight: 600;
 
       &.active {
         color: ${({ theme }) => theme.green};
@@ -60,6 +61,15 @@ export const Header = ({ className }) => (
       <li>
         <NavLink className="nav-link" to="/companies" activeClassName="active">
           Companies
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className="nav-link"
+          to="/why-gainesville"
+          activeClassName="active"
+        >
+          Why Gainesville?
         </NavLink>
       </li>
       <li>

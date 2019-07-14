@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import MapPage from './MapPage';
 import AboutPage from './AboutPage';
+import WhyGainesvillePage from './WhyGainesvillePage';
 import AdminPage from './AdminPage';
 import AdminRoute from './AdminRoute';
 import AdminLogin from './AdminLogin';
@@ -33,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const mapRoutes = ['/company/:company', '/job/:jobId', '/', '/companies'];
-const publicRoutes = [...mapRoutes, '/about'];
+const publicRoutes = [...mapRoutes, '/about', '/why-gainesville'];
 
 export const App = () => (
   <>
@@ -45,6 +46,11 @@ export const App = () => (
           <Switch>
             <Route exact path={mapRoutes} component={MapPage} />
             <Route exact path="/about" component={AboutPage} />
+            <Route
+              exact
+              path="/why-gainesville"
+              component={WhyGainesvillePage}
+            />
             <Route exact path="/admin/login" component={AdminLogin} />
             <AdminRoute path="/admin" component={AdminPage} />
           </Switch>

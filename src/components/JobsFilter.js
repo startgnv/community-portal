@@ -28,6 +28,9 @@ const JobsFilter = () => (
     <FilterItem>
       <Button label="Experience Level" style="outline" />
     </FilterItem>
+    <FilterItem>
+      <Button label="Full / Part Time" style="outline" />
+    </FilterItem>
   </JobsFilterContainer>
 );
 

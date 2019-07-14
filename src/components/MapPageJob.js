@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import SidebarHeader from './SidebarHeader';
 import { Link, Redirect } from 'react-router-dom';
+import JobCategories from './JobCategories';
 import Button from './Button';
 import TextInput from './TextInput';
 
@@ -96,9 +97,18 @@ const MapPageJobContainer = styled.div`
   }
 `;
 
+const CategoriesContainer = styled.div`
+  margin-bottom: 10px;
+`;
+
 export const MapPageJob = ({
   history: { goBack },
-  job: { title: jobTitle, description: jobDescription, applyUrl = '' } = {},
+  job: {
+    title: jobTitle,
+    description: jobDescription,
+    applyUrl = '',
+    categories
+  } = {},
   company: {
     name: companyName,
     logoImg: companyLogo = '',
@@ -157,6 +167,11 @@ export const MapPageJob = ({
             {companyName}
           </Link>
         </h3>
+        {categories && categories.length > 0 && (
+          <CategoriesContainer>
+            <JobCategories categories={categories} />
+          </CategoriesContainer>
+        )}
         {applyContent}
         <div className="job-description">
           <p>{jobDescription}</p>

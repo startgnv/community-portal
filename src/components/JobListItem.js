@@ -1,18 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
-import feathrLogo from '../assets/images/companyLogos/feathr.png';
-import exactechLogo from '../assets/images/companyLogos/exactech.png';
-import admiralLogo from '../assets/images/companyLogos/admiral.png';
-import infotechLogo from '../assets/images/companyLogos/infotech.png';
-import ieLogo from '../assets/images/companyLogos/infinite-energy.png';
-const companyLogos = {
-  feathr: feathrLogo,
-  exactech: exactechLogo,
-  admiral: admiralLogo,
-  'info-tech': infotechLogo,
-  'infinite-energy': ieLogo
-};
+import JobCategories from './JobCategories';
 
 const JobListItemContainer = styled.li`
   display: flex;
@@ -50,41 +39,18 @@ const JobListItemContainer = styled.li`
     font-size: 16px;
     color: #333;
     text-decoration: none;
-    line-height: 24px;
+    line-height: 22px;
   }
 
   .company {
     display: inline-block;
-    margin-bottom: 5px;
     font-size: 13px;
-    line-height: 18px;
+    line-height: 16px;
     color: #333;
     text-decoration: none;
 
     &:hover {
       text-decoration: underline;
-    }
-  }
-
-  .tags {
-    margin: 0 0 10px;
-    padding: 0;
-    list-style: none;
-  }
-
-  .tag {
-    display: inline-block;
-    height: 20px;
-    padding: 0 10px;
-    margin-right: 5px;
-    background-color: #666;
-    line-height: 20px;
-    border-radius: 3px;
-    color: white;
-    font-size: 11px;
-
-    &:last-child {
-      margin: 0;
     }
   }
 
@@ -97,9 +63,17 @@ const JobListItemContainer = styled.li`
   }
 `;
 
+const CategoriesContainer = styled.div`
+  margin-bottom: 10px;
+`;
+
 export const JobListItem = ({
-  job: { id, title = 'No Title', description = 'No Description' } = {},
-  categories = [],
+  job: {
+    id,
+    title = 'No Title',
+    description = 'No Description',
+    categories
+  } = {},
   company = {},
   showCompanyInfo = true
 }) => (
@@ -115,14 +89,10 @@ export const JobListItem = ({
             </Link>
           </div>
         )}
-        {categories.length > 0 && (
-          <ul className="tags">
-            {categories.map(category => (
-              <li className="tag" key={category.id}>
-                {category.name}
-              </li>
-            ))}
-          </ul>
+        {categories && categories.length > 0 && (
+          <CategoriesContainer>
+            <JobCategories categories={categories} size="small" />
+          </CategoriesContainer>
         )}
         <p className="description">{description}</p>
       </div>

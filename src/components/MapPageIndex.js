@@ -31,21 +31,7 @@ export const MapPageIndex = ({
       <JobList jobCount={filteredJobs.length}>
         {filteredJobs.map(job => {
           const jobCompany = _.find(companies, { id: job.companyID });
-          let jobCategories = [];
-          if (job.categories && job.categories.length > 0) {
-            jobCategories = _.filter(
-              categories,
-              category => job.categories.indexOf(category.id) > -1
-            );
-          }
-          return (
-            <JobListItem
-              job={job}
-              company={jobCompany}
-              categories={jobCategories}
-              key={job.id}
-            />
-          );
+          return <JobListItem job={job} company={jobCompany} key={job.id} />;
         })}
       </JobList>
     </MapPageIndexContainer>

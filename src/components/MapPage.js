@@ -45,14 +45,11 @@ export const MapPage = ({
   const [jobsValue, jobsLoading, jobsError] = useCollection(
     db.collection('jobs')
   );
-  const [categoriesValue, categoriesLoading, categoriesError] = useCollection(
-    db.collection('jobCategories')
-  );
 
-  if (companiesError || jobsError || categoriesError) {
+  if (companiesError || jobsError) {
     return <Error />;
   }
-  if (companiesLoading || jobsLoading || categoriesLoading) {
+  if (companiesLoading || jobsLoading) {
     return <LinearProgress />;
   }
 
@@ -61,10 +58,6 @@ export const MapPage = ({
     ...doc.data()
   }));
   const jobs = jobsValue.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  const categories = categoriesValue.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
 
   return (
     <MapPageContainer>
@@ -75,12 +68,7 @@ export const MapPage = ({
             exact
             path="/"
             render={props => (
-              <MapPageIndex
-                {...props}
-                companies={companies}
-                jobs={jobs}
-                categories={categories}
-              />
+              <MapPageIndex {...props} companies={companies} jobs={jobs} />
             )}
           />
           <Route
