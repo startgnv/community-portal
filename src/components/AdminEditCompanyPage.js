@@ -76,16 +76,16 @@ export const AdminEditCompanyPage = ({
         const company = snapshot.data();
         setName(company.name);
         const center = company.coordinates
-          ? [company.coordinates.latitude, company.coordinates.longitude]
+          ? [company.coordinates.longitude, company.coordinates.latitude]
           : null;
         setAddress({ place_name: company.address, center });
-        setInputAddress(company.address);
-        setSlug(company.slug);
-        setDescription(company.description);
-        setUrl(company.url);
-        setFounded(company.founded);
-        setLogo(company.logoImg);
-        setCover(company.coverImg);
+        setInputAddress(company.address || '');
+        setSlug(company.slug || '');
+        setDescription(company.description || '');
+        setUrl(company.url || '');
+        setFounded(company.founded || '');
+        setLogo(company.logoImg || '');
+        setCover(company.coverImg || '');
 
         setLoadingCompany(false);
       });
