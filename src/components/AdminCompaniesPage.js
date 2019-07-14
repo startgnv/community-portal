@@ -62,7 +62,7 @@ export const AdminCompaniesPage = () => {
                   coverSrc={coverImg}
                   logoSrc={logoImg}
                   label={name}
-                  linkTo={`/admin/companies/${id}`}
+                  linkTo={`/admin/companies/${id}/edit`}
                 />
               </Grid>
             ))}

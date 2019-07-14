@@ -21,6 +21,9 @@ export const AdminEditCompanyPage = ({
   const [slug, setSlug] = useState('');
   const [logo, setLogo] = useState('');
   const [cover, setCover] = useState('');
+  const [url, setUrl] = useState('');
+  const [description, setDescription] = useState('');
+  const [founded, setFounded] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const logoUploadRef = useRef();
@@ -78,6 +81,11 @@ export const AdminEditCompanyPage = ({
         setAddress({ place_name: company.address, center });
         setInputAddress(company.address);
         setSlug(company.slug);
+        setDescription(company.description);
+        setUrl(company.url);
+        setFounded(company.founded);
+        setLogo(company.logoImg);
+        setCover(company.coverImg);
 
         setLoadingCompany(false);
       });
@@ -117,18 +125,26 @@ export const AdminEditCompanyPage = ({
           res.map(({ ref } = {}) => (ref ? ref.getDownloadURL() : null))
         )
       )
-      .then(([coverImg, logoImg]) =>
-        doc.current.update({
+      .then(([coverImg, logoImg]) => {
+        const companyData = {
           name,
           slug,
           address: address.place_name || null,
           coordinates: address.center
             ? new firebase.firestore.GeoPoint(...address.center.reverse())
             : null,
-          coverImg,
-          logoImg
-        })
-      )
+          coverImg: coverImg || cover,
+          logoImg: logoImg || logo,
+          url,
+          founded,
+          description
+        };
+        if (companyID) {
+          return doc.current.update(companyData);
+        } else {
+          return db.collection('companies').add(companyData);
+        }
+      })
       .then(() => {
         setSuccess(true);
         setLoading(false);
@@ -183,6 +199,16 @@ export const AdminEditCompanyPage = ({
           />
         </Grid>
         <Grid item>
+          <TextField
+            value={description}
+            fullWidth
+            variant="outlined"
+            label="Description"
+            onChange={e => setDescription(e.target.value)}
+            multiline
+          />
+        </Grid>
+        <Grid item>
           <FormLabel>Address</FormLabel>
           <GeocodingInput
             placeholder="Address"
@@ -200,6 +226,24 @@ export const AdminEditCompanyPage = ({
                 setAddress(val);
               }
             }}
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            value={url}
+            fullWidth
+            variant="outlined"
+            label="URL"
+            onChange={e => setUrl(e.target.value)}
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            value={founded}
+            fullWidth
+            variant="outlined"
+            label="Year Founded"
+            onChange={e => setFounded(e.target.value)}
           />
         </Grid>
         <Grid item container justify="flex-end">
