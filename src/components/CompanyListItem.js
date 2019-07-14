@@ -3,17 +3,21 @@ import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 
 const CompanyListItemContainer = styled.li`
-  display: flex;
-  padding: 10px 10px 10px 13px;
   list-style-type: none;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  transition: 250ms;
 
-  &:hover {
-    background-color: #eee;
-    cursor: pointer;
+  .link-container {
+    display: flex;
+    padding: 10px 10px 10px 13px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: 250ms;
+    text-decoration: none;
+
+    &:hover {
+      background-color: #eee;
+      cursor: pointer;
+    }
   }
 
   .company-img {
@@ -37,7 +41,6 @@ const CompanyListItemContainer = styled.li`
     display: block;
     font-size: 16px;
     color: #333;
-    text-decoration: none;
     line-height: 24px;
   }
 `;
@@ -48,12 +51,12 @@ export const CompanyListItem = ({
   showLogo = true
 }) => (
   <CompanyListItemContainer>
-    {showLogo && <img className="company-img" src={logoImg} />}
-    <div className="info">
-      <Link className="name" to={`/company/${slug}`}>
-        {name}
-      </Link>
-    </div>
+    <Link className="link-container" to={`/company/${slug}`}>
+      {showLogo && <img className="company-img" src={logoImg} />}
+      <div className="info">
+        <span className="name">{name}</span>
+      </div>
+    </Link>
   </CompanyListItemContainer>
 );
 
