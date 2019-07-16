@@ -3,7 +3,6 @@ import styled from 'styled-components/macro';
 import { Redirect } from 'react-router-dom';
 import SidebarHeader from './SidebarHeader';
 import JobList from './JobList';
-import JobListItem from './JobListItem';
 
 const MapPageCompanyContainer = styled.div`
   .logo {
@@ -59,11 +58,7 @@ export const MapPageCompany = ({
         </CompanyLink>
         <p className="description">{description}</p>
         <h2>Jobs</h2>
-        <JobList showTitle={false}>
-          {jobs.map(job => (
-            <JobListItem job={job} key={job.id} showCompanyInfo={false} />
-          ))}
-        </JobList>
+        <JobList jobs={jobs} showTitle={false} showCompanyInfo={false} />
         <h2>Culture</h2>
         <h2>Photos</h2>
       </div>

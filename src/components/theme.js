@@ -3,8 +3,8 @@ export default {
   // colors
   green: '#37a642',
   textDark: '#131516',
-  textMedium: lighten(0.1, '#131516'),
-  textLight: lighten(0.2, '#131516'),
+  textMedium: lighten(0.25, '#131516'),
+  textLight: lighten(0.4, '#131516'),
   uiBorder: '#DAE0E3',
   uiBackground: '#F1F1F4',
 

@@ -57,8 +57,10 @@ const Tags = ({ tags, limit, className = '', size = 'medium' }) => {
   }
   return (
     <TagsContainer className={className}>
-      {renderTags.map(({ name }, i) => (
-        <Tag className={tagClassNames}>{name}</Tag>
+      {renderTags.map(({ name, id }, i) => (
+        <Tag className={tagClassNames} key={id}>
+          {name}
+        </Tag>
       ))}
       {plusTag}
     </TagsContainer>

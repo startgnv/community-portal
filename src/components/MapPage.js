@@ -39,6 +39,7 @@ export const MapPage = ({
     params: { company }
   }
 }) => {
+  const [jobsFilter, setJobsFilter] = useState({ search: '', categories: [] });
   const [companiesValue, companiesLoading, companiesError] = useCollection(
     db.collection('companies')
   );
@@ -62,13 +63,18 @@ export const MapPage = ({
   return (
     <MapPageContainer>
       <div className="main-content">
-        <JobsFilter />
+        <JobsFilter onChange={filter => setJobsFilter(filter)} />
         <Sidebar>
           <Route
             exact
             path="/"
             render={props => (
-              <MapPageIndex {...props} companies={companies} jobs={jobs} />
+              <MapPageIndex
+                {...props}
+                companies={companies}
+                jobs={jobs}
+                jobsFilter={jobsFilter}
+              />
             )}
           />
           <Route

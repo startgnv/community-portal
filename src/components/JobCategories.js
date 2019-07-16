@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
-import Tags from './Tags';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../firebase';
+import Tags from './Tags';
 
 const JobCategories = ({
   categories,
