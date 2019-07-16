@@ -1,9 +1,14 @@
+import _ from 'lodash';
 import React, { useState, useRef, useEffect } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Checkbox from '@material-ui/core/Checkbox';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Select from 'react-select';
 
@@ -30,6 +35,8 @@ export const AdminJobForm = ({
   const [description, setDescription] = useState('');
   const [companyID, setCompanyID] = useState();
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [applyUrl, setApplyUrl] = useState('');
+  const [type, setType] = useState('');
   const [saving, setSaving] = useState(false);
   const [savingSuccess, setSavingSuccess] = useState(false);
   const [savingError, setSavingError] = useState(false);
@@ -40,10 +47,12 @@ export const AdminJobForm = ({
     if (jobID) {
       doc.current.get().then(snapshot => {
         const job = snapshot.data();
-        setTitle(job.title);
-        setDescription(job.description);
-        setCompanyID(job.companyID);
-        setSelectedCategories(job.categories);
+        setTitle(job.title || '');
+        setDescription(job.description || '');
+        setCompanyID(job.companyID || '');
+        setSelectedCategories(job.categories || []);
+        setApplyUrl(job.applyUrl || '');
+        setType(job.type || 'fullTime');
         setLoadingJob(false);
       });
     }
@@ -58,35 +67,65 @@ export const AdminJobForm = ({
   const onFormSubmit = e => {
     e.preventDefault();
 
-    if (title && description && selectedCategories.length && companyID) {
+    if (
+      title &&
+      description &&
+      selectedCategories.length &&
+      companyID &&
+      applyUrl
+    ) {
       setSaving(true);
       setSavingError(false);
       setSavingSuccess(false);
+      const jobData = {
+        title,
+        description,
+        categories: selectedCategories,
+        companyID,
+        applyUrl,
+        type
+      };
+      let updatePromise;
+      if (jobID) {
+        updatePromise = doc.current.update(jobData);
+      } else {
+        updatePromise = db.collection('jobs').add(jobData);
+      }
 
-      doc.current
-        .set({
-          title,
-          description,
-          categories: selectedCategories,
-          companyID
-        })
-        .then(() => {
-          setSaving(false);
-          setSavingSuccess(true);
-          setSavingError(false);
-        });
+      updatePromise.then(() => {
+        setSaving(false);
+        setSavingSuccess(true);
+        setSavingError(false);
+      });
     }
   };
-
-  const categoryOptions = categories.map(({ parentID, name }) => ({
-    value: parentID,
-    label: name
-  }));
 
   const companyOptions = companies.map(({ id, name }) => ({
     value: id,
     label: name
   }));
+
+  const typeOptions = [
+    {
+      value: 'fullTime',
+      label: 'Full Time'
+    },
+    {
+      value: 'partTime',
+      label: 'Part Time'
+    }
+  ];
+
+  const onCategoryChange = ({ target: { checked, value } }) => {
+    let newCategories;
+    if (checked) {
+      newCategories = _.concat(selectedCategories, value);
+    } else {
+      newCategories = _.without(selectedCategories, value);
+    }
+    setSelectedCategories(newCategories);
+  };
+  console.warn();
 
   return (
     <FormCardPage title="Job Details" onSubmit={onFormSubmit}>
@@ -114,17 +153,21 @@ export const AdminJobForm = ({
 
         <Grid item>
           <FormLabel>Categories</FormLabel>
-          <Select
-            disabled={loadingCategories}
-            isMulti
-            options={categoryOptions}
-            value={selectedCategories.map(cat =>
-              categoryOptions.find(opt => opt.value === cat)
-            )}
-            onChange={selected =>
-              setSelectedCategories(selected.map(({ value }) => value))
-            }
-          />
+          <FormGroup>
+            {categories.map(cat => (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedCategories.indexOf(cat.id) > -1}
+                    onChange={onCategoryChange}
+                    value={cat.id}
+                  />
+                }
+                label={cat.name}
+                key={cat.id}
+              />
+            ))}
+          </FormGroup>
         </Grid>
         <Grid item>
           <TextField
@@ -136,6 +179,28 @@ export const AdminJobForm = ({
             label="Job Description"
             value={description}
             onChange={e => setDescription(e.target.value)}
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            required
+            variant="outlined"
+            fullWidth
+            label="Application URL"
+            value={applyUrl}
+            onChange={e => setApplyUrl(e.target.value)}
+          />
+        </Grid>
+        <Grid item>
+          <FormLabel>Type</FormLabel>
+          <Select
+            label="Type"
+            options={typeOptions}
+            value={typeOptions.find(({ value }) => type === value)}
+            onChange={({ value }) => {
+              console.warn(value);
+              setType(value);
+            }}
           />
         </Grid>
         <Grid item container justify="flex-end">
