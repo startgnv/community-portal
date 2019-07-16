@@ -10,7 +10,7 @@ const CheckContainer = styled.div`
   top: 50%;
   margin: -10px 10px 0 0;
   float: left;
-  box-shadow: inset 0 0 0 1px ${({ theme }) => theme.textMedium};
+  box-shadow: inset 0 0 0 1px ${({ theme }) => theme.uiBorder};
   border-radius: 2px;
   transition: 250ms;
   box-sizing: border-box;
@@ -26,12 +26,15 @@ const CheckContainer = styled.div`
 `;
 
 const CheckboxContainer = styled.label`
-  display: inline-block;
+  display: block;
   height: 40px;
   margin: 0 10px 0 0;
+  padding: 0 10px;
+  border-radius: 3px;
 
   &:hover {
     cursor: pointer;
+    background: ${({ theme }) => theme.uiBackground};
 
     ${CheckContainer} {
       box-shadow: inset 0 0 0 1px ${({ theme }) => theme.textLight};
@@ -46,6 +49,7 @@ const FieldLabel = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: left;
 `;
 
 const CheckInput = styled.input`

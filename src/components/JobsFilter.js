@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../firebase';
+import Popper from '@material-ui/core/Popper';
 import Checkbox from './Checkbox';
 import Button from './Button';
 
@@ -23,10 +24,18 @@ const FilterItem = styled.div`
   margin-right: 10px;
 `;
 
+const CategoriesContainer = styled.div`
+  background-color: white;
+  border-radius: 3px;
+  padding: 10px;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
+`;
+
 const noop = () => {};
 
 const JobsFilter = ({ onChange = noop, filter }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [catAnchorEl, setCatAnchorEl] = useState(null);
   const [categoriesValue, categoriesLoading, categoriesError] = useCollection(
     db.collection('jobCategories')
   );
@@ -41,6 +50,13 @@ const JobsFilter = ({ onChange = noop, filter }) => {
     categoriesSrc,
     category => !category.parentID
   );
+
+  const onClickCategoriesBtn = event => {
+    setCatAnchorEl(catAnchorEl ? null : event.currentTarget);
+  };
+
+  const catOpen = Boolean(catAnchorEl);
+  const catPopId = catOpen ? 'cat-popper' : undefined;
 
   const onCategoryChange = ({ target: { checked, value } }) => {
     let newCategories;
@@ -60,7 +76,11 @@ const JobsFilter = ({ onChange = noop, filter }) => {
     <JobsFilterContainer>
       <span className="filter-label">Filter:</span>
       <FilterItem>
-        <Button label="Categories" style="outline" />
+        <Button
+          label="Categories"
+          style="outline"
+          onClick={onClickCategoriesBtn}
+        />
       </FilterItem>
       <FilterItem>
         <Button label="Experience Level" style="outline" />
@@ -68,17 +88,19 @@ const JobsFilter = ({ onChange = noop, filter }) => {
       <FilterItem>
         <Button label="Full / Part Time" style="outline" />
       </FilterItem>
-      <div className="categories">
-        {renderCategories.map(({ name, id }) => (
-          <Checkbox
-            label={name}
-            value={id}
-            onChange={onCategoryChange}
-            checked={selectedCategories.indexOf(id) > -1}
-            key={id}
-          />
-        ))}
-      </div>
+      <Popper id={catPopId} open={catOpen} anchorEl={catAnchorEl} transition>
+        <CategoriesContainer>
+          {renderCategories.map(({ name, id }) => (
+            <Checkbox
+              label={name}
+              value={id}
+              onChange={onCategoryChange}
+              checked={selectedCategories.indexOf(id) > -1}
+              key={id}
+            />
+          ))}
+        </CategoriesContainer>
+      </Popper>
     </JobsFilterContainer>
   );
 };
