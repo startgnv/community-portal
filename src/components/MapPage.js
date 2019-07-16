@@ -15,7 +15,6 @@ import MapPageCompany from './MapPageCompany';
 import MapPageJob from './MapPageJob';
 import MapPageIndex from './MapPageIndex';
 import MapPageCompanies from './MapPageCompanies';
-import JobsFilter from './JobsFilter';
 
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -39,7 +38,6 @@ export const MapPage = ({
     params: { company }
   }
 }) => {
-  const [jobsFilter, setJobsFilter] = useState({ search: '', categories: [] });
   const [companiesValue, companiesLoading, companiesError] = useCollection(
     db.collection('companies')
   );
@@ -63,18 +61,12 @@ export const MapPage = ({
   return (
     <MapPageContainer>
       <div className="main-content">
-        <JobsFilter onChange={filter => setJobsFilter(filter)} />
         <Sidebar>
           <Route
             exact
             path="/"
             render={props => (
-              <MapPageIndex
-                {...props}
-                companies={companies}
-                jobs={jobs}
-                jobsFilter={jobsFilter}
-              />
+              <MapPageIndex {...props} companies={companies} jobs={jobs} />
             )}
           />
           <Route

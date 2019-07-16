@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../firebase';
-import Popper from '@material-ui/core/Popper';
+import { clearFix } from 'polished';
 import Checkbox from './Checkbox';
 import Button from './Button';
 
 const JobsFilterContainer = styled.div`
-  padding: 10px 20px;
   text-align: right;
+  clear: both;
 
   .filter-label {
     display: inline-block;
@@ -25,17 +25,26 @@ const FilterItem = styled.div`
 `;
 
 const CategoriesContainer = styled.div`
-  background-color: white;
-  border-radius: 3px;
-  padding: 10px;
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  ${clearFix()}
+  text-align: left;
+`;
+
+const GroupTitle = styled.h3``;
+
+const FilterControls = styled.div`
+  display: ${({ open }) => (open ? 'block' : 'none')};
+`;
+
+const CheckContainer = styled.div`
+  float: left;
 `;
 
 const noop = () => {};
 
 const JobsFilter = ({ onChange = noop, filter }) => {
+  const [controlsOpen, setControlsOpen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [catAnchorEl, setCatAnchorEl] = useState(null);
+  const [selectedTimes, setSelectedTimes] = useState(['fullTime', 'partTime']);
   const [categoriesValue, categoriesLoading, categoriesError] = useCollection(
     db.collection('jobCategories')
   );
@@ -51,13 +60,6 @@ const JobsFilter = ({ onChange = noop, filter }) => {
     category => !category.parentID
   );
 
-  const onClickCategoriesBtn = event => {
-    setCatAnchorEl(catAnchorEl ? null : event.currentTarget);
-  };
-
-  const catOpen = Boolean(catAnchorEl);
-  const catPopId = catOpen ? 'cat-popper' : undefined;
-
   const onCategoryChange = ({ target: { checked, value } }) => {
     let newCategories;
     if (checked) {
@@ -67,40 +69,67 @@ const JobsFilter = ({ onChange = noop, filter }) => {
     }
     setSelectedCategories(newCategories);
     onChange({
-      search: '',
       categories: newCategories
+    });
+  };
+
+  const onTimeChange = ({ target: { checked, value } }) => {
+    let newTimes;
+    if (checked) {
+      newTimes = _.concat(selectedTimes, value);
+    } else {
+      newTimes = _.without(selectedTimes, value);
+    }
+    setSelectedTimes(newTimes);
+    onChange({
+      times: newTimes
     });
   };
 
   return (
     <JobsFilterContainer>
-      <span className="filter-label">Filter:</span>
       <FilterItem>
         <Button
-          label="Categories"
+          label={controlsOpen ? 'Close Filter' : 'Open Filter'}
           style="outline"
-          onClick={onClickCategoriesBtn}
+          onClick={() => setControlsOpen(!controlsOpen)}
         />
       </FilterItem>
-      <FilterItem>
-        <Button label="Experience Level" style="outline" />
-      </FilterItem>
-      <FilterItem>
-        <Button label="Full / Part Time" style="outline" />
-      </FilterItem>
-      <Popper id={catPopId} open={catOpen} anchorEl={catAnchorEl} transition>
+      <FilterControls open={controlsOpen}>
         <CategoriesContainer>
+          <GroupTitle>Categories</GroupTitle>
           {renderCategories.map(({ name, id }) => (
-            <Checkbox
-              label={name}
-              value={id}
-              onChange={onCategoryChange}
-              checked={selectedCategories.indexOf(id) > -1}
-              key={id}
-            />
+            <CheckContainer>
+              <Checkbox
+                label={name}
+                value={id}
+                onChange={onCategoryChange}
+                checked={selectedCategories.indexOf(id) > -1}
+                key={id}
+              />
+            </CheckContainer>
           ))}
         </CategoriesContainer>
-      </Popper>
+        <CategoriesContainer>
+          <GroupTitle>Type</GroupTitle>
+          <CheckContainer>
+            <Checkbox
+              label="Full Time"
+              value="fullTime"
+              onChange={onTimeChange}
+              checked={selectedTimes.indexOf('fullTime') > -1}
+            />
+          </CheckContainer>
+          <CheckContainer>
+            <Checkbox
+              label="Part Time"
+              value="partTime"
+              onChange={onTimeChange}
+              checked={selectedTimes.indexOf('partTime') > -1}
+            />
+          </CheckContainer>
+        </CategoriesContainer>
+      </FilterControls>
     </JobsFilterContainer>
   );
 };

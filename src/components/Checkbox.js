@@ -50,6 +50,7 @@ const FieldLabel = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
+  font-size: 13px;
 `;
 
 const CheckInput = styled.input`
@@ -74,7 +75,8 @@ const Checkbox = ({
   label = 'Checkbox',
   disabled = false,
   value = '',
-  onChange = noop
+  onChange = noop,
+  size = 'medium'
 }) => (
   <CheckboxContainer>
     <CheckInput

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import classnames from 'classnames';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const TagsContainer = styled.ul`
   display: block;
@@ -48,11 +49,18 @@ const Tags = ({ tags, limit, className = '', size = 'medium' }) => {
     [size]: true
   });
   let renderTags = tags;
+  let moreTags;
   let plusTag;
   if (limit) {
     renderTags = tags.slice(0, limit);
+    moreTags = tags.slice(limit);
     if (limit < tags.length) {
-      plusTag = <Tag className={tagClassNames}>+{tags.length - limit}</Tag>;
+      const moreTagNames = moreTags.map(tag => tag.name);
+      plusTag = (
+        <Tooltip title={moreTagNames.join(', ')} placement="top">
+          <Tag className={tagClassNames}>+{tags.length - limit}</Tag>
+        </Tooltip>
+      );
     }
   }
   return (
