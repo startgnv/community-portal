@@ -8,6 +8,8 @@ import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import { db } from '../firebase';
 import { useAdminContainer } from './AdminPageContainer';
@@ -31,6 +33,9 @@ const useStyles = makeStyles(theme => ({
 export const AdminJobsPage = ({ match: { isExact } }) => {
   const classes = useStyles();
   const [search, setSearch] = useState('');
+  const [importJSON, setImportJSON] = useState('');
+  const [importing, setImporting] = useState(false);
+  const [importError, setImportError] = useState('');
   const [jobs = [], loadingJobs, errorJobs] = useCollectionData(
     db.collection('jobs'),
     {
@@ -53,6 +58,24 @@ export const AdminJobsPage = ({ match: { isExact } }) => {
     }),
     {}
   );
+
+  const onJSONImport = ev => {
+    ev.preventDefault();
+    setImportError('');
+    let parsedJobs;
+    try {
+      parsedJobs = JSON.parse(importJSON);
+    } catch (e) {
+      setImportError('JSON Parse Failed');
+      setTimeout(() => setImportError(''), 2000);
+      return;
+    }
+    const jobPromises = parsedJobs.map(job => db.collection('jobs').add(job));
+    Promise.all(jobPromises).then(() => {
+      console.warn('IMPORT SUCCESS');
+    });
+    return false;
+  };
 
   return (
     <>
@@ -88,6 +111,37 @@ export const AdminJobsPage = ({ match: { isExact } }) => {
             color="secondary"
           />
         )}
+        <Grid container>
+          <Grid item xs={12}>
+            <form onSubmit={onJSONImport}>
+              <TextField
+                type="text"
+                fullWidth
+                margin="normal"
+                label="Import Jobs (paste JSON, DO NOT USE)"
+                value={importJSON}
+                onChange={e => setImportJSON(e.target.value)}
+                multiline
+                variant="outlined"
+              />
+              {importError && (
+                <Snackbar
+                  message={importError}
+                  open={!!importError}
+                  variant="error"
+                />
+              )}
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={importing}
+                type="submit"
+              >
+                Import
+              </Button>
+            </form>
+          </Grid>
+        </Grid>
       </Container>
 
       <Fab

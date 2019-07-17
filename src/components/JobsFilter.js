@@ -44,7 +44,7 @@ const noop = () => {};
 const JobsFilter = ({ onChange = noop, filter }) => {
   const [controlsOpen, setControlsOpen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedTimes, setSelectedTimes] = useState(['fullTime', 'partTime']);
+  const [selectedTypes, setSelectedTypes] = useState(['fullTime', 'partTime']);
   const [categoriesValue, categoriesLoading, categoriesError] = useCollection(
     db.collection('jobCategories')
   );
@@ -73,16 +73,16 @@ const JobsFilter = ({ onChange = noop, filter }) => {
     });
   };
 
-  const onTimeChange = ({ target: { checked, value } }) => {
-    let newTimes;
+  const onTypeChange = ({ target: { checked, value } }) => {
+    let newTypes;
     if (checked) {
-      newTimes = _.concat(selectedTimes, value);
+      newTypes = _.concat(selectedTypes, value);
     } else {
-      newTimes = _.without(selectedTimes, value);
+      newTypes = _.without(selectedTypes, value);
     }
-    setSelectedTimes(newTimes);
+    setSelectedTypes(newTypes);
     onChange({
-      times: newTimes
+      type: newTypes
     });
   };
 
@@ -116,16 +116,16 @@ const JobsFilter = ({ onChange = noop, filter }) => {
             <Checkbox
               label="Full Time"
               value="fullTime"
-              onChange={onTimeChange}
-              checked={selectedTimes.indexOf('fullTime') > -1}
+              onChange={onTypeChange}
+              checked={selectedTypes.indexOf('fullTime') > -1}
             />
           </CheckContainer>
           <CheckContainer>
             <Checkbox
               label="Part Time"
               value="partTime"
-              onChange={onTimeChange}
-              checked={selectedTimes.indexOf('partTime') > -1}
+              onChange={onTypeChange}
+              checked={selectedTypes.indexOf('partTime') > -1}
             />
           </CheckContainer>
         </CategoriesContainer>

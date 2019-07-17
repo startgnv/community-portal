@@ -14,7 +14,7 @@ const Tag = styled.li`
   display: inline-block;
   height: 26px;
   padding: 0 10px;
-  margin-right: 5px;
+  margin: 0 5px 5px 0;
   background-color: #666;
   line-height: 26px;
   border-radius: 3px;
