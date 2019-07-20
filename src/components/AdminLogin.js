@@ -1,7 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { auth } from '../firebase';
-import firebase from 'firebase/app';
+import firebase, { auth } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { LinearProgress } from '@material-ui/core';
 
@@ -20,7 +19,7 @@ export const AdminLogin = ({
 
   const onClick = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider);
+    auth.signInWithPopup(provider);
   };
   return (
     <div>
