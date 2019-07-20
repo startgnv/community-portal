@@ -1,7 +1,5 @@
-import _ from 'lodash';
-import React, { useState } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
@@ -16,7 +14,6 @@ import MapPageJob from './MapPageJob';
 import MapPageIndex from './MapPageIndex';
 import MapPageCompanies from './MapPageCompanies';
 
-import Header from './Header';
 import Sidebar from './Sidebar';
 import { LinearProgress } from '@material-ui/core';
 
@@ -33,11 +30,7 @@ const MapPageContainer = styled.div`
   }
 `;
 
-export const MapPage = ({
-  match: {
-    params: { company }
-  }
-}) => {
+export const MapPage = () => {
   const [companiesValue, companiesLoading, companiesError] = useCollection(
     db.collection('companies')
   );
@@ -89,7 +82,7 @@ export const MapPage = ({
               const companyMatch = companies.find(
                 ({ slug }) => company === slug
               );
-              const filteredJobs = _.filter(jobs, job => {
+              const filteredJobs = jobs.filter(job => {
                 return job.companyID === companyMatch.id;
               });
               return (

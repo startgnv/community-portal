@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import JobList from './JobList';
@@ -12,11 +11,7 @@ const FilterContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-export const MapPageIndex = ({
-  jobs = [],
-  categories = [],
-  companies = []
-}) => {
+export const MapPageIndex = ({ jobs = [], companies = [] }) => {
   const [jobsFilter, setJobsFilter] = useState({ search: '', categories: [] });
   const onFilterChange = filterChanged => {
     setJobsFilter({

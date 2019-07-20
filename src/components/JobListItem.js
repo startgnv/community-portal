@@ -83,7 +83,13 @@ export const JobListItem = ({
 }) => (
   <JobListItemContainer>
     <Link className="container-link" to={`/job/${id}`}>
-      {showCompanyInfo && <img className="company-img" src={company.logoImg} />}
+      {showCompanyInfo && (
+        <img
+          className="company-img"
+          alt={`${company.name}`}
+          src={company.logoImg}
+        />
+      )}
       <div className="info">
         <span className="title">{title}</span>
         {showCompanyInfo && (

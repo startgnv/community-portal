@@ -49,7 +49,12 @@ const HeaderContainer = styled.div`
 
 export const Header = ({ className }) => (
   <HeaderContainer className={className}>
-    <a className="logo-link" href="http://startupgnv.com" target="_blank">
+    <a
+      className="logo-link"
+      href="http://startupgnv.com"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
       <img className="logo" src={logo} alt="logo" />
     </a>
     <ul className="navigation">

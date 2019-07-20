@@ -32,7 +32,7 @@ export const SidebarHeader = ({
       height={height}
       mainImgSize={mainImgSize}
     >
-      <img className="logo" src={mainImg} />
+      <img className="logo" src={mainImg} alt="Logo" />
     </SidebarHeaderContainer>
   );
 };

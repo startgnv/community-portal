@@ -48,7 +48,7 @@ export const UploadAvatar = ({
       .getDownloadURL()
       .then(onUploadComplete)
       .catch(() => onUploadComplete(''));
-  }, []);
+  }, [onUploadComplete]);
 
   const changeHandler = useCallback(() => {
     const file = uploadRef.current.files.item(0);
@@ -62,7 +62,7 @@ export const UploadAvatar = ({
     });
 
     task.then(() => urlRef.current.getDownloadURL()).then(onUploadComplete);
-  }, []);
+  }, [onUploadComplete]);
 
   useEffect(() => {
     if (uploadEl) {

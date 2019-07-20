@@ -62,9 +62,7 @@ export const AdminListCard = ({
                   fontWeight="fontWeightLight"
                   clone
                 >
-                  <Typography borderRadius="5" variant={labelVariant}>
-                    {label}
-                  </Typography>
+                  <Typography variant={labelVariant}>{label}</Typography>
                 </Box>
               </Grid>
             </Box>

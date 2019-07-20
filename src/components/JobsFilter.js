@@ -91,7 +91,7 @@ const JobsFilter = ({ onChange = noop, filter }) => {
       <FilterItem>
         <Button
           label={controlsOpen ? 'Close Filter' : 'Open Filter'}
-          style="outline"
+          variant="outline"
           onClick={() => setControlsOpen(!controlsOpen)}
         />
       </FilterItem>

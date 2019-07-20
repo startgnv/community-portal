@@ -52,7 +52,7 @@ export const MapPageCompany = ({
       <div className="content">
         <h1 className="company-name">{name}</h1>
         <CompanyLink>
-          <a href={url} target="_blank">
+          <a href={url} rel="noopener noreferrer" target="_blank">
             View Website
           </a>
         </CompanyLink>

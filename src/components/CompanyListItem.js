@@ -52,7 +52,7 @@ export const CompanyListItem = ({
 }) => (
   <CompanyListItemContainer>
     <Link className="link-container" to={`/company/${slug}`}>
-      {showLogo && <img className="company-img" src={logoImg} />}
+      {showLogo && <img className="company-img" alt={name} src={logoImg} />}
       <div className="info">
         <span className="name">{name}</span>
       </div>

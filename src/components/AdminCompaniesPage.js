@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { useDownloadURL } from 'react-firebase-hooks/storage';
 import { makeStyles } from '@material-ui/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Fab from '@material-ui/core/Fab';
@@ -12,7 +11,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { useAdminContainer } from './AdminPageContainer';
 import AdminListCard from './AdminListCard';
-import { db, storage } from '../firebase';
+import { db } from '../firebase';
 
 const useStyles = makeStyles({
   fab: {
@@ -56,7 +55,7 @@ export const AdminCompaniesPage = () => {
           {companies
             .filter(({ name = '' }) => name.includes(search))
             .map(({ name, id, coverImg, logoImg }) => (
-              <Grid item md={4} xs={12}>
+              <Grid key={id} item md={4} xs={12}>
                 <AdminListCard
                   key={id}
                   coverSrc={coverImg}

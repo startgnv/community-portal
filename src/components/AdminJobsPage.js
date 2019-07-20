@@ -135,6 +135,10 @@ export const AdminJobsPage = ({ match: { isExact } }) => {
                 variant="contained"
                 color="primary"
                 disabled={importing}
+                onClick={() => {
+                  setImporting(true);
+                  setTimeout(setImporting, 700);
+                }}
                 type="submit"
               >
                 Import

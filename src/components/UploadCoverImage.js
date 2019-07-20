@@ -53,7 +53,7 @@ export const UploadCoverImage = ({
     });
 
     task.then(({ ref }) => ref.getDownloadURL()).then(onUploadComplete);
-  }, []);
+  }, [companyID, onUploadComplete]);
 
   useEffect(() => {
     if (uploadRef.current) {
@@ -61,7 +61,7 @@ export const UploadCoverImage = ({
       uploadEl.addEventListener('change', changeHandler);
       return () => uploadEl.removeEventListener('change', changeHandler);
     }
-  }, [uploadRef.current]);
+  }, [changeHandler]);
 
   return (
     <>
