@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
+import StorageImg from './StorageImg';
 
 const CompanyListItemContainer = styled.li`
   list-style-type: none;
@@ -46,13 +47,14 @@ const CompanyListItemContainer = styled.li`
 `;
 
 export const CompanyListItem = ({
-  company: { name, slug = '', logoImg = '' } = {},
-  company,
+  company: { name, slug = '', logoPath = '' } = {},
   showLogo = true
 }) => (
   <CompanyListItemContainer>
     <Link className="link-container" to={`/company/${slug}`}>
-      {showLogo && <img className="company-img" alt={name} src={logoImg} />}
+      {showLogo && (
+        <StorageImg className="company-img" alt={name} path={logoPath} />
+      )}
       <div className="info">
         <span className="name">{name}</span>
       </div>

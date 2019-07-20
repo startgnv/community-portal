@@ -52,7 +52,7 @@ export const UploadCoverImage = ({
       setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
     });
 
-    task.then(({ ref }) => ref.getDownloadURL()).then(onUploadComplete);
+    task.then(({ ref }) => ref.fullPath).then(onUploadComplete);
   }, [companyID, onUploadComplete]);
 
   useEffect(() => {

@@ -39,8 +39,7 @@ const CompanyLink = styled.div`
 `;
 
 export const MapPageCompany = ({
-  history: { goBack },
-  company: { name, logoImg, coverImg = '', description = '', url = '' } = {},
+  company: { name, logoPath, coverPath = '', description = '', url = '' } = {},
   jobs = []
 }) => {
   if (!name) {
@@ -48,7 +47,7 @@ export const MapPageCompany = ({
   }
   return (
     <MapPageCompanyContainer>
-      <SidebarHeader coverImg={coverImg} mainImg={logoImg} />
+      <SidebarHeader coverPath={coverPath} logoPath={logoPath} />
       <div className="content">
         <h1 className="company-name">{name}</h1>
         <CompanyLink>
