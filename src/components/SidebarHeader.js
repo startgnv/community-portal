@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import StorageImg from './StorageImg';
+import { storage } from '../firebase';
+import { useDownloadURL } from 'react-firebase-hooks/storage';
 
 const SidebarHeaderContainer = styled.div`
   position: relative;
   height: ${({ height }) => height};
-  background-image: url(${props => props.coverImg});
+  background-image: url(${props => props.coverURL});
   background-size: cover;
   background-position: center;
 
@@ -21,18 +24,19 @@ const SidebarHeaderContainer = styled.div`
 `;
 
 export const SidebarHeader = ({
-  coverImg,
-  mainImg,
+  coverPath,
+  logoPath,
   height = '200px',
   mainImgSize = '120px'
 }) => {
+  const [coverURL] = useDownloadURL(coverPath ? storage.ref(coverPath) : '');
   return (
     <SidebarHeaderContainer
-      coverImg={coverImg}
+      coverURL={coverURL}
       height={height}
       mainImgSize={mainImgSize}
     >
-      <img className="logo" src={mainImg} alt="Logo" />
+      <StorageImg className="logo" path={logoPath} alt="Logo" />
     </SidebarHeaderContainer>
   );
 };

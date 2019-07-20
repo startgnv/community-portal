@@ -25,7 +25,6 @@ export const UploadAvatar = ({
 }) => {
   const [progress, setProgress] = useState(0);
   const [imageReady, setImageReady] = useState(false);
-  const urlRef = useRef(storage.ref(`companyLogos/${companyID}`));
   const classes = useStyles({ size });
   const uploadRef = useRef();
   const uploadEl = uploadRef.current;
@@ -43,17 +42,10 @@ export const UploadAvatar = ({
     }
   }, [src]);
 
-  useEffect(() => {
-    urlRef.current
-      .getDownloadURL()
-      .then(onUploadComplete)
-      .catch(() => onUploadComplete(''));
-  }, [onUploadComplete]);
-
   const changeHandler = useCallback(() => {
     const file = uploadRef.current.files.item(0);
 
-    const task = urlRef.current.put(file);
+    const task = storage.ref(`companyLogos/${companyID}`).put(file);
     setProgress(0);
     setImageReady(false);
 
@@ -61,8 +53,8 @@ export const UploadAvatar = ({
       setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
     });
 
-    task.then(() => urlRef.current.getDownloadURL()).then(onUploadComplete);
-  }, [onUploadComplete]);
+    task.then(({ ref }) => ref.fullPath).then(onUploadComplete);
+  }, [companyID, onUploadComplete]);
 
   useEffect(() => {
     if (uploadEl) {

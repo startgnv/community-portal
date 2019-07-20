@@ -111,8 +111,8 @@ export const MapPageJob = ({
   } = {},
   company: {
     name: companyName,
-    logoImg: companyLogo = '',
-    coverImg: companyCover = '',
+    logoPath: companyLogoPath = '',
+    coverPath: companyCoverPath = '',
     slug: companySlug
   } = {}
 }) => {
@@ -155,8 +155,8 @@ export const MapPageJob = ({
   return (
     <MapPageJobContainer showFullDesc={showFullDesc}>
       <SidebarHeader
-        coverImg={companyCover}
-        mainImg={companyLogo}
+        coverPath={companyCoverPath}
+        logoPath={companyLogoPath}
         height="120px"
         mainImgSize="80px"
       />

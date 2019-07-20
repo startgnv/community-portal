@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import JobCategories from './JobCategories';
+import StorageImg from './StorageImg';
 
 const JobListItemContainer = styled.li`
   list-style-type: none;
@@ -84,10 +85,10 @@ export const JobListItem = ({
   <JobListItemContainer>
     <Link className="container-link" to={`/job/${id}`}>
       {showCompanyInfo && (
-        <img
+        <StorageImg
           className="company-img"
           alt={`${company.name}`}
-          src={company.logoImg}
+          path={company.logoPath}
         />
       )}
       <div className="info">

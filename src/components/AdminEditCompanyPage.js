@@ -5,6 +5,8 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Grid from '@material-ui/core/Grid';
 
 import firebase, { db, storage } from '../firebase';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
+import { useDownloadURL } from 'react-firebase-hooks/storage';
 import GeocodingInput from './GeocodingInput';
 import { useAdminContainer } from './AdminPageContainer';
 import FormCardPage from './FormCardPage';
@@ -15,13 +17,26 @@ export const AdminEditCompanyPage = ({
   },
   history
 }) => {
+  const doc = useRef(
+    // we do the spread trick to "trick" firebase into giving us a doc with a
+    // random ID but it only does that if you pass _nothing_ to it
+    db.collection('companies').doc(...(companyID ? [companyID] : []))
+  );
+  const [companyData, loadingCompany] = useDocumentData(doc.current);
+  const company = companyData || {};
   const [name, setName] = useState('');
   const [address, setAddress] = useState({});
-  const [inputAddress, setInputAddress] = useState();
+  const [fbLogoURL, fbLogoLoading] = useDownloadURL(
+    company.logoPath ? storage.ref(company.logoPath) : null
+  );
+  const [fbCoverURL, fbCoverLoading] = useDownloadURL(
+    company.coverPath ? storage.ref(company.coverPath) : null
+  );
+  const [logoURL, setLogoURL] = useState('');
+  const [coverURL, setCoverURL] = useState('');
+  const [inputAddress, setInputAddress] = useState('');
   const [slug, setSlug] = useState('');
-  const [logo, setLogo] = useState('');
-  const [cover, setCover] = useState('');
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState(company.url || '');
   const [description, setDescription] = useState('');
   const [founded, setFounded] = useState('');
   const [success, setSuccess] = useState(false);
@@ -29,12 +44,44 @@ export const AdminEditCompanyPage = ({
   const logoUploadRef = useRef();
   const coverUploadRef = useRef();
 
+  useEffect(() => {
+    setName(company.name || '');
+    const center = company.coordinates
+      ? [company.coordinates.longitude, company.coordinates.latitude]
+      : null;
+    setAddress({
+      center,
+      place_name: company.address
+    });
+    setInputAddress(company.address || '');
+    setSlug(company.slug || '');
+    setUrl(company.url || '');
+    setDescription(company.description || '');
+    setFounded(company.founded || '');
+  }, [
+    company.name,
+    company.coordinates,
+    company.address,
+    company.slug,
+    company.url,
+    company.description,
+    company.founded
+  ]);
+
+  useEffect(() => {
+    setLogoURL(fbLogoURL || '');
+  }, [fbLogoURL]);
+
+  useEffect(() => {
+    setCoverURL(fbCoverURL || '');
+  }, [fbCoverURL]);
+
   const logoChangeHandler = useCallback(() => {
     const file = logoUploadRef.current.files.item(0);
 
     if (FileReader && file) {
       const reader = new FileReader();
-      reader.onload = () => setLogo(reader.result);
+      reader.onload = () => setLogoURL(reader.result);
       reader.readAsDataURL(file);
     }
   }, []);
@@ -44,7 +91,7 @@ export const AdminEditCompanyPage = ({
 
     if (FileReader && file) {
       const reader = new FileReader();
-      reader.onload = () => setCover(reader.result);
+      reader.onload = () => setCoverURL(reader.result);
       reader.readAsDataURL(file);
     }
   }, []);
@@ -65,35 +112,8 @@ export const AdminEditCompanyPage = ({
     }
   }, [coverChangeHandler]);
 
-  const doc = useRef(
-    db.collection('companies').doc(...(companyID ? [companyID] : []))
-  );
-  const [loadingCompany, setLoadingCompany] = useState(!!companyID);
-
-  useEffect(() => {
-    if (companyID) {
-      doc.current.get().then(snapshot => {
-        const company = snapshot.data();
-        setName(company.name);
-        const center = company.coordinates
-          ? [company.coordinates.longitude, company.coordinates.latitude]
-          : null;
-        setAddress({ place_name: company.address, center });
-        setInputAddress(company.address || '');
-        setSlug(company.slug || '');
-        setDescription(company.description || '');
-        setUrl(company.url || '');
-        setFounded(company.founded || '');
-        setLogo(company.logoImg || '');
-        setCover(company.coverImg || '');
-
-        setLoadingCompany(false);
-      });
-    }
-  }, [companyID]);
-
   useAdminContainer({
-    loading: loading || loadingCompany,
+    loading: loading || loadingCompany || fbLogoLoading || fbCoverLoading,
     backTo: '/admin/companies'
   });
 
@@ -102,47 +122,53 @@ export const AdminEditCompanyPage = ({
     setLoading(true);
     setSuccess(false);
 
-    const imgUploads = [];
-    if (coverUploadRef.current.files[0]) {
-      const coverRes = storage
-        .ref(`companyCovers/${doc.current.id}`)
-        .put(coverUploadRef.current.files[0]);
-      imgUploads.push(coverRes);
-    } else {
-      imgUploads.push(undefined);
-    }
-    if (logoUploadRef.current.files[0]) {
-      const logoRes = storage
-        .ref(`companyLogos/${doc.current.id}`)
-        .put(logoUploadRef.current.files[0]);
-      imgUploads.push(logoRes);
-    } else {
-      imgUploads.push(undefined);
-    }
-    Promise.all(imgUploads)
-      .then(res =>
-        Promise.all(
-          res.map(({ ref } = {}) => (ref ? ref.getDownloadURL() : null))
-        )
-      )
-      .then(([coverImg, logoImg]) => {
-        const companyData = {
-          name,
-          slug,
-          address: address.place_name || null,
-          coordinates: address.center
-            ? new firebase.firestore.GeoPoint(...address.center.reverse())
-            : null,
-          coverImg: coverImg || cover,
-          logoImg: logoImg || logo,
-          url,
-          founded,
-          description
-        };
-        if (companyID) {
-          return doc.current.update(companyData);
+    const companyData = {
+      name,
+      slug,
+      address: address.place_name || null,
+      coordinates: address.center
+        ? new firebase.firestore.GeoPoint(...address.center.reverse())
+        : null,
+      url,
+      founded,
+      description
+    };
+    // after we create or update the doc, we'll have the ID which we need for
+    // the images
+    doc.current
+      .set(companyData, { merge: true })
+      .then(() => {
+        const imgUploads = [];
+        if (coverUploadRef.current.files[0]) {
+          const coverRes = storage
+            .ref(`companyCovers/${doc.current.id}`)
+            .put(coverUploadRef.current.files[0]);
+          imgUploads.push(coverRes);
         } else {
-          return db.collection('companies').add(companyData);
+          imgUploads.push(null);
+        }
+        if (logoUploadRef.current.files[0]) {
+          const logoRes = storage
+            .ref(`companyLogos/${doc.current.id}`)
+            .put(logoUploadRef.current.files[0]);
+          imgUploads.push(logoRes);
+        } else {
+          imgUploads.push(null);
+        }
+        return Promise.all(imgUploads);
+      })
+      .then(([newCover, newLogo]) => {
+        if (newCover || newLogo) {
+          const update = {};
+          // only set the fields we changed so we don't overwrite someone
+          // else
+          if (newCover) {
+            update.coverPath = newCover.ref.fullPath;
+          }
+          if (newLogo) {
+            update.logoPath = newLogo.ref.fullPath;
+          }
+          return doc.current.update(update);
         }
       })
       .then(() => {
@@ -160,22 +186,22 @@ export const AdminEditCompanyPage = ({
         <Grid item>
           <FormLabel>Cover</FormLabel>
           <input type="file" ref={coverUploadRef} />
-          {cover && (
+          {coverURL && (
             <img
               alt={`${name} cover`}
               style={{ height: 'auto', width: 'auto', maxWidth: 300 }}
-              src={cover}
+              src={coverURL}
             />
           )}
         </Grid>
         <Grid item>
           <FormLabel>Logo</FormLabel>
           <input type="file" ref={logoUploadRef} />
-          {logo && (
+          {logoURL && (
             <img
               alt={`${name} logo to upload`}
               style={{ height: 'auto', width: 'auto', maxWidth: 300 }}
-              src={logo}
+              src={logoURL}
             />
           )}
         </Grid>

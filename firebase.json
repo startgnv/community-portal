@@ -7,7 +7,8 @@
     "public": "public",
     "ignore": [
       "firebase.json",
-      "firebase.rules",
+      "firestore.rules",
+      "storage.rules",
       "firebase.indexes.json",
       "**/.*",
       "**/node_modules/**"
@@ -18,5 +19,8 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

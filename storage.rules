@@ -1,0 +1,14 @@
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      // ideally we'd use:
+    	// allow write: if exists(/databases/$(database)/documents/admins/$(request.auth.token.email));
+    	// but we can't currently since storage can't lookup in firestore
+      allow write: if request.auth.token.email == "james@getadmiral.com";
+      allow write: if request.auth.token.email == "nathan@getadmiral.com";
+      allow write: if request.auth.token.email == "will@getadmiral.com";
+      allow read: if true;
+    }
+  }
+}
+  

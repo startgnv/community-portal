@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
 import { useAdminContainer } from './AdminPageContainer';
-import AdminListCard from './AdminListCard';
+import AdminCompanyListCard from './AdminCompanyListCard';
 import { db } from '../firebase';
 
 const useStyles = makeStyles({
@@ -54,12 +54,12 @@ export const AdminCompaniesPage = () => {
           </Grid>
           {companies
             .filter(({ name = '' }) => name.includes(search))
-            .map(({ name, id, coverImg, logoImg }) => (
+            .map(({ name, id, coverPath, logoPath }) => (
               <Grid key={id} item md={4} xs={12}>
-                <AdminListCard
+                <AdminCompanyListCard
                   key={id}
-                  coverSrc={coverImg}
-                  logoSrc={logoImg}
+                  coverPath={coverPath}
+                  logoPath={logoPath}
                   label={name}
                   linkTo={`/admin/companies/${id}/edit`}
                 />
