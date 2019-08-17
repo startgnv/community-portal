@@ -28,7 +28,6 @@ export const JobList = ({
   }
 }) => {
   let filteredJobs;
-  console.warn(filter);
   if (filter.search || filter.categories.length) {
     filteredJobs = _.filter(jobs, job => {
       let match = false;

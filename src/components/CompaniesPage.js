@@ -10,8 +10,6 @@ import Error from './Error';
 import MapPin from './MapPin';
 import MapContainer from './MapContainer';
 import MapPageCompany from './MapPageCompany';
-import MapPageJob from './MapPageJob';
-import MapPageIndex from './MapPageIndex';
 import MapPageCompanies from './MapPageCompanies';
 
 import Sidebar from './Sidebar';
@@ -57,13 +55,6 @@ export const MapPage = () => {
         <Sidebar>
           <Route
             exact
-            path="/"
-            render={props => (
-              <MapPageIndex {...props} companies={companies} jobs={jobs} />
-            )}
-          />
-          <Route
-            exact
             path="/companies"
             component={({ match, ...props }) => {
               return <MapPageCompanies {...props} companies={companies} />;
@@ -71,7 +62,7 @@ export const MapPage = () => {
           />
           <Route
             exact
-            path="/company/:company"
+            path="/companies/:company"
             component={({
               match: {
                 params: { company }
@@ -95,35 +86,13 @@ export const MapPage = () => {
               );
             }}
           />
-          <Route
-            exact
-            path="/job/:jobId"
-            component={({
-              match: {
-                params: { jobId }
-              },
-              match,
-              ...props
-            }) => {
-              const job = jobs.find(({ id }) => jobId === id);
-              const company = companies.find(({ id }) => id === job.companyID);
-              return (
-                <MapPageJob
-                  {...props}
-                  match={match}
-                  job={job}
-                  company={company}
-                />
-              );
-            }}
-          />
         </Sidebar>
         <MapContainer>
           {companies
             .filter(({ coordinates }) => coordinates)
             .map(({ name, coordinates: { latitude, longitude }, slug }) => (
               <Marker key={name} longitude={longitude} latitude={latitude}>
-                <MapPin linkTo={'/company/' + slug} height={36} />
+                <MapPin linkTo={'/companies/' + slug} height={36} />
               </Marker>
             ))}
         </MapContainer>

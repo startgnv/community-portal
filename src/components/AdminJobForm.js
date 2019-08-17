@@ -197,7 +197,6 @@ export const AdminJobForm = ({
             options={typeOptions}
             value={typeOptions.find(({ value }) => type === value)}
             onChange={({ value }) => {
-              console.warn(value);
               setType(value);
             }}
           />

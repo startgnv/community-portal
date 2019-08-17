@@ -1,10 +1,16 @@
+import _ from 'lodash';
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { db } from '../firebase';
 import SidebarHeader from './SidebarHeader';
 import { Link, Redirect } from 'react-router-dom';
 import JobCategories from './JobCategories';
 import Button from './Button';
+import Error from './Error';
 import TextInput from './TextInput';
+
+import { LinearProgress } from '@material-ui/core';
 
 const MapPageJobContainer = styled.div`
   .content {
@@ -103,21 +109,45 @@ const CategoriesContainer = styled.div`
 
 export const MapPageJob = ({
   history: { goBack },
-  job: {
+  match: {
+    params: { jobID }
+  }
+}) => {
+  const [jobValue, jobLoading, jobError] = useCollection(
+    db.collection('jobs').doc(jobID)
+  );
+  // TODO Find a way to get a single company here based on job result rather than just getting all of the companies
+  const [companiesValue, companiesLoading, companiesError] = useCollection(
+    db.collection('companies')
+  );
+  const [showFullDesc, setShowFullDesc] = useState(false);
+  const [clickedApply, setClickedApply] = useState(false);
+
+  if (jobLoading || companiesLoading) {
+    return <LinearProgress />;
+  }
+
+  if (jobError || companiesError) {
+    return <Error />;
+  }
+
+  const companies = companiesValue.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
+  const {
     title: jobTitle,
     description: jobDescription,
     applyUrl = '',
-    categories
-  } = {},
-  company: {
+    categories,
+    companyID
+  } = jobValue.data();
+  const {
     name: companyName,
     logoPath: companyLogoPath = '',
     coverPath: companyCoverPath = '',
     slug: companySlug
-  } = {}
-}) => {
-  const [showFullDesc, setShowFullDesc] = useState(false);
-  const [clickedApply, setClickedApply] = useState(false);
+  } = _.find(companies, { id: companyID });
 
   if (!jobTitle) {
     return <Redirect to="/" />;
@@ -163,7 +193,7 @@ export const MapPageJob = ({
       <div className="content">
         <h1 className="job-title">{jobTitle}</h1>
         <h3 className="company-name">
-          <Link className="company-link" to={'/company/' + companySlug}>
+          <Link className="company-link" to={'/companies/' + companySlug}>
             {companyName}
           </Link>
         </h3>

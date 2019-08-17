@@ -83,7 +83,7 @@ export const JobListItem = ({
   showDescription = true
 }) => (
   <JobListItemContainer>
-    <Link className="container-link" to={`/job/${id}`}>
+    <Link className="container-link" to={`/jobs/${id}`}>
       {showCompanyInfo && (
         <StorageImg
           className="company-img"
@@ -95,7 +95,7 @@ export const JobListItem = ({
         <span className="title">{title}</span>
         {showCompanyInfo && (
           <div>
-            <Link className="company" to={`/company/${company.slug}`}>
+            <Link className="company" to={`/companies/${company.slug}`}>
               {company.name}
             </Link>
           </div>

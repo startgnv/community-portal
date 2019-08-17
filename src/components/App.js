@@ -5,8 +5,12 @@ import theme from './theme';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import MapPage from './MapPage';
+import HomePage from './HomePage';
+import CompaniesPage from './CompaniesPage';
 import AboutPage from './AboutPage';
+import EcosystemPage from './EcosystemPage';
+import JobPage from './JobPage';
+import JobsPage from './JobsPage';
 import WhyGainesvillePage from './WhyGainesvillePage';
 import AdminPage from './AdminPage';
 import AdminRoute from './AdminRoute';
@@ -33,8 +37,16 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const mapRoutes = ['/company/:company', '/job/:jobId', '/', '/companies'];
-const publicRoutes = [...mapRoutes, '/about', '/why-gainesville'];
+const mapRoutes = ['/companies/:company', '/companies'];
+const publicRoutes = [
+  ...mapRoutes,
+  '/',
+  '/jobs',
+  '/jobs/:jobId',
+  '/about',
+  '/ecosystem',
+  '/why-gainesville'
+];
 
 export const App = () => (
   <>
@@ -44,8 +56,12 @@ export const App = () => (
         <Router>
           <Route exact path={publicRoutes} component={Header} />
           <Switch>
-            <Route exact path={mapRoutes} component={MapPage} />
+            <Route exact path={mapRoutes} component={CompaniesPage} />
+            <Route exact path="/" component={HomePage} />
             <Route exact path="/about" component={AboutPage} />
+            <Route exact path="/ecosystem" component={EcosystemPage} />
+            <Route exact path="/jobs" component={JobsPage} />
+            <Route exact path="/jobs/:jobID" component={JobPage} />
             <Route
               exact
               path="/why-gainesville"

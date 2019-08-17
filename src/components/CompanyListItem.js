@@ -51,7 +51,7 @@ export const CompanyListItem = ({
   showLogo = true
 }) => (
   <CompanyListItemContainer>
-    <Link className="link-container" to={`/company/${slug}`}>
+    <Link className="link-container" to={`/companies/${slug}`}>
       {showLogo && (
         <StorageImg className="company-img" alt={name} path={logoPath} />
       )}
