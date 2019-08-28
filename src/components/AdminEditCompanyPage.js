@@ -39,6 +39,7 @@ export const AdminEditCompanyPage = ({
   const [url, setUrl] = useState(company.url || '');
   const [description, setDescription] = useState('');
   const [founded, setFounded] = useState('');
+  const [employeeCount, setEmployeeCount] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const logoUploadRef = useRef();
@@ -58,6 +59,7 @@ export const AdminEditCompanyPage = ({
     setUrl(company.url || '');
     setDescription(company.description || '');
     setFounded(company.founded || '');
+    setEmployeeCount(company.employeeCount || '');
   }, [
     company.name,
     company.coordinates,
@@ -65,7 +67,8 @@ export const AdminEditCompanyPage = ({
     company.slug,
     company.url,
     company.description,
-    company.founded
+    company.founded,
+    company.employeeCount
   ]);
 
   useEffect(() => {
@@ -131,6 +134,7 @@ export const AdminEditCompanyPage = ({
         : null,
       url,
       founded,
+      employeeCount,
       description
     };
     // after we create or update the doc, we'll have the ID which we need for
@@ -270,6 +274,15 @@ export const AdminEditCompanyPage = ({
             variant="outlined"
             label="Year Founded"
             onChange={e => setFounded(e.target.value)}
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            value={employeeCount}
+            fullWidth
+            variant="outlined"
+            label="Employee Count"
+            onChange={e => setEmployeeCount(e.target.value)}
           />
         </Grid>
         <Grid item container justify="flex-end">

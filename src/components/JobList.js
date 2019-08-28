@@ -7,10 +7,27 @@ const JobListContainer = styled.ul`
   padding: 0;
   margin: 0 -10px 30px;
   overflow: hidden;
+`;
 
-  .list-title {
-    margin: 0 0 0 10px;
-  }
+const ListTitle = styled.h3`
+  display: block;
+  margin: 0 0 0 10px;
+  font-size 13px;
+  font-family: 'Montserrat';
+  fon-weight: bold;
+  text-transform: uppercase;
+`;
+
+const ListContainer = styled.ul`
+  padding: 0;
+  overflow: hidden;
+`;
+
+const ItemContainer = styled.div`
+  width: 33.33333%;
+  padding-right: 30px;
+  float: left;
+  box-sizing: border-box;
 `;
 
 export const JobList = ({
@@ -21,7 +38,6 @@ export const JobList = ({
   showTitle = true,
   showCompanyInfo = true,
   showDescription = true,
-  jobCount = 0,
   filter = {
     search: '',
     categories: []
@@ -32,6 +48,9 @@ export const JobList = ({
     filteredJobs = _.filter(jobs, job => {
       let match = false;
       match = _.difference(filter.categories, job.categories).length === 0;
+      if (filter.search) {
+        match = job.title.toLowerCase().includes(filter.search);
+      }
       return match;
     });
   } else {
@@ -40,21 +59,23 @@ export const JobList = ({
 
   return (
     <JobListContainer className={className}>
-      {showTitle && (
-        <h3 className="list-title">Jobs ({filteredJobs.length})</h3>
-      )}
-      {filteredJobs.map(job => {
-        const jobCompany = _.find(companies, { id: job.companyID });
-        return (
-          <JobListItem
-            job={job}
-            company={jobCompany}
-            key={job.id}
-            showDescription={showDescription}
-            showCompanyInfo={showCompanyInfo}
-          />
-        );
-      })}
+      {showTitle && <ListTitle>Jobs ({filteredJobs.length})</ListTitle>}
+      <ListContainer>
+        {filteredJobs.map(job => {
+          const jobCompany = _.find(companies, { id: job.companyID });
+          return (
+            <ItemContainer>
+              <JobListItem
+                job={job}
+                company={jobCompany}
+                key={job.id}
+                showDescription={showDescription}
+                showCompanyInfo={showCompanyInfo}
+              />
+            </ItemContainer>
+          );
+        })}
+      </ListContainer>
     </JobListContainer>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { darken } from 'polished';
+import { lighten } from 'polished';
 import classnames from 'classnames';
 
 const ButtonContainer = styled.button`
@@ -9,7 +9,7 @@ const ButtonContainer = styled.button`
   width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
   padding: 0 20px;
   border-radius: ${({ theme, size }) => theme.buttonSizes[size].borderRadius};
-  background-color: ${({ theme }) => theme.green};
+  background-color: ${({ theme }) => theme.purple};
   text-align: center;
   border: 0;
   outline: none;
@@ -17,7 +17,7 @@ const ButtonContainer = styled.button`
   transition: 250ms;
 
   &:hover {
-    background-color: ${({ theme }) => darken(0.1, theme.green)};
+    background-color: ${({ theme }) => lighten(0.1, theme.purple)};
   }
 
   .btn-label {

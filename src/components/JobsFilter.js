@@ -6,10 +6,14 @@ import { db } from '../firebase';
 import { clearFix } from 'polished';
 import Checkbox from './Checkbox';
 import Button from './Button';
+import TextInput from './TextInput';
 
 const JobsFilterContainer = styled.div`
   text-align: right;
   clear: both;
+  padding: 20px;
+  background: ${({ theme }) => theme.uiBackground};
+  border-radius: 6px;
 
   .filter-label {
     display: inline-block;
@@ -42,9 +46,10 @@ const CheckContainer = styled.div`
 const noop = () => {};
 
 const JobsFilter = ({ onChange = noop, filter }) => {
-  const [controlsOpen, setControlsOpen] = useState(false);
+  const [controlsOpen, setControlsOpen] = useState(true);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState(['fullTime', 'partTime']);
+  const [searchString, setSearchString] = useState('');
   const [categoriesValue, categoriesLoading, categoriesError] = useCollection(
     db.collection('jobCategories')
   );
@@ -86,16 +91,20 @@ const JobsFilter = ({ onChange = noop, filter }) => {
     });
   };
 
+  const onSearchChange = ({ target: { value } }) => {
+    onChange({
+      search: value
+    });
+  };
+
   return (
     <JobsFilterContainer>
-      <FilterItem>
-        <Button
-          label={controlsOpen ? 'Close Filter' : 'Open Filter'}
-          variant="outline"
-          onClick={() => setControlsOpen(!controlsOpen)}
-        />
-      </FilterItem>
       <FilterControls open={controlsOpen}>
+        <TextInput
+          placeholder="Filter Jobs"
+          name="filter"
+          onChange={onSearchChange}
+        />
         <CategoriesContainer>
           <GroupTitle>Categories</GroupTitle>
           {renderCategories.map(({ name, id }) => (
