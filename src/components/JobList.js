@@ -6,7 +6,6 @@ import JobListItem from './JobListItem';
 const JobListContainer = styled.ul`
   padding: 0;
   margin: 0 -10px 30px;
-  overflow: hidden;
 `;
 
 const ListTitle = styled.h3`
@@ -20,12 +19,11 @@ const ListTitle = styled.h3`
 
 const ListContainer = styled.ul`
   padding: 0;
-  overflow: hidden;
 `;
 
 const ItemContainer = styled.div`
   width: 33.33333%;
-  padding-right: 30px;
+  padding: 0 30px 30px 0;
   float: left;
   box-sizing: border-box;
 `;

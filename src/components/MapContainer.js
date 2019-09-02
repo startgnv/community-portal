@@ -3,8 +3,10 @@ import ReactMapGL from 'react-map-gl';
 import styled from 'styled-components/macro';
 
 const MapContainerContainer = styled.div`
+  width: 100%;
   height: 100%;
-  overflow: hidden;
+  border: solid 1px ${({ theme }) => theme.uiBorder};
+  border-radius: 6px;
 `;
 
 const defaultCenter = {
@@ -32,7 +34,7 @@ export const MapContainer = ({ children }) => {
         onViewportChange={setViewport}
         width={'100%'}
         height={'100%'}
-        scrollZoom={true}
+        scrollZoom={false}
       >
         {children}
       </ReactMapGL>

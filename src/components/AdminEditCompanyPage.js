@@ -36,8 +36,10 @@ export const AdminEditCompanyPage = ({
   const [coverURL, setCoverURL] = useState('');
   const [inputAddress, setInputAddress] = useState('');
   const [slug, setSlug] = useState('');
+  const [industry, setIndustry] = useState('');
   const [url, setUrl] = useState(company.url || '');
   const [description, setDescription] = useState('');
+  const [shortDescription, setShortDescription] = useState('');
   const [founded, setFounded] = useState('');
   const [employeeCount, setEmployeeCount] = useState('');
   const [success, setSuccess] = useState(false);
@@ -56,8 +58,10 @@ export const AdminEditCompanyPage = ({
     });
     setInputAddress(company.address || '');
     setSlug(company.slug || '');
+    setIndustry(company.industry || '');
     setUrl(company.url || '');
     setDescription(company.description || '');
+    setShortDescription(company.shortDescription || '');
     setFounded(company.founded || '');
     setEmployeeCount(company.employeeCount || '');
   }, [
@@ -65,8 +69,10 @@ export const AdminEditCompanyPage = ({
     company.coordinates,
     company.address,
     company.slug,
+    company.industry,
     company.url,
     company.description,
+    company.shortDescription,
     company.founded,
     company.employeeCount
   ]);
@@ -128,6 +134,7 @@ export const AdminEditCompanyPage = ({
     const companyData = {
       name,
       slug,
+      industry,
       address: address.place_name || null,
       coordinates: address.center
         ? new firebase.firestore.GeoPoint(...address.center.reverse())
@@ -135,7 +142,8 @@ export const AdminEditCompanyPage = ({
       url,
       founded,
       employeeCount,
-      description
+      description,
+      shortDescription
     };
     // after we create or update the doc, we'll have the ID which we need for
     // the images
@@ -230,11 +238,30 @@ export const AdminEditCompanyPage = ({
         </Grid>
         <Grid item>
           <TextField
+            value={industry}
+            label="Industry"
+            variant="outlined"
+            onChange={e => setIndustry(e.target.value)}
+            fullWidth
+          />
+        </Grid>
+        <Grid item>
+          <TextField
             value={description}
             fullWidth
             variant="outlined"
             label="Description"
             onChange={e => setDescription(e.target.value)}
+            multiline
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            value={shortDescription}
+            fullWidth
+            variant="outlined"
+            label="Short Description"
+            onChange={e => setShortDescription(e.target.value)}
             multiline
           />
         </Grid>

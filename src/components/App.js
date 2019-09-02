@@ -85,30 +85,6 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 700;
     font-style: normal;
   }
-
-  h1 {
-    font-size: 68px;
-  }
-
-  h2 {
-    font-size: 40px;
-  }
-
-  h3 {
-    font-size: 32px;
-  }
-
-  h4 {
-    font-size: 24px;
-  }
-
-  h5 {
-    font-size: 18px;
-  }
-
-  h6 {
-    font-size: 14px;
-  }
 `;
 
 const mapRoutes = ['/companies/:company', '/companies'];

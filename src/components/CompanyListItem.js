@@ -44,9 +44,12 @@ const CompanyMeta = styled.div`
 
 const CompanyName = styled.span`
   display: block;
-  font-size: 16px;
-  color: #333;
-  line-height: 24px;
+  font-size: 13px;
+  color: ${({ theme }) => theme.deepNavy};
+  height: 32px;
+  line-height: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
 `;
 
 const EmployeeCount = styled.span`

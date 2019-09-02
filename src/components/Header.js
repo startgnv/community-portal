@@ -65,7 +65,7 @@ export const Header = ({ className }) => (
   <HeaderContainer className={className}>
     <HeaderContent>
       <Link className="logo-link" to="/">
-        <h1 className="logo">innovateGNV</h1>
+        <h1 className="logo">sparkGNV</h1>
       </Link>
       <ul className="navigation">
         <li>
