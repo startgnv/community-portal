@@ -14,7 +14,7 @@ const HeroContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding-top: 70px;
-  background-image: url(${heroBG});
+  background-image: url(${({ bgImage }) => bgImage || heroBG});
   background-size: cover;
   background-position: center;
   background-repeat: none;
@@ -27,8 +27,8 @@ const HeroContent = styled.div`
   padding: 0 20px;
 `;
 
-const Hero = ({ children, size = 'medium' }) => (
-  <HeroContainer size={size}>
+const Hero = ({ children, size = 'medium', bgImage = '' }) => (
+  <HeroContainer size={size} bgImage={bgImage}>
     <HeroContent>{children}</HeroContent>
   </HeroContainer>
 );

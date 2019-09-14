@@ -1,10 +1,15 @@
+import _ from 'lodash';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormLabel from '@material-ui/core/FormLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 
 import firebase, { db, storage } from '../firebase';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import GeocodingInput from './GeocodingInput';
@@ -17,6 +22,10 @@ export const AdminEditCompanyPage = ({
   },
   history
 }) => {
+  const [categories = [], loadingCategories] = useCollectionData(
+    db.collection('companyCategories'),
+    { idField: 'id' }
+  );
   const doc = useRef(
     // we do the spread trick to "trick" firebase into giving us a doc with a
     // random ID but it only does that if you pass _nothing_ to it
@@ -36,7 +45,7 @@ export const AdminEditCompanyPage = ({
   const [coverURL, setCoverURL] = useState('');
   const [inputAddress, setInputAddress] = useState('');
   const [slug, setSlug] = useState('');
-  const [industry, setIndustry] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [url, setUrl] = useState(company.url || '');
   const [description, setDescription] = useState('');
   const [shortDescription, setShortDescription] = useState('');
@@ -58,7 +67,7 @@ export const AdminEditCompanyPage = ({
     });
     setInputAddress(company.address || '');
     setSlug(company.slug || '');
-    setIndustry(company.industry || '');
+    setSelectedCategories(company.categories || []);
     setUrl(company.url || '');
     setDescription(company.description || '');
     setShortDescription(company.shortDescription || '');
@@ -69,7 +78,6 @@ export const AdminEditCompanyPage = ({
     company.coordinates,
     company.address,
     company.slug,
-    company.industry,
     company.url,
     company.description,
     company.shortDescription,
@@ -134,7 +142,7 @@ export const AdminEditCompanyPage = ({
     const companyData = {
       name,
       slug,
-      industry,
+      categories: selectedCategories,
       address: address.place_name || null,
       coordinates: address.center
         ? new firebase.firestore.GeoPoint(...address.center.reverse())
@@ -192,6 +200,16 @@ export const AdminEditCompanyPage = ({
       });
   };
 
+  const onCategoryChange = ({ target: { checked, value } }) => {
+    let newCategories;
+    if (checked) {
+      newCategories = _.concat(selectedCategories, value);
+    } else {
+      newCategories = _.without(selectedCategories, value);
+    }
+    setSelectedCategories(newCategories);
+  };
+
   return (
     <FormCardPage title="Company Details" onSubmit={onSubmit}>
       <Grid container spacing={2} direction="column">
@@ -237,13 +255,22 @@ export const AdminEditCompanyPage = ({
           />
         </Grid>
         <Grid item>
-          <TextField
-            value={industry}
-            label="Industry"
-            variant="outlined"
-            onChange={e => setIndustry(e.target.value)}
-            fullWidth
-          />
+          <FormLabel>Categories</FormLabel>
+          <FormGroup>
+            {categories.map(cat => (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedCategories.indexOf(cat.id) > -1}
+                    onChange={onCategoryChange}
+                    value={cat.id}
+                  />
+                }
+                label={cat.name}
+                key={cat.id}
+              />
+            ))}
+          </FormGroup>
         </Grid>
         <Grid item>
           <TextField

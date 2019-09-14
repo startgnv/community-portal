@@ -5,13 +5,17 @@ import SidebarHeader from './SidebarHeader';
 import JobList from './JobList';
 
 const MapPageCompanyContainer = styled.div`
+  width: 60%;
+  margin-right: 30px;
+  flex: 7;
+
   .logo {
     position: absolute;
     width: 120px;
     height: 120px;
     bottom: -30px;
     left: 30px;
-    border-radius: 100%;
+    border-radius: 6px;
     border: solid 3px white;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.15);
   }

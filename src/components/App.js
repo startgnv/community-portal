@@ -2,8 +2,15 @@ import React from 'react';
 import { createGlobalStyle } from 'styled-components/macro';
 import { ThemeProvider } from 'styled-components';
 import theme from './theme';
+import { usePrevious } from '../components/hooks';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  withRouter
+} from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 import HomePage from './HomePage';
 import CompaniesPage from './CompaniesPage';
@@ -18,6 +25,17 @@ import AdminLogin from './AdminLogin';
 import Header from './Header';
 import Footer from './Footer';
 import { CssBaseline } from '@material-ui/core';
+
+ReactGA.initialize('UA-138572620-3');
+
+const ScrollToTop = withRouter(({ location: { pathname = '' }, children }) => {
+  const prevPath = usePrevious(pathname);
+  if (pathname !== prevPath && prevPath) {
+    window.scrollTo(0, 0);
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }
+  return children;
+});
 
 const GlobalStyle = createGlobalStyle`
 
@@ -85,6 +103,30 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 700;
     font-style: normal;
   }
+
+  h1 {
+    font-size: 68px;
+  }
+
+  h2 {
+    font-size: 40px;
+  }
+
+  h3 {
+    font-size: 32px;
+  }
+
+  h4 {
+    font-size: 24px;
+  }
+
+  h5 {
+    font-size: 18px;
+  }
+
+  h6 {
+    font-size: 14px;
+  }
 `;
 
 const mapRoutes = ['/companies/:company', '/companies'];
@@ -104,23 +146,25 @@ export const App = () => (
     <ThemeProvider theme={theme}>
       <>
         <Router>
-          <Route exact path={publicRoutes} component={Header} />
-          <Switch>
-            <Route exact path={mapRoutes} component={CompaniesPage} />
-            <Route exact path="/" component={HomePage} />
-            <Route exact path="/about" component={AboutPage} />
-            <Route exact path="/ecosystem" component={EcosystemPage} />
-            <Route exact path="/jobs" component={JobsPage} />
-            <Route exact path="/jobs/:jobID" component={JobPage} />
-            <Route
-              exact
-              path="/why-gainesville"
-              component={WhyGainesvillePage}
-            />
-            <Route exact path="/admin/login" component={AdminLogin} />
-            <AdminRoute path="/admin" component={AdminPage} />
-          </Switch>
-          <Route exact path={publicRoutes} component={Footer} />
+          <ScrollToTop>
+            <Route exact path={publicRoutes} component={Header} />
+            <Switch>
+              <Route exact path={mapRoutes} component={CompaniesPage} />
+              <Route exact path="/" component={HomePage} />
+              <Route exact path="/about" component={AboutPage} />
+              <Route exact path="/ecosystem" component={EcosystemPage} />
+              <Route exact path="/jobs" component={JobsPage} />
+              <Route exact path="/jobs/:jobID" component={JobPage} />
+              <Route
+                exact
+                path="/why-gainesville"
+                component={WhyGainesvillePage}
+              />
+              <Route exact path="/admin/login" component={AdminLogin} />
+              <AdminRoute path="/admin" component={AdminPage} />
+            </Switch>
+            <Route exact path={publicRoutes} component={Footer} />
+          </ScrollToTop>
         </Router>
         <GlobalStyle />
       </>

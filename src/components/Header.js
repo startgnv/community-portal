@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { Link, NavLink } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
-  position: absolute;
+  position: fixed;
   height: ${({ theme }) => theme.headerHeight};
   top: 0;
   left: 0;

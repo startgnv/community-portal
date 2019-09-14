@@ -6,30 +6,6 @@ const PageContentContainer = styled.div`
   margin: 0 auto;
   padding: 20px 0;
 
-  h1 {
-    font-size: 68px;
-  }
-
-  h2 {
-    font-size: 40px;
-  }
-
-  h3 {
-    font-size: 32px;
-  }
-
-  h4 {
-    font-size: 24px;
-  }
-
-  h5 {
-    font-size: 18px;
-  }
-
-  h6 {
-    font-size: 14px;
-  }
-
   > p {
     margin-bottom: 30px;
   }

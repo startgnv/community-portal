@@ -124,7 +124,6 @@ export const AdminJobForm = ({
     }
     setSelectedCategories(newCategories);
   };
-  console.warn();
 
   return (
     <FormCardPage title="Job Details" onSubmit={onFormSubmit}>

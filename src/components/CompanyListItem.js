@@ -70,7 +70,7 @@ export const CompanyListItem = ({
         <div>
           <CompanyName>{name}</CompanyName>
           {employeeCount && (
-            <EmployeeCount>{employeeCount} Employees</EmployeeCount>
+            <EmployeeCount>{employeeCount || '10+'} Employees</EmployeeCount>
           )}
         </div>
       </CompanyInfo>

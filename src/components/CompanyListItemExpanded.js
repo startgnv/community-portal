@@ -10,7 +10,11 @@ const ItemContainer = styled.div`
   border-radius: 6px;
   overflow: hidden;
 
-  .company-link {
+  .container-link {
+    text-decoration: none;
+  }
+
+  .jobs-link {
     font-size: 13px;
     height: 32px;
     text-transform: uppercase;
@@ -76,19 +80,21 @@ const CompaniListItemExpanded = ({
   jobs = []
 }) => (
   <ItemContainer>
-    <Images coverImg={coverImg}>
-      <StorageImg className="logo" alt={name} path={logoPath} />
-    </Images>
-    <CompanyInfo>
-      <CompanyName>{name}</CompanyName>
-      <EmployeeCount>{employeeCount} Employees</EmployeeCount>
-      <ShortDescription>{shortDescription}</ShortDescription>
-      {jobs.length > 0 && (
-        <Link className="company-link" to={'/companies/' + slug}>
-          View {jobs.length} job{jobs.length !== 1 && 's'}
-        </Link>
-      )}
-    </CompanyInfo>
+    <Link className="container-link" to={'/companies/' + slug}>
+      <Images coverImg={coverImg}>
+        <StorageImg className="logo" alt={name} path={logoPath} />
+      </Images>
+      <CompanyInfo>
+        <CompanyName>{name}</CompanyName>
+        <EmployeeCount>{employeeCount || '10+'} Employees</EmployeeCount>
+        <ShortDescription>{shortDescription}</ShortDescription>
+        {jobs.length > 0 && (
+          <Link className="jobs-link" to={'/companies/' + slug}>
+            View {jobs.length} job{jobs.length !== 1 && 's'}
+          </Link>
+        )}
+      </CompanyInfo>
+    </Link>
   </ItemContainer>
 );
 
