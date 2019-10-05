@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactMapGL from 'react-map-gl';
 import styled from 'styled-components/macro';
+import 'mapbox-gl/src/css/mapbox-gl.css';
 
 const MapContainerContainer = styled.div`
   width: 100%;
@@ -9,14 +10,11 @@ const MapContainerContainer = styled.div`
   border-radius: 6px;
 `;
 
-const defaultCenter = {
-  latitude: 29.6607805656048,
-  longitude: -82.380708628568,
-  zoom: 11
-};
-
-export const MapContainer = ({ children }) => {
-  const [viewport, setViewport] = useState(defaultCenter);
+export const MapContainer = ({
+  children,
+  viewport,
+  onViewportChange = () => {}
+}) => {
   return (
     <MapContainerContainer>
       <ReactMapGL
@@ -31,10 +29,10 @@ export const MapContainer = ({ children }) => {
         touchZoom={true}
         dragRotate={false}
         doubleClickZoom={false}
-        onViewportChange={setViewport}
         width={'100%'}
         height={'100%'}
         scrollZoom={false}
+        onViewportChange={onViewportChange}
       >
         {children}
       </ReactMapGL>

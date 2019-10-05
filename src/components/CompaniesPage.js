@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
-import { Marker } from 'react-map-gl';
+import { Marker, FlyToInterpolator } from 'react-map-gl';
+import { easeCubic } from 'd3-ease';
 
 import { db } from '../firebase';
 import Error from './Error';
@@ -47,6 +48,10 @@ const CompaniesMapInner = styled.div`
   height: 100vh;
   padding: 20px 0;
   box-sizing: border-box;
+
+  .active-pin {
+    z-index: 1000;
+  }
 `;
 
 export const MapPage = () => {
@@ -56,6 +61,12 @@ export const MapPage = () => {
   const [jobsValue, jobsLoading, jobsError] = useCollection(
     db.collection('jobs')
   );
+  const [viewport, setViewport] = useState({
+    latitude: 29.6607805656048,
+    longitude: -82.380708628568,
+    zoom: 11
+  });
+  const [activeCompany, setActiveCompany] = useState('');
 
   if (companiesError || jobsError) {
     return <Error />;
@@ -70,6 +81,26 @@ export const MapPage = () => {
   }));
   const jobs = jobsValue.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
+  const onViewportChange = newViewport => {
+    const viewport = {
+      ...viewport,
+      ...newViewport
+    };
+    setViewport(viewport);
+  };
+
+  const onCompanyMouseEnter = ({ id, coordinates }) => {
+    onViewportChange({
+      latitude: coordinates.latitude,
+      longitude: coordinates.longitude,
+      zoom: 13,
+      transitionDuration: 500,
+      transitionInterpolator: new FlyToInterpolator(),
+      transitionEasing: easeCubic
+    });
+    setActiveCompany(id);
+  };
+
   return (
     <MapPageContainer>
       <Hero size="medium">
@@ -83,7 +114,12 @@ export const MapPage = () => {
           path="/companies"
           component={({ match, ...props }) => {
             return (
-              <MapPageCompanies {...props} companies={companies} jobs={jobs} />
+              <MapPageCompanies
+                {...props}
+                companies={companies}
+                jobs={jobs}
+                onCompanyMouseEnter={onCompanyMouseEnter}
+              />
             );
           }}
         />
@@ -113,14 +149,33 @@ export const MapPage = () => {
         />
         <CompaniesMap>
           <CompaniesMapInner>
-            <MapContainer>
+            <MapContainer
+              viewport={viewport}
+              onViewportChange={onViewportChange}
+            >
               {companies
                 .filter(({ coordinates }) => coordinates)
-                .map(({ name, coordinates: { latitude, longitude }, slug }) => (
-                  <Marker key={name} longitude={longitude} latitude={latitude}>
-                    <MapPin linkTo={'/companies/' + slug} height={36} />
-                  </Marker>
-                ))}
+                .map(
+                  ({
+                    id,
+                    name,
+                    coordinates: { latitude, longitude },
+                    slug
+                  }) => (
+                    <Marker
+                      key={name}
+                      longitude={longitude}
+                      latitude={latitude}
+                      className={activeCompany === id ? 'active-pin' : ''}
+                    >
+                      <MapPin
+                        linkTo={'/companies/' + slug}
+                        size={36}
+                        active={activeCompany === id}
+                      />
+                    </Marker>
+                  )
+                )}
             </MapContainer>
           </CompaniesMapInner>
         </CompaniesMap>

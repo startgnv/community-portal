@@ -1,11 +1,13 @@
 import _ from 'lodash';
 import React from 'react';
 import styled from 'styled-components/macro';
+import { clearFix } from 'polished';
 import JobListItem from './JobListItem';
 
 const JobListContainer = styled.ul`
   padding: 0;
   margin: 0 -10px 30px;
+  ${clearFix()}
 `;
 
 const ListTitle = styled.h3`

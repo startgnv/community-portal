@@ -7,4 +7,4 @@ const StorageImg = ({ path, ...imgProps }) => {
   return <img src={url} {...imgProps} alt="" />;
 };
 
-export default StorageImg;
+export default React.memo(StorageImg);

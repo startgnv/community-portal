@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { Link, NavLink } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
-  position: fixed;
+  position: absolute;
   height: ${({ theme }) => theme.headerHeight};
   top: 0;
   left: 0;
@@ -99,15 +99,6 @@ export const Header = ({ className }) => (
             activeClassName="active"
           >
             Why Gainesville?
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            className="nav-link"
-            to="/ecosystem"
-            activeClassName="active"
-          >
-            Ecosystem
           </NavLink>
         </li>
       </ul>

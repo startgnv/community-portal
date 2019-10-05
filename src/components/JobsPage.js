@@ -63,6 +63,7 @@ export const MapPageIndex = () => {
           companies={companies}
           filter={jobsFilter}
           showDescription={false}
+          showTitle={false}
         />
       </PageContent>
     </>

@@ -29,7 +29,7 @@ const ButtonContainer = styled.button`
 
   &.outline {
     background-color: transparent;
-    box-shadow: inset 0 0 0 1px ${({ theme }) => theme.uiBorder};
+    box-shadow: inset 0 0 0 2px ${({ theme }) => theme.uiBorder};
 
     .btn-label {
       color: ${({ theme }) => theme.textMedium};
@@ -46,11 +46,11 @@ export const Button = ({
   className,
   fullWidth = false,
   size = 'medium',
-  style = '',
+  variant = '',
   onClick = () => {}
 }) => {
   const btnClasses = classnames(className, {
-    [`${style}`]: true
+    [`${variant}`]: true
   });
   return (
     <ButtonContainer

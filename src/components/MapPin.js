@@ -4,18 +4,23 @@ import mapPin from '../assets/images/map-pin.svg';
 import { Link } from 'react-router-dom';
 
 const PinContainer = styled.div`
-  transform: translate(${({ height }) => `${-height * 0.75}px, ${-height}px`});
+  z-index: ${({ active }) => (active ? '1000' : '100')};
 `;
 
 export const MapPin = ({ size = 36, active, linkTo }) => {
-  const img = <img height={active ? size * 2 : size} src={mapPin} alt="pin" />;
+  const calcSize = active ? size * 2 : size;
+  const img = <img height={calcSize} src={mapPin} alt="pin" />;
   let content;
   if (linkTo) {
     content = <Link to={linkTo}>{img}</Link>;
   } else {
     content = img;
   }
-  return <PinContainer height={size}>{content}</PinContainer>;
+  return (
+    <PinContainer height={calcSize} active={active}>
+      {content}
+    </PinContainer>
+  );
 };
 
 export default MapPin;

@@ -40,7 +40,7 @@ const Images = styled.div`
     top: 14px;
     right: -26px;
     border: solid 2px white;
-    border-radius: 3px;
+    border-radius: 6px;
   }
 `;
 
@@ -77,9 +77,10 @@ const CompaniListItemExpanded = ({
     coverImg = '',
     shortDescription = ''
   } = {},
-  jobs = []
+  jobs = [],
+  onMouseEnter = () => {}
 }) => (
-  <ItemContainer>
+  <ItemContainer onMouseEnter={onMouseEnter}>
     <Link className="container-link" to={'/companies/' + slug}>
       <Images coverImg={coverImg}>
         <StorageImg className="logo" alt={name} path={logoPath} />

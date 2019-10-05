@@ -3,9 +3,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormLabel from '@material-ui/core/FormLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 
 import firebase, { db, storage } from '../firebase';
@@ -15,6 +12,7 @@ import { useDownloadURL } from 'react-firebase-hooks/storage';
 import GeocodingInput from './GeocodingInput';
 import { useAdminContainer } from './AdminPageContainer';
 import FormCardPage from './FormCardPage';
+import Select from 'react-select';
 
 export const AdminEditCompanyPage = ({
   match: {
@@ -22,7 +20,7 @@ export const AdminEditCompanyPage = ({
   },
   history
 }) => {
-  const [categories = [], loadingCategories] = useCollectionData(
+  const [industries = [], loadingIndustries] = useCollectionData(
     db.collection('companyCategories'),
     { idField: 'id' }
   );
@@ -46,6 +44,7 @@ export const AdminEditCompanyPage = ({
   const [inputAddress, setInputAddress] = useState('');
   const [slug, setSlug] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [industryID, setIndustryID] = useState('');
   const [url, setUrl] = useState(company.url || '');
   const [description, setDescription] = useState('');
   const [shortDescription, setShortDescription] = useState('');
@@ -73,6 +72,7 @@ export const AdminEditCompanyPage = ({
     setShortDescription(company.shortDescription || '');
     setFounded(company.founded || '');
     setEmployeeCount(company.employeeCount || '');
+    setIndustryID(company.industryID || '');
   }, [
     company.name,
     company.coordinates,
@@ -82,7 +82,8 @@ export const AdminEditCompanyPage = ({
     company.description,
     company.shortDescription,
     company.founded,
-    company.employeeCount
+    company.employeeCount,
+    company.industryID
   ]);
 
   useEffect(() => {
@@ -134,6 +135,11 @@ export const AdminEditCompanyPage = ({
     backTo: '/admin/companies'
   });
 
+  const industryOptions = industries.map(({ id, name }) => ({
+    value: id,
+    label: name
+  }));
+
   const onSubmit = e => {
     e.preventDefault();
     setLoading(true);
@@ -151,7 +157,8 @@ export const AdminEditCompanyPage = ({
       founded,
       employeeCount,
       description,
-      shortDescription
+      shortDescription,
+      industryID
     };
     // after we create or update the doc, we'll have the ID which we need for
     // the images
@@ -200,16 +207,6 @@ export const AdminEditCompanyPage = ({
       });
   };
 
-  const onCategoryChange = ({ target: { checked, value } }) => {
-    let newCategories;
-    if (checked) {
-      newCategories = _.concat(selectedCategories, value);
-    } else {
-      newCategories = _.without(selectedCategories, value);
-    }
-    setSelectedCategories(newCategories);
-  };
-
   return (
     <FormCardPage title="Company Details" onSubmit={onSubmit}>
       <Grid container spacing={2} direction="column">
@@ -255,22 +252,14 @@ export const AdminEditCompanyPage = ({
           />
         </Grid>
         <Grid item>
-          <FormLabel>Categories</FormLabel>
-          <FormGroup>
-            {categories.map(cat => (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={selectedCategories.indexOf(cat.id) > -1}
-                    onChange={onCategoryChange}
-                    value={cat.id}
-                  />
-                }
-                label={cat.name}
-                key={cat.id}
-              />
-            ))}
-          </FormGroup>
+          <FormLabel>Industry</FormLabel>
+          <Select
+            label="Industry"
+            disabled={loadingIndustries}
+            options={industryOptions}
+            value={industryOptions.find(({ value }) => industryID === value)}
+            onChange={({ value }) => setIndustryID(value)}
+          />
         </Grid>
         <Grid item>
           <TextField

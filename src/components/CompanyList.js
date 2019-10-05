@@ -1,4 +1,5 @@
 import React from 'react';
+import { clearFix } from 'polished';
 import CompanyListItem from './CompanyListItem';
 import styled from 'styled-components/macro';
 
@@ -16,6 +17,7 @@ const ListTitle = styled.h3`
 const ListContainer = styled.ul`
   margin-right: -30px;
   padding: 0;
+  ${clearFix()}
 `;
 
 const CompanyItemContainer = styled.div`
@@ -26,7 +28,6 @@ const CompanyItemContainer = styled.div`
 `;
 
 export const CompanyList = ({
-  children,
   className,
   jobs,
   companies,

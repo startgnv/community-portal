@@ -9,15 +9,6 @@ const PageContentContainer = styled.div`
   > p {
     margin-bottom: 30px;
   }
-
-  > ul {
-    margin: 0 0 30px 30px;
-
-    > li {
-      margin-bottom: 5px;
-      list-style: disc;
-    }
-  }
 `;
 
 const PageContent = ({ children }) => (

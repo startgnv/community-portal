@@ -9,7 +9,11 @@ const MapPageComapniesContainer = styled.div`
   flex: 7;
 `;
 
-export const MapPageCompanies = ({ companies = [], jobs = [] }) => (
+export const MapPageCompanies = ({
+  companies = [],
+  jobs = [],
+  onCompanyMouseEnter = () => {}
+}) => (
   <MapPageComapniesContainer>
     {companies.map(company => {
       const companyJobs = jobs.filter(job => job.companyID === company.id);
@@ -18,6 +22,7 @@ export const MapPageCompanies = ({ companies = [], jobs = [] }) => (
           company={company}
           jobs={companyJobs}
           key={company.id}
+          onMouseEnter={() => onCompanyMouseEnter(company)}
         />
       );
     })}
