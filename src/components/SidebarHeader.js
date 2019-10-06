@@ -17,10 +17,17 @@ const SidebarHeaderContainer = styled.div`
     height: ${({ mainImgSize }) => mainImgSize};
     bottom: -30px;
     left: 30px;
-    border-radius: 100%;
+    border-radius: 6px;
     border: solid 3px white;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.15);
   }
+`;
+
+const HeaderInner = styled.div`
+  position: relative;
+  max-width: ${({ theme }) => theme.contentMaxWidth};
+  height: 100%;
+  margin: 0 auto;
 `;
 
 export const SidebarHeader = ({
@@ -36,7 +43,9 @@ export const SidebarHeader = ({
       height={height}
       mainImgSize={mainImgSize}
     >
-      <StorageImg className="logo" path={logoPath} alt="Logo" />
+      <HeaderInner>
+        <StorageImg className="logo" path={logoPath} alt="Logo" />
+      </HeaderInner>
     </SidebarHeaderContainer>
   );
 };

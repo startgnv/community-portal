@@ -14,6 +14,7 @@ export default {
 
   // structure
   headerHeight: '70px',
+  contentMaxWidth: '960px',
 
   // buttons
   buttonSizes: {

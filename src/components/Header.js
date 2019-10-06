@@ -3,11 +3,11 @@ import styled from 'styled-components/macro';
 import { Link, NavLink } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
-  position: absolute;
   height: ${({ theme }) => theme.headerHeight};
   top: 0;
   left: 0;
   right: 0;
+  background-color: ${({ theme }) => theme.deepNavy};
 
   .logo-link {
     display: block;

@@ -13,7 +13,7 @@ const HeroContainer = styled.div`
   min-height: ${({ size }) => heroSizes[size]};
   align-items: center;
   justify-content: center;
-  padding-top: 70px;
+  margin-top: -${({ theme }) => theme.headerHeight};
   background-image: url(${({ bgImage }) => bgImage || heroBG});
   background-size: cover;
   background-position: center;

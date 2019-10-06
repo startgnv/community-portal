@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 
 const PageContentContainer = styled.div`
-  max-width: 960px;
+  max-width: ${({ theme }) => theme.contentMaxWidth};
   margin: 0 auto;
   padding: 20px 0;
 
