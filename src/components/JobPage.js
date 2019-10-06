@@ -73,13 +73,17 @@ export const MapPageJob = ({
     id: doc.id,
     ...doc.data()
   }));
+  const job = {
+    id: jobValue.id,
+    ...jobValue.data()
+  };
   const {
     title: jobTitle,
     description: jobDescription,
     applyUrl = '',
     categories,
     companyID
-  } = jobValue.data();
+  } = job;
   const {
     name: companyName,
     logoPath: companyLogoPath = '',
@@ -111,7 +115,7 @@ export const MapPageJob = ({
             <JobCategories categories={categories} />
           </CategoriesContainer>
         )}
-        <JobApply applyUrl={applyUrl} />
+        <JobApply job={job} />
         <div className="job-description">
           <p>{jobDescription}</p>
         </div>
