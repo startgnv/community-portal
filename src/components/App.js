@@ -14,6 +14,7 @@ import ReactGA from 'react-ga';
 
 import HomePage from './HomePage';
 import CompaniesPage from './CompaniesPage';
+import CompanyPage from './CompanyPage';
 import AboutPage from './AboutPage';
 import EcosystemPage from './EcosystemPage';
 import JobPage from './JobPage';
@@ -129,10 +130,10 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const mapRoutes = ['/companies/:company', '/companies'];
 const publicRoutes = [
-  ...mapRoutes,
   '/',
+  '/companies',
+  '/companies/:companySlug',
   '/jobs',
   '/jobs/:jobId',
   '/about',
@@ -149,12 +150,17 @@ export const App = () => (
           <ScrollToTop>
             <Route exact path={publicRoutes} component={Header} />
             <Switch>
-              <Route exact path={mapRoutes} component={CompaniesPage} />
               <Route exact path="/" component={HomePage} />
               <Route exact path="/about" component={AboutPage} />
               <Route exact path="/ecosystem" component={EcosystemPage} />
               <Route exact path="/jobs" component={JobsPage} />
               <Route exact path="/jobs/:jobID" component={JobPage} />
+              <Route exact path="/companies" component={CompaniesPage} />
+              <Route
+                exact
+                path="/companies/:companySlug"
+                component={CompanyPage}
+              />
               <Route
                 exact
                 path="/why-gainesville"

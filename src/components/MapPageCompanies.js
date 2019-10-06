@@ -17,7 +17,6 @@ export const MapPageCompanies = ({
   <MapPageComapniesContainer>
     <SharedMapConsumer>
       {({ setActiveCompany }) => {
-        console.warn(setActiveCompany);
         return companies.map(company => {
           const companyJobs = jobs.filter(job => job.companyID === company.id);
           return (

@@ -5,7 +5,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { db } from '../firebase';
 import Error from './Error';
-import MapPageCompany from './MapPageCompany';
+import CompanyPage from './CompanyPage';
 import MapPageCompanies from './MapPageCompanies';
 import CompaniesMap from './CompaniesMap';
 import { SharedMapProvider } from './CompaniesMapContext';
@@ -79,45 +79,7 @@ export const MapPage = () => {
       </Hero>
       <SharedMapProvider>
         <CompaniesContent>
-          <Route
-            exact
-            path="/companies"
-            component={({ match, ...props }) => {
-              return (
-                <MapPageCompanies
-                  {...props}
-                  companies={companies}
-                  jobs={jobs}
-                />
-              );
-            }}
-          />
-          <Route
-            exact
-            path="/companies/:company"
-            component={({
-              match: {
-                params: { company }
-              },
-              match,
-              ...props
-            }) => {
-              const companyMatch = companies.find(
-                ({ slug }) => company === slug
-              );
-              const filteredJobs = jobs.filter(job => {
-                return job.companyID === companyMatch.id;
-              });
-              return (
-                <MapPageCompany
-                  {...props}
-                  match={match}
-                  company={companyMatch}
-                  jobs={filteredJobs}
-                />
-              );
-            }}
-          />
+          <MapPageCompanies companies={companies} jobs={jobs} />
           <CompaniesMapContainer>
             <CompaniesMapInner>
               <CompaniesMap companies={companies} />
