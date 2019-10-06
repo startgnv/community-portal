@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../firebase';
@@ -60,8 +60,6 @@ export const MapPageJob = ({
   const [companiesValue, companiesLoading, companiesError] = useCollection(
     db.collection('companies')
   );
-  const [showFullDesc, setShowFullDesc] = useState(false);
-  const [clickedApply, setClickedApply] = useState(false);
 
   if (jobLoading || companiesLoading) {
     return <LinearProgress />;
@@ -94,7 +92,7 @@ export const MapPageJob = ({
   }
 
   return (
-    <MapPageJobContainer showFullDesc={showFullDesc}>
+    <MapPageJobContainer>
       <SidebarHeader
         coverPath={companyCoverPath}
         logoPath={companyLogoPath}

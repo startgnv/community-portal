@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactMapGL from 'react-map-gl';
 import styled from 'styled-components/macro';
 import 'mapbox-gl/src/css/mapbox-gl.css';

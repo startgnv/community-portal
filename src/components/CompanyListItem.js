@@ -38,10 +38,6 @@ const CompanyInfo = styled.div`
   margin-bottom: 20px;
 `;
 
-const CompanyMeta = styled.div`
-  flex: 2;
-`;
-
 const CompanyName = styled.span`
   display: block;
   font-size: 13px;

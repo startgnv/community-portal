@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import CompanyList from './CompanyList';
 import CompanyListItemExpanded from './CompanyListItemExpanded';
 
 const MapPageComapniesContainer = styled.div`

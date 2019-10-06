@@ -12,10 +12,8 @@ import MapPin from './MapPin';
 import MapContainer from './MapContainer';
 import MapPageCompany from './MapPageCompany';
 import MapPageCompanies from './MapPageCompanies';
-import PageContent from './PageContent';
 import Hero from './Hero';
 
-import Sidebar from './Sidebar';
 import { LinearProgress } from '@material-ui/core';
 
 const MapPageContainer = styled.div``;

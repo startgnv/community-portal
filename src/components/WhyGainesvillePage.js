@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import Hero from './Hero';
-import PageContent from './PageContent';
 import culturePhoto from '../assets/images/culture.jpg';
 import divider from '../assets/images/whygnv-divider.jpg';
 

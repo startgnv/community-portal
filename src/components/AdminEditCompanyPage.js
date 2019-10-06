@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
