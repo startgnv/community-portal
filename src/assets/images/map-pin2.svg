@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="254px" height="254px" viewBox="0 0 254 254" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.3 (81716) - https://sketch.com -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="map-pin" transform="translate(41.507588, 12.000000)" fill-rule="nonzero">
+            <path d="M80.9950124,221.790202 C66.4653367,200.103834 55.0478593,184.921229 37.1769336,162.56081 C19.6469171,140.626944 15.2142181,134.684871 10.018917,125.071593 C3.45874557,112.932786 0.492412006,101.025322 0.492412006,85.9235164 C0.492412006,38.4692687 38.9959236,-1.42108547e-14 86.492412,-1.42108547e-14 C133.9889,-1.42108547e-14 172.492412,38.4692687 172.492412,85.9235164 C172.492412,101.031812 169.547895,112.89324 163.016403,124.977346 C157.848192,134.539206 153.539339,140.309963 135.912098,162.365324 C118.115202,184.632958 106.598138,199.961905 91.9917238,221.787347 L86.4955043,230 L80.9950124,221.790202 Z" id="Oval" stroke="#FFFFFF" stroke-width="13.4285714" fill="#9632F3"></path>
+            <circle id="Oval" fill="#FFFFFF" cx="85.992412" cy="86.5" r="31.5"></circle>
+        </g>
+    </g>
+</svg>

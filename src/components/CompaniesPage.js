@@ -60,9 +60,9 @@ export const MapPage = () => {
     db.collection('jobs')
   );
   const [viewport, setViewport] = useState({
-    latitude: 29.6607805656048,
+    latitude: 29.70078999971,
     longitude: -82.380708628568,
-    zoom: 11
+    zoom: 10
   });
   const [activeCompany, setActiveCompany] = useState('');
 
@@ -87,18 +87,6 @@ export const MapPage = () => {
     setViewport(viewport);
   };
 
-  const onCompanyMouseEnter = ({ id, coordinates }) => {
-    onViewportChange({
-      latitude: coordinates.latitude,
-      longitude: coordinates.longitude,
-      zoom: 13,
-      transitionDuration: 500,
-      transitionInterpolator: new FlyToInterpolator(),
-      transitionEasing: easeCubic
-    });
-    setActiveCompany(id);
-  };
-
   return (
     <MapPageContainer>
       <Hero size="medium">
@@ -116,7 +104,7 @@ export const MapPage = () => {
                 {...props}
                 companies={companies}
                 jobs={jobs}
-                onCompanyMouseEnter={onCompanyMouseEnter}
+                onCompanyMouseEnter={({ id }) => setActiveCompany(id)}
               />
             );
           }}
