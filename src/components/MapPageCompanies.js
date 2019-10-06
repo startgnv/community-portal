@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import CompanyListItemExpanded from './CompanyListItemExpanded';
+import { SharedMapConsumer } from './CompaniesMapContext';
 
 const MapPageComapniesContainer = styled.div`
   width: 60%;
@@ -14,17 +15,22 @@ export const MapPageCompanies = ({
   onCompanyMouseEnter = () => {}
 }) => (
   <MapPageComapniesContainer>
-    {companies.map(company => {
-      const companyJobs = jobs.filter(job => job.companyID === company.id);
-      return (
-        <CompanyListItemExpanded
-          company={company}
-          jobs={companyJobs}
-          key={company.id}
-          onMouseEnter={() => onCompanyMouseEnter(company)}
-        />
-      );
-    })}
+    <SharedMapConsumer>
+      {({ setActiveCompany }) => {
+        console.warn(setActiveCompany);
+        return companies.map(company => {
+          const companyJobs = jobs.filter(job => job.companyID === company.id);
+          return (
+            <CompanyListItemExpanded
+              company={company}
+              jobs={companyJobs}
+              key={company.id}
+              onMouseEnter={() => setActiveCompany(company.id)}
+            />
+          );
+        });
+      }}
+    </SharedMapConsumer>
   </MapPageComapniesContainer>
 );
 

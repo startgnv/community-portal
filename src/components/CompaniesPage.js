@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
-import { Marker, FlyToInterpolator } from 'react-map-gl';
-import { easeCubic } from 'd3-ease';
-
 import { db } from '../firebase';
 import Error from './Error';
-import MapPin from './MapPin';
-import MapContainer from './MapContainer';
 import MapPageCompany from './MapPageCompany';
 import MapPageCompanies from './MapPageCompanies';
+import CompaniesMap from './CompaniesMap';
+import { SharedMapProvider } from './CompaniesMapContext';
 import Hero from './Hero';
 
 import { LinearProgress } from '@material-ui/core';
@@ -35,7 +32,7 @@ const CompaniesContent = styled.div`
   padding: 30px 0;
 `;
 
-const CompaniesMap = styled.div`
+const CompaniesMapContainer = styled.div`
   flex: 5;
   margin-top: -20px;
 `;
@@ -59,12 +56,6 @@ export const MapPage = () => {
   const [jobsValue, jobsLoading, jobsError] = useCollection(
     db.collection('jobs')
   );
-  const [viewport, setViewport] = useState({
-    latitude: 29.70078999971,
-    longitude: -82.380708628568,
-    zoom: 10
-  });
-  const [activeCompany, setActiveCompany] = useState('');
 
   if (companiesError || jobsError) {
     return <Error />;
@@ -79,14 +70,6 @@ export const MapPage = () => {
   }));
   const jobs = jobsValue.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-  const onViewportChange = newViewport => {
-    const viewport = {
-      ...viewport,
-      ...newViewport
-    };
-    setViewport(viewport);
-  };
-
   return (
     <MapPageContainer>
       <Hero size="medium">
@@ -94,78 +77,54 @@ export const MapPage = () => {
           Meet the companies <strong>shaping Gainesville.</strong>
         </HeroHeadline>
       </Hero>
-      <CompaniesContent>
-        <Route
-          exact
-          path="/companies"
-          component={({ match, ...props }) => {
-            return (
-              <MapPageCompanies
-                {...props}
-                companies={companies}
-                jobs={jobs}
-                onCompanyMouseEnter={({ id }) => setActiveCompany(id)}
-              />
-            );
-          }}
-        />
-        <Route
-          exact
-          path="/companies/:company"
-          component={({
-            match: {
-              params: { company }
-            },
-            match,
-            ...props
-          }) => {
-            const companyMatch = companies.find(({ slug }) => company === slug);
-            const filteredJobs = jobs.filter(job => {
-              return job.companyID === companyMatch.id;
-            });
-            return (
-              <MapPageCompany
-                {...props}
-                match={match}
-                company={companyMatch}
-                jobs={filteredJobs}
-              />
-            );
-          }}
-        />
-        <CompaniesMap>
-          <CompaniesMapInner>
-            <MapContainer
-              viewport={viewport}
-              onViewportChange={onViewportChange}
-            >
-              {companies
-                .filter(({ coordinates }) => coordinates)
-                .map(
-                  ({
-                    id,
-                    name,
-                    coordinates: { latitude, longitude },
-                    slug
-                  }) => (
-                    <Marker
-                      key={name}
-                      longitude={longitude}
-                      latitude={latitude}
-                      className={activeCompany === id ? 'active-pin' : ''}
-                    >
-                      <MapPin
-                        linkTo={'/companies/' + slug}
-                        size={36}
-                        active={activeCompany === id}
-                      />
-                    </Marker>
-                  )
-                )}
-            </MapContainer>
-          </CompaniesMapInner>
-        </CompaniesMap>
-      </CompaniesContent>
+      <SharedMapProvider>
+        <CompaniesContent>
+          <Route
+            exact
+            path="/companies"
+            component={({ match, ...props }) => {
+              return (
+                <MapPageCompanies
+                  {...props}
+                  companies={companies}
+                  jobs={jobs}
+                />
+              );
+            }}
+          />
+          <Route
+            exact
+            path="/companies/:company"
+            component={({
+              match: {
+                params: { company }
+              },
+              match,
+              ...props
+            }) => {
+              const companyMatch = companies.find(
+                ({ slug }) => company === slug
+              );
+              const filteredJobs = jobs.filter(job => {
+                return job.companyID === companyMatch.id;
+              });
+              return (
+                <MapPageCompany
+                  {...props}
+                  match={match}
+                  company={companyMatch}
+                  jobs={filteredJobs}
+                />
+              );
+            }}
+          />
+          <CompaniesMapContainer>
+            <CompaniesMapInner>
+              <CompaniesMap companies={companies} />
+            </CompaniesMapInner>
+          </CompaniesMapContainer>
+        </CompaniesContent>
+      </SharedMapProvider>
     </MapPageContainer>
   );
 };
