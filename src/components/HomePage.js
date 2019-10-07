@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { db } from '../firebase';
+import AppContext from './AppContext';
 import { clearFix } from 'polished';
 import { Link } from 'react-router-dom';
 import Hero from './Hero';
@@ -77,23 +76,12 @@ const FeaturedHeadline = styled.div`
 `;
 
 const HomePage = () => {
-  const [jobsValue, jobsLoading, jobsError] = useCollection(
-    db.collection('jobs')
+  const { jobs, companies, jobsLoading, companiesLoading } = useContext(
+    AppContext
   );
-  const [companiesValue, companiesLoading, companiesError] = useCollection(
-    db.collection('companies')
-  );
-  if (companiesError || jobsError) {
-    return <Error />;
-  }
   if (companiesLoading || jobsLoading) {
     return <LinearProgress />;
   }
-  const jobs = jobsValue.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  const companies = companiesValue.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
   return (
     <HomePageContainer>
       <Hero size="large">

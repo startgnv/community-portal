@@ -12,7 +12,9 @@ export class AppProvider extends React.Component {
     companiesLoading: true,
     jobsByCompany: {},
     jobCategories: [],
-    companyCategories: []
+    jobCategoriesLoading: true,
+    companyCategories: [],
+    companyCategoriesLoading: true
   };
 
   componentDidMount = () => {
@@ -37,6 +39,18 @@ export class AppProvider extends React.Component {
             ...doc.data()
           })),
           companiesLoading: false
+        });
+      })
+      .catch(() => {});
+    db.collection('jobCategories')
+      .get()
+      .then(jobCatRefs => {
+        this.setState({
+          jobCategories: jobCatRefs.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          })),
+          jobCategoriesLoading: false
         });
       })
       .catch(() => {});
