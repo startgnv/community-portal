@@ -1,8 +1,7 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { db } from '../firebase';
+import AppContext from './AppContext';
 import SidebarHeader from './SidebarHeader';
 import { Link, Redirect } from 'react-router-dom';
 import JobCategories from './JobCategories';
@@ -53,30 +52,15 @@ export const MapPageJob = ({
     params: { jobID }
   }
 }) => {
-  const [jobValue, jobLoading, jobError] = useCollection(
-    db.collection('jobs').doc(jobID)
-  );
-  // TODO Find a way to get a single company here based on job result rather than just getting all of the companies
-  const [companiesValue, companiesLoading, companiesError] = useCollection(
-    db.collection('companies')
+  const { jobs, companies, jobsLoading, companiesLoading } = useContext(
+    AppContext
   );
 
-  if (jobLoading || companiesLoading) {
+  if (jobsLoading || companiesLoading) {
     return <LinearProgress />;
   }
 
-  if (jobError || companiesError) {
-    return <Error />;
-  }
-
-  const companies = companiesValue.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
-  const job = {
-    id: jobValue.id,
-    ...jobValue.data()
-  };
+  const job = _.find(jobs, { id: jobID });
   const {
     title: jobTitle,
     description: jobDescription,

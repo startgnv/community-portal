@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { db } from '../firebase';
+import AppContext from './AppContext';
 import Error from './Error';
 import CompanyPage from './CompanyPage';
 import MapPageCompanies from './MapPageCompanies';
@@ -50,25 +51,12 @@ const CompaniesMapInner = styled.div`
 `;
 
 export const MapPage = () => {
-  const [companiesValue, companiesLoading, companiesError] = useCollection(
-    db.collection('companies')
+  const { jobs, companies, jobsLoading, companiesLoading } = useContext(
+    AppContext
   );
-  const [jobsValue, jobsLoading, jobsError] = useCollection(
-    db.collection('jobs')
-  );
-
-  if (companiesError || jobsError) {
-    return <Error />;
-  }
   if (companiesLoading || jobsLoading) {
     return <LinearProgress />;
   }
-
-  const companies = companiesValue.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
-  const jobs = jobsValue.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
   return (
     <MapPageContainer>

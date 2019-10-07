@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components/macro';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../firebase';
+import AppContext from './AppContext';
 import Hero from './Hero';
 import Error from './Error';
 import PageContent from './PageContent';
@@ -25,30 +26,19 @@ const FilterContainer = styled.div`
 `;
 
 export const MapPageIndex = () => {
-  const [jobsValue, jobsLoading, jobsError] = useCollection(
-    db.collection('jobs')
-  );
-  const [companiesValue, companiesLoading, companiesError] = useCollection(
-    db.collection('companies')
-  );
   const [jobsFilter, setJobsFilter] = useState({ search: '', categories: [] });
+  const { jobs, companies, jobsLoading, companiesLoading } = useContext(
+    AppContext
+  );
   const onFilterChange = filterChanged => {
     setJobsFilter({
       ...jobsFilter,
       ...filterChanged
     });
   };
-  if (companiesError || jobsError) {
-    return <Error />;
-  }
-  if (companiesLoading || jobsLoading) {
+  if (jobsLoading || companiesLoading) {
     return <LinearProgress />;
   }
-  const jobs = jobsValue.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  const companies = companiesValue.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
   return (
     <>
       <Hero>

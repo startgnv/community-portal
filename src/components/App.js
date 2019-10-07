@@ -12,6 +12,7 @@ import {
 } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
+import { AppProvider } from './AppContext';
 import HomePage from './HomePage';
 import CompaniesPage from './CompaniesPage';
 import CompanyPage from './CompanyPage';
@@ -142,7 +143,7 @@ const publicRoutes = [
 ];
 
 export const App = () => (
-  <>
+  <AppProvider>
     <CssBaseline />
     <ThemeProvider theme={theme}>
       <>
@@ -175,7 +176,7 @@ export const App = () => (
         <GlobalStyle />
       </>
     </ThemeProvider>
-  </>
+  </AppProvider>
 );
 
 export default App;

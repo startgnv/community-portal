@@ -76,9 +76,8 @@ export const CompanyPage = ({
 
   return (
     <CompanyPageContainer>
-      <SidebarHeader coverPath={coverPath} logoPath={logoPath} />
+      <SidebarHeader title={name} coverPath={coverPath} logoPath={logoPath} />
       <CompanyContent>
-        <h1 className="company-name">{name}</h1>
         <CompanyLink>
           <a href={url} rel="noopener noreferrer" target="_blank">
             View Website

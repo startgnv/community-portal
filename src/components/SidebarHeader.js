@@ -7,7 +7,12 @@ import { useDownloadURL } from 'react-firebase-hooks/storage';
 const SidebarHeaderContainer = styled.div`
   position: relative;
   height: ${({ height }) => height};
-  background-image: url(${props => props.coverURL});
+  background-image: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(255, 255, 255, 0) 50%
+    ),
+    url(${props => props.coverURL});
   background-size: cover;
   background-position: center;
 
@@ -23,6 +28,16 @@ const SidebarHeaderContainer = styled.div`
   }
 `;
 
+const Title = styled.h1`
+  position: absolute;
+  left: 170px;
+  bottom: 10px;
+  color: white;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 36px;
+`;
+
 const HeaderInner = styled.div`
   position: relative;
   max-width: ${({ theme }) => theme.contentMaxWidth};
@@ -31,6 +46,7 @@ const HeaderInner = styled.div`
 `;
 
 export const SidebarHeader = ({
+  title = '',
   coverPath,
   logoPath,
   height = '200px',
@@ -44,6 +60,7 @@ export const SidebarHeader = ({
       mainImgSize={mainImgSize}
     >
       <HeaderInner>
+        {title && <Title>{title}</Title>}
         <StorageImg className="logo" path={logoPath} alt="Logo" />
       </HeaderInner>
     </SidebarHeaderContainer>

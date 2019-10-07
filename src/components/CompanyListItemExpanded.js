@@ -6,9 +6,17 @@ import StorageImg from './StorageImg';
 const ItemContainer = styled.div`
   height: 170px;
   margin-bottom: 30px;
-  box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.15);
   border-radius: 6px;
   overflow: hidden;
+  box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.05);
+  transition: 200ms;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.15);
+    transform: scale(1.01);
+    transform-origin: center;
+  }
 
   .container-link {
     text-decoration: none;
