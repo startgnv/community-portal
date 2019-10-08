@@ -84,7 +84,6 @@ const HomePage = () => {
   return (
     <HomePageContainer>
       <Hero size="large">
-        <HeroStats>150 companies, 7 incubators, XX techies</HeroStats>
         <HeroHeadline>
           Join the{' '}
           <strong>

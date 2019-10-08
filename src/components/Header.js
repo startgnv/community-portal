@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Link, NavLink } from 'react-router-dom';
+import Logo from './Logo';
 
 const HeaderContainer = styled.div`
   height: ${({ theme }) => theme.headerHeight};
@@ -8,20 +9,6 @@ const HeaderContainer = styled.div`
   left: 0;
   right: 0;
   background-color: ${({ theme }) => theme.deepNavy};
-
-  .logo-link {
-    display: block;
-    margin-right: 30px;
-    text-decoration: none;
-  }
-
-  .logo {
-    flex: 0;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 22px;
-    text-transform: uppercase;
-    color: white;
-  }
 
   .navigation {
     flex: 1;
@@ -64,9 +51,7 @@ const HeaderContent = styled.div`
 export const Header = ({ className }) => (
   <HeaderContainer className={className}>
     <HeaderContent>
-      <Link className="logo-link" to="/">
-        <h1 className="logo">sparkGNV</h1>
-      </Link>
+      <Logo />
       <ul className="navigation">
         <li>
           <NavLink className="nav-link" to="/" activeClassName="active" exact>

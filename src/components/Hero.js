@@ -5,7 +5,7 @@ import heroBG from '../assets/images/hero-bg.jpg';
 const heroSizes = {
   small: '200px',
   medium: '300px',
-  large: '450px'
+  large: '420px'
 };
 
 const HeroContainer = styled.div`
