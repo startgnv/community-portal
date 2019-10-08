@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import React from 'react';
 import { db } from '../firebase';
-import { useCollection } from 'react-firebase-hooks/firestore';
 
 const AppContext = new React.createContext();
 
@@ -10,7 +10,6 @@ export class AppProvider extends React.Component {
     jobsLoading: true,
     companies: [],
     companiesLoading: true,
-    jobsByCompany: {},
     jobCategories: [],
     jobCategoriesLoading: true,
     companyCategories: [],

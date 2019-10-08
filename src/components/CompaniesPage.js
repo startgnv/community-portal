@@ -1,12 +1,7 @@
 import React, { useContext } from 'react';
-import { Route } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import { useCollection } from 'react-firebase-hooks/firestore';
 
-import { db } from '../firebase';
 import AppContext from './AppContext';
-import Error from './Error';
-import CompanyPage from './CompanyPage';
 import MapPageCompanies from './MapPageCompanies';
 import CompaniesMap from './CompaniesMap';
 import { SharedMapProvider } from './CompaniesMapContext';

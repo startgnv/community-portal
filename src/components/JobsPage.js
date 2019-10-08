@@ -1,10 +1,7 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components/macro';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { db } from '../firebase';
 import AppContext from './AppContext';
 import Hero from './Hero';
-import Error from './Error';
 import PageContent from './PageContent';
 import JobList from './JobList';
 import JobsFilter from './JobsFilter';

@@ -14,6 +14,7 @@ const CompanyListItemContainer = styled.li`
     border-radius: 6px;
     text-decoration: none;
     box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.15);
+    background: white;
     ${clearFix()}
 
     &:hover {

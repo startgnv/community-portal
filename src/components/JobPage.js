@@ -5,7 +5,6 @@ import AppContext from './AppContext';
 import SidebarHeader from './SidebarHeader';
 import { Link, Redirect } from 'react-router-dom';
 import JobCategories from './JobCategories';
-import Error from './Error';
 
 import JobApply from './JobApply';
 
@@ -64,7 +63,6 @@ export const MapPageJob = ({
   const {
     title: jobTitle,
     description: jobDescription,
-    applyUrl = '',
     categories,
     companyID
   } = job;

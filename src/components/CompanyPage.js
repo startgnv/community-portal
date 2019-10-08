@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
 import { db } from '../firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { Redirect } from 'react-router-dom';
+import AppContext from './AppContext';
 import SidebarHeader from './SidebarHeader';
 import JobList from './JobList';
 import Error from './Error';
@@ -44,13 +44,13 @@ const MapWrap = styled.div`
 export const CompanyPage = ({
   match: {
     params: { companySlug }
-  },
-  jobs = []
+  }
 }) => {
   const [companyValue, companyLoading, companyError] = useCollection(
     db.collection('companies').where('slug', '==', companySlug)
   );
-  if (companyLoading) {
+  const { jobs, jobsLoading } = useContext(AppContext);
+  if (companyLoading || jobsLoading) {
     return <LinearProgress />;
   }
   if (companyError || companyValue.empty) {
@@ -61,6 +61,7 @@ export const CompanyPage = ({
     ...companyValue.docs[0].data()
   };
   const {
+    id,
     name,
     logoPath,
     coverPath = '',
@@ -73,6 +74,7 @@ export const CompanyPage = ({
     longitude,
     zoom: 12
   };
+  const companyJobs = jobs.filter(job => job.companyID === id);
 
   return (
     <CompanyPageContainer>
@@ -84,8 +86,16 @@ export const CompanyPage = ({
           </a>
         </CompanyLink>
         <p className="description">{description}</p>
-        <h2>Jobs</h2>
-        <JobList jobs={jobs} showTitle={false} showCompanyInfo={false} />
+        {companyJobs && companyJobs.length && (
+          <>
+            <h2>Jobs</h2>
+            <JobList
+              jobs={companyJobs}
+              showTitle={false}
+              showCompanyInfo={false}
+            />
+          </>
+        )}
         <h2>Culture</h2>
         <MapWrap>
           <MapContainer viewport={viewport}>

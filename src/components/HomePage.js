@@ -7,7 +7,6 @@ import Hero from './Hero';
 import PageContent from './PageContent';
 import JobList from './JobList';
 import CompanyList from './CompanyList';
-import Error from './Error';
 
 import { LinearProgress } from '@material-ui/core';
 

@@ -11,6 +11,7 @@ const ItemContainer = styled.div`
   box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.05);
   transition: 200ms;
   cursor: pointer;
+  background: white;
 
   &:hover {
     box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.15);
