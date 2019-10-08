@@ -19,7 +19,7 @@ export const AdminJobForm = ({
   match: {
     params: { jobID }
   },
-  history: { replace = () => {} }
+  history: { replace = () => {}, push = () => {} }
 }) => {
   const [categories = [], loadingCategories] = useCollectionData(
     db.collection('jobCategories'),
@@ -85,16 +85,21 @@ export const AdminJobForm = ({
         type
       };
       let updatePromise;
+      let redirect = false;
       if (jobID) {
         updatePromise = doc.current.update(jobData);
       } else {
         updatePromise = db.collection('jobs').add(jobData);
+        redirect = true;
       }
 
-      updatePromise.then(() => {
+      updatePromise.then(jobRef => {
         setSaving(false);
         setSavingSuccess(true);
         setSavingError(false);
+        if (redirect) {
+          setTimeout(() => push('/admin/jobs/' + jobRef.id), 1000);
+        }
       });
     }
   };
@@ -218,7 +223,7 @@ export const AdminJobForm = ({
           </Button>
         </Grid>
         {saving && <LinearProgress />}
-        {savingSuccess && 'Saved!'}
+        {savingSuccess && 'Saved! Redirecting...'}
         {savingError && 'Failed to save!'}
       </Grid>
     </FormCardPage>
