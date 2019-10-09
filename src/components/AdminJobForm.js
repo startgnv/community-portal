@@ -22,11 +22,11 @@ export const AdminJobForm = ({
   history: { replace = () => {}, push = () => {} }
 }) => {
   const [categories = [], loadingCategories] = useCollectionData(
-    db.collection('jobCategories'),
+    db.collection('jobCategories').orderBy('name', 'asc'),
     { idField: 'id' }
   );
   const [companies = [], loadingCompanies] = useCollectionData(
-    db.collection('companies'),
+    db.collection('companies').orderBy('name', 'asc'),
     { idField: 'id' }
   );
 
@@ -144,35 +144,6 @@ export const AdminJobForm = ({
           />
         </Grid>
         <Grid item>
-          <FormLabel>Company</FormLabel>
-          <Select
-            label="Company"
-            disabled={loadingCompanies}
-            options={companyOptions}
-            value={companyOptions.find(({ value }) => companyID === value)}
-            onChange={({ value }) => setCompanyID(value)}
-          />
-        </Grid>
-
-        <Grid item>
-          <FormLabel>Categories</FormLabel>
-          <FormGroup>
-            {categories.map(cat => (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={selectedCategories.indexOf(cat.id) > -1}
-                    onChange={onCategoryChange}
-                    value={cat.id}
-                  />
-                }
-                label={cat.name}
-                key={cat.id}
-              />
-            ))}
-          </FormGroup>
-        </Grid>
-        <Grid item>
           <TextField
             variant="outlined"
             fullWidth
@@ -204,6 +175,35 @@ export const AdminJobForm = ({
               setType(value);
             }}
           />
+        </Grid>
+        <Grid item>
+          <FormLabel>Company</FormLabel>
+          <Select
+            label="Company"
+            disabled={loadingCompanies}
+            options={companyOptions}
+            value={companyOptions.find(({ value }) => companyID === value)}
+            onChange={({ value }) => setCompanyID(value)}
+          />
+        </Grid>
+
+        <Grid item>
+          <FormLabel>Categories</FormLabel>
+          <FormGroup>
+            {categories.map(cat => (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedCategories.indexOf(cat.id) > -1}
+                    onChange={onCategoryChange}
+                    value={cat.id}
+                  />
+                }
+                label={cat.name}
+                key={cat.id}
+              />
+            ))}
+          </FormGroup>
         </Grid>
         <Grid item container justify="flex-end">
           <Button
