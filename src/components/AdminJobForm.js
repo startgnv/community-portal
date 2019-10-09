@@ -10,10 +10,28 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Select from 'react-select';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 
 import { db } from '../firebase';
 import { useAdminContainer } from './AdminPageContainer';
 import FormCardPage from './FormCardPage';
+
+const wysiwygToolbar = {
+  options: ['inline', 'blockType', 'list'],
+  inline: {
+    options: ['bold', 'italic', 'underline'],
+    bold: { className: 'bordered-option-classname' },
+    italic: { className: 'bordered-option-classname' },
+    underline: { className: 'bordered-option-classname' }
+  },
+  blockType: {
+    className: 'bordered-option-classname'
+  }
+};
 
 export const AdminJobForm = ({
   match: {
@@ -39,6 +57,7 @@ export const AdminJobForm = ({
   const [saving, setSaving] = useState(false);
   const [savingSuccess, setSavingSuccess] = useState(false);
   const [savingError, setSavingError] = useState(false);
+  const [wysiwygState, setWysiwygState] = useState(EditorState.createEmpty());
 
   const doc = useRef(db.collection('jobs').doc(...(jobID ? [jobID] : [])));
   const [loadingJob, setLoadingJob] = useState(!!jobID);
@@ -53,6 +72,12 @@ export const AdminJobForm = ({
         setApplyUrl(job.applyUrl || '');
         setType(job.type || 'fullTime');
         setLoadingJob(false);
+        const contentBlock = htmlToDraft(job.description);
+        const contentState = ContentState.createFromBlockArray(
+          contentBlock.contentBlocks
+        );
+        const editorState = EditorState.createWithContent(contentState);
+        setWysiwygState(editorState);
       });
     }
   }, [jobID]);
@@ -130,6 +155,11 @@ export const AdminJobForm = ({
     setSelectedCategories(newCategories);
   };
 
+  const onWysiwygStateChange = state => {
+    setDescription(draftToHtml(convertToRaw(state.getCurrentContent())));
+    setWysiwygState(state);
+  };
+
   return (
     <FormCardPage title="Job Details" onSubmit={onFormSubmit}>
       <Grid container spacing={2} direction="column" justify="center">
@@ -144,15 +174,25 @@ export const AdminJobForm = ({
           />
         </Grid>
         <Grid item>
-          <TextField
-            variant="outlined"
-            fullWidth
-            required
-            multiline
-            rows={6}
-            label="Job Description"
-            value={description}
-            onChange={e => setDescription(e.target.value)}
+          <FormLabel>Description</FormLabel>
+          <Editor
+            editorState={wysiwygState}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="wrapperClassName"
+            editorClassName="editorClassName"
+            editorStyle={{
+              border: 'solid 1px rgba(0, 0, 0, 0.25)',
+              borderTop: '0px',
+              padding: '0 15px',
+              borderRadius: '0 0 4px 4px'
+            }}
+            toolbarStyle={{
+              marginBottom: '0px',
+              border: 'solid 1px rgba(0, 0, 0, 0.25)',
+              borderRadius: '4px 4px 0 0'
+            }}
+            toolbar={wysiwygToolbar}
+            onEditorStateChange={onWysiwygStateChange}
           />
         </Grid>
         <Grid item>
@@ -223,7 +263,7 @@ export const AdminJobForm = ({
           </Button>
         </Grid>
         {saving && <LinearProgress />}
-        {savingSuccess && 'Saved! Redirecting...'}
+        {savingSuccess && 'Saved!'}
         {savingError && 'Failed to save!'}
       </Grid>
     </FormCardPage>

@@ -21,6 +21,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { db, storage } from '../firebase';
 import { useAdminContainer } from './AdminPageContainer';
+import { Parser } from 'html-to-react';
+
+const htmlParser = new Parser();
 
 const useStyles = makeStyles(theme => ({
   jobCard: {
@@ -155,7 +158,7 @@ const AdminJobCard = ({
           }
         />
 
-        <CardContent>{job.description}</CardContent>
+        <CardContent>{htmlParser.parse(job.description)}</CardContent>
       </Card>
     </>
   );

@@ -9,6 +9,9 @@ import JobCategories from './JobCategories';
 import JobApply from './JobApply';
 
 import { LinearProgress } from '@material-ui/core';
+import { Parser } from 'html-to-react';
+
+const htmlParser = new Parser();
 
 const MapPageJobContainer = styled.div`
   .job-title {
@@ -99,7 +102,7 @@ export const MapPageJob = ({
         )}
         <JobApply job={job} />
         <div className="job-description">
-          <p>{jobDescription}</p>
+          <p>{htmlParser.parse(jobDescription)}</p>
         </div>
       </JobContent>
     </MapPageJobContainer>
