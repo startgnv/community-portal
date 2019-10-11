@@ -10,7 +10,9 @@ import CompanyList from './CompanyList';
 
 import { LinearProgress } from '@material-ui/core';
 
-const HomePageContainer = styled.div``;
+const HomePageContainer = styled.div`
+  background: ${({ theme }) => theme.uiBackground};
+`;
 
 const HeroStats = styled.span`
   display: block;
@@ -105,7 +107,7 @@ const HomePage = () => {
                 <Link to="/companies">View all Companies</Link>
               </FeaturedHeadline>
               <CompanyList
-                companies={companies.slice(0, 3)}
+                companies={companies.filter(company => company.featured)}
                 showTitle={false}
               />
             </FeaturedSection>
@@ -115,7 +117,7 @@ const HomePage = () => {
                 <Link to="/jobs">View all Jobs</Link>
               </FeaturedHeadline>
               <JobList
-                jobs={jobs.slice(0, 6)}
+                jobs={jobs.filter(job => job.featured)}
                 companies={companies}
                 showTitle={false}
               />

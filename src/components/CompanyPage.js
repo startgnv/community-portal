@@ -14,9 +14,7 @@ import { LinearProgress } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
 const CompanyPageContainer = styled.div`
-  .company-name {
-    margin: 0;
-  }
+  background: ${({ theme }) => theme.uiBackground};
 `;
 
 const CompanyContent = styled.div`

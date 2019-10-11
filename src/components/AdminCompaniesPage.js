@@ -53,7 +53,15 @@ export const AdminCompaniesPage = () => {
             />
           </Grid>
           {companies
-            .filter(({ name = '' }) => name.includes(search))
+            .filter(({ name = '', featured = false }) => {
+              let match;
+              const normalizedSearch = search.toLowerCase();
+              const isFeatured = featured ? 'featured' : '';
+              match =
+                name.toLowerCase().includes(normalizedSearch) ||
+                isFeatured.includes(normalizedSearch);
+              return match;
+            })
             .map(({ name, id, coverPath, logoPath }) => (
               <Grid key={id} item md={4} xs={12}>
                 <AdminCompanyListCard

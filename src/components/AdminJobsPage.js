@@ -1,19 +1,21 @@
+import _ from 'lodash';
 import React, { useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import StorageAvatar from './StorageAvatar';
 import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
 
-import { db } from '../firebase';
+import { db, storage } from '../firebase';
 import { useAdminContainer } from './AdminPageContainer';
-import AdminListCard from './AdminListCard';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -30,12 +32,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
+
 export const AdminJobsPage = ({ match: { isExact } }) => {
   const classes = useStyles();
   const [search, setSearch] = useState('');
-  const [importJSON, setImportJSON] = useState('');
-  const [importing, setImporting] = useState(false);
-  const [importError, setImportError] = useState('');
   const [jobs = [], loadingJobs, errorJobs] = useCollectionData(
     db.collection('jobs'),
     {
@@ -51,59 +54,49 @@ export const AdminJobsPage = ({ match: { isExact } }) => {
 
   useAdminContainer({ loading: loadingJobs || loadingCompanies });
 
-  const companiesByID = companies.reduce(
-    (memo, company) => ({
-      [company.id]: company,
-      ...memo
-    }),
-    {}
-  );
-
-  const onJSONImport = ev => {
-    ev.preventDefault();
-    setImportError('');
-    let parsedJobs;
-    try {
-      parsedJobs = JSON.parse(importJSON);
-    } catch (e) {
-      setImportError('JSON Parse Failed');
-      setTimeout(() => setImportError(''), 2000);
-      return;
-    }
-    const jobPromises = parsedJobs.map(job => db.collection('jobs').add(job));
-    Promise.all(jobPromises).then(() => {
-      console.warn('IMPORT SUCCESS');
-    });
-    return false;
-  };
+  const companiesByID = _.keyBy(companies, company => company.id);
 
   return (
     <>
       <Container className={classes.container} maxWidth="lg">
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              type="search"
-              fullWidth
-              margin="normal"
-              label="Search Jobs"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-            />
-          </Grid>
+        <List>
+          <TextField
+            type="search"
+            fullWidth
+            margin="normal"
+            label="Search Jobs"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
           {jobs
-            .filter(({ title }) => title.includes(search))
-            .map(job => (
-              <Grid item md={4} xs={12}>
-                <AdminListCard
-                  company={companiesByID[job.companyID]}
-                  label={job.title}
-                  linkTo={`/admin/jobs/${job.id}`}
-                  key={job.id}
-                />
-              </Grid>
-            ))}
-        </Grid>
+            .filter(({ title, companyID, featured }) => {
+              let match;
+              const normalizedSearch = search.toLowerCase();
+              const companyName = companiesByID[companyID]
+                ? companiesByID[companyID].name
+                : '';
+              const isFeatured = featured ? 'featured' : '';
+              match =
+                title.toLowerCase().includes(normalizedSearch) ||
+                companyName.toLowerCase().includes(normalizedSearch) ||
+                isFeatured.includes(normalizedSearch);
+              return match;
+            })
+            .map(job => {
+              const company = companiesByID[job.companyID] || {};
+              return (
+                <ListItemLink href={`/admin/jobs/${job.id}`} key={job.id}>
+                  <ListItemAvatar>
+                    <StorageAvatar
+                      path={company.logoPath}
+                      avatarProps={{ style: { width: '40px' } }}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText primary={job.title} secondary={company.name} />
+                </ListItemLink>
+              );
+            })}
+        </List>
         {(errorJobs || errorCompanies) && (
           <CircularProgress
             value="75"
@@ -111,41 +104,6 @@ export const AdminJobsPage = ({ match: { isExact } }) => {
             color="secondary"
           />
         )}
-        <Grid container>
-          <Grid item xs={12}>
-            <form onSubmit={onJSONImport}>
-              <TextField
-                type="text"
-                fullWidth
-                margin="normal"
-                label="Import Jobs (paste JSON, DO NOT USE)"
-                value={importJSON}
-                onChange={e => setImportJSON(e.target.value)}
-                multiline
-                variant="outlined"
-              />
-              {importError && (
-                <Snackbar
-                  message={importError}
-                  open={!!importError}
-                  variant="error"
-                />
-              )}
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={importing}
-                onClick={() => {
-                  setImporting(true);
-                  setTimeout(setImporting, 700);
-                }}
-                type="submit"
-              >
-                Import
-              </Button>
-            </form>
-          </Grid>
-        </Grid>
       </Container>
 
       <Fab

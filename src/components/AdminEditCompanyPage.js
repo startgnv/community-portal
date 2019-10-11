@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import FormLabel from '@material-ui/core/FormLabel';
 import Grid from '@material-ui/core/Grid';
 
@@ -49,6 +51,7 @@ export const AdminEditCompanyPage = ({
   const [shortDescription, setShortDescription] = useState('');
   const [founded, setFounded] = useState('');
   const [employeeCount, setEmployeeCount] = useState('');
+  const [featured, setFeatured] = useState(false);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const logoUploadRef = useRef();
@@ -71,6 +74,7 @@ export const AdminEditCompanyPage = ({
     setShortDescription(company.shortDescription || '');
     setFounded(company.founded || '');
     setEmployeeCount(company.employeeCount || '');
+    setFeatured(company.featured || false);
     setIndustryID(company.industryID || '');
   }, [
     company.name,
@@ -82,6 +86,7 @@ export const AdminEditCompanyPage = ({
     company.shortDescription,
     company.founded,
     company.employeeCount,
+    company.feautred,
     company.industryID
   ]);
 
@@ -157,7 +162,8 @@ export const AdminEditCompanyPage = ({
       employeeCount,
       description,
       shortDescription,
-      industryID
+      industryID,
+      featured
     };
     // after we create or update the doc, we'll have the ID which we need for
     // the images
@@ -248,6 +254,18 @@ export const AdminEditCompanyPage = ({
             variant="outlined"
             label="Slug for readable URLs"
             onChange={e => setSlug(e.target.value)}
+          />
+        </Grid>
+        <Grid item>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={featured}
+                onChange={e => setFeatured(e.target.checked)}
+                value="featured"
+              />
+            }
+            label="Featured"
           />
         </Grid>
         <Grid item>

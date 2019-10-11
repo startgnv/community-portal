@@ -45,7 +45,7 @@ const Title = styled.h1`
 `;
 
 const HeaderContent = styled.div`
-  background: ${({ theme }) => theme.uiBackground};
+  background: white;
 `;
 
 const ContentInner = styled.div`

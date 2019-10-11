@@ -16,9 +16,7 @@ import { Parser } from 'html-to-react';
 const htmlParser = new Parser();
 
 const MapPageJobContainer = styled.div`
-  .job-title {
-    margin: 0;
-  }
+  background: ${({ theme }) => theme.uiBackground};
 
   .company-name {
     margin: 0 0 10px;

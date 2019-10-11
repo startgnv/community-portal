@@ -54,6 +54,7 @@ export const AdminJobForm = ({
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [applyUrl, setApplyUrl] = useState('');
   const [type, setType] = useState('');
+  const [featured, setFeatured] = useState(false);
   const [saving, setSaving] = useState(false);
   const [savingSuccess, setSavingSuccess] = useState(false);
   const [savingError, setSavingError] = useState(false);
@@ -71,6 +72,7 @@ export const AdminJobForm = ({
         setSelectedCategories(job.categories || []);
         setApplyUrl(job.applyUrl || '');
         setType(job.type || 'fullTime');
+        setFeatured(job.featured || false);
         setLoadingJob(false);
         const contentBlock = htmlToDraft(job.description);
         const contentState = ContentState.createFromBlockArray(
@@ -107,7 +109,8 @@ export const AdminJobForm = ({
         categories: selectedCategories,
         companyID,
         applyUrl,
-        type
+        type,
+        featured
       };
       let updatePromise;
       let redirect = false;
@@ -224,6 +227,19 @@ export const AdminJobForm = ({
             options={companyOptions}
             value={companyOptions.find(({ value }) => companyID === value)}
             onChange={({ value }) => setCompanyID(value)}
+          />
+        </Grid>
+
+        <Grid item>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={featured}
+                onChange={e => setFeatured(e.target.checked)}
+                value="featured"
+              />
+            }
+            label="Featured"
           />
         </Grid>
 
