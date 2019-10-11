@@ -2,7 +2,7 @@
 const firebase = window.firebase;
 
 export const db = firebase.firestore();
-db.enablePersistence(); // enables offline data
+db.enablePersistence({ experimentalTabSynchronization: true }); // enables offline data persistence and multi-tab support
 export const auth = firebase.auth();
 export const storage = firebase.storage();
 export default firebase;

@@ -5,7 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const TagsContainer = styled.ul`
   display: block;
-  margin; 0;
+  margin: 0 0 -5px 0;
   padding: 0;
   list-style: none;
 `;

@@ -7,12 +7,11 @@ const Dropdown = ({
   btnLabel = 'Dropdown',
   btnSize = 'medium',
   placement = 'bottom-start',
-  children = {},
+  children = false,
   style = {}
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const popperEl = useRef(null);
-  const buttonEl = useRef(null);
   const isOpen = Boolean(anchorEl);
   const popperHash =
     Math.random()

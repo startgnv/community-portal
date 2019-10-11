@@ -6,7 +6,6 @@ import { useDownloadURL } from 'react-firebase-hooks/storage';
 
 const SidebarHeaderContainer = styled.div`
   position: relative;
-  height: ${({ height }) => height};
   background-image: linear-gradient(
       0deg,
       rgba(0, 0, 0, 0.5) 0%,
@@ -18,8 +17,8 @@ const SidebarHeaderContainer = styled.div`
 
   .logo {
     position: absolute;
-    width: ${({ mainImgSize }) => mainImgSize};
-    height: ${({ mainImgSize }) => mainImgSize};
+    width: ${({ mainImgSize }) => mainImgSize}px;
+    height: ${({ mainImgSize }) => mainImgSize}px;
     bottom: -30px;
     left: 30px;
     border-radius: 6px;
@@ -28,9 +27,16 @@ const SidebarHeaderContainer = styled.div`
   }
 `;
 
+const HeaderInner = styled.div`
+  position: relative;
+  height: ${({ coverHeight }) => coverHeight}px;
+  max-width: ${({ theme }) => theme.contentMaxWidth};
+  margin: 0 auto;
+`;
+
 const Title = styled.h1`
   position: absolute;
-  left: 170px;
+  left: ${({ mainImgSize }) => mainImgSize + 50}px;
   bottom: 10px;
   color: white;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
@@ -38,31 +44,37 @@ const Title = styled.h1`
   font-size: 36px;
 `;
 
-const HeaderInner = styled.div`
-  position: relative;
+const HeaderContent = styled.div`
+  background: ${({ theme }) => theme.uiBackground};
+`;
+
+const ContentInner = styled.div`
   max-width: ${({ theme }) => theme.contentMaxWidth};
-  height: 100%;
   margin: 0 auto;
+  padding: 10px 20px 10px ${({ mainImgSize }) => mainImgSize + 50}px;
+  box-sizing: border-box;
 `;
 
 export const SidebarHeader = ({
   title = '',
   coverPath,
   logoPath,
-  height = '200px',
-  mainImgSize = '120px'
+  coverHeight = 200,
+  mainImgSize = 120,
+  children = false
 }) => {
   const [coverURL] = useDownloadURL(coverPath ? storage.ref(coverPath) : '');
   return (
-    <SidebarHeaderContainer
-      coverURL={coverURL}
-      height={height}
-      mainImgSize={mainImgSize}
-    >
-      <HeaderInner>
-        {title && <Title>{title}</Title>}
+    <SidebarHeaderContainer coverURL={coverURL} mainImgSize={mainImgSize}>
+      <HeaderInner coverHeight={coverHeight}>
+        {title && <Title mainImgSize={mainImgSize}>{title}</Title>}
         <StorageImg className="logo" path={logoPath} alt="Logo" />
       </HeaderInner>
+      {children && (
+        <HeaderContent>
+          <ContentInner mainImgSize={mainImgSize}>{children}</ContentInner>
+        </HeaderContent>
+      )}
     </SidebarHeaderContainer>
   );
 };

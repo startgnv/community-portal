@@ -11,6 +11,7 @@ import MapPin from './MapPin';
 import { Marker } from 'react-map-gl';
 
 import { LinearProgress } from '@material-ui/core';
+import LinkIcon from '@material-ui/icons/Link';
 
 const CompanyPageContainer = styled.div`
   .company-name {
@@ -24,16 +25,16 @@ const CompanyContent = styled.div`
   padding: 50px 30px 30px;
 `;
 
-const CompanyLink = styled.div`
-  margin-bottom: 10px;
+const CompanyLink = styled.span`
+  .link-icon {
+    line-height: 26px;
+    vertical-align: top;
+  }
 
   a {
-    color: ${({ theme }) => theme.textMedium};
+    color: ${({ theme }) => theme.textDark};
+    line-height: 26px;
     text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 `;
 
@@ -67,7 +68,8 @@ export const CompanyPage = ({
     coverPath = '',
     description = '',
     url = '',
-    coordinates: { latitude, longitude }
+    coordinates: { latitude, longitude },
+    employeeCount = 0
   } = company;
   const viewport = {
     latitude,
@@ -78,13 +80,16 @@ export const CompanyPage = ({
 
   return (
     <CompanyPageContainer>
-      <SidebarHeader title={name} coverPath={coverPath} logoPath={logoPath} />
-      <CompanyContent>
+      <SidebarHeader title={name} coverPath={coverPath} logoPath={logoPath}>
         <CompanyLink>
           <a href={url} rel="noopener noreferrer" target="_blank">
+            <LinkIcon className="link-icon" />
             View Website
           </a>
         </CompanyLink>
+        {employeeCount && <span>{`${employeeCount} Employees`}</span>}
+      </SidebarHeader>
+      <CompanyContent>
         <p className="description">{description}</p>
         {companyJobs && companyJobs.length && (
           <>

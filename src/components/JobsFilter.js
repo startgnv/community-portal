@@ -1,12 +1,10 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
-import { Popper } from '@material-ui/core';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../firebase';
 import { clearFix } from 'polished';
 import Checkbox from './Checkbox';
-import Button from './Button';
 import TextInput from './TextInput';
 import Dropdown from './Dropdown';
 

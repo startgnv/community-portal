@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import React, { useContext } from 'react';
+import { baseContentStyling } from './mixins';
+import BusinessIcon from '@material-ui/icons/Business';
 import styled from 'styled-components/macro';
 import AppContext from './AppContext';
 import SidebarHeader from './SidebarHeader';
@@ -23,29 +25,35 @@ const MapPageJobContainer = styled.div`
   }
 
   .company-link {
+    display: inline-block;
+    margin-right: 20px;
+    height: 26px;
+    line-height: 26px;
+    vertical-align: top;
     font-size: 16px;
     font-weight: 400;
     text-decoration: none;
     color: ${({ theme }) => theme.textDark};
   }
 
-  .job-description {
-    position: relative;
-    padding-bottom: 30px;
-    margin-bottom: 20px;
-    overflow: hidden;
-    color: ${({ theme }) => theme.textMedium};
+  .company-icon {
+    line-height: 26px;
+    vertical-align: top;
   }
 `;
 
 const JobContent = styled.div`
   max-width: ${({ theme }) => theme.contentMaxWidth};
   margin: 0 auto;
-  padding: 40px 20px 20px;
+  padding: 30px 20px 20px;
+`;
+
+const JobDescription = styled.div`
+  ${baseContentStyling()}
 `;
 
 const CategoriesContainer = styled.div`
-  margin-bottom: 10px;
+  display: inline-block;
 `;
 
 export const MapPageJob = ({
@@ -85,25 +93,23 @@ export const MapPageJob = ({
       <SidebarHeader
         coverPath={companyCoverPath}
         logoPath={companyLogoPath}
-        height="120px"
-        mainImgSize="80px"
-      />
-      <JobContent>
-        <h1 className="job-title">{jobTitle}</h1>
-        <h3 className="company-name">
-          <Link className="company-link" to={'/companies/' + companySlug}>
-            {companyName}
-          </Link>
-        </h3>
+        coverHeight={160}
+        mainImgSize={80}
+        title={jobTitle}
+      >
+        <Link className="company-link" to={'/companies/' + companySlug}>
+          <BusinessIcon className="company-icon" />
+          {companyName}
+        </Link>
         {categories && categories.length > 0 && (
           <CategoriesContainer>
             <JobCategories categories={categories} />
           </CategoriesContainer>
         )}
+      </SidebarHeader>
+      <JobContent>
         <JobApply job={job} />
-        <div className="job-description">
-          <p>{htmlParser.parse(jobDescription)}</p>
-        </div>
+        <JobDescription>{htmlParser.parse(jobDescription)}</JobDescription>
       </JobContent>
     </MapPageJobContainer>
   );
