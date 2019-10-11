@@ -21,22 +21,26 @@ export default {
     small: {
       height: '20px',
       fontSize: '11px',
-      borderRadius: '2px'
+      borderRadius: '2px',
+      padding: '0 12px'
     },
     medium: {
       height: '30px',
       fontSize: '12px',
-      borderRadius: '3px'
+      borderRadius: '3px',
+      padding: '0 20px'
     },
     large: {
       height: '50px',
       fontSize: '14px',
-      borderRadius: '3px'
+      borderRadius: '3px',
+      padding: '0 30px'
     },
     extraLarge: {
       height: '80px',
       fontSize: '16px',
-      borderRadius: '6px'
+      borderRadius: '6px',
+      padding: '0 40px'
     }
   },
 

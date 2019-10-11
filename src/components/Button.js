@@ -7,7 +7,7 @@ const ButtonContainer = styled.button`
   display: inline-block;
   height: ${({ theme, size }) => theme.buttonSizes[size].height};
   width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
-  padding: 0 20px;
+  padding: ${({ theme, size }) => theme.buttonSizes[size].padding};
   border-radius: ${({ theme, size }) => theme.buttonSizes[size].borderRadius};
   background-color: ${({ theme }) => theme.purple};
   text-align: center;

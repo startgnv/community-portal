@@ -8,7 +8,7 @@ import { clearFix } from 'polished';
 import Checkbox from './Checkbox';
 import Button from './Button';
 import TextInput from './TextInput';
-import Fade from '@material-ui/core/Fade';
+import Dropdown from './Dropdown';
 
 const JobsFilterContainer = styled.div`
   margin-bottom: 30px;
@@ -52,12 +52,7 @@ const JobsFilter = ({ onChange = noop, filter }) => {
   const [categoriesValue, categoriesLoading, categoriesError] = useCollection(
     db.collection('jobCategories')
   );
-  const [categoriesAnchorEl, setCategoriesAnchorEl] = useState(null);
-  const onCategoriesBtnClick = ev => {
-    setCategoriesAnchorEl(categoriesAnchorEl ? null : ev.currentTarget);
-  };
-  const categoriesOpen = Boolean(categoriesAnchorEl);
-  const cateogiresElID = categoriesOpen ? 'categories-popper' : undefined;
+
   const [typeAnchorEl, setTypeAnchorEl] = useState(null);
   const onTypeBtnClick = ev => {
     setTypeAnchorEl(typeAnchorEl ? null : ev.currentTarget);
@@ -117,71 +112,43 @@ const JobsFilter = ({ onChange = noop, filter }) => {
     <JobsFilterContainer>
       <FilterControls>
         <FilterItem>
-          <Button
-            label={categoriesBtnLabel}
-            variant="outline"
-            aria-describedby={cateogiresElID}
-            onClick={onCategoriesBtnClick}
-          />
-          <Popper
-            id={cateogiresElID}
-            open={categoriesOpen}
-            anchorEl={categoriesAnchorEl}
-            placement="bottom-start"
-            transition
-          >
-            {({ TransitionProps }) => (
-              <CategoriesContainer>
-                {renderCategories.map(({ name, id }) => (
-                  <CheckContainer>
-                    <Checkbox
-                      label={name}
-                      value={id}
-                      onChange={onCategoryChange}
-                      checked={selectedCategories.indexOf(id) > -1}
-                      key={id}
-                    />
-                  </CheckContainer>
-                ))}
-              </CategoriesContainer>
-            )}
-          </Popper>
+          <Dropdown btnLabel={categoriesBtnLabel} btnSize="large">
+            <CategoriesContainer>
+              {renderCategories.map(({ name, id }) => (
+                <CheckContainer>
+                  <Checkbox
+                    label={name}
+                    value={id}
+                    onChange={onCategoryChange}
+                    checked={selectedCategories.indexOf(id) > -1}
+                    key={id}
+                  />
+                </CheckContainer>
+              ))}
+            </CategoriesContainer>
+          </Dropdown>
         </FilterItem>
         <FilterItem>
-          <Button
-            label="Type"
-            variant="outline"
-            aria-describedby={typeElID}
-            onClick={onTypeBtnClick}
-          />
-          <Popper
-            id={typeElID}
-            open={typeOpen}
-            anchorEl={typeAnchorEl}
-            placement="bottom-start"
-            transition
-          >
-            {({ TransitionProps }) => (
-              <CategoriesContainer>
-                <CheckContainer>
-                  <Checkbox
-                    label="Full Time"
-                    value="fullTime"
-                    onChange={onTypeChange}
-                    checked={selectedTypes.indexOf('fullTime') > -1}
-                  />
-                </CheckContainer>
-                <CheckContainer>
-                  <Checkbox
-                    label="Part Time"
-                    value="partTime"
-                    onChange={onTypeChange}
-                    checked={selectedTypes.indexOf('partTime') > -1}
-                  />
-                </CheckContainer>
-              </CategoriesContainer>
-            )}
-          </Popper>
+          <Dropdown btnLabel="Type" btnSize="large">
+            <CategoriesContainer>
+              <CheckContainer>
+                <Checkbox
+                  label="Full Time"
+                  value="fullTime"
+                  onChange={onTypeChange}
+                  checked={selectedTypes.indexOf('fullTime') > -1}
+                />
+              </CheckContainer>
+              <CheckContainer>
+                <Checkbox
+                  label="Part Time"
+                  value="partTime"
+                  onChange={onTypeChange}
+                  checked={selectedTypes.indexOf('partTime') > -1}
+                />
+              </CheckContainer>
+            </CategoriesContainer>
+          </Dropdown>
         </FilterItem>
         <FilterItem>
           <TextInput
