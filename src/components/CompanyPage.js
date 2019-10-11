@@ -22,7 +22,7 @@ const CompanyPageContainer = styled.div`
 const CompanyContent = styled.div`
   width: ${({ theme }) => theme.contentMaxWidth};
   margin: 0 auto;
-  padding: 50px 30px 30px;
+  padding: 30px 20px 20px;
 `;
 
 const CompanyLink = styled.span`
