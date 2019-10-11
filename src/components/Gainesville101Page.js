@@ -59,7 +59,7 @@ const WhyGainesvillePage = () => (
   <WhyGainesvilleContainer>
     <Hero size="medium">
       <HeroHeadline>
-        Why <strong>Gainesville?</strong>
+        Gainesville <strong>101</strong>
       </HeroHeadline>
     </Hero>
     <HeroContent>

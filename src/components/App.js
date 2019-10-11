@@ -20,7 +20,7 @@ import AboutPage from './AboutPage';
 import EcosystemPage from './EcosystemPage';
 import JobPage from './JobPage';
 import JobsPage from './JobsPage';
-import WhyGainesvillePage from './WhyGainesvillePage';
+import Gainesville101Page from './Gainesville101Page';
 import AdminPage from './AdminPage';
 import AdminRoute from './AdminRoute';
 import AdminLogin from './AdminLogin';
@@ -139,7 +139,7 @@ const publicRoutes = [
   '/jobs/:jobId',
   '/about',
   '/ecosystem',
-  '/why-gainesville'
+  '/gainesville-101'
 ];
 
 export const App = () => (
@@ -164,8 +164,8 @@ export const App = () => (
               />
               <Route
                 exact
-                path="/why-gainesville"
-                component={WhyGainesvillePage}
+                path="/gainesville-101"
+                component={Gainesville101Page}
               />
               <Route exact path="/admin/login" component={AdminLogin} />
               <AdminRoute path="/admin" component={AdminPage} />
