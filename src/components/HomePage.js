@@ -31,13 +31,17 @@ const HeroHeadline = styled.h2`
 `;
 
 const FeaturedContainer = styled.div`
-  padding: 30px;
-  background-color: white;
-  border-radius: 3px;
+  width: ${({ theme }) => theme.contentMaxWidth};
+  margin: 0 auto;
+  padding: 30px 0;
 `;
 
 const FeaturedSection = styled.div`
-  margin-bottom: 60px;
+  margin-bottom: 30px;
+  padding: 20px 30px 30px;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.15);
   ${clearFix()}
 
   &:last-of-type {
@@ -54,7 +58,7 @@ const FeaturedHeadline = styled.div`
     height: 30px;
     line-height: 30px;
     float: left;
-    font-size 13px;
+    font-size 16px;
     font-family: 'Montserrat';
     font-weight: bold;
     text-transform: uppercase;
@@ -97,31 +101,29 @@ const HomePage = () => {
         </HeroHeadline>
       </Hero>
       <div>
-        <PageContent>
-          <FeaturedContainer>
-            <FeaturedSection>
-              <FeaturedHeadline>
-                <h3>Featured Companies</h3>
-                <Link to="/companies">View all Companies</Link>
-              </FeaturedHeadline>
-              <CompanyList
-                companies={companies.filter(company => company.featured)}
-                showTitle={false}
-              />
-            </FeaturedSection>
-            <FeaturedSection>
-              <FeaturedHeadline>
-                <h3>Featured Jobs</h3>
-                <Link to="/jobs">View all Jobs</Link>
-              </FeaturedHeadline>
-              <JobList
-                jobs={jobs.filter(job => job.featured)}
-                companies={companies}
-                showTitle={false}
-              />
-            </FeaturedSection>
-          </FeaturedContainer>
-        </PageContent>
+        <FeaturedContainer>
+          <FeaturedSection>
+            <FeaturedHeadline>
+              <h3>Featured Companies</h3>
+              <Link to="/companies">View all Companies</Link>
+            </FeaturedHeadline>
+            <CompanyList
+              companies={companies.filter(company => company.featured)}
+              showTitle={false}
+            />
+          </FeaturedSection>
+          <FeaturedSection>
+            <FeaturedHeadline>
+              <h3>Featured Jobs</h3>
+              <Link to="/jobs">View all Jobs</Link>
+            </FeaturedHeadline>
+            <JobList
+              jobs={jobs.filter(job => job.featured)}
+              companies={companies}
+              showTitle={false}
+            />
+          </FeaturedSection>
+        </FeaturedContainer>
       </div>
     </HomePageContainer>
   );

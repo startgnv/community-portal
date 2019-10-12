@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import Hero from './Hero';
-import PageContent from './PageContent';
 import culturePhoto from '../assets/images/culture.jpg';
 import cade from '../assets/images/cade.jpg';
 import uf from '../assets/images/uf.jpg';

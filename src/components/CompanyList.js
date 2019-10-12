@@ -15,14 +15,14 @@ const ListTitle = styled.h3`
 `;
 
 const ListContainer = styled.ul`
-  margin-right: -30px;
+  margin: 0 -30px -30px 0;
   padding: 0;
   ${clearFix()}
 `;
 
 const CompanyItemContainer = styled.div`
   width: 33%;
-  padding-right: 30px;
+  padding: 0 30px 30px 0;
   float: left;
   box-sizing: border-box;
 `;
