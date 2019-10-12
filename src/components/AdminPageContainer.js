@@ -73,8 +73,7 @@ const useStyles = makeStyles(theme => ({
   },
   root: {
     display: 'flex',
-    backgroundColor: '#fcfcfc',
-    height: '100vh'
+    backgroundColor: '#fcfcfc'
   },
   toolbarBuffer: theme.mixins.toolbar
 }));

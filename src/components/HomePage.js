@@ -10,9 +10,7 @@ import CompanyList from './CompanyList';
 
 import { LinearProgress } from '@material-ui/core';
 
-const HomePageContainer = styled.div`
-  background: ${({ theme }) => theme.uiBackground};
-`;
+const HomePageContainer = styled.div``;
 
 const HeroStats = styled.span`
   display: block;

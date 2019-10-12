@@ -1,7 +1,16 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import Hero from './Hero';
+import PageContent from './PageContent';
 import culturePhoto from '../assets/images/culture.jpg';
+import cade from '../assets/images/cade.jpg';
+import uf from '../assets/images/uf.jpg';
+import ichetucknee from '../assets/images/ichetucknee-springs.jpg';
+import boxcar from '../assets/images/boxcar.jpg';
+import shands from '../assets/images/shands.jpg';
+import school from '../assets/images/school.jpg';
+import depot from '../assets/images/depot.jpg';
+import crescent from '../assets/images/crescent.jpg';
 import divider from '../assets/images/whygnv-divider.jpg';
 
 const WhyGainesvilleContainer = styled.div``;
@@ -17,20 +26,31 @@ const HeroHeadline = styled.h2`
 `;
 
 const HeroContent = styled.div`
+  position: relative;
   max-width: 725px;
   margin: 0 auto;
   padding: 120px 0;
   text-align: center;
+
+  &:after {
+    position: absolute;
+    width: 2px;
+    height: 60px;
+    left: 50%;
+    bottom: 30px;
+    background-color: ${({ theme }) => theme.yellow};
+    content: '';
+  }
 `;
 
-const CultureContainer = styled.div`
+const CopyWithImageContainer = styled.div`
   position: relative;
   max-width: 960px;
   margin: 0 auto;
   padding: 80px 0 60px;
 `;
 
-const CultureContent = styled.div`
+const CopyWithImageContent = styled.div`
   position: relative;
   max-width: 425px;
   padding: 60px;
@@ -40,7 +60,7 @@ const CultureContent = styled.div`
   z-index: 10;
 `;
 
-const CulturePhoto = styled.img`
+const CopyWithImagePhoto = styled.img`
   position: absolute;
   max-width: 687px;
   top: 0;
@@ -50,6 +70,7 @@ const CulturePhoto = styled.img`
 
 const Divider = styled.div`
   height: 210px;
+  margin-bottom: 60px;
   background: url(${divider});
   background-size: cover;
   background-position: center;
@@ -57,70 +78,166 @@ const Divider = styled.div`
 
 const WhyGainesvillePage = () => (
   <WhyGainesvilleContainer>
-    <Hero size="medium">
+    <Hero size="small">
       <HeroHeadline>
         Gainesville <strong>101</strong>
       </HeroHeadline>
     </Hero>
     <HeroContent>
-      <h2>A City Rich in History</h2>
+      <h2>Notable Track Record</h2>
       <p>
-        Gainesville. The Swamp. Home of: UF, the 8th best public university in
-        America; Santa Fe, the #1 college in America; Sid Martin Biotech, the #1
-        biotech incubator in the world; a town full of enticingly small cocktail
-        bars, top-tier breweries (that partner with butterflies to brew pale
-        ales) and niche dining spots; the origin of Tom Petty and Gatorade; one
-        of the most cutting edge research hospitals in the world--UFHealth, and
-        a slough of collaborative and engaging events that take place in and
-        around these institutions (plus the institutions we’ve failed to
-        mention). GNV is nature, academic rigor and constantly unfolding
-        ideation packed into one community waiting for you to come and
-        contribute.
+        Gainesville is a mid-size city in the middle of Florida with a quiet
+        buzzing of builders and thinkers. It is the birthplace of Gatorade, home
+        to the complete lifecycle of Grooveshark, a music sharing platform, and
+        a place of growth for Olympic athletes, Pulitzer Prize winners, and a
+        MacArthur ‘Genuis Grant’ Recipient.
       </p>
     </HeroContent>
-    <CultureContainer>
-      <CultureContent>
-        <h2>Culture of Ideation & Experimentation</h2>
+    <CopyWithImageContainer>
+      <CopyWithImagePhoto src={culturePhoto} />
+      <CopyWithImageContent>
+        <h2>Community Successes</h2>
         <p>
-          GNV’s history of spinning out a varied collection of businesses and
-          products is sustained by a community that’s build on ideation and
-          experimentation. The spaces within and between citadels of creativity
-          like Cade Museum, the Hub, Optym, San Felasco Tech City and more is
-          navigated by one of the most educated communities in the nation.
-          Residing at the intersection of the rigorous work and experimental
-          thinking makes GNV a community that values divergent thinking like
-          yours.
+          Gainesville and its institutions have enjoyed many wins and success
+          stories over the years. It doesn’t look like it's slowing down either.
+          In 2019 alone Fracture, a glass photo printing company, has expanded
+          into a new 60,000 sq. ft. office and Sharpspring, a marketing
+          automation company, joined the Russell 3000® Index. Both are a sign of
+          the type of growth happening right now.
         </p>
-      </CultureContent>
-      <CulturePhoto src={culturePhoto} />
-    </CultureContainer>
+      </CopyWithImageContent>
+    </CopyWithImageContainer>
+    <CopyWithImageContainer>
+      <CopyWithImagePhoto src={cade} />
+      <CopyWithImageContent>
+        <h2>Community Supports</h2>
+        <p>
+          Gainesville at large is an ecosystem supported by great resources for
+          inspiration and the support of ideas like the Cade Museum for
+          Creativity and Invention, the San Felasco Tech City, the Florida
+          Natural History Museum and The 2017 Incubator of The Year: The Sid
+          Martin Biotech.
+        </p>
+      </CopyWithImageContent>
+    </CopyWithImageContainer>
     <Divider />
-    <h2>Nature-Minded</h2>
-    <p>
-      There is no shortage of natural resources or nature minded projects to be
-      proud of if you live in “The Swamp”. GNV has some of the highest density
-      of freshwater springs in the world--where the water stays 72º F year
-      round. There are wide plains where wild bison, horses and alligators run
-      (and swim) about like you’re not even there. IFAS (UF’s Institute for Food
-      and Agricultural Science) is a 140 year-old institution with hundreds of
-      facilities around the world working extremely cool research projects aimed
-      at protecting our environment while feeding the world. Whether you want to
-      recuperate with nature or engage productively in sustainability projects,
-      GNV has a place in nature for you.
-    </p>
-    <h2>Is GNV right for your family?</h2>
-    <p>
-      There is no chapter of family life that GNV is not equipped for. Alachua
-      County Public Schools produces students that score some of the highest SAT
-      scores in the state, and even the nation. Remarkable health institutions
-      like UF Health and North Florida Regional Medical Center will give you
-      family the highest quality personalized care. Locations like the Cade
-      Museum, Harn Museum of Art, Depot Park, Hippodrome Theater, Florida
-      Natural History Museum and more will always have a collection of engaging
-      events that cater to kids of all ages (as well as the parents!).
-      Ichetucknee Springs, Loblolly Trail, Rainbow Springs and San Felasco are
-      just a few examples of pristine nature spots ideal for family outings.
-    </p>
+    <CopyWithImageContainer>
+      <CopyWithImagePhoto src={uf} />
+      <CopyWithImageContent>
+        <h2>University</h2>
+        <p>
+          Gainesville is home to The University of Florida, the 7th best public
+          university in the United States. UF goes beyond education and weaves
+          itself into the community with investments like UF Innovate | The Hub
+          and the Innovation District. In the last 15 years UF has spun off 190
+          startup companies from its researchers’ technologies and brought in
+          $776 million in research awards in the 2019 fiscal year.
+        </p>
+      </CopyWithImageContent>
+    </CopyWithImageContainer>
+    <CopyWithImageContainer>
+      <CopyWithImagePhoto src={ichetucknee} />
+      <CopyWithImageContent>
+        <h2>Everyday Nature</h2>
+        <p>
+          Sunny Gainesville Florida is also a great place to live with an
+          average of 224 sunny days per year and an average high of 82 F.
+          Winters are mild with an average low of 45 F. Water is plentiful from
+          the 50 inches of rain per year and its abundant natural structures
+          like the springs.
+        </p>
+      </CopyWithImageContent>
+    </CopyWithImageContainer>
+    <CopyWithImageContainer>
+      <CopyWithImagePhoto src={depot} />
+      <CopyWithImageContent>
+        <h2>Adventure</h2>
+        <p>
+          When you are ready to go exploring, Gainesville is uniquely prepared
+          for your needs. For a relaxing afternoon stroll the Kanapaha Botanical
+          Gardens provide scenic and shaded paths. For a higher energy escape
+          once can try mountain biking in the San Felasco Hammock Preserve State
+          Park. Other great spots to check out include Ichetucknee Springs,
+          Loblolly Trail, and Devil’s Millhopper.
+        </p>
+      </CopyWithImageContent>
+    </CopyWithImageContainer>
+    <Divider />
+    <CopyWithImageContainer>
+      <CopyWithImagePhoto src={boxcar} />
+      <CopyWithImageContent>
+        <h2>Food & Drinks</h2>
+        <p>
+          Gainesville has a vibrant dining scene with local favorites like
+          Satchel's Pizza, The Top, Dragonfly Sushi & Sake Company and Las
+          Margarita's. Stylish cocktail bars like Cry Baby’s, The Dime, and laid
+          back venues like the Boxcar Beer and Wine Garden are great meeting
+          spots to catch up with friends. For more local insights you can check
+          out the blog: Ken Eats Gainesville.
+        </p>
+      </CopyWithImageContent>
+    </CopyWithImageContainer>
+    <CopyWithImageContainer>
+      <CopyWithImagePhoto src={cade} />
+      <CopyWithImageContent>
+        <h2>Livability</h2>
+        <p>
+          In Gainesville, transportation costs and expenses for housing and
+          health care have brought the city’s cost of living down to 2% below
+          the national average. Because of the low cost of living and lack of
+          income tax in Florida, Gainesville salaries go a lot further than
+          those of many other places in the U.S. Gainesville also has some of
+          the shortest commute times in the country. The average car ride to
+          work is about 20 minutes.
+        </p>
+      </CopyWithImageContent>
+    </CopyWithImageContainer>
+    <Divider />
+    <CopyWithImageContainer>
+      <CopyWithImagePhoto src={shands} />
+      <CopyWithImageContent>
+        <h2>World Class Medical Facilities</h2>
+        <p>
+          Remarkable health institutions like UF Health and North Florida
+          Regional Medical Center will give you and your family the highest
+          quality personalized care. UF Health specializes in more than 100
+          medical areas, including cancer treatment and research, heart care,
+          transplant surgeries, rehab, psychiatry, neuromedicine and women and
+          children’s services. North Florida Regional Medical Center: NFRMC is a
+          fully accredited 432-bed medical and surgical acute care center.
+        </p>
+      </CopyWithImageContent>
+    </CopyWithImageContainer>
+    <CopyWithImageContainer>
+      <CopyWithImagePhoto src={school} />
+      <CopyWithImageContent>
+        <h2>High-Performing School System</h2>
+        <p>
+          Gainesville’s school system, Alachua County Public Schools produces
+          students that score some of the highest SAT scores in the state, and
+          even the nation. It was awarded the title, ‘District of the Year,’ for
+          2018 by Cambridge Assessment International Education in May for
+          success in running a program that allows students to earn college
+          credit while still in high school.
+        </p>
+      </CopyWithImageContent>
+    </CopyWithImageContainer>
+    <Divider />
+    <CopyWithImageContainer>
+      <CopyWithImagePhoto src={crescent} />
+      <CopyWithImageContent>
+        <h2>Easy to Get Away, Too</h2>
+        <p>
+          It is easy to get wherever you need to go with everything you need
+          only one to two-hours away. Major international airports in
+          Jacksonville and Orlando have affordable international and domestic
+          flights. If you’re a fan of the ocean, Crescent Beach, St. Augustine
+          and Cedar Key are great choices. And world-class theme parks like
+          SeaWorld, Disney World and Universal Studios are fun weekend trip
+          destinations.
+        </p>
+      </CopyWithImageContent>
+    </CopyWithImageContainer>
   </WhyGainesvilleContainer>
 );
 
