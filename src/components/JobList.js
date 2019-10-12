@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { clearFix } from 'polished';
 import JobListItem from './JobListItem';
+import EmptyJobs from './EmptyJobs';
 
 const JobListContainer = styled.ul`
   padding: 0;
@@ -57,25 +58,30 @@ export const JobList = ({
     filteredJobs = jobs;
   }
 
+  let listContent;
+  if (filteredJobs.length) {
+    listContent = filteredJobs.map(job => {
+      const jobCompany = _.find(companies, { id: job.companyID });
+      return (
+        <ItemContainer>
+          <JobListItem
+            job={job}
+            company={jobCompany}
+            key={job.id}
+            showDescription={showDescription}
+            showCompanyInfo={showCompanyInfo}
+          />
+        </ItemContainer>
+      );
+    });
+  } else {
+    listContent = <EmptyJobs />;
+  }
+
   return (
     <JobListContainer className={className}>
       {showTitle && <ListTitle>Jobs ({filteredJobs.length})</ListTitle>}
-      <ListContainer>
-        {filteredJobs.map(job => {
-          const jobCompany = _.find(companies, { id: job.companyID });
-          return (
-            <ItemContainer>
-              <JobListItem
-                job={job}
-                company={jobCompany}
-                key={job.id}
-                showDescription={showDescription}
-                showCompanyInfo={showCompanyInfo}
-              />
-            </ItemContainer>
-          );
-        })}
-      </ListContainer>
+      <ListContainer>{listContent}</ListContainer>
     </JobListContainer>
   );
 };

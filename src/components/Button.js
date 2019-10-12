@@ -28,7 +28,7 @@ const ButtonContainer = styled.button`
   }
 
   &.outline {
-    background-color: transparent;
+    background-color: white;
     box-shadow: inset 0 0 0 2px ${({ theme }) => theme.uiBorder};
 
     .btn-label {
