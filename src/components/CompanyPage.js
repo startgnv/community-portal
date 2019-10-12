@@ -99,7 +99,6 @@ export const CompanyPage = ({
             />
           </>
         )}
-        <h2>Culture</h2>
         <MapWrap>
           <MapContainer viewport={viewport}>
             <Marker longitude={longitude} latitude={latitude}>
