@@ -11,6 +11,7 @@ import school from '../assets/images/school.jpg';
 import depot from '../assets/images/depot.jpg';
 import crescent from '../assets/images/crescent.jpg';
 import divider from '../assets/images/whygnv-divider.jpg';
+import divider2 from '../assets/images/divider2.jpg';
 
 const WhyGainesvilleContainer = styled.div``;
 
@@ -70,7 +71,7 @@ const CopyWithImagePhoto = styled.img`
 const Divider = styled.div`
   height: 210px;
   margin-bottom: 60px;
-  background: url(${divider});
+  background: url(${({ src }) => src || divider});
   background-size: cover;
   background-position: center;
 `;
@@ -161,7 +162,7 @@ const WhyGainesvillePage = () => (
         </p>
       </CopyWithImageContent>
     </CopyWithImageContainer>
-    <Divider />
+    <Divider src={divider2} />
     <CopyWithImageContainer>
       <CopyWithImagePhoto src={boxcar} />
       <CopyWithImageContent>
