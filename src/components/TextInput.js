@@ -7,9 +7,12 @@ const TextInputContainer = styled.div`
   .input {
     display: block;
     width: 100%;
-    height: 30px;
-    padding: 0 10px;
+    height: 40px;
+    padding: 0 15px;
+    border: 0;
+    box-shadow: inset 0 0 0 2px ${({ theme }) => theme.uiBorder};
     box-sizing: border-box;
+    border-radius: 3px;
   }
 `;
 
@@ -19,7 +22,8 @@ export const TextInput = ({
   fullWidth = false,
   name = '',
   placeholder = '',
-  onChange = () => {}
+  onChange = () => {},
+  inputProps = {}
 }) => {
   return (
     <TextInputContainer
@@ -35,6 +39,7 @@ export const TextInput = ({
         name={name}
         placeholder={placeholder}
         onChange={onChange}
+        {...inputProps}
       />
     </TextInputContainer>
   );

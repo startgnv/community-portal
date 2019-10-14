@@ -174,7 +174,7 @@ const JobsFilter = ({ onChange = noop, filter }) => {
         </FilterItem>
         <FilterItem>
           <TextInput
-            placeholder="Filter Jobs"
+            placeholder="Search Jobs"
             name="filter"
             onChange={onSearchChange}
           />
