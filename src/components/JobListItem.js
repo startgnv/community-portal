@@ -102,7 +102,7 @@ export const JobListItem = ({
           )}
         </CategoriesContainer>
       </JobInfo>
-      <Button label="View Job" fullWidth />
+      <Button label="View Job" size="small" fullWidth />
     </Link>
   </JobListItemContainer>
 );

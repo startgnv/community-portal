@@ -19,10 +19,10 @@ export default {
   // buttons
   buttonSizes: {
     small: {
-      height: '20px',
+      height: '30px',
       fontSize: '11px',
       borderRadius: '2px',
-      padding: '0 12px'
+      padding: '0 20px'
     },
     medium: {
       height: '40px',
