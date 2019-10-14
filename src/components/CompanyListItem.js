@@ -71,7 +71,7 @@ export const CompanyListItem = ({
           )}
         </div>
       </CompanyInfo>
-      <Button label="View Company" fullWidth />
+      <Button label="View Company" size="small" fullWidth />
     </Link>
   </CompanyListItemContainer>
 );
