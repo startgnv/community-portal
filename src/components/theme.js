@@ -31,13 +31,13 @@ export default {
       padding: '0 20px'
     },
     large: {
-      height: '50px',
+      height: '40px',
       fontSize: '14px',
       borderRadius: '3px',
       padding: '0 30px'
     },
     extraLarge: {
-      height: '80px',
+      height: '60px',
       fontSize: '16px',
       borderRadius: '6px',
       padding: '0 40px'

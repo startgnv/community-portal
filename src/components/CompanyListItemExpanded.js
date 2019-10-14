@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { storage } from '../firebase';
+import { useDownloadURL } from 'react-firebase-hooks/storage';
 import StorageImg from './StorageImg';
 
 const ItemContainer = styled.div`
@@ -83,29 +85,32 @@ const CompaniListItemExpanded = ({
     employeeCount = '',
     slug = '',
     logoPath = '',
-    coverImg = '',
+    coverPath = '',
     shortDescription = ''
   } = {},
   jobs = [],
   onMouseEnter = () => {}
-}) => (
-  <ItemContainer onMouseEnter={onMouseEnter}>
-    <Link className="container-link" to={'/companies/' + slug}>
-      <Images coverImg={coverImg}>
-        <StorageImg className="logo" alt={name} path={logoPath} />
-      </Images>
-      <CompanyInfo>
-        <CompanyName>{name}</CompanyName>
-        <EmployeeCount>{employeeCount || '10+'} Employees</EmployeeCount>
-        <ShortDescription>{shortDescription}</ShortDescription>
-        {jobs.length > 0 && (
-          <Link className="jobs-link" to={'/companies/' + slug}>
-            View {jobs.length} job{jobs.length !== 1 && 's'}
-          </Link>
-        )}
-      </CompanyInfo>
-    </Link>
-  </ItemContainer>
-);
+}) => {
+  const [coverUrl] = useDownloadURL(coverPath ? storage.ref(coverPath) : '');
+  return (
+    <ItemContainer onMouseEnter={onMouseEnter}>
+      <Link className="container-link" to={'/companies/' + slug}>
+        <Images coverImg={coverUrl}>
+          <StorageImg className="logo" alt={name} path={logoPath} />
+        </Images>
+        <CompanyInfo>
+          <CompanyName>{name}</CompanyName>
+          <EmployeeCount>{employeeCount || '10+'} Employees</EmployeeCount>
+          <ShortDescription>{shortDescription}</ShortDescription>
+          {jobs.length > 0 && (
+            <Link className="jobs-link" to={'/companies/' + slug}>
+              View {jobs.length} job{jobs.length !== 1 && 's'}
+            </Link>
+          )}
+        </CompanyInfo>
+      </Link>
+    </ItemContainer>
+  );
+};
 
 export default CompaniListItemExpanded;
