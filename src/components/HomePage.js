@@ -31,7 +31,7 @@ const HeroHeadline = styled.h2`
 `;
 
 const FeaturedContainer = styled.div`
-  width: ${({ theme }) => theme.contentMaxWidth};
+  max-width: ${({ theme }) => theme.contentMaxWidth};
   margin: 0 auto;
   padding: 30px 0;
 `;
@@ -100,7 +100,7 @@ const HomePage = () => {
           in Florida
         </HeroHeadline>
       </Hero>
-      <div>
+      <PageContent>
         <FeaturedContainer>
           <FeaturedSection>
             <FeaturedHeadline>
@@ -124,7 +124,7 @@ const HomePage = () => {
             />
           </FeaturedSection>
         </FeaturedContainer>
-      </div>
+      </PageContent>
     </HomePageContainer>
   );
 };

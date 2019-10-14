@@ -1,5 +1,6 @@
 import React from 'react';
 import { clearFix } from 'polished';
+import { device } from './device';
 import CompanyListItem from './CompanyListItem';
 import styled from 'styled-components/macro';
 
@@ -25,6 +26,15 @@ const CompanyItemContainer = styled.div`
   padding: 0 30px 30px 0;
   float: left;
   box-sizing: border-box;
+
+  @media ${device.tabletPort} {
+    width: 50%;
+  }
+
+  @media ${device.mobile} {
+    width: 100%;
+    float: none;
+  }
 `;
 
 export const CompanyList = ({

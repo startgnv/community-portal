@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import styled from 'styled-components/macro';
 import { clearFix } from 'polished';
+import { device } from './device';
 import JobListItem from './JobListItem';
 import EmptyJobs from './EmptyJobs';
 
@@ -29,6 +30,15 @@ const ItemContainer = styled.div`
   padding: 0 30px 30px 0;
   float: left;
   box-sizing: border-box;
+
+  @media ${device.tabletPort} {
+    width: 50%;
+  }
+
+  @media ${device.mobile} {
+    width: 100%;
+    float: none;
+  }
 `;
 
 export const JobList = ({

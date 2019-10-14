@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
+import { device } from './device';
 
 import AppContext from './AppContext';
 import MapPageCompanies from './MapPageCompanies';
@@ -23,14 +24,18 @@ const HeroHeadline = styled.h2`
 
 const CompaniesContent = styled.div`
   display: flex;
-  max-width: 1120px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 30px 0;
+  padding: 30px 20px;
 `;
 
 const CompaniesMapContainer = styled.div`
   flex: 5;
   margin-top: -20px;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    display: none;
+  }
 `;
 
 const CompaniesMapInner = styled.div`
