@@ -25,22 +25,22 @@ export default {
       padding: '0 12px'
     },
     medium: {
-      height: '30px',
+      height: '40px',
       fontSize: '12px',
       borderRadius: '3px',
-      padding: '0 20px'
+      padding: '0 30px'
     },
     large: {
-      height: '40px',
+      height: '50px',
       fontSize: '14px',
       borderRadius: '3px',
-      padding: '0 30px'
+      padding: '0 40px'
     },
     extraLarge: {
       height: '60px',
       fontSize: '16px',
       borderRadius: '6px',
-      padding: '0 40px'
+      padding: '0 50px'
     }
   },
 

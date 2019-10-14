@@ -72,8 +72,7 @@ const JobsFilter = ({ onChange = noop, filter }) => {
   }));
   const renderCategories = _.filter(
     categoriesSrc,
-    category =>
-      !category.parentID && selectedCategories.indexOf(category.id) === -1
+    category => !category.parentID
   );
   const renderSelectedCategories = _.filter(
     categoriesSrc,
@@ -122,7 +121,7 @@ const JobsFilter = ({ onChange = noop, filter }) => {
     <JobsFilterContainer>
       <FilterControls>
         <FilterItem>
-          <Dropdown btnLabel={categoriesBtnLabel} btnSize="large">
+          <Dropdown btnLabel={categoriesBtnLabel}>
             <CategoriesContainer>
               {renderSelectedCategories.map(({ name, id }) => (
                 <CheckContainer>
@@ -152,7 +151,7 @@ const JobsFilter = ({ onChange = noop, filter }) => {
           </Dropdown>
         </FilterItem>
         <FilterItem>
-          <Dropdown btnLabel="Type" btnSize="large">
+          <Dropdown btnLabel="Type">
             <CategoriesContainer>
               <CheckContainer>
                 <Checkbox
