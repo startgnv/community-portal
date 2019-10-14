@@ -37,6 +37,12 @@ const CategoriesContainer = styled.div`
   ${clearFix()}
 `;
 
+const CategoriesDivider = styled.div`
+  height: 1px;
+  background-color: ${({ theme }) => theme.uiBorder};
+  margin: 5px 0;
+`;
+
 const FilterControls = styled.div``;
 
 const CheckContainer = styled.div``;
@@ -66,7 +72,13 @@ const JobsFilter = ({ onChange = noop, filter }) => {
   }));
   const renderCategories = _.filter(
     categoriesSrc,
-    category => !category.parentID
+    category =>
+      !category.parentID && selectedCategories.indexOf(category.id) === -1
+  );
+  const renderSelectedCategories = _.filter(
+    categoriesSrc,
+    category =>
+      !category.parentID && selectedCategories.indexOf(category.id) > -1
   );
 
   const onCategoryChange = ({ target: { checked, value } }) => {
@@ -112,6 +124,19 @@ const JobsFilter = ({ onChange = noop, filter }) => {
         <FilterItem>
           <Dropdown btnLabel={categoriesBtnLabel} btnSize="large">
             <CategoriesContainer>
+              {renderSelectedCategories.map(({ name, id }) => (
+                <CheckContainer>
+                  <Checkbox
+                    label={name}
+                    value={id}
+                    onChange={onCategoryChange}
+                    checked={selectedCategories.indexOf(id) > -1}
+                    key={id}
+                  />
+                </CheckContainer>
+              ))}
+              {renderSelectedCategories &&
+                renderSelectedCategories.length > 0 && <CategoriesDivider />}
               {renderCategories.map(({ name, id }) => (
                 <CheckContainer>
                   <Checkbox
