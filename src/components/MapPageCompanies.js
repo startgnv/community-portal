@@ -2,11 +2,16 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import CompanyListItemExpanded from './CompanyListItemExpanded';
 import { SharedMapConsumer } from './CompaniesMapContext';
+import { device } from './device';
 
 const MapPageComapniesContainer = styled.div`
   width: 60%;
   margin-right: 30px;
   flex: 7;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    margin-right: 0;
+  }
 `;
 
 export const MapPageCompanies = ({

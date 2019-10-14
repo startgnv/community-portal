@@ -18,7 +18,7 @@ const CompanyPageContainer = styled.div`
 `;
 
 const CompanyContent = styled.div`
-  width: ${({ theme }) => theme.contentMaxWidth};
+  max-width: ${({ theme }) => theme.contentMaxWidth};
   margin: 0 auto;
   padding: 30px 20px 20px;
 `;
@@ -38,6 +38,7 @@ const CompanyLink = styled.span`
 
 const MapWrap = styled.div`
   height: 200px;
+  margin-top: 30px;
 `;
 
 export const CompanyPage = ({
