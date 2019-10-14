@@ -23,7 +23,8 @@ export const TextInput = ({
   name = '',
   placeholder = '',
   onChange = () => {},
-  inputProps = {}
+  inputProps = {},
+  value = ''
 }) => {
   return (
     <TextInputContainer
@@ -39,6 +40,7 @@ export const TextInput = ({
         name={name}
         placeholder={placeholder}
         onChange={onChange}
+        value={value}
         {...inputProps}
       />
     </TextInputContainer>

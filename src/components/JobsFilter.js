@@ -5,7 +5,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../firebase';
 import { clearFix } from 'polished';
 import Checkbox from './Checkbox';
-import TextInput from './TextInput';
+import SearchInput from './SearchInput';
 import Dropdown from './Dropdown';
 
 const JobsFilterContainer = styled.div`
@@ -106,12 +106,6 @@ const JobsFilter = ({ onChange = noop, filter }) => {
     });
   };
 
-  const onSearchChange = ({ target: { value } }) => {
-    onChange({
-      search: value
-    });
-  };
-
   let categoriesBtnLabel = 'Categories';
   if (selectedCategories.length) {
     categoriesBtnLabel += ` (${selectedCategories.length})`;
@@ -173,10 +167,10 @@ const JobsFilter = ({ onChange = noop, filter }) => {
           </Dropdown>
         </FilterItem>
         <FilterItem>
-          <TextInput
+          <SearchInput
             placeholder="Search Jobs"
             name="filter"
-            onChange={onSearchChange}
+            onChange={value => onChange({ search: value })}
           />
         </FilterItem>
       </FilterControls>

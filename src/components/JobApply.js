@@ -82,6 +82,7 @@ const JobApply = ({ job, job: { applyUrl, id } = {} }) => {
           className="email-input"
           placeholder="Email"
           onChange={e => setApplicantEmail(e.target.value)}
+          value={applicantEmail}
           fullWidth
         />
         <Button label={submitLabel} size="large" fullWidth type="submit" />
