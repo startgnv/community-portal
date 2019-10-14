@@ -90,7 +90,7 @@ export const CompanyPage = ({
       </SidebarHeader>
       <CompanyContent>
         <p className="description">{description}</p>
-        {companyJobs && companyJobs.length && (
+        {companyJobs && companyJobs.length > 0 && (
           <>
             <h2>Jobs</h2>
             <JobList
