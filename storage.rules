@@ -7,8 +7,9 @@ service firebase.storage {
       allow write: if request.auth.token.email == "james@getadmiral.com";
       allow write: if request.auth.token.email == "nathan@getadmiral.com";
       allow write: if request.auth.token.email == "will@getadmiral.com";
+      allow write: if request.auth.token.email == "will@startupgnv.com";
+      allow write: if request.auth.token.email == "lauren@startupgnv.com";
       allow read: if true;
     }
   }
 }
-  
