@@ -14,7 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
 
-import { db, storage } from '../firebase';
+import { db } from '../firebase';
 import { useAdminContainer } from './AdminPageContainer';
 
 const useStyles = makeStyles(theme => ({

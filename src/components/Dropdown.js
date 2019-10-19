@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { Popper } from '@material-ui/core';
-import Fade from '@material-ui/core/Fade';
 import Button from './Button';
 
 const Dropdown = ({

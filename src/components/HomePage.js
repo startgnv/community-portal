@@ -12,14 +12,6 @@ import { LinearProgress } from '@material-ui/core';
 
 const HomePageContainer = styled.div``;
 
-const HeroStats = styled.span`
-  display: block;
-  font-size: 15px;
-  text-transform: uppercase;
-  color: white;
-  font-weight: bold;
-`;
-
 const HeroHeadline = styled.h2`
   font-size: 46px;
   color: white;

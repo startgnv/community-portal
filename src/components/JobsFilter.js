@@ -52,17 +52,10 @@ const noop = () => {};
 const JobsFilter = ({ onChange = noop, filter }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
-  const [searchString, setSearchString] = useState('');
   const [categoriesValue, categoriesLoading, categoriesError] = useCollection(
     db.collection('jobCategories')
   );
 
-  const [typeAnchorEl, setTypeAnchorEl] = useState(null);
-  const onTypeBtnClick = ev => {
-    setTypeAnchorEl(typeAnchorEl ? null : ev.currentTarget);
-  };
-  const typeOpen = Boolean(typeAnchorEl);
-  const typeElID = typeOpen ? 'type-popper' : undefined;
   if (categoriesLoading || categoriesError) {
     return false;
   }
