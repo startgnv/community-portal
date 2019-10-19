@@ -118,6 +118,7 @@ export const AdminJobForm = ({
       if (jobID) {
         updatePromise = doc.current.update(jobData);
       } else {
+        jobData.TSCreated = Date.now();
         updatePromise = db.collection('jobs').add(jobData);
         redirect = true;
       }
