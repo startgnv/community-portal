@@ -163,7 +163,8 @@ export const AdminEditCompanyPage = ({
       description,
       shortDescription,
       industryID,
-      featured
+      featured,
+      TSUpdated: Date.now()
     };
     // after we create or update the doc, we'll have the ID which we need for
     // the images

@@ -22,6 +22,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { db, storage } from '../firebase';
 import { useAdminContainer } from './AdminPageContainer';
 import { Parser } from 'html-to-react';
+import moment from 'moment';
 
 const htmlParser = new Parser();
 
@@ -99,6 +100,7 @@ const AdminJobCard = ({
         setDeleted(false);
       });
   };
+  const updatedAgo = job.TSUpdated ? moment(job.TSUpdated).fromNow() : 'Never';
 
   return (
     <>
@@ -158,7 +160,10 @@ const AdminJobCard = ({
           }
         />
 
-        <CardContent>{htmlParser.parse(job.description)}</CardContent>
+        <CardContent>
+          <p>Updated {updatedAgo}</p>
+          {htmlParser.parse(job.description)}
+        </CardContent>
       </Card>
     </>
   );

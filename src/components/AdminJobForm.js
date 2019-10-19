@@ -110,7 +110,8 @@ export const AdminJobForm = ({
         companyID,
         applyUrl,
         type,
-        featured
+        featured,
+        TSUpdated: Date.now()
       };
       let updatePromise;
       let redirect = false;

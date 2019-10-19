@@ -8,14 +8,25 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
 import StorageAvatar from './StorageAvatar';
 import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 import { db } from '../firebase';
 import { useAdminContainer } from './AdminPageContainer';
+
+const sortKeys = {
+  Updated: 'TSUpdated',
+  Created: 'TSCreated'
+};
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -29,6 +40,16 @@ const useStyles = makeStyles(theme => ({
   progress: {
     display: 'block',
     margin: 'auto'
+  },
+  listActions: {
+    display: 'flex'
+  },
+  search: {
+    flex: '2',
+    marginRight: '20px'
+  },
+  sort: {
+    flex: '1'
   }
 }));
 
@@ -39,6 +60,7 @@ function ListItemLink(props) {
 export const AdminJobsPage = ({ match: { isExact } }) => {
   const classes = useStyles();
   const [search, setSearch] = useState('');
+  const [sort, setSort] = useState({ by: 'Updated', asc: false });
   const [jobs = [], loadingJobs, errorJobs] = useCollectionData(
     db.collection('jobs'),
     {
@@ -56,18 +78,54 @@ export const AdminJobsPage = ({ match: { isExact } }) => {
 
   const companiesByID = _.keyBy(companies, company => company.id);
 
+  const onSortChange = ({ target: { value } }) => {
+    if (value === sort.by) {
+      setSort({
+        ...sort,
+        asc: !sort.asc
+      });
+      return;
+    }
+    setSort({
+      by: value,
+      asc: false
+    });
+  };
+
+  const sortIcon = sort.asc ? (
+    <ArrowUpwardIcon fontSize="inherit" />
+  ) : (
+    <ArrowDownwardIcon fontSize="inherit" />
+  );
+
   return (
     <>
       <Container className={classes.container} maxWidth="lg">
-        <List>
+        <div className={classes.listActions}>
           <TextField
+            className={classes.search}
             type="search"
-            fullWidth
-            margin="normal"
             label="Search Jobs"
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
+          <FormControl className={classes.sort}>
+            <InputLabel htmlFor="age-simple">Sort By</InputLabel>
+            <Select
+              value={sort.by}
+              renderValue={value => (
+                <>
+                  {sortIcon} {value}
+                </>
+              )}
+              onChange={onSortChange}
+            >
+              <MenuItem value="Updated">Updated</MenuItem>
+              <MenuItem value="Created">Created</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+        <List>
           {jobs
             .filter(({ title, companyID, featured }) => {
               let match;
@@ -81,6 +139,16 @@ export const AdminJobsPage = ({ match: { isExact } }) => {
                 companyName.toLowerCase().includes(normalizedSearch) ||
                 isFeatured.includes(normalizedSearch);
               return match;
+            })
+            .sort((a, b) => {
+              const sortAttr = sortKeys[sort.by];
+              const aVal = a[sortAttr] || 0;
+              const bVal = b[sortAttr] || 0;
+              if (sort.asc) {
+                return aVal - bVal;
+              } else {
+                return bVal - aVal;
+              }
             })
             .map(job => {
               const company = companiesByID[job.companyID] || {};
