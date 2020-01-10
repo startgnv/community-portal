@@ -168,7 +168,7 @@ export const App = () => (
               />
               <Route
                 exact
-                path="/gainesville-101"
+                path="/new-to-gainesville"
                 component={Gainesville101Page}
               />
               <Route exact path="/admin/login" component={AdminLogin} />

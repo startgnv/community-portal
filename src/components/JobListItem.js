@@ -1,18 +1,17 @@
 import React from 'react';
+import { storage } from '../firebase';
+import { useDownloadURL } from 'react-firebase-hooks/storage';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import { clearFix } from 'polished';
 import JobCategories from './JobCategories';
 import StorageImg from './StorageImg';
-import Button from './Button';
 
 const JobListItemContainer = styled.li`
   list-style-type: none;
 
   .link-container {
     display: block;
-    padding: 13px;
-    border-radius: 6px;
     text-decoration: none;
     box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.15);
     background: white;
@@ -25,17 +24,11 @@ const JobListItemContainer = styled.li`
 
   .company-img {
     display: block;
-    flex: 1;
-    width: 54px;
-    height: 54px;
-    max-width: 54px;
-    float: left;
-    border-radius: 3px;
-    margin-right: 10px;
+    width: 40px;
+    height: 40px;
   }
 
   .company {
-    display: inline-block;
     font-size: 13px;
     line-height: 16px;
     color: #333;
@@ -47,24 +40,39 @@ const JobListItemContainer = styled.li`
   }
 `;
 
+const Images = styled.div`
+  display: flex;
+`;
+
+const CompanyCover = styled.div`
+  flex: 1;
+  height: 40px;
+  background-image: url(${({ coverImg }) => coverImg});
+  background-size: cover;
+  background-position: center;
+`;
+
 const JobInfo = styled.div`
-  margin-bottom: 20px;
+  display: flex;
+  height: 70px;
+  padding: 15px;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
 `;
 
 const JobTitle = styled.span`
   display: block;
+  width: 100%;
   font-size: 13px;
   color: ${({ theme }) => theme.deepNavy};
-  height: 32px;
   line-height: 16px;
   text-transform: uppercase;
   font-weight: bold;
+  white-space: nowrap;
   overflow: hidden;
-`;
-
-const CategoriesContainer = styled.div`
-  height: 22px;
-  margin-bottom: 10px;
+  text-overflow: ellipsis;
 `;
 
 export const JobListItem = ({
@@ -77,34 +85,34 @@ export const JobListItem = ({
   company = {},
   showCompanyInfo = true,
   showDescription = true
-}) => (
-  <JobListItemContainer>
-    <Link className="link-container" to={`/jobs/${id}`}>
-      {showCompanyInfo && (
-        <StorageImg
-          className="company-img"
-          alt={`${company.name}`}
-          path={company.logoPath}
-        />
-      )}
-      <JobInfo>
-        <JobTitle>{title}</JobTitle>
+}) => {
+  const [coverUrl] = useDownloadURL(
+    company.coverPath ? storage.ref(company.coverPath) : ''
+  );
+  return (
+    <JobListItemContainer>
+      <Link className="link-container" to={`/jobs/${id}`}>
         {showCompanyInfo && (
-          <div>
+          <Images>
+            <CompanyCover coverImg={coverUrl} />
+            <StorageImg
+              className="company-img"
+              alt={`${company.name}`}
+              path={company.logoPath}
+            />
+          </Images>
+        )}
+        <JobInfo>
+          <JobTitle>{title}</JobTitle>
+          {showCompanyInfo && (
             <Link className="company" to={`/companies/${company.slug}`}>
               {company.name}
             </Link>
-          </div>
-        )}
-        <CategoriesContainer>
-          {categories && categories.length > 0 && (
-            <JobCategories categories={categories} size="small" limit={1} />
           )}
-        </CategoriesContainer>
-      </JobInfo>
-      <Button label="View Job" size="small" fullWidth />
-    </Link>
-  </JobListItemContainer>
-);
+        </JobInfo>
+      </Link>
+    </JobListItemContainer>
+  );
+};
 
 export default JobListItem;

@@ -66,7 +66,7 @@ const FeaturedHeadline = styled.div`
     font-weight: bold;
     text-transform: uppercase;
     text-decoration: none;
-    color: ${({ theme }) => theme.purple};
+    color: ${({ theme }) => theme.orange};
   }
 `;
 

@@ -9,7 +9,7 @@ const ButtonContainer = styled.button`
   width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
   padding: ${({ theme, size }) => theme.buttonSizes[size].padding};
   border-radius: ${({ theme, size }) => theme.buttonSizes[size].borderRadius};
-  background-color: ${({ theme }) => theme.purple};
+  background-color: ${({ theme }) => theme.orange};
   text-align: center;
   border: 0;
   outline: none;
@@ -17,7 +17,7 @@ const ButtonContainer = styled.button`
   transition: 250ms;
 
   &:hover {
-    background-color: ${({ theme }) => lighten(0.1, theme.purple)};
+    background-color: ${({ theme }) => lighten(0.1, theme.orange)};
   }
 
   .btn-label {

@@ -20,7 +20,7 @@ const HeroHeadline = styled.h2`
   color: white;
 
   strong {
-    color: ${({ theme }) => theme.teal};
+    color: ${({ theme }) => theme.darkGreen};
     font-weight: 700;
   }
 `;
@@ -31,6 +31,10 @@ const HeroContent = styled.div`
   margin: 0 auto;
   padding: 120px 0;
   text-align: center;
+
+  h2 {
+    color: ${({ theme }) => theme.darkGreen};
+  }
 
   &:after {
     position: absolute;
@@ -58,6 +62,10 @@ const CopyWithImageContent = styled.div`
   box-sizing: border-box;
   background-color: white;
   z-index: 10;
+
+  h2 {
+    color: ${({ theme }) => theme.darkGreen};
+  }
 `;
 
 const CopyWithImagePhoto = styled.img`
@@ -80,7 +88,7 @@ const WhyGainesvillePage = () => (
   <WhyGainesvilleContainer>
     <Hero size="small">
       <HeroHeadline>
-        Gainesville <strong>101</strong>
+        New to <strong>Gainseville</strong>?
       </HeroHeadline>
     </Hero>
     <HeroContent>

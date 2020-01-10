@@ -80,10 +80,10 @@ export const Header = ({ className }) => (
         <li>
           <NavLink
             className="nav-link"
-            to="/gainesville-101"
+            to="/new-to-gainesville"
             activeClassName="active"
           >
-            Gainesville 101
+            New To Gainesville
           </NavLink>
         </li>
       </ul>

@@ -30,7 +30,7 @@ const ItemContainer = styled.div`
     height: 32px;
     text-transform: uppercase;
     font-weight: bold;
-    color: ${({ theme }) => theme.purple};
+    color: ${({ theme }) => theme.orange};
     text-decoration: none;
   }
 `;

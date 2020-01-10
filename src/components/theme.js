@@ -11,6 +11,10 @@ export default {
   teal: '#1fc3b3',
   purple: '#9632f3',
   yellow: '#f2d433',
+  darkGreen: '#00502d',
+  lightGreen: '#dcebd7',
+  orange: '#f35b1a',
+  lightBlue: '#ccdee5',
 
   // structure
   headerHeight: '70px',

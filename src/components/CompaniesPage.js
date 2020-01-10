@@ -17,7 +17,7 @@ const HeroHeadline = styled.h2`
   color: white;
 
   strong {
-    color: ${({ theme }) => theme.teal};
+    color: ${({ theme }) => theme.darkGreen};
     font-weight: 700;
   }
 `;
