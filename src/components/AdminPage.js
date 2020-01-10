@@ -7,6 +7,7 @@ import AdminIndex from './AdminIndex';
 import AdminJobsPage from './AdminJobsPage';
 import AdminEditCompanyPage from './AdminEditCompanyPage';
 import AdminJobPage from './AdminJobPage';
+import AdminJobsSyncPage from './AdminJobsSyncPage';
 import AdminPageContainer from './AdminPageContainer';
 
 const AdminSettingsPage = () => 'Settings';
@@ -31,6 +32,7 @@ export const AdminPage = () => (
         component={AdminCompanyPage}
       />
       <Route exact path="/admin/jobs" component={AdminJobsPage} />
+      <Route exact path="/admin/jobs/sync" component={AdminJobsSyncPage} />
       <Route path="/admin/jobs" component={AdminJobPage} />
       <Route exact path="/admin/settings" component={AdminSettingsPage} />
       <Route exact path="/admin" component={AdminIndex} />

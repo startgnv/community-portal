@@ -51,6 +51,7 @@ export const AdminEditCompanyPage = ({
   const [shortDescription, setShortDescription] = useState('');
   const [founded, setFounded] = useState('');
   const [employeeCount, setEmployeeCount] = useState('');
+  const [leverID, setLeverID] = useState('');
   const [featured, setFeatured] = useState(false);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -76,6 +77,7 @@ export const AdminEditCompanyPage = ({
     setEmployeeCount(company.employeeCount || '');
     setFeatured(company.featured || false);
     setIndustryID(company.industryID || '');
+    setLeverID(company.leverID || '');
   }, [
     company.name,
     company.coordinates,
@@ -87,7 +89,8 @@ export const AdminEditCompanyPage = ({
     company.founded,
     company.employeeCount,
     company.feautred,
-    company.industryID
+    company.industryID,
+    company.leverID
   ]);
 
   useEffect(() => {
@@ -164,6 +167,7 @@ export const AdminEditCompanyPage = ({
       shortDescription,
       industryID,
       featured,
+      leverID,
       TSUpdated: Date.now()
     };
     // after we create or update the doc, we'll have the ID which we need for
@@ -344,6 +348,15 @@ export const AdminEditCompanyPage = ({
             variant="outlined"
             label="Employee Count"
             onChange={e => setEmployeeCount(e.target.value)}
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            value={leverID}
+            fullWidth
+            variant="outlined"
+            label="Lever ID"
+            onChange={e => setLeverID(e.target.value)}
           />
         </Grid>
         <Grid item container justify="flex-end">

@@ -9,12 +9,15 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Drawer from '@material-ui/core/Drawer';
+import Collapse from '@material-ui/core/Collapse';
 import Divider from '@material-ui/core/Divider';
 import HomeIcon from '@material-ui/icons/Home';
 import BusinessIcon from '@material-ui/icons/Business';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
+import SyncIcon from '@material-ui/icons/Sync';
 
 import AdminHeader from './AdminHeader';
 
@@ -40,8 +43,7 @@ const drawerWidth = 250;
 
 const useStyles = makeStyles(theme => ({
   active: {
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10
+    backgroundColor: '#f0f0f0'
   },
   bottomNav: {
     position: 'fixed',
@@ -54,7 +56,6 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0
   },
   drawerList: {
-    padding: 10,
     '& a:visited, & a:hover, & a:active': {
       color: theme.palette.text.primary,
       fontWeight: 800
@@ -75,6 +76,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     backgroundColor: '#fcfcfc'
   },
+  nested: {
+    paddingLeft: theme.spacing(4)
+  },
   toolbarBuffer: theme.mixins.toolbar
 }));
 
@@ -82,11 +86,9 @@ export const BottomNavigationLink = props => (
   <BottomNavigationAction component={Link} {...props} to={props.value} />
 );
 
-const ListItemLink = ({ label, ...props }) => (
+const ListItemLink = ({ children, ...props }) => (
   <ListItem component={React.forwardRef(NavLink)} {...props}>
-    <ListItemText color="text.primary" fontWeight="200">
-      {label}
-    </ListItemText>
+    {children}
   </ListItem>
 );
 
@@ -140,27 +142,65 @@ export const AdminPageContainer = ({ children, location }) => {
           <div className={classes.toolbarBuffer} />
           <Divider />
           <List className={classes.drawerList}>
-            <ListItemLink
-              to="/admin"
-              exact
-              activeClassName={classes.active}
-              label="Home"
-            />
+            <ListItemLink to="/admin" exact activeClassName={classes.active}>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText color="text.primary" fontWeight="200">
+                Home
+              </ListItemText>
+            </ListItemLink>
             <ListItemLink
               to="/admin/companies"
               activeClassName={classes.active}
-              label="Companies"
-            />
+            >
+              <ListItemIcon>
+                <BusinessIcon />
+              </ListItemIcon>
+              <ListItemText color="text.primary" fontWeight="200">
+                Companies
+              </ListItemText>
+            </ListItemLink>
             <ListItemLink
               to="/admin/jobs"
               activeClassName={classes.active}
-              label="Jobs"
-            />
-            <ListItemLink
-              to="/admin/settings"
-              activeClassName={classes.active}
-              label="Settings"
-            />
+              exact
+            >
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText color="text.primary" fontWeight="200">
+                Jobs
+              </ListItemText>
+            </ListItemLink>
+            <Collapse
+              in={location.pathname.includes('jobs')}
+              timeout="auto"
+              unmountOnExit
+            >
+              <List>
+                <ListItemLink
+                  to="/admin/jobs/sync"
+                  activeClassName={classes.active}
+                  className={classes.nested}
+                >
+                  <ListItemIcon>
+                    <SyncIcon />
+                  </ListItemIcon>
+                  <ListItemText color="text.primary" fontWeight="200">
+                    Sync
+                  </ListItemText>
+                </ListItemLink>
+              </List>
+            </Collapse>
+            <ListItemLink to="/admin/settings" activeClassName={classes.active}>
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText color="text.primary" fontWeight="200">
+                Settings
+              </ListItemText>
+            </ListItemLink>
           </List>
         </Drawer>
       </Hidden>

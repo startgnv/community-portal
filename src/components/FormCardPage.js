@@ -15,7 +15,7 @@ export const FormCardPage = ({ title = '', onSubmit = () => {}, children }) => {
   const classes = useStyles();
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       <Card component="form" m={2} className={classes.card} onSubmit={onSubmit}>
         <CardHeader title={title} />
         <CardContent>{children}</CardContent>
