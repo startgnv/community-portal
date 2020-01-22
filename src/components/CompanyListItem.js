@@ -83,7 +83,7 @@ export const JobListItem = ({
   const [coverUrl] = useDownloadURL(coverPath ? storage.ref(coverPath) : '');
   return (
     <CompanyListItemContainer>
-      <Link className="link-container" to={`/companies/${id}`}>
+      <Link className="link-container" to={`/companies/${slug}`}>
         <Images>
           <CompanyCover coverImg={coverUrl} />
           <StorageImg className="company-img" alt={`${name}`} path={logoPath} />
