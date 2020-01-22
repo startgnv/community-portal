@@ -29,7 +29,7 @@ const ButtonContainer = styled.button`
 
   &.outline {
     background-color: white;
-    box-shadow: inset 0 0 0 2px ${({ theme }) => theme.uiBorder};
+    box-shadow: inset 0 0 0 1px ${({ theme }) => theme.uiBorder};
 
     .btn-label {
       color: ${({ theme }) => theme.textMedium};

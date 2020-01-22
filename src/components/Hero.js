@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import heroBG from '../assets/images/hero-bg.jpg';
 
 const heroSizes = {
   small: '200px',
@@ -8,23 +7,15 @@ const heroSizes = {
   large: '420px'
 };
 
-const HeroContainer = styled.div`
-  display: flex;
-  min-height: ${({ size }) => heroSizes[size]};
-  align-items: center;
-  justify-content: center;
-  margin-top: -${({ theme }) => theme.headerHeight};
-  background-image: url(${({ bgImage }) => bgImage || heroBG});
-  background-size: cover;
-  background-position: center;
-  background-repeat: none;
-`;
+const HeroContainer = styled.div``;
 
 const HeroContent = styled.div`
+  display: flex;
   width: 100%;
-  max-width: 960px;
   margin: 0 auto;
-  padding: 0 20px;
+  align-items: center;
+  justify-content: center;
+  min-height: ${({ size }) => heroSizes[size]};
 `;
 
 const Hero = ({ children, size = 'medium', bgImage = '' }) => (

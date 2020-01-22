@@ -14,7 +14,7 @@ const MapPageContainer = styled.div``;
 
 const HeroHeadline = styled.h2`
   font-size: 46px;
-  color: white;
+  color: ${({ theme }) => theme.textDark};
 
   strong {
     color: ${({ theme }) => theme.darkGreen};

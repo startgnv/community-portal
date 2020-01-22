@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 
 const LogoContainer = styled.div`
   display: block;
-  margin-right: 30px;
+  padding: 10px 30px;
   text-decoration: none;
+  background-color: ${({ theme }) => theme.lightBlue};
 
   .logo-link {
     display: block;
@@ -19,7 +20,7 @@ const LogoText = styled.span`
   font-size: 22px;
   font-weight: 700;
   text-transform: uppercase;
-  color: white;
+  color: ${({ theme }) => theme.textDark};
 `;
 
 const Logo = () => (

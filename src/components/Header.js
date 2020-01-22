@@ -5,10 +5,10 @@ import Logo from './Logo';
 
 const HeaderContainer = styled.div`
   height: ${({ theme }) => theme.headerHeight};
+  display: flex;
   top: 0;
   left: 0;
   right: 0;
-  background-color: ${({ theme }) => theme.deepNavy};
 
   .navigation {
     flex: 1;
@@ -28,9 +28,10 @@ const HeaderContainer = styled.div`
       text-decoration: none;
       line-height: 30px;
       font-weight: 600;
+      color: ${({ theme }) => theme.textDark};
 
       &.active {
-        color: ${({ theme }) => theme.teal};
+        color: ${({ theme }) => theme.green};
       }
     }
   }

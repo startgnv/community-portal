@@ -10,7 +10,7 @@ const TextInputContainer = styled.div`
     height: 40px;
     padding: 0 15px;
     border: 0;
-    box-shadow: inset 0 0 0 2px ${({ theme }) => theme.uiBorder};
+    box-shadow: inset 0 0 0 1px ${({ theme }) => theme.uiBorder};
     box-sizing: border-box;
     border-radius: 3px;
   }

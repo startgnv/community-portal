@@ -8,7 +8,7 @@ import StorageImg from './StorageImg';
 const ItemContainer = styled.div`
   height: 170px;
   margin-bottom: 30px;
-  border-radius: 6px;
+  border-radius: 3px;
   overflow: hidden;
   box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.05);
   transition: 200ms;

@@ -1,7 +1,7 @@
 import { lighten } from 'polished';
 export default {
   // colors
-  green: '#37a642',
+  green: '#00b496',
   textDark: '#131516',
   textMedium: '#a3a9b3',
   textLight: lighten(0.4, '#131516'),
@@ -17,7 +17,7 @@ export default {
   lightBlue: '#ccdee5',
 
   // structure
-  headerHeight: '70px',
+  headerHeight: '80px',
   contentMaxWidth: '960px',
 
   // buttons

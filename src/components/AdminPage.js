@@ -8,11 +8,13 @@ import AdminJobsPage from './AdminJobsPage';
 import AdminEditCompanyPage from './AdminEditCompanyPage';
 import AdminJobPage from './AdminJobPage';
 import AdminPageContainer from './AdminPageContainer';
+import { CssBaseline } from '@material-ui/core';
 
 const AdminSettingsPage = () => 'Settings';
 
 export const AdminPage = () => (
   <AdminPageContainer>
+    <CssBaseline />
     <Switch>
       <Route exact path="/admin/companies" component={AdminCompaniesPage} />
       <Route

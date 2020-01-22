@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import CompanyListItemExpanded from './CompanyListItemExpanded';
+import AddCompanyCTA from './AddCompanyCTA';
 import { SharedMapConsumer } from './CompaniesMapContext';
 import { device } from './device';
 
@@ -35,6 +36,7 @@ export const MapPageCompanies = ({
         });
       }}
     </SharedMapConsumer>
+    <AddCompanyCTA />
   </MapPageComapniesContainer>
 );
 

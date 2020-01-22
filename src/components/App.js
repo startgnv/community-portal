@@ -26,8 +26,6 @@ import AdminRoute from './AdminRoute';
 import AdminLogin from './AdminLogin';
 import Header from './Header';
 import Footer from './Footer';
-import { CssBaseline } from '@material-ui/core';
-import topoBg from '../assets/images/topo-bg.png';
 
 ReactGA.initialize('UA-138572620-3');
 
@@ -93,10 +91,7 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     font-family: 'Montserrat', sans-serif;
     color: ${({ theme }) => theme.textDark};
-    background-color: ${({ theme }) => theme.uiBackground};
-    background-image: url(${topoBg});
-    background-size: 100%;
-    background-position: top center;
+    background: white;
   }
 
   p {
@@ -143,12 +138,11 @@ const publicRoutes = [
   '/jobs/:jobId',
   '/about',
   '/ecosystem',
-  '/gainesville-101'
+  '/new-to-gainesville'
 ];
 
 export const App = () => (
   <AppProvider>
-    <CssBaseline />
     <ThemeProvider theme={theme}>
       <>
         <Router>

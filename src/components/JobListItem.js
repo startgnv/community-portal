@@ -4,7 +4,6 @@ import { useDownloadURL } from 'react-firebase-hooks/storage';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import { clearFix } from 'polished';
-import JobCategories from './JobCategories';
 import StorageImg from './StorageImg';
 
 const JobListItemContainer = styled.li`
