@@ -100,8 +100,8 @@ const GlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6 {
     color: ${({ theme }) => theme.textDark};
-    font-family: miller-banner, serif;
-    font-weight: 700;
+    font-family: williams-caslon-text, serif;
+    font-weight: 400;
     font-style: normal;
   }
 

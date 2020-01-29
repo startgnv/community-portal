@@ -8,24 +8,44 @@ import JobList from './JobList';
 import CompanyList from './CompanyList';
 import homeHero from '../assets/images/home-hero.jpg';
 import homeFeaturedBG from '../assets/images/home-featured-bg.jpg';
+import circleText from '../assets/images/circle-text.png';
 
 import { LinearProgress } from '@material-ui/core';
 
 const HomePageContainer = styled.div``;
 
-const HeroImage = styled.img`
-  display: block;
+const HomeHero = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+`;
+
+const HeroImage = styled.div`
+  position: relative;
   flex: 1;
-  max-width: 547px;
+  background-image: url(${homeHero});
+  background-size: cover;
+  background-position: center;
+`;
+
+const CircleText = styled.img`
+  position: absolute;
+  top: -20px;
+  right: -40px;
+  opacity: 0.6;
 `;
 
 const HeroContent = styled.div`
   flex: 1;
+  padding: 60px 0;
+  margin-left: 80px;
 
   h2 {
     font-size: 1rem;
     text-transform: uppercase;
     margin-bottom: 10px;
+    font-family: benton-sans-wide;
+    font-weight: 500;
   }
 
   h3 {
@@ -106,32 +126,36 @@ const HomePage = () => {
   }
   return (
     <HomePageContainer>
-      <Hero size="large">
-        <HeroImage src={homeHero} />
+      <HomeHero>
+        <HeroImage>
+          <CircleText src={circleText} />
+        </HeroImage>
         <HeroContent>
           <h2>Welcome to Gainesville</h2>
           <h3>
-            Join the fastest growing
+            Join the most human
             <br />
-            tech community in Florida
+            tech ecosystem in Florida.
           </h3>
+          <p>We are always growing and striving.</p>
+          <p>It’s nature. We literally can’t stop if we tried.</p>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-            magna et nisl maximus sagittis ac nec nibh. Curabitur posuere leo ac
-            eros placerat, in accumsan lorem gravida. Pellentesque arcu tellus,
-            tristique id auctor id, pulvinar ut quam. Fusce consectetur iaculis
-            nunc ac sodales. Pellentesque habitant morbi tristique senectus et
-            netus et malesuada fames ac turpis egestas. Quisque dictum nulla
-            leo. Proin tincidunt fringilla nisi, in scelerisque lacus.
+            We are building towards the next product launch or round of funding.
+            We are learning new languages, training for our first 5K, and
+            investing in our people.
           </p>
           <p>
-            Fusce scelerisque magna magna, sed viverra dolor aliquam sed. Nam
-            lobortis vehicula dapibus. Integer dolor orci, placerat eu ornare
-            sed, facilisis ac tellus. In tempor consectetur odio, scelerisque
-            congue sem vulputate lobortis.
+            We know some of our flaws and cherish all our triumphs. Also like
+            humans, we are seeking reliability and connection. So we want to
+            meet you, hire you, support you and count on you to tell us where we
+            can be better.
+          </p>
+          <p>
+            Join us in our growth, help us fill in the gaps and be you. We’re
+            all human, right?
           </p>
         </HeroContent>
-      </Hero>
+      </HomeHero>
       <FeaturedContainer>
         <FeaturedSection>
           <FeaturedHeadline>
