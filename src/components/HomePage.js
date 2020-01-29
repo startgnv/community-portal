@@ -5,6 +5,7 @@ import { clearFix } from 'polished';
 import { Link } from 'react-router-dom';
 import Hero from './Hero';
 import JobList from './JobList';
+import RecentBlogPosts from './RecentBlogPosts';
 import CompanyList from './CompanyList';
 import homeHero from '../assets/images/home-hero.jpg';
 import homeFeaturedBG from '../assets/images/home-featured-bg.jpg';
@@ -37,7 +38,7 @@ const CircleText = styled.img`
 
 const HeroContent = styled.div`
   flex: 1;
-  padding: 60px 0;
+  padding: 60px 30px 100px;
   margin-left: 80px;
 
   h2 {
@@ -54,10 +55,10 @@ const HeroContent = styled.div`
   }
 
   p {
-    font-size: 0.8rem;
+    font-size: 1rem;
     max-width: 460px;
     line-height: 1.2rem;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
   }
 
   strong {
@@ -156,6 +157,7 @@ const HomePage = () => {
           </p>
         </HeroContent>
       </HomeHero>
+      <RecentBlogPosts />
       <FeaturedContainer>
         <FeaturedSection>
           <FeaturedHeadline>

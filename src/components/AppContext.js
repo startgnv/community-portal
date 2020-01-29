@@ -52,6 +52,18 @@ export class AppProvider extends React.Component {
         });
       })
       .catch(() => {});
+    db.collection('companyCategories')
+      .get()
+      .then(companyCatRefs => {
+        this.setState({
+          companyCategories: companyCatRefs.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          })),
+          companyCategoriesLoading: false
+        });
+      })
+      .catch(() => {});
   };
 
   setActiveCompany = id => {

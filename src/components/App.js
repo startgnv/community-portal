@@ -89,7 +89,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    font-family: 'Montserrat', sans-serif;
+    font-family: williams-caslon-text, serif;
     color: ${({ theme }) => theme.textDark};
     background: white;
   }
