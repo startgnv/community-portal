@@ -34,7 +34,10 @@ const Post = styled.li`
 
 const PostImage = styled.div`
   height: 200px;
-  background: #333;
+  background-color: #333;
+  background-image: url(${({ bgImg }) => bgImg});
+  background-size: cover;
+  background-position: center;
 `;
 
 const PostMeta = styled.div`
@@ -81,10 +84,10 @@ const RecentBlogPosts = () => {
       <PostList>
         {posts &&
           !!posts.length &&
-          posts.map(({ title, url }) => (
+          posts.map(({ title, url, feature_image }) => (
             <Post>
               <a href={url} target="_blank">
-                <PostImage />
+                <PostImage bgImg={feature_image} />
                 <PostMeta>
                   <PostType>Article</PostType>
                   <PostTitle>{title}</PostTitle>
