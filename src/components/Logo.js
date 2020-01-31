@@ -26,7 +26,7 @@ const LogoText = styled.span`
 const Logo = () => (
   <LogoContainer>
     <Link className="logo-link" to="/">
-      <LogoText>sparkGNV</LogoText>
+      <LogoText>startGNV</LogoText>
     </Link>
   </LogoContainer>
 );

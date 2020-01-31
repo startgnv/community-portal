@@ -55,6 +55,7 @@ export class AppProvider extends React.Component {
     db.collection('companyCategories')
       .get()
       .then(companyCatRefs => {
+        console.warn(companyCatRefs);
         this.setState({
           companyCategories: companyCatRefs.docs.map(doc => ({
             id: doc.id,
@@ -63,7 +64,9 @@ export class AppProvider extends React.Component {
           companyCategoriesLoading: false
         });
       })
-      .catch(() => {});
+      .catch(err => {
+        console.warn(err);
+      });
   };
 
   setActiveCompany = id => {

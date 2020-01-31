@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { storage } from '../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import { clearFix } from 'polished';
+import AppContext from './AppContext';
 import StorageImg from './StorageImg';
 
 const CompanyListItemContainer = styled.li`
@@ -81,6 +82,8 @@ export const JobListItem = ({
   } = {}
 }) => {
   const [coverUrl] = useDownloadURL(coverPath ? storage.ref(coverPath) : '');
+  const { companyCategories } = useContext(AppContext);
+  const category = companyCategories.find(cat => cat.id === industryID) || {};
   return (
     <CompanyListItemContainer>
       <Link className="link-container" to={`/companies/${slug}`}>
@@ -90,7 +93,7 @@ export const JobListItem = ({
         </Images>
         <CompanyInfo>
           <CompanyTitle>{name}</CompanyTitle>
-          <IndustryTitle>{industryID}</IndustryTitle>
+          <IndustryTitle>{category.name}</IndustryTitle>
         </CompanyInfo>
       </Link>
     </CompanyListItemContainer>

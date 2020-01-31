@@ -60,7 +60,7 @@ const AboutPage = () => (
       <HeroContent>
         <h3>Mission</h3>
         <p>
-          sparkGNV is an initiative by startupGNV dedicated to growing the
+          startGNV is an initiative by startupGNV dedicated to growing the
           Gainesville startup, tech, and biotech communities.
         </p>
       </HeroContent>

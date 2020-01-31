@@ -16,5 +16,11 @@ service cloud.firestore {
     match /jobCategories/{document=**} {
       allow read: if true;
     }
+    match /companyCategories/{document=**} {
+      allow read: if true;
+    }
+    match /addCompanyResponses/{document=**} {
+      allow read, write: if true;
+    }
   }
 }

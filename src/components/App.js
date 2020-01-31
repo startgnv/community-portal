@@ -21,6 +21,7 @@ import EcosystemPage from './EcosystemPage';
 import JobPage from './JobPage';
 import JobsPage from './JobsPage';
 import Gainesville101Page from './Gainesville101Page';
+import AddCompanyPage from './AddCompanyPage';
 import AdminPage from './AdminPage';
 import AdminRoute from './AdminRoute';
 import AdminLogin from './AdminLogin';
@@ -89,7 +90,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    font-family: williams-caslon-text, serif;
+    font-family: 'Montserrat', sans-serif;
     color: ${({ theme }) => theme.textDark};
     background: white;
   }
@@ -138,7 +139,8 @@ const publicRoutes = [
   '/jobs/:jobId',
   '/about',
   '/ecosystem',
-  '/new-to-gainesville'
+  '/new-to-gainesville',
+  '/add-company'
 ];
 
 export const App = () => (
@@ -160,6 +162,7 @@ export const App = () => (
                 path="/companies/:companySlug"
                 component={CompanyPage}
               />
+              <Route exact path="/add-company" component={AddCompanyPage} />
               <Route
                 exact
                 path="/new-to-gainesville"

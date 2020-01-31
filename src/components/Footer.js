@@ -93,13 +93,13 @@ const Footer = () => (
       <EmailSubscribe>
         <Logo />
         <SubscribeTagline>
-          sparkGNV is an initiative by startupGNV to promote and grow the
+          startGNV is an initiative by startupGNV to promote and grow the
           Gainesville startup, tech, and biotech communities.
         </SubscribeTagline>
       </EmailSubscribe>
       <FooterNavContainer>
         <FooterNav>
-          <FooterHeader>Explore sparkGNV</FooterHeader>
+          <FooterHeader>Explore startGNV</FooterHeader>
           <NavList>
             <li>
               <Link to="/companies" class="footer-link">

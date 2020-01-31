@@ -8,6 +8,7 @@ const PageContentContainer = styled.div`
 
   > p {
     margin-bottom: 30px;
+    line-height: 1.4rem;
   }
 `;
 
