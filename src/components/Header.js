@@ -27,8 +27,11 @@ const HeaderContainer = styled.div`
       color: white;
       text-decoration: none;
       line-height: 30px;
-      font-weight: 600;
       color: ${({ theme }) => theme.textDark};
+      font-size: 0.8rem;
+      font-family: benton-sans-wide;
+      font-weight: 500;
+      text-transform: uppercase;
 
       &.active {
         color: ${({ theme }) => theme.green};

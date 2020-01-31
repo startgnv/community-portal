@@ -42,7 +42,7 @@ const HeroContent = styled.div`
     height: 60px;
     left: 50%;
     bottom: 30px;
-    background-color: ${({ theme }) => theme.yellow};
+    background-color: ${({ theme }) => theme.orange};
     content: '';
   }
 `;
@@ -64,6 +64,7 @@ const CopyWithImageContent = styled.div`
   z-index: 10;
 
   h2 {
+    margin-bottom: 15px;
     color: ${({ theme }) => theme.darkGreen};
   }
 `;
