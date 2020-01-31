@@ -8,7 +8,7 @@ import JobList from './JobList';
 import RecentBlogPosts from './RecentBlogPosts';
 import CompanyList from './CompanyList';
 import homeHero from '../assets/images/home-hero.jpg';
-import homeFeaturedBG from '../assets/images/home-featured-bg.jpg';
+import homeFeaturedBG from '../assets/images/jobs-bg.jpg';
 import circleText from '../assets/images/circle-text.png';
 
 import { LinearProgress } from '@material-ui/core';
