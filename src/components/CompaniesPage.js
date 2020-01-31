@@ -60,11 +60,7 @@ export const MapPage = () => {
 
   return (
     <MapPageContainer>
-      <Hero size="medium">
-        <HeroHeadline>
-          Meet the companies <strong>shaping Gainesville.</strong>
-        </HeroHeadline>
-      </Hero>
+      <Hero title="Tech Companies in GNV" size="medium" />
       <SharedMapProvider>
         <CompaniesContent>
           <MapPageCompanies companies={companies} jobs={jobs} />
