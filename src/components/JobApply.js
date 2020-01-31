@@ -48,7 +48,8 @@ const JobApply = ({ job, job: { applyUrl, id } = {} }) => {
     success: false
   });
   const onApplyClick = () => {
-    setShowForm(true);
+    // setShowForm(true);
+    window.open(applyUrl);
   };
   const onFormSubmit = e => {
     e.preventDefault();

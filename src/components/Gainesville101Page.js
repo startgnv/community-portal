@@ -88,7 +88,7 @@ const WhyGainesvillePage = () => (
   <WhyGainesvilleContainer>
     <Hero size="small">
       <HeroHeadline>
-        New to <strong>Gainseville</strong>?
+        New to <strong>Gainesville</strong>?
       </HeroHeadline>
     </Hero>
     <HeroContent>

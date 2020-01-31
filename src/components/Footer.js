@@ -117,18 +117,8 @@ const Footer = () => (
               </Link>
             </li>
             <li>
-              <Link to="/faq" class="footer-link">
-                FAQ
-              </Link>
-            </li>
-            <li>
               <Link to="/about" class="footer-link">
                 About
-              </Link>
-            </li>
-            <li>
-              <Link to="/sponsors" class="footer-link">
-                Sponsors
               </Link>
             </li>
           </NavList>

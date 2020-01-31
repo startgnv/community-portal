@@ -90,6 +90,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    font-size: 16px;
     font-family: 'Montserrat', sans-serif;
     color: ${({ theme }) => theme.textDark};
     background: white;
@@ -97,6 +98,7 @@ const GlobalStyle = createGlobalStyle`
 
   p {
     color: ${({ theme }) => theme.textDark};
+    line-height: 1.4rem;
   }
 
   h1, h2, h3, h4, h5, h6 {
