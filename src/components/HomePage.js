@@ -44,14 +44,14 @@ const HeroContent = styled.div`
   h2 {
     font-size: 1rem;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     font-family: benton-sans-wide;
     font-weight: 500;
   }
 
   h3 {
     font-size: 3rem;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   p {
@@ -132,24 +132,27 @@ const HomePage = () => {
           <CircleText src={circleText} />
         </HeroImage>
         <HeroContent>
-          <h2>Welcome to Gainesville</h2>
           <h3>
             Join the most human
             <br />
             tech ecosystem in Florida.
           </h3>
-          <p>We are always growing and striving.</p>
-          <p>It’s nature. We literally can’t stop if we tried.</p>
+          <h2>Welcome to Gainesville</h2>
+          <p>We are always growing, decomposing, and striving even higher.</p>
+          <p>It’s in our nature. It IS our nature.</p>
           <p>
-            We are building towards the next product launch or round of funding.
-            We are learning new languages, training for our first 5K, and
-            investing in our people.
+            We are building towards the next product launch. We are growing the
+            round of funding. We are learning new languages, training for our
+            first 5K, and investing in people.
           </p>
           <p>
-            We know some of our flaws and cherish all our triumphs. Also like
-            humans, we are seeking reliability and connection. So we want to
-            meet you, hire you, support you and count on you to tell us where we
-            can be better.
+            We know our flaws. We cherish all our triumphs. And like humans in
+            any environment, we are seeking reliability and connection. So... we
+            want to meet YOU - human.
+          </p>
+          <p>
+            We want to hire you, support you and count on you to tell us where
+            we can be better. We need you in our ecosystem.
           </p>
           <p>
             Join us in our growth, help us fill in the gaps and be you. We’re
