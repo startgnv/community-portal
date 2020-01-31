@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-const RecentBlogPostsContainer = styled.div`
-  padding: 60px;
-  display: flex;
-  justify-content: center;
-`;
-
 const PostList = styled.ul`
   display: flex;
   max-width: 1200px;
-  margin-right: -20px;
+  margin-right: ${({ direction }) =>
+    direction === 'vertical' ? '0' : '-20px'};
+  flex-direction: ${({ direction }) =>
+    direction === 'vertical' ? 'column' : 'row'};
 `;
 
 const Post = styled.li`
+  display: block;
   flex: 1;
-  margin-right: 20px;
+  margin: ${({ direction }) =>
+    direction === 'vertical' ? '0 0 20px 0' : '0 20px 0 0'};
   border-radius: 3px;
   overflow: hidden;
   box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.1);
@@ -33,7 +32,7 @@ const Post = styled.li`
 `;
 
 const PostImage = styled.div`
-  height: 200px;
+  height: ${({ direction }) => (direction === 'vertical' ? '60px' : '200px')};
   background-color: #333;
   background-image: url(${({ bgImg }) => bgImg});
   background-size: cover;
@@ -41,7 +40,8 @@ const PostImage = styled.div`
 `;
 
 const PostMeta = styled.div`
-  padding: 30px;
+  padding: ${({ direction }) =>
+    direction === 'vertical' ? '15px 30px' : '30px'};
 `;
 
 const PostType = styled.span`
@@ -59,8 +59,9 @@ const PostTitle = styled.span`
   color: ${({ theme }) => theme.textDark};
 `;
 
-const RecentBlogPosts = () => {
+const RecentBlogPosts = ({ dir = '' }) => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(
@@ -72,7 +73,10 @@ const RecentBlogPosts = () => {
         }
       }
     )
-      .then(res => res.json())
+      .then(res => {
+        setLoading(false);
+        return res.json();
+      })
       .then(response => {
         setPosts(response.posts);
       })
@@ -80,23 +84,21 @@ const RecentBlogPosts = () => {
   }, []);
 
   return (
-    <RecentBlogPostsContainer>
-      <PostList>
-        {posts &&
-          !!posts.length &&
-          posts.map(({ title, url, feature_image }) => (
-            <Post>
-              <a href={url} target="_blank">
-                <PostImage bgImg={feature_image} />
-                <PostMeta>
-                  <PostType>Article</PostType>
-                  <PostTitle>{title}</PostTitle>
-                </PostMeta>
-              </a>
-            </Post>
-          ))}
-      </PostList>
-    </RecentBlogPostsContainer>
+    <PostList direction={dir}>
+      {posts &&
+        !!posts.length &&
+        posts.map(({ title, url, feature_image }) => (
+          <Post direction={dir}>
+            <a href={url} target="_blank">
+              <PostImage bgImg={feature_image} direction={dir} />
+              <PostMeta direction={dir}>
+                <PostType>Article</PostType>
+                <PostTitle>{title}</PostTitle>
+              </PostMeta>
+            </a>
+          </Post>
+        ))}
+    </PostList>
   );
 };
 

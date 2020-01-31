@@ -67,6 +67,12 @@ const HeroContent = styled.div`
   }
 `;
 
+const RecentBlogPostsContainer = styled.div`
+  padding: 60px;
+  display: flex;
+  justify-content: center;
+`;
+
 const FeaturedContainer = styled.div`
   padding: 60px 0;
   background-image: url(${homeFeaturedBG});
@@ -160,7 +166,9 @@ const HomePage = () => {
           </p>
         </HeroContent>
       </HomeHero>
-      <RecentBlogPosts />
+      <RecentBlogPostsContainer>
+        <RecentBlogPosts />
+      </RecentBlogPostsContainer>
       <FeaturedContainer>
         <FeaturedSection>
           <FeaturedHeadline>

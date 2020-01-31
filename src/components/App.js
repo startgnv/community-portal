@@ -20,7 +20,7 @@ import AboutPage from './AboutPage';
 import EcosystemPage from './EcosystemPage';
 import JobPage from './JobPage';
 import JobsPage from './JobsPage';
-import Gainesville101Page from './Gainesville101Page';
+import NewToGainesvillePage from './NewToGainesvillePage';
 import AddCompanyPage from './AddCompanyPage';
 import AdminPage from './AdminPage';
 import AdminRoute from './AdminRoute';
@@ -168,7 +168,7 @@ export const App = () => (
               <Route
                 exact
                 path="/new-to-gainesville"
-                component={Gainesville101Page}
+                component={NewToGainesvillePage}
               />
               <Route exact path="/admin/login" component={AdminLogin} />
               <AdminRoute path="/admin" component={AdminPage} />
