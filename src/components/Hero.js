@@ -9,7 +9,7 @@ const heroSizes = {
 };
 
 const HeroContainer = styled.div`
-  background-image: url(${heroBG});
+  background-image: url(${({ bgImage }) => bgImage || heroBG});
   background-size: cover;
   background-position: center;
 `;
@@ -21,10 +21,7 @@ const HeroContent = styled.div`
   margin: 0 auto;
   align-items: center;
   justify-content: center;
-  min-height: ${({ size }) => {
-    console.warn(size, heroSizes);
-    return heroSizes[size];
-  }};
+  min-height: ${({ size }) => heroSizes[size]};
 `;
 
 const HeroTitle = styled.h2`

@@ -5,6 +5,7 @@ import Hero from './Hero';
 import PageContent from './PageContent';
 import JobList from './JobList';
 import JobsFilter from './JobsFilter';
+import heroBG from '../assets/images/hero-bg2.jpg';
 
 import { LinearProgress } from '@material-ui/core';
 
@@ -28,7 +29,7 @@ export const MapPageIndex = () => {
   }
   return (
     <>
-      <Hero title="Available Positions" size="medium" />
+      <Hero bgImage={heroBG} title="Available Positions" size="medium" />
       <PageContent>
         <FilterContainer>
           <JobsFilter onChange={onFilterChange} />
