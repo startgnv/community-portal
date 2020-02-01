@@ -26,13 +26,11 @@ const HeroContent = styled.div`
 
 const HeroTitle = styled.h2`
   position: absolute;
-  display: table-cell;
-  vertical-align: bottom;
-  height: 64px;
   left: 0;
   bottom: 0;
   padding: 0 20px;
   background-color: white;
+  line-height: 64px;
   font-size: 46px;
   color: ${({ theme }) => theme.textDark};
 `;

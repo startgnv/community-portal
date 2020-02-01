@@ -43,7 +43,7 @@ const HeaderContainer = styled.div`
 const HeaderContent = styled.div`
   display: flex;
   width: 100%;
-  height: 70px;
+  height: ${({ theme }) => theme.headerHeight};
   align-items: center;
   align-content: space-between;
   max-width: 960px;

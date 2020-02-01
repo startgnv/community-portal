@@ -59,13 +59,13 @@ const PostTitle = styled.span`
   color: ${({ theme }) => theme.textDark};
 `;
 
-const RecentBlogPosts = ({ dir = '' }) => {
+const RecentBlogPosts = ({ dir = '', limit = 0 }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(
-      'https://sparkgnv.ghost.io/ghost/api/v3/content/posts/?key=a49362ef6958b6f133bb40ceaa&limit=4',
+      `https://sparkgnv.ghost.io/ghost/api/v3/content/posts/?key=a49362ef6958b6f133bb40ceaa&limit=${limit}`,
       {
         method: 'GET',
         headers: {

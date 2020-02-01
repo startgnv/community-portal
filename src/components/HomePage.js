@@ -167,7 +167,7 @@ const HomePage = () => {
         </HeroContent>
       </HomeHero>
       <RecentBlogPostsContainer>
-        <RecentBlogPosts />
+        <RecentBlogPosts limit={4} />
       </RecentBlogPostsContainer>
       <FeaturedContainer>
         <FeaturedSection>

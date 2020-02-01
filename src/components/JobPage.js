@@ -106,7 +106,7 @@ export const MapPageJob = ({
         )}
       </SidebarHeader>
       <JobContent>
-        <JobApply job={job} />
+        <JobApply job={job} companyName={companyName} />
         <JobDescription>{htmlParser.parse(jobDescription)}</JobDescription>
       </JobContent>
     </MapPageJobContainer>

@@ -39,7 +39,7 @@ const ApplyContainer = styled.div`
   }
 `;
 
-const JobApply = ({ job, job: { applyUrl, id } = {} }) => {
+const JobApply = ({ job, job: { applyUrl, id } = {}, companyName = '' }) => {
   const [showForm, setShowForm] = useState(false);
   const [applicantEmail, setApplicantEmail] = useState('');
   const [submitState, setSubmitState] = useState({
@@ -49,6 +49,12 @@ const JobApply = ({ job, job: { applyUrl, id } = {} }) => {
   });
   const onApplyClick = () => {
     // setShowForm(true);
+    window.ga('send', {
+      hitType: 'event',
+      eventCategory: 'Jobs',
+      eventAction: 'applyClick',
+      eventLabel: `Job: ${job.title} Company: ${companyName}`
+    });
     window.open(applyUrl);
   };
   const onFormSubmit = e => {

@@ -34,7 +34,7 @@ const NewToGainesvillePage = () => (
     <PageContent>
       <PageInner>
         <BlogPosts>
-          <RecentBlogPosts dir="vertical" />
+          <RecentBlogPosts dir="vertical" limit={0} />
         </BlogPosts>
         <GuideContainer>
           <EcosystemPreviewImg
