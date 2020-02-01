@@ -15,10 +15,14 @@ const CompanyListItemContainer = styled.li`
     text-decoration: none;
     box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.15);
     background: white;
+    transition: 200ms;
+    cursor: pointer;
     ${clearFix()}
 
     &:hover {
-      cursor: pointer;
+      box-shadow: 3px 3px 13px 0 rgba(0, 0, 0, 0.15);
+      transform: scale(1.04);
+      transform-origin: center;
     }
   }
 
