@@ -20,6 +20,7 @@ export const MapContainer = ({
       <ReactMapGL
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
+        mapStyle="mapbox://styles/williamrichardson/ck62urig104j91inoaevttyc1"
         style={{
           display: 'flex',
           justifyContent: 'center',
