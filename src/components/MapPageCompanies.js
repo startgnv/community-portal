@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import CompanyListItemExpanded from './CompanyListItemExpanded';
+import CompanyListItemLarge from './CompanyListItemLarge';
 import AddCompanyCTA from './AddCompanyCTA';
 import { SharedMapConsumer } from './CompaniesMapContext';
 import { device } from './device';
@@ -26,7 +26,7 @@ export const MapPageCompanies = ({
         return companies.map(company => {
           const companyJobs = jobs.filter(job => job.companyID === company.id);
           return (
-            <CompanyListItemExpanded
+            <CompanyListItemLarge
               company={company}
               jobs={companyJobs}
               key={company.id}

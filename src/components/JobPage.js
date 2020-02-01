@@ -40,10 +40,20 @@ const MapPageJobContainer = styled.div`
   }
 `;
 
-const JobContent = styled.div`
+const JobMainContent = styled.div`
+  display: flex;
   max-width: ${({ theme }) => theme.contentMaxWidth};
   margin: 0 auto;
-  padding: 30px 20px 20px;
+  padding: 30px 0 0 0;
+`;
+
+const JobContent = styled.div`
+  flex: 5;
+  padding: 0 30px 20px;
+`;
+
+const JobSidebar = styled.div`
+  flex: 2;
 `;
 
 const JobDescription = styled.div`
@@ -105,10 +115,14 @@ export const MapPageJob = ({
           </CategoriesContainer>
         )}
       </SidebarHeader>
-      <JobContent>
-        <JobApply job={job} companyName={companyName} />
-        <JobDescription>{htmlParser.parse(jobDescription)}</JobDescription>
-      </JobContent>
+      <JobMainContent>
+        <JobContent>
+          <JobDescription>{htmlParser.parse(jobDescription)}</JobDescription>
+        </JobContent>
+        <JobSidebar>
+          <JobApply job={job} companyName={companyName} />
+        </JobSidebar>
+      </JobMainContent>
     </MapPageJobContainer>
   );
 };

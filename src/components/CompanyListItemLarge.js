@@ -79,7 +79,7 @@ const EmployeeCount = styled.span`
   color: ${({ theme }) => theme.textMedium};
 `;
 
-const CompaniListItemExpanded = ({
+const CompanyListItemLarge = ({
   company: {
     name,
     employeeCount = '',
@@ -113,4 +113,4 @@ const CompaniListItemExpanded = ({
   );
 };
 
-export default CompaniListItemExpanded;
+export default CompanyListItemLarge;
