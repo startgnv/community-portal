@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { clearFix } from 'polished';
 import StorageImg from './StorageImg';
 
-const JobListItemContainer = styled.li`
+const JobListItemContainer = styled.div`
   list-style-type: none;
 
   .link-container {

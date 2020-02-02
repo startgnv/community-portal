@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
+import { baseContentStyling } from './mixins';
 import { db } from '../firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import AppContext from './AppContext';
@@ -21,6 +22,10 @@ const CompanyContent = styled.div`
   max-width: ${({ theme }) => theme.contentMaxWidth};
   margin: 0 auto;
   padding: 30px 20px 20px;
+
+  .description {
+    margin-bottom: 30px;
+  }
 `;
 
 const CompanyLink = styled.span`

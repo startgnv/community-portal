@@ -52,6 +52,7 @@ export const AdminEditCompanyPage = ({
   const [founded, setFounded] = useState('');
   const [employeeCount, setEmployeeCount] = useState('');
   const [featured, setFeatured] = useState(false);
+  const [isSponsor, setIsSponsor] = useState(false);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const logoUploadRef = useRef();
@@ -76,6 +77,7 @@ export const AdminEditCompanyPage = ({
     setEmployeeCount(company.employeeCount || '');
     setFeatured(company.featured || false);
     setIndustryID(company.industryID || '');
+    setIsSponsor(company.isSponsor || '');
   }, [
     company.name,
     company.coordinates,
@@ -87,7 +89,8 @@ export const AdminEditCompanyPage = ({
     company.founded,
     company.employeeCount,
     company.feautred,
-    company.industryID
+    company.industryID,
+    company.isSponsor
   ]);
 
   useEffect(() => {
@@ -164,6 +167,7 @@ export const AdminEditCompanyPage = ({
       shortDescription,
       industryID,
       featured,
+      isSponsor,
       TSUpdated: Date.now()
     };
     // after we create or update the doc, we'll have the ID which we need for
@@ -267,6 +271,18 @@ export const AdminEditCompanyPage = ({
               />
             }
             label="Featured"
+          />
+        </Grid>
+        <Grid item>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isSponsor}
+                onChange={e => setIsSponsor(e.target.checked)}
+                value="isSponsor"
+              />
+            }
+            label="Sponsor"
           />
         </Grid>
         <Grid item>

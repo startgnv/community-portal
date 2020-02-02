@@ -6,7 +6,7 @@ import { device } from './device';
 import JobListItem from './JobListItem';
 import EmptyJobs from './EmptyJobs';
 
-const JobListContainer = styled.ul`
+const JobListContainer = styled.div`
   padding: 0;
 `;
 
@@ -22,14 +22,16 @@ const ListTitle = styled.h3`
 const ListContainer = styled.ul`
   padding: 0;
   margin: 0 -30px -30px 0;
+  list-style: none;
   ${clearFix()}
 `;
 
-const ItemContainer = styled.div`
+const ItemContainer = styled.li`
   width: 33.33333%;
   padding: 0 30px 30px 0;
   float: left;
   box-sizing: border-box;
+  list-style-type: none;
 
   @media ${device.tabletPort} {
     width: 50%;
