@@ -24,7 +24,6 @@ const HeroHeadline = styled.h2`
 
 const CompaniesContent = styled.div`
   display: flex;
-  max-width: 1200px;
   margin: 0 auto;
   padding: 30px 20px;
 `;
@@ -60,7 +59,7 @@ export const MapPage = () => {
 
   return (
     <MapPageContainer>
-      <Hero title="Tech Companies in GNV" size="medium" />
+      <Hero title="Tech Companies in GNV" size="medium" maxWidth="none" />
       <SharedMapProvider>
         <CompaniesContent>
           <MapPageCompanies companies={companies} jobs={jobs} />

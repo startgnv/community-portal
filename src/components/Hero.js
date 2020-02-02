@@ -17,7 +17,7 @@ const HeroContainer = styled.div`
 const HeroContent = styled.div`
   position: relative;
   display: flex;
-  width: ${({ theme }) => theme.contentMaxWidth};
+  max-width: ${({ theme, maxWidth }) => maxWidth || theme.contentMaxWidth};
   margin: 0 auto;
   align-items: center;
   justify-content: center;
@@ -35,9 +35,15 @@ const HeroTitle = styled.h2`
   color: ${({ theme }) => theme.textDark};
 `;
 
-const Hero = ({ children, size = 'medium', bgImage = '', title = '' }) => (
+const Hero = ({
+  children,
+  size = 'medium',
+  bgImage = '',
+  title = '',
+  maxWidth = ''
+}) => (
   <HeroContainer bgImage={bgImage}>
-    <HeroContent size={size}>
+    <HeroContent size={size} maxWidth={maxWidth}>
       <HeroTitle>{title}</HeroTitle>
     </HeroContent>
   </HeroContainer>
