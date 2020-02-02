@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
 import AppContext from './AppContext';
@@ -176,7 +177,7 @@ const HomePage = () => {
             <Link to="/companies">View all Companies</Link>
           </FeaturedHeadline>
           <CompanyList
-            companies={companies.filter(company => company.featured)}
+            companies={_.shuffle(companies).slice(0, 3)}
             showTitle={false}
           />
         </FeaturedSection>

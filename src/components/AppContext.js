@@ -45,13 +45,7 @@ export class AppProvider extends React.Component {
               if (isSponsorA === isSponsorB) {
                 return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
               } else {
-                return isSponsorA
-                  ? -1
-                  : nameA < nameB
-                  ? -1
-                  : nameA > nameB
-                  ? 1
-                  : 0;
+                return isSponsorA ? -1 : 1;
               }
             }),
           companiesLoading: false
