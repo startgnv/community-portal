@@ -60,7 +60,7 @@ export const JobList = ({
   if (filter.search || filter.categories.length) {
     filteredJobs = _.filter(jobs, job => {
       let match = false;
-      match = _.difference(filter.categories, job.categories).length === 0;
+      match = _.intersection(filter.categories, job.categories).length > 0;
       if (filter.search) {
         match = job.title.toLowerCase().includes(filter.search);
       }
