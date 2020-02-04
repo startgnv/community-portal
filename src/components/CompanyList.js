@@ -49,7 +49,7 @@ export const CompanyList = ({
       {showTitle && <ListTitle>Companies ({companies.length})</ListTitle>}
       <ListContainer>
         {companies.map(company => (
-          <CompanyItemContainer>
+          <CompanyItemContainer key={company.id}>
             <CompanyListItem company={company} />
           </CompanyItemContainer>
         ))}

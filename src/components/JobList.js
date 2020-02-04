@@ -75,11 +75,10 @@ export const JobList = ({
     listContent = filteredJobs.map(job => {
       const jobCompany = _.find(companies, { id: job.companyID });
       return (
-        <ItemContainer>
+        <ItemContainer key={job.id}>
           <JobListItem
             job={job}
             company={jobCompany}
-            key={job.id}
             showDescription={showDescription}
             showCompanyInfo={showCompanyInfo}
           />

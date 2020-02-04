@@ -97,8 +97,8 @@ const RecentBlogPosts = ({ dir = '', limit = 0 }) => {
     <PostList direction={dir}>
       {posts &&
         !!posts.length &&
-        posts.map(({ title, url, feature_image }) => (
-          <Post direction={dir}>
+        posts.map(({ title, url, feature_image }, i) => (
+          <Post direction={dir} key={i}>
             <a href={url} target="_blank">
               <PostImage bgImg={feature_image} direction={dir} />
               <PostMeta direction={dir}>

@@ -162,6 +162,7 @@ const HomePage = () => {
   if (companiesLoading || jobsLoading) {
     return <LinearProgress />;
   }
+  const renderCompanies = _.shuffle(companies).slice(0, 3);
   return (
     <HomePageContainer>
       <HomeHero>
@@ -206,10 +207,7 @@ const HomePage = () => {
             <h3>Featured Companies</h3>
             <Link to="/companies">View All</Link>
           </FeaturedHeadline>
-          <CompanyList
-            companies={_.shuffle(companies).slice(0, 3)}
-            showTitle={false}
-          />
+          <CompanyList companies={renderCompanies} showTitle={false} />
         </FeaturedSection>
         <FeaturedSection>
           <FeaturedHeadline>
