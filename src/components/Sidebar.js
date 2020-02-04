@@ -10,7 +10,7 @@ const SidebarContainer = styled.div`
   top: ${({ theme }) => theme.headerHeight};
   bottom: 0;
   right: ${({ isOpen }) =>
-    isOpen && (device.mobile || device.tablet) ? '0' : '-300px'};
+    isOpen && (device.mobile || device.tabletPort) ? '0' : '-300px'};
   background: white;
   box-sizing: border-box;
   overflow: auto;

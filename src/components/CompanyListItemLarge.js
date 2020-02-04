@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { device } from './device';
 import { Link } from 'react-router-dom';
 import { storage } from '../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
@@ -33,6 +34,10 @@ const ItemContainer = styled.div`
     color: ${({ theme }) => theme.orange};
     text-decoration: none;
   }
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    height: auto;
+  }
 `;
 
 const Images = styled.div`
@@ -53,16 +58,34 @@ const Images = styled.div`
     border: solid 2px white;
     border-radius: 6px;
   }
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    width: 100%;
+    height: 80px;
+    float: none;
+    margin-bottom: 26px;
+
+    .logo {
+      top: auto;
+      left: 20px;
+      bottom: -26px;
+    }
+  }
 `;
 
 const CompanyInfo = styled.div`
   padding: 20px 20px 20px 46px;
   overflow: hidden;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    padding: 20px;
+  }
 `;
 
 const CompanyName = styled.span`
   display: block;
-  font-size: 13px;
+  margin-bottom: 5px;
+  font-size: 1rem;
   color: ${({ theme }) => theme.deepNavy};
   line-height: 16px;
   text-transform: uppercase;
@@ -71,11 +94,13 @@ const CompanyName = styled.span`
 
 const ShortDescription = styled.p`
   margin-bottom: 10px;
-  font-size: 12px;
+  font-size: 0.8rem;
+  line-height: 1rem;
 `;
 
 const EmployeeCount = styled.span`
   display: block;
+  margin-bottom: 5px;
   color: ${({ theme }) => theme.textMedium};
 `;
 
