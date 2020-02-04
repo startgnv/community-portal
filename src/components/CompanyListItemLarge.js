@@ -11,7 +11,7 @@ const ItemContainer = styled.div`
   margin-bottom: 30px;
   border-radius: 3px;
   overflow: hidden;
-  box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.08);
   transition: 200ms;
   cursor: pointer;
   background: white;
