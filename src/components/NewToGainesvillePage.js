@@ -15,7 +15,7 @@ const PageInner = styled.div`
   display: flex;
 
   @media ${device.tabletPort}, ${device.mobile} {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 `;
 
@@ -30,6 +30,10 @@ const BlogPosts = styled.ul`
 
 const GuideContainer = styled.div`
   flex: 3;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    margin-bottom: 30px;
+  }
 `;
 
 const EcosystemPreviewImg = styled.img`
