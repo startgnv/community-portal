@@ -9,6 +9,12 @@ import heroBG from '../assets/images/hero-bg2.jpg';
 
 import { LinearProgress } from '@material-ui/core';
 
+const JobsPageContent = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 0 0 0;
+`;
+
 const FilterContainer = styled.div`
   margin-bottom: 20px;
 `;
@@ -30,7 +36,7 @@ export const MapPageIndex = () => {
   return (
     <>
       <Hero bgImage={heroBG} title="Available Positions" size="medium" />
-      <PageContent>
+      <JobsPageContent>
         <FilterContainer>
           <JobsFilter onChange={onFilterChange} />
         </FilterContainer>
@@ -41,7 +47,7 @@ export const MapPageIndex = () => {
           showDescription={false}
           showTitle={false}
         />
-      </PageContent>
+      </JobsPageContent>
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { device } from './device';
 
 const PostList = styled.ul`
   display: flex;
@@ -8,6 +9,11 @@ const PostList = styled.ul`
     direction === 'vertical' ? '0' : '-20px'};
   flex-direction: ${({ direction }) =>
     direction === 'vertical' ? 'column' : 'row'};
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    flex-direction: column;
+    margin-right: 0;
+  }
 `;
 
 const Post = styled.li`
@@ -28,6 +34,10 @@ const Post = styled.li`
 
   a {
     text-decoration: none;
+  }
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    margin: 0 0 20px 0;
   }
 `;
 

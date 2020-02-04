@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { device } from './device';
 import { NavLink } from 'react-router-dom';
 import Logo from './Logo';
 
@@ -37,6 +38,10 @@ const HeaderContainer = styled.div`
         color: ${({ theme }) => theme.green};
       }
     }
+
+    @media ${device.tabletPort}, ${device.mobile} {
+      display: none;
+    }
   }
 `;
 
@@ -52,10 +57,47 @@ const HeaderContent = styled.div`
   text-align: center;
 `;
 
+const HamburgerContainer = styled.div`
+  position: absolute;
+  display: none;
+  cursor: pointer;
+  top: 27px;
+  right: 30px;
+  height: 26px;
+  width: 40px;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    display: inline-block;
+  }
+`;
+
+const Hamburger = styled.div`
+  height: 2px;
+  background-color: ${({ theme }) => theme.textDark};
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    height: 2px;
+    width: 40px;
+    top: 12px;
+    background-color: ${({ theme }) => theme.textDark};
+  }
+
+  &:after {
+    top: 24px;
+  }
+`;
+
 export const Header = ({ className }) => (
   <HeaderContainer className={className}>
     <HeaderContent>
       <Logo />
+      <HamburgerContainer>
+        <Hamburger />
+      </HamburgerContainer>
       <ul className="navigation">
         <li>
           <NavLink className="nav-link" to="/" activeClassName="active" exact>

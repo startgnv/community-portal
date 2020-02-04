@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
+import { device } from './device';
 import { clearFix } from 'polished';
 import Logo from './Logo';
 
@@ -25,6 +26,10 @@ const FooterContent = styled.div`
   max-width: ${({ theme }) => theme.contentMaxWidth};
   margin: 0 auto;
   ${clearFix()}
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    flex-direction: column;
+  }
 `;
 
 const EmailSubscribe = styled.div`

@@ -21,6 +21,16 @@ const JobsFilterContainer = styled.div`
   }
 `;
 
+const FilterTitle = styled.h3`
+  margin-bottom: 10px;
+  line-height: 20px;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  font-family: benton-sans-wide;
+  font-weight: 500;
+  border-bottom: solid 1px ${({ theme }) => theme.uiBorder};
+`;
+
 const FilterItem = styled.div`
   display: inline-block;
   margin-right: 10px;
@@ -106,6 +116,7 @@ const JobsFilter = ({ onChange = noop, filter }) => {
 
   return (
     <JobsFilterContainer>
+      <FilterTitle>Filter By</FilterTitle>
       <FilterControls>
         <FilterItem>
           <Dropdown btnLabel={categoriesBtnLabel}>

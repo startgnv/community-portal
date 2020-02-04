@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
+import { device } from './device';
 import AppContext from './AppContext';
 import { clearFix } from 'polished';
 import { Link } from 'react-router-dom';
@@ -20,6 +21,11 @@ const HomeHero = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 30px;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    margin-top: 0;
+    flex-direction: column;
+  }
 `;
 
 const HeroImage = styled.div`
@@ -28,6 +34,11 @@ const HeroImage = styled.div`
   background-image: url(${homeHero});
   background-size: cover;
   background-position: center;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    width: 100%;
+    min-height: 160px;
+  }
 `;
 
 const CircleText = styled.img`
@@ -35,6 +46,12 @@ const CircleText = styled.img`
   top: -20px;
   right: -40px;
   opacity: 0.6;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    top: auto;
+    bottom: -40px;
+    right: 20px;
+  }
 `;
 
 const HeroContent = styled.div`
@@ -66,16 +83,29 @@ const HeroContent = styled.div`
     color: ${({ theme }) => theme.teal};
     font-weight: 700;
   }
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    padding: 30px;
+    margin-left: 0;
+
+    h3 {
+      font-size: 2rem;
+    }
+  }
 `;
 
 const RecentBlogPostsContainer = styled.div`
   padding: 60px;
   display: flex;
   justify-content: center;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    padding: 20px;
+  }
 `;
 
 const FeaturedContainer = styled.div`
-  padding: 60px 0;
+  padding: 60px 20px;
   background-image: url(${homeFeaturedBG});
   background-size: cover;
   background-position: center;
@@ -174,7 +204,7 @@ const HomePage = () => {
         <FeaturedSection>
           <FeaturedHeadline>
             <h3>Featured Companies</h3>
-            <Link to="/companies">View all Companies</Link>
+            <Link to="/companies">View All</Link>
           </FeaturedHeadline>
           <CompanyList
             companies={_.shuffle(companies).slice(0, 3)}
@@ -184,7 +214,7 @@ const HomePage = () => {
         <FeaturedSection>
           <FeaturedHeadline>
             <h3>Featured Jobs</h3>
-            <Link to="/jobs">View all Jobs</Link>
+            <Link to="/jobs">View All</Link>
           </FeaturedHeadline>
           <JobList
             jobs={jobs.filter(job => job.featured)}
