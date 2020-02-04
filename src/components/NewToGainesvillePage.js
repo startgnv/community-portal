@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { device } from './device';
 import PageContent from './PageContent';
 import Hero from './Hero';
 import RecentBlogPosts from './RecentBlogPosts';
@@ -12,11 +13,19 @@ const NewToGNVContainer = styled.div``;
 
 const PageInner = styled.div`
   display: flex;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    flex-direction: column;
+  }
 `;
 
 const BlogPosts = styled.ul`
   flex: 2;
   margin-right: 30px;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    margin-right: 0;
+  }
 `;
 
 const GuideContainer = styled.div`
