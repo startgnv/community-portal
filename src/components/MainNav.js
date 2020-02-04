@@ -5,6 +5,7 @@ import AppContext from './AppContext';
 import { NavLink } from 'react-router-dom';
 
 const NavContainer = styled.ul`
+  text-align: right;
   margin: 0;
   padding: 0;
   justify-content: right;
@@ -32,6 +33,8 @@ const NavContainer = styled.ul`
   }
 
   @media ${device.tabletPort}, ${device.mobile} {
+    text-align: left;
+
     li {
       display: block;
     }
