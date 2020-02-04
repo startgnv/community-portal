@@ -91,6 +91,10 @@ const HeroContent = styled.div`
     h3 {
       font-size: 2rem;
     }
+
+    p {
+      max-width: none;
+    }
   }
 `;
 
