@@ -12,7 +12,8 @@ export class AppProvider extends React.Component {
     jobCategories: [],
     jobCategoriesLoading: true,
     companyCategories: [],
-    companyCategoriesLoading: true
+    companyCategoriesLoading: true,
+    sidebarOpen: false
   };
 
   componentDidMount = () => {
@@ -67,7 +68,6 @@ export class AppProvider extends React.Component {
     db.collection('companyCategories')
       .get()
       .then(companyCatRefs => {
-        console.warn(companyCatRefs);
         this.setState({
           companyCategories: companyCatRefs.docs.map(doc => ({
             id: doc.id,
@@ -85,6 +85,14 @@ export class AppProvider extends React.Component {
     this.setState({ activeCompanyID: id });
   };
 
+  openSidebar = () => {
+    this.setState({ sidebarOpen: true });
+  };
+
+  closeSidebar = () => {
+    this.setState({ sidebarOpen: false });
+  };
+
   render() {
     const { children } = this.props;
     const {
@@ -93,7 +101,8 @@ export class AppProvider extends React.Component {
       jobsLoading,
       companiesLoading,
       jobCategories,
-      companyCategories
+      companyCategories,
+      sidebarOpen
     } = this.state;
 
     return (
@@ -104,7 +113,10 @@ export class AppProvider extends React.Component {
           jobsLoading,
           companiesLoading,
           jobCategories,
-          companyCategories
+          companyCategories,
+          sidebarOpen,
+          openSidebar: this.openSidebar,
+          closeSidebar: this.closeSidebar
         }}
       >
         {children}

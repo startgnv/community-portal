@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
+import { device } from './device';
+import AppContext from './AppContext';
+import MainNav from './MainNav';
 
 const SidebarContainer = styled.div`
-  width: 460px;
-  height: 100%;
-  float: right;
+  position: fixed;
+  width: 300px;
+  top: ${({ theme }) => theme.headerHeight};
+  bottom: 0;
+  right: ${({ isOpen }) =>
+    isOpen && (device.mobile || device.tablet) ? '0' : '-300px'};
   background: white;
   box-sizing: border-box;
   overflow: auto;
+  transition: 250ms;
+  z-index: 99999999;
 `;
 
-export const Sidebar = ({ children, className }) => (
-  <SidebarContainer className={className}>{children}</SidebarContainer>
-);
+export const Sidebar = () => {
+  const { sidebarOpen } = useContext(AppContext);
+  return (
+    <SidebarContainer isOpen={sidebarOpen}>
+      <MainNav />
+    </SidebarContainer>
+  );
+};
 
 export default Sidebar;

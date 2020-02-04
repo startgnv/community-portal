@@ -26,6 +26,7 @@ import AdminPage from './AdminPage';
 import AdminRoute from './AdminRoute';
 import AdminLogin from './AdminLogin';
 import Header from './Header';
+import Sidebar from './Sidebar';
 import Footer from './Footer';
 
 ReactGA.initialize('UA-138572620-3');
@@ -152,6 +153,7 @@ export const App = () => (
         <Router>
           <ScrollToTop>
             <Route exact path={publicRoutes} component={Header} />
+            <Route exact path={publicRoutes} component={Sidebar} />
             <Switch>
               <Route exact path="/" component={HomePage} />
               <Route exact path="/about" component={AboutPage} />

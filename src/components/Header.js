@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
+import AppContext from './AppContext';
 import { device } from './device';
-import { NavLink } from 'react-router-dom';
+import MainNav from './MainNav';
 import Logo from './Logo';
 
 const HeaderContainer = styled.div`
@@ -10,38 +11,13 @@ const HeaderContainer = styled.div`
   top: 0;
   left: 0;
   right: 0;
+`;
 
-  .navigation {
-    flex: 1;
-    margin: 0;
-    padding: 0;
-    text-align: right;
+const NavContainer = styled.div`
+  flex: 1;
 
-    li {
-      display: inline-block;
-    }
-
-    .nav-link {
-      display: block;
-      height: 30px;
-      padding: 0 20px;
-      color: white;
-      text-decoration: none;
-      line-height: 30px;
-      color: ${({ theme }) => theme.textDark};
-      font-size: 0.8rem;
-      font-family: benton-sans-wide;
-      font-weight: 500;
-      text-transform: uppercase;
-
-      &.active {
-        color: ${({ theme }) => theme.green};
-      }
-    }
-
-    @media ${device.tabletPort}, ${device.mobile} {
-      display: none;
-    }
+  @media ${device.tabletPort}, ${device.mobile} {
+    display: none;
   }
 `;
 
@@ -61,10 +37,10 @@ const HamburgerContainer = styled.div`
   position: absolute;
   display: none;
   cursor: pointer;
-  top: 27px;
+  top: 28px;
   right: 30px;
-  height: 26px;
-  width: 40px;
+  height: 24px;
+  width: 32px;
 
   @media ${device.tabletPort}, ${device.mobile} {
     display: inline-block;
@@ -81,60 +57,31 @@ const Hamburger = styled.div`
     position: absolute;
     display: block;
     height: 2px;
-    width: 40px;
-    top: 12px;
+    width: 100%;
+    top: 11px;
     background-color: ${({ theme }) => theme.textDark};
   }
 
   &:after {
-    top: 24px;
+    top: 22px;
   }
 `;
 
-export const Header = ({ className }) => (
-  <HeaderContainer className={className}>
-    <HeaderContent>
-      <Logo />
-      <HamburgerContainer>
-        <Hamburger />
-      </HamburgerContainer>
-      <ul className="navigation">
-        <li>
-          <NavLink className="nav-link" to="/" activeClassName="active" exact>
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            className="nav-link"
-            to="/companies"
-            activeClassName="active"
-          >
-            Companies
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            className="nav-link"
-            to="/jobs"
-            activeClassName="active"
-            exact
-          >
-            Jobs
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            className="nav-link"
-            to="/new-to-gainesville"
-            activeClassName="active"
-          >
-            New To Gainesville
-          </NavLink>
-        </li>
-      </ul>
-    </HeaderContent>
-  </HeaderContainer>
-);
+export const Header = ({ className }) => {
+  const { sidebarOpen, openSidebar, closeSidebar } = useContext(AppContext);
+  return (
+    <HeaderContainer className={className}>
+      <HeaderContent>
+        <Logo />
+        <NavContainer>
+          <MainNav />
+        </NavContainer>
+        <HamburgerContainer onClick={sidebarOpen ? closeSidebar : openSidebar}>
+          <Hamburger />
+        </HamburgerContainer>
+      </HeaderContent>
+    </HeaderContainer>
+  );
+};
 
 export default Header;
