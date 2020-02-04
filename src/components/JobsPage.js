@@ -12,7 +12,7 @@ import { LinearProgress } from '@material-ui/core';
 const JobsPageContent = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 30px 0 0 0;
+  padding: 30px;
 `;
 
 const FilterContainer = styled.div`
