@@ -37,8 +37,8 @@ const NavContainer = styled.ul`
     }
 
     .nav-link {
-      height: 40px;
-      line-height: 40px;
+      height: 60px;
+      line-height: 60px;
     }
   }
 `;
