@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import styled from 'styled-components/macro';
 import AppContext from './AppContext';
 import Hero from './Hero';
-import PageContent from './PageContent';
 import JobList from './JobList';
 import JobsFilter from './JobsFilter';
 import heroBG from '../assets/images/hero-bg2.jpg';

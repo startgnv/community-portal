@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
-import { baseContentStyling } from './mixins';
 import { db } from '../firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import AppContext from './AppContext';

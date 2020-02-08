@@ -12,16 +12,6 @@ import { LinearProgress } from '@material-ui/core';
 
 const MapPageContainer = styled.div``;
 
-const HeroHeadline = styled.h2`
-  font-size: 46px;
-  color: ${({ theme }) => theme.textDark};
-
-  strong {
-    color: ${({ theme }) => theme.darkGreen};
-    font-weight: 700;
-  }
-`;
-
 const CompaniesContent = styled.div`
   display: flex;
   margin: 0 auto;

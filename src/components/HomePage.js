@@ -5,7 +5,6 @@ import { device } from './device';
 import AppContext from './AppContext';
 import { clearFix } from 'polished';
 import { Link } from 'react-router-dom';
-import Hero from './Hero';
 import JobList from './JobList';
 import RecentBlogPosts from './RecentBlogPosts';
 import CompanyList from './CompanyList';
