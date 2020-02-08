@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { device } from './device';
+import Loading from './Loading';
 
 const PostList = styled.ul`
   display: flex;
@@ -93,11 +94,11 @@ const RecentBlogPosts = ({ dir = '', limit = 0 }) => {
       .catch(err => console.log(err));
   }, []);
 
-  return (
-    <PostList direction={dir}>
-      {posts &&
-        !!posts.length &&
-        posts.map(({ title, url, feature_image }, i) => (
+  let content;
+  if (posts && posts.length > 0) {
+    content = (
+      <PostList direction={dir}>
+        {posts.map(({ title, url, feature_image }, i) => (
           <Post direction={dir} key={i}>
             <a href={url} target="_blank">
               <PostImage bgImg={feature_image} direction={dir} />
@@ -108,8 +109,13 @@ const RecentBlogPosts = ({ dir = '', limit = 0 }) => {
             </a>
           </Post>
         ))}
-    </PostList>
-  );
+      </PostList>
+    );
+  } else {
+    content = <Loading size={60} height={120} />;
+  }
+
+  return content;
 };
 
 export default RecentBlogPosts;
