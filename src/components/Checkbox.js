@@ -37,7 +37,7 @@ const CheckboxContainer = styled.label`
     background: ${({ theme }) => theme.uiBackground};
 
     ${CheckContainer} {
-      box-shadow: inset 0 0 0 1px ${({ theme }) => theme.textLight};
+      box-shadow: inset 0 0 0 1px ${({ theme }) => theme.uiBorder};
     }
   }
 `;
@@ -58,8 +58,8 @@ const CheckInput = styled.input`
 
   &:checked {
     ~ ${CheckContainer} {
-      background: ${({ theme }) => theme.textMedium};
-      box-shadow: inset 0 0 0 1px ${({ theme }) => theme.textMedium};
+      background: ${({ theme }) => theme.textDark};
+      box-shadow: inset 0 0 0 1px ${({ theme }) => theme.textDark};
 
       .icon {
         display: block;

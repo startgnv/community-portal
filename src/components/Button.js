@@ -32,7 +32,7 @@ const ButtonContainer = styled.button`
     box-shadow: inset 0 0 0 1px ${({ theme }) => theme.uiBorder};
 
     .btn-label {
-      color: ${({ theme }) => theme.textMedium};
+      color: ${({ theme }) => theme.textDark};
     }
 
     &:hover {

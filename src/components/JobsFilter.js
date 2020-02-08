@@ -39,12 +39,21 @@ const FilterItem = styled.div`
 const CategoriesContainer = styled.div`
   width: 260px;
   max-height: 260px;
+  padding: 20px 10px 10px;
   text-align: left;
   background: white;
   overflow: auto;
   box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.15);
   border-radius: 3px;
   ${clearFix()}
+`;
+
+const DropdownTitle = styled.h6`
+  margin: 0 0 5px 5px;
+  font-size: 0.7rem;
+  font-family: benton-sans-wide;
+  font-weight: 500;
+  text-transform: uppercase;
 `;
 
 const CategoriesDivider = styled.div`
@@ -121,6 +130,7 @@ const JobsFilter = ({ onChange = noop, filter }) => {
         <FilterItem>
           <Dropdown btnLabel={categoriesBtnLabel}>
             <CategoriesContainer>
+              <DropdownTitle>Job Categories</DropdownTitle>
               {renderSelectedCategories.map(({ name, id }) => (
                 <CheckContainer>
                   <Checkbox
@@ -151,6 +161,7 @@ const JobsFilter = ({ onChange = noop, filter }) => {
         <FilterItem>
           <Dropdown btnLabel="Type">
             <CategoriesContainer>
+              <DropdownTitle>Job Type</DropdownTitle>
               <CheckContainer>
                 <Checkbox
                   label="Full Time"

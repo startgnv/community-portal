@@ -10,6 +10,7 @@ import { LinearProgress } from '@material-ui/core';
 
 const JobsPageContent = styled.div`
   max-width: 1200px;
+  min-height: 400px;
   margin: 0 auto;
   padding: 30px;
 `;
