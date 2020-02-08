@@ -12,11 +12,8 @@ const JobListContainer = styled.div`
 
 const ListTitle = styled.h3`
   display: block;
-  margin: 0 0 0 10px;
-  font-size 13px;
-  font-family: 'Montserrat';
-  fon-weight: bold;
-  text-transform: uppercase;
+  margin: 0 0 15px 10px;
+  font-size: 1.6rem;
 `;
 
 const ListContainer = styled.ul`

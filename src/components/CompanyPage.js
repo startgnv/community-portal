@@ -27,8 +27,17 @@ const CompanyContent = styled.div`
   }
 `;
 
+const EmployeeCount = styled.span`
+  display: inline-block;
+  margin-right: 10px;
+`;
+
 const CompanyLink = styled.span`
+  display: inline-block;
+  margin-right: 15px;
+
   .link-icon {
+    margin-right: 5px;
     line-height: 26px;
     vertical-align: top;
   }
@@ -84,25 +93,22 @@ export const CompanyPage = ({
   return (
     <CompanyPageContainer>
       <SidebarHeader title={name} coverPath={coverPath} logoPath={logoPath}>
+        {employeeCount && (
+          <EmployeeCount>
+            <span>{`${employeeCount} Employees`}</span>
+          </EmployeeCount>
+        )}
         <CompanyLink>
           <a href={url} rel="noopener noreferrer" target="_blank">
             <LinkIcon className="link-icon" />
-            View Website
+            Open Website
           </a>
         </CompanyLink>
-        {employeeCount && <span>{`${employeeCount} Employees`}</span>}
       </SidebarHeader>
       <CompanyContent>
         <p className="description">{description}</p>
         {companyJobs && companyJobs.length > 0 && (
-          <>
-            <h2>Jobs</h2>
-            <JobList
-              jobs={companyJobs}
-              showTitle={false}
-              showCompanyInfo={false}
-            />
-          </>
+          <JobList jobs={companyJobs} showCompanyInfo={false} />
         )}
         <MapWrap>
           <MapContainer viewport={viewport}>
