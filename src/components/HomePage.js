@@ -60,16 +60,36 @@ const HeroContent = styled.div`
   margin-left: 80px;
 
   h2 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+
+    strong {
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+      color: ${({ theme }) => theme.textDark};
+      font-weight: 400;
+
+      &:after {
+        display: block;
+        position: absolute;
+        left: -5px;
+        right: -5px;
+        top: 60%;
+        bottom: 0;
+        background-color: ${({ theme }) => theme.lightBlue};
+        z-index: -1;
+        content: '';
+      }
+    }
+  }
+
+  h3 {
     font-size: 1rem;
     text-transform: uppercase;
     margin-bottom: 20px;
     font-family: benton-sans-wide;
     font-weight: 500;
-  }
-
-  h3 {
-    font-size: 3rem;
-    margin-bottom: 10px;
   }
 
   p {
@@ -174,12 +194,12 @@ const HomePage = () => {
           <CircleText src={circleText} />
         </HeroImage>
         <HeroContent>
-          <h3>
-            Join the most human
+          <h2>
+            Join the <strong>most human</strong>
             <br />
             tech ecosystem in Florida.
-          </h3>
-          <h2>Welcome to Gainesville</h2>
+          </h2>
+          <h3>Welcome to Gainesville</h3>
           <p>We are always growing, decomposing, and striving even higher.</p>
           <p>It’s in our nature. It IS our nature.</p>
           <p>
