@@ -27,12 +27,7 @@ export const TextInput = ({
   value = ''
 }) => {
   return (
-    <TextInputContainer
-      className={className}
-      fullWidth={fullWidth}
-      placeholder={placeholder}
-      name={name}
-    >
+    <TextInputContainer className={className} fullWidth={fullWidth} name={name}>
       {label && <span className="label">{label}</span>}
       <input
         className="input"

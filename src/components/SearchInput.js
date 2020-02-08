@@ -17,7 +17,7 @@ const IconContainer = styled.div`
   cursor: pointer;
 `;
 
-const SearchInput = ({ onChange = () => {} }) => {
+const SearchInput = ({ onChange = () => {}, placeholder = 'Search' }) => {
   const [value, setValue] = useState('');
   const onFieldChange = e => {
     setValue(e.target.value);
@@ -34,7 +34,11 @@ const SearchInput = ({ onChange = () => {} }) => {
           <ClearIcon />
         </IconContainer>
       )}
-      <TextInput onChange={onFieldChange} value={value} />
+      <TextInput
+        onChange={onFieldChange}
+        value={value}
+        placeholder={placeholder}
+      />
     </SearchContainer>
   );
 };
