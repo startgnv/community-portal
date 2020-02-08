@@ -55,12 +55,12 @@ const CircleText = styled.img`
 
 const HeroContent = styled.div`
   flex: 1;
-  padding: 60px 30px 100px;
+  padding: 60px 30px 60px;
   margin-left: 80px;
 
   h2 {
-    font-size: 3rem;
-    margin-bottom: 10px;
+    font-size: 3.4rem;
+    margin-bottom: 15px;
 
     strong {
       position: relative;
@@ -84,17 +84,18 @@ const HeroContent = styled.div`
   }
 
   h3 {
-    font-size: 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.2rem;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-family: benton-sans-wide;
     font-weight: 500;
   }
 
   p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     max-width: 460px;
-    line-height: 1.2rem;
+    line-height: 1.6rem;
     margin-bottom: 16px;
   }
 
@@ -107,7 +108,7 @@ const HeroContent = styled.div`
     padding: 30px;
     margin-left: 0;
 
-    h3 {
+    h2 {
       font-size: 2rem;
     }
 
