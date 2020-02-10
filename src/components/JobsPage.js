@@ -9,7 +9,7 @@ import heroBG from '../assets/images/hero-bg2.jpg';
 import { LinearProgress } from '@material-ui/core';
 
 const JobsPageContent = styled.div`
-  max-width: 1200px;
+  max-width: ${({ theme }) => theme.contentMaxWidth};
   min-height: 400px;
   margin: 0 auto;
   padding: 30px;
@@ -46,6 +46,7 @@ export const MapPageIndex = () => {
           filter={jobsFilter}
           showDescription={false}
           showTitle={false}
+          variant="large"
         />
       </JobsPageContent>
     </>

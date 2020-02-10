@@ -4,6 +4,7 @@ import styled from 'styled-components/macro';
 import { clearFix } from 'polished';
 import { device } from './device';
 import JobListItem from './JobListItem';
+import JobListItemLarge from './JobListItemLarge';
 import EmptyJobs from './EmptyJobs';
 
 const JobListContainer = styled.div`
@@ -24,14 +25,14 @@ const ListContainer = styled.ul`
 `;
 
 const ItemContainer = styled.li`
-  width: 33.33333%;
-  padding: 0 30px 30px 0;
-  float: left;
+  width: ${({ variant }) => (variant === 'large' ? '100' : 100 / 3)}%;
+  padding: '0 30px 30px 0';
+  float: ${({ variant }) => (variant === 'large' ? 'none' : 'left')};
   box-sizing: border-box;
   list-style-type: none;
 
   @media ${device.tabletPort} {
-    width: 50%;
+    width: ${({ variant }) => (variant === 'large' ? '100%' : '50%')};
   }
 
   @media ${device.mobile} {
@@ -51,8 +52,10 @@ export const JobList = ({
   filter = {
     search: '',
     categories: []
-  }
+  },
+  variant = ''
 }) => {
+  const ItemComponent = variant === 'large' ? JobListItemLarge : JobListItem;
   let filteredJobs;
   if (filter.search || filter.categories.length) {
     filteredJobs = _.filter(jobs, job => {
@@ -72,8 +75,8 @@ export const JobList = ({
     listContent = filteredJobs.map(job => {
       const jobCompany = _.find(companies, { id: job.companyID });
       return (
-        <ItemContainer key={job.id}>
-          <JobListItem
+        <ItemContainer variant={variant} key={job.id}>
+          <ItemComponent
             job={job}
             company={jobCompany}
             showDescription={showDescription}
