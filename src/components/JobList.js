@@ -26,7 +26,7 @@ const ListContainer = styled.ul`
 
 const ItemContainer = styled.li`
   width: ${({ variant }) => (variant === 'large' ? '100' : 100 / 3)}%;
-  padding: '0 30px 30px 0';
+  padding: ${({ variant }) => (variant === 'large' ? '0' : '0 30px 30px 0')};
   float: ${({ variant }) => (variant === 'large' ? 'none' : 'left')};
   box-sizing: border-box;
   list-style-type: none;
