@@ -19,7 +19,14 @@ const Tag = styled.li`
   line-height: 26px;
   border-radius: 3px;
   color: white;
-  font-size: 13px;
+  font-size: 0.6rem;
+  font-family: benton-sans-wide;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  &:last-child:first-child {
+    margin: 0 0 5px 0;
+  }
 
   &:last-child {
     margin: 0;
@@ -28,19 +35,19 @@ const Tag = styled.li`
   &.small {
     height: 20px;
     line-height: 20px;
-    font-size: 11px;
+    font-size: 0.5rem;
   }
 
   &.medium {
     height: 26px;
     line-height: 26px;
-    font-size: 13px;
+    ffont-size: 0.8rem;
   }
 
   &.large {
     height: 32px;
     line-height: 32px;
-    font-size: 16px;
+    font-size: 1rem;
   }
 `;
 

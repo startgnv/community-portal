@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { storage } from '../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import StorageImg from './StorageImg';
+import JobCategories from './JobCategories';
 
 const ItemContainer = styled.div`
   height: 140px;
@@ -24,8 +25,8 @@ const ItemContainer = styled.div`
   }
 
   .company {
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 1rem;
+    line-height: 1.2rem;
     color: #333;
     text-decoration: none;
 
@@ -87,9 +88,13 @@ const JobName = styled.span`
   margin-bottom: 5px;
   font-size: 1rem;
   color: ${({ theme }) => theme.deepNavy};
-  line-height: 16px;
+  line-height: 1.2rem;
   text-transform: uppercase;
   font-weight: bold;
+`;
+
+const CategoriesContainer = styled.div`
+  margin-bottom: 5px;
 `;
 
 const ShortDescription = styled.p`
@@ -99,7 +104,7 @@ const ShortDescription = styled.p`
 `;
 
 const JobListItemLarge = ({
-  job: { title, id } = {},
+  job: { title, id, categories } = {},
   company = {},
   onMouseEnter = () => {}
 }) => {
@@ -119,6 +124,9 @@ const JobListItemLarge = ({
         <JobInfo>
           <div>
             <JobName>{title}</JobName>
+            <CategoriesContainer>
+              <JobCategories categories={categories} size="small" />
+            </CategoriesContainer>
             <Link className="company" to={`/companies/${company.slug}`}>
               {company.name}
             </Link>
