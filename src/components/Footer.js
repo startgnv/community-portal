@@ -6,53 +6,50 @@ import { clearFix } from 'polished';
 import Logo from './Logo';
 
 const FooterContainer = styled.div`
-  position: relative;
   background: ${({ theme }) => theme.deepNavy};
+  padding: 70px 0;
+`;
 
-  &:before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 70%;
-    content: '';
-    background: #1d2d3b;
-    z-index: 1;
+const FooterRow = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 0 50px;
+  max-width: ${({ theme }) => theme.contentMaxWidth};
+  
+  ${clearFix()}
+  
+  @media ${device.tabletPort}, ${device.mobile} {
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 0;
   }
 `;
 
-const FooterContent = styled.div`
+const FooterColumn = styled.div`
   display: flex;
-  max-width: ${({ theme }) => theme.contentMaxWidth};
-  margin: 0 auto;
-  ${clearFix()}
+  flex-flow: column nowrap;
+  align-items: flex-start;
+`;
+
+const Info = styled.div`
+  max-width: 275px;
 
   @media ${device.tabletPort}, ${device.mobile} {
-    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 `;
 
-const EmailSubscribe = styled.div`
-  position: relative;
-  flex: 2;
-  padding: 30px 60px 30px 30px;
-  float: left;
-  background: #1d2d3b;
-  z-index: 10;
-`;
-
-const SubscribeTagline = styled.p`
+const Description = styled.p`
   color: #a3a9b3;
   font-size: 13px;
-`;
-
-const FooterNavContainer = styled.div`
-  flex: 2;
-  padding: 30px 30px 30px 80px;
+  margin-top: 15px;
 `;
 
 const FooterNav = styled.div`
-  ${clearFix()}
+  margin-top: 50px;
 `;
 
 const FooterHeader = styled.h3`
@@ -85,24 +82,68 @@ const NavList = styled.ul`
 `;
 
 const Contact = styled.div`
-  flex: 1;
-  padding: 30px;
+  margin-top: 50px;
+`;
 
-  h3 {
+const EmailForm = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 10px;
+    max-width: 275px;
+    margin-top: 50px;
   }
+`;
+
+const EmailInput = styled.input`
+  box-sizing: border-box;
+  background: none;
+  display: block;
+  border: 1px solid ${({ theme }) => theme.lightBlue};
+  border-radius: 3px;
+  width: 100%;
+  padding: 12px;
+  color: ${({ theme }) => theme.lightBlue};
+  font-family: sans-serif;
+  font-size: 12px;
+  margin: 20px 0;
+
+  &::placeholder {
+    color: rgba(${({ theme }) => theme.lightBlue}, 0.8);
+  }
+`;
+
+const EmailSubmit = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  background-color: ${({ theme }) => theme.lightBlue};
+  border-radius: 3px;
+  border: none;
+  color: ${({ theme }) => theme.deepNavy};
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 12px 0;
 `;
 
 const Footer = () => (
   <FooterContainer>
-    <FooterContent>
-      <EmailSubscribe>
-        <Logo />
-        <SubscribeTagline>
-          startGNV is an initiative by startupGNV to promote and grow the
-          Gainesville startup, tech, and biotech communities.
-        </SubscribeTagline>
-      </EmailSubscribe>
-      <FooterNavContainer>
+    <FooterRow>
+      <FooterColumn>
+        <Info>
+          <Logo />
+          <Description>
+            startGNV is an initiative by startupGNV to promote and grow the
+            Gainesville startup, tech, and biotech communities.
+          </Description>
+        </Info>
         <FooterNav>
           <FooterHeader>Explore startGNV</FooterHeader>
           <NavList>
@@ -128,18 +169,29 @@ const Footer = () => (
             </li>
           </NavList>
         </FooterNav>
-      </FooterNavContainer>
-      <Contact>
-        <FooterHeader>Contact</FooterHeader>
-        <NavList>
-          <li>
-            <a href="mailto:info@startupgnv.com" class="footer-link">
-              info@startupgnv.com
-            </a>
-          </li>
-        </NavList>
-      </Contact>
-    </FooterContent>
+        <Contact>
+          <FooterHeader>Contact</FooterHeader>
+          <NavList>
+            <li>
+              <a href="mailto:info@startupgnv.com" className="footer-link">
+                info@startupgnv.com
+              </a>
+            </li>
+          </NavList>
+        </Contact>
+      </FooterColumn>
+      <FooterColumn>
+        <EmailForm>
+          <FooterHeader>SUBSCRIBE TO OUR NEWSLETTER</FooterHeader>
+          <EmailInput placeholder="Email" />
+          <EmailSubmit>SUBMIT</EmailSubmit>
+          <Description>
+            Stay notified for regular updates on upcoming events and ways to get
+            involved
+          </Description>
+        </EmailForm>
+      </FooterColumn>
+    </FooterRow>
   </FooterContainer>
 );
 
