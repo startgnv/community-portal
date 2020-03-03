@@ -12,6 +12,7 @@ import JobApply from './JobApply';
 
 import { LinearProgress } from '@material-ui/core';
 import { Parser } from 'html-to-react';
+import { Helmet } from 'react-helmet';
 
 const htmlParser = new Parser();
 
@@ -97,33 +98,46 @@ export const MapPageJob = ({
   }
 
   return (
-    <MapPageJobContainer>
-      <SidebarHeader
-        coverPath={companyCoverPath}
-        logoPath={companyLogoPath}
-        coverHeight={160}
-        mainImgSize={80}
-        title={jobTitle}
-      >
-        <Link className="company-link" to={'/companies/' + companySlug}>
-          <BusinessIcon className="company-icon" />
-          {companyName}
-        </Link>
-        {categories && categories.length > 0 && (
-          <CategoriesContainer>
-            <JobCategories categories={categories} />
-          </CategoriesContainer>
-        )}
-      </SidebarHeader>
-      <JobMainContent>
-        <JobContent>
-          <JobDescription>{htmlParser.parse(jobDescription)}</JobDescription>
-        </JobContent>
-        <JobSidebar>
-          <JobApply job={job} companyName={companyName} />
-        </JobSidebar>
-      </JobMainContent>
-    </MapPageJobContainer>
+    <>
+      <Helmet>
+        <title>{`${companyName} - ${jobTitle}`}</title>
+        <meta name="description" content={`${companyName} - ${jobTitle}`} />
+        <meta name="og:title" property="og:title" content={companyName} />
+        <meta
+          name="og:description"
+          property="og:description"
+          content={jobTitle}
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+      <MapPageJobContainer>
+        <SidebarHeader
+          coverPath={companyCoverPath}
+          logoPath={companyLogoPath}
+          coverHeight={160}
+          mainImgSize={80}
+          title={jobTitle}
+        >
+          <Link className="company-link" to={'/companies/' + companySlug}>
+            <BusinessIcon className="company-icon" />
+            {companyName}
+          </Link>
+          {categories && categories.length > 0 && (
+            <CategoriesContainer>
+              <JobCategories categories={categories} />
+            </CategoriesContainer>
+          )}
+        </SidebarHeader>
+        <JobMainContent>
+          <JobContent>
+            <JobDescription>{htmlParser.parse(jobDescription)}</JobDescription>
+          </JobContent>
+          <JobSidebar>
+            <JobApply job={job} companyName={companyName} />
+          </JobSidebar>
+        </JobMainContent>
+      </MapPageJobContainer>
+    </>
   );
 };
 
