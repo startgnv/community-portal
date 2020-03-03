@@ -44,31 +44,30 @@ const ItemContainer = styled.li`
 export const JobList = ({
   jobs,
   companies,
-  children,
   className,
   showTitle = true,
   showCompanyInfo = true,
   showDescription = true,
   filter = {
     search: '',
-    categories: []
+    categories: [],
+    types: []
   },
   variant = ''
 }) => {
   const ItemComponent = variant === 'large' ? JobListItemLarge : JobListItem;
-  let filteredJobs;
-  if (filter.search || filter.categories.length) {
-    filteredJobs = _.filter(jobs, job => {
-      let match = false;
-      match = _.intersection(filter.categories, job.categories).length > 0;
-      if (filter.search) {
-        match = job.title.toLowerCase().includes(filter.search);
-      }
-      return match;
-    });
-  } else {
-    filteredJobs = jobs;
-  }
+
+  const searchFilter = job => job.title.toLowerCase().includes(filter.search);
+  const categoryFilter = job =>
+    filter.categories.length
+      ? _.intersection(filter.categories, job.categories).length
+      : true;
+  const typeFilter = job =>
+    filter.types.length ? filter.types.includes(job.type) : true;
+
+  const filteredJobs = jobs.filter(
+    job => searchFilter(job) && categoryFilter(job) && typeFilter(job)
+  );
 
   let listContent;
   if (filteredJobs.length) {

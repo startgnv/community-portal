@@ -114,7 +114,7 @@ const JobsFilter = ({ onChange = noop, filter }) => {
     }
     setSelectedTypes(newTypes);
     onChange({
-      type: newTypes
+      types: newTypes
     });
   };
 
