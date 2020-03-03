@@ -20,7 +20,11 @@ const FilterContainer = styled.div`
 `;
 
 export const MapPageIndex = () => {
-  const [jobsFilter, setJobsFilter] = useState({ search: '', categories: [] });
+  const [jobsFilter, setJobsFilter] = useState({
+    search: '',
+    categories: [],
+    types: []
+  });
   const { jobs, companies, jobsLoading, companiesLoading } = useContext(
     AppContext
   );
