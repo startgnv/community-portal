@@ -9,6 +9,7 @@ import Error from './Error';
 import MapContainer from './MapContainer';
 import MapPin from './MapPin';
 import { Marker } from 'react-map-gl';
+import { Helmet } from 'react-helmet';
 
 import { LinearProgress } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
@@ -91,34 +92,51 @@ export const CompanyPage = ({
   const companyJobs = jobs.filter(job => job.companyID === id);
 
   return (
-    <CompanyPageContainer>
-      <SidebarHeader title={name} coverPath={coverPath} logoPath={logoPath}>
-        {employeeCount && (
-          <EmployeeCount>
-            <span>{`${employeeCount} Employees`}</span>
-          </EmployeeCount>
-        )}
-        <CompanyLink>
-          <a href={url} rel="noopener noreferrer" target="_blank">
-            <LinkIcon className="link-icon" />
-            Open Website
-          </a>
-        </CompanyLink>
-      </SidebarHeader>
-      <CompanyContent>
-        <p className="description">{description}</p>
-        {companyJobs && companyJobs.length > 0 && (
-          <JobList jobs={companyJobs} showCompanyInfo={false} />
-        )}
-        <MapWrap>
-          <MapContainer viewport={viewport}>
-            <Marker longitude={longitude} latitude={latitude}>
-              <MapPin size={36} />
-            </Marker>
-          </MapContainer>
-        </MapWrap>
-      </CompanyContent>
-    </CompanyPageContainer>
+    <>
+      <Helmet>
+        <title>startGNV - {name}</title>
+        <meta name="description" content={description} />
+        <meta
+          name="og:title"
+          property="og:title"
+          content={`${name} - startGNV`}
+        />
+        <meta
+          name="og:description"
+          property="og:description"
+          content={description}
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+      <CompanyPageContainer>
+        <SidebarHeader title={name} coverPath={coverPath} logoPath={logoPath}>
+          {employeeCount && (
+            <EmployeeCount>
+              <span>{`${employeeCount} Employees`}</span>
+            </EmployeeCount>
+          )}
+          <CompanyLink>
+            <a href={url} rel="noopener noreferrer" target="_blank">
+              <LinkIcon className="link-icon" />
+              Open Website
+            </a>
+          </CompanyLink>
+        </SidebarHeader>
+        <CompanyContent>
+          <p className="description">{description}</p>
+          {companyJobs && companyJobs.length > 0 && (
+            <JobList jobs={companyJobs} showCompanyInfo={false} />
+          )}
+          <MapWrap>
+            <MapContainer viewport={viewport}>
+              <Marker longitude={longitude} latitude={latitude}>
+                <MapPin size={36} />
+              </Marker>
+            </MapContainer>
+          </MapWrap>
+        </CompanyContent>
+      </CompanyPageContainer>
+    </>
   );
 };
 

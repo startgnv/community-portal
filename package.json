@@ -23,6 +23,7 @@
     "react-draft-wysiwyg": "^1.13.2",
     "react-firebase-hooks": "^2.0.0",
     "react-ga": "^2.6.0",
+    "react-helmet": "^5.2.1",
     "react-map-gl": "^4.1.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
