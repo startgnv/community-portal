@@ -14,6 +14,7 @@ import digitalbrands from '../assets/images/sponsors/digitalbrands.png';
 import chamber from '../assets/images/sponsors/chamber.png';
 import feathr from '../assets/images/sponsors/feathr.png';
 import opie from '../assets/images/sponsors/opiesoftware.jpg';
+import gville from '../assets/images/sponsors/gville-logo.png';
 import { Helmet } from 'react-helmet';
 
 const AboutPageContainer = styled.div`
@@ -88,6 +89,15 @@ const AboutPage = () => (
                 className="sponsor-img"
                 image={uf}
                 title="University of Florida"
+              />
+            </Card>
+          </CardContainer>
+          <CardContainer>
+            <Card className="sponsor-card">
+              <CardMedia
+                className="sponsor-img"
+                image={gville}
+                title="City of Gainesville"
               />
             </Card>
           </CardContainer>
