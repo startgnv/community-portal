@@ -187,7 +187,9 @@ const HomePage = () => {
   if (companiesLoading || jobsLoading) {
     return <LinearProgress />;
   }
-  const renderCompanies = _.shuffle(companies).slice(0, 3);
+  const renderCompanies = _.shuffle(
+    companies.filter(company => company.featured)
+  );
   return (
     <>
       <Helmet>
