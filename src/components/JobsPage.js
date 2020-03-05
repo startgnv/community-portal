@@ -24,6 +24,7 @@ export const MapPageIndex = () => {
   const [jobsFilter, setJobsFilter] = useState({
     search: '',
     categories: [],
+    companies: [],
     types: []
   });
   const { jobs, companies, jobsLoading, companiesLoading } = useContext(

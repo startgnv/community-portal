@@ -1,9 +1,10 @@
 import _ from 'lodash';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components/macro';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../firebase';
 import { clearFix } from 'polished';
+import AppContext from './AppContext';
 import Checkbox from './Checkbox';
 import SearchInput from './SearchInput';
 import Dropdown from './Dropdown';
@@ -70,12 +71,14 @@ const noop = () => {};
 
 const JobsFilter = ({ onChange = noop, filter }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
+  const { companies, companiesLoading } = useContext(AppContext);
   const [categoriesValue, categoriesLoading, categoriesError] = useCollection(
     db.collection('jobCategories')
   );
 
-  if (categoriesLoading || categoriesError) {
+  if (categoriesLoading || categoriesError || companiesLoading) {
     return false;
   }
   const categoriesSrc = categoriesValue.docs.map(doc => ({
@@ -91,6 +94,10 @@ const JobsFilter = ({ onChange = noop, filter }) => {
     category =>
       !category.parentID && selectedCategories.indexOf(category.id) > -1
   );
+  const renderSelectedCompanies = _.filter(
+    companies,
+    company => selectedCompanies.indexOf(company.id) > -1
+  );
 
   const onCategoryChange = ({ target: { checked, value } }) => {
     let newCategories;
@@ -102,6 +109,19 @@ const JobsFilter = ({ onChange = noop, filter }) => {
     setSelectedCategories(newCategories);
     onChange({
       categories: newCategories
+    });
+  };
+
+  const onCompanyChange = ({ target: { checked, value } }) => {
+    let newCompanies;
+    if (checked) {
+      newCompanies = _.concat(selectedCompanies, value);
+    } else {
+      newCompanies = _.without(selectedCompanies, value);
+    }
+    setSelectedCompanies(newCompanies);
+    onChange({
+      companies: newCompanies
     });
   };
 
@@ -121,6 +141,11 @@ const JobsFilter = ({ onChange = noop, filter }) => {
   let categoriesBtnLabel = 'Categories';
   if (selectedCategories.length) {
     categoriesBtnLabel += ` (${selectedCategories.length})`;
+  }
+
+  let companiesBtnLabel = 'Companies';
+  if (selectedCompanies.length) {
+    companiesBtnLabel += ` (${selectedCompanies.length})`;
   }
 
   return (
@@ -151,6 +176,37 @@ const JobsFilter = ({ onChange = noop, filter }) => {
                     value={id}
                     onChange={onCategoryChange}
                     checked={selectedCategories.indexOf(id) > -1}
+                    key={id}
+                  />
+                </CheckContainer>
+              ))}
+            </CategoriesContainer>
+          </Dropdown>
+        </FilterItem>
+        <FilterItem>
+          <Dropdown btnLabel={companiesBtnLabel}>
+            <CategoriesContainer>
+              <DropdownTitle>Companies</DropdownTitle>
+              {renderSelectedCompanies.map(({ name, id }) => (
+                <CheckContainer>
+                  <Checkbox
+                    label={name}
+                    value={id}
+                    onChange={onCompanyChange}
+                    checked={selectedCompanies.indexOf(id) > -1}
+                    key={id}
+                  />
+                </CheckContainer>
+              ))}
+              {renderSelectedCompanies &&
+                renderSelectedCompanies.length > 0 && <CategoriesDivider />}
+              {companies.map(({ name, id }) => (
+                <CheckContainer>
+                  <Checkbox
+                    label={name}
+                    value={id}
+                    onChange={onCompanyChange}
+                    checked={selectedCompanies.indexOf(id) > -1}
                     key={id}
                   />
                 </CheckContainer>

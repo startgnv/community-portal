@@ -51,6 +51,7 @@ export const JobList = ({
   filter = {
     search: '',
     categories: [],
+    companies: [],
     types: []
   },
   variant = ''
@@ -62,11 +63,19 @@ export const JobList = ({
     filter.categories.length
       ? _.intersection(filter.categories, job.categories).length
       : true;
+  const companyFilter = job =>
+    filter.companies.length
+      ? filter.companies.indexOf(job.companyID) > -1
+      : true;
   const typeFilter = job =>
     filter.types.length ? filter.types.includes(job.type) : true;
 
   const filteredJobs = jobs.filter(
-    job => searchFilter(job) && categoryFilter(job) && typeFilter(job)
+    job =>
+      searchFilter(job) &&
+      categoryFilter(job) &&
+      companyFilter(job) &&
+      typeFilter(job)
   );
 
   let listContent;
