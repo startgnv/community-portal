@@ -22,5 +22,8 @@ service cloud.firestore {
     match /addCompanyResponses/{document=**} {
       allow read, write: if true;
     }
+    match /newsletterSubscribers/{document=**} {
+      allow read, write: if true;
+    }
   }
 }
