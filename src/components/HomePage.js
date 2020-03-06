@@ -6,7 +6,7 @@ import AppContext from './AppContext';
 import { clearFix } from 'polished';
 import { Link } from 'react-router-dom';
 import JobList from './JobList';
-import RecentBlogPosts from './RecentBlogPosts';
+import RecentPosts from './Blog/RecentPosts';
 import CompanyList from './CompanyList';
 import homeHero from '../assets/images/home-hero.jpg';
 import homeFeaturedBG from '../assets/images/jobs-bg.jpg';
@@ -247,7 +247,7 @@ const HomePage = () => {
           </HeroContent>
         </HomeHero>
         <RecentBlogPostsContainer>
-          <RecentBlogPosts limit={4} />
+          <RecentPosts limit={4} />
         </RecentBlogPostsContainer>
         <FeaturedContainer>
           <FeaturedSection>
