@@ -11,6 +11,7 @@ import CompanyList from './CompanyList';
 import homeHero from '../assets/images/home-hero.jpg';
 import homeFeaturedBG from '../assets/images/jobs-bg.jpg';
 import circleText from '../assets/images/circle-text.png';
+import { Helmet } from 'react-helmet';
 
 import { LinearProgress } from '@material-ui/core';
 
@@ -159,7 +160,7 @@ const FeaturedHeadline = styled.div`
     height: 30px;
     line-height: 30px;
     float: left;
-    font-size 16px;
+    font-size: 16px;
     font-family: 'Montserrat';
     font-weight: bold;
     text-transform: uppercase;
@@ -170,7 +171,7 @@ const FeaturedHeadline = styled.div`
     float: right;
     height: 30px;
     line-height: 30px;
-    font-size 13px;
+    font-size: 13px;
     font-family: 'Montserrat';
     font-weight: bold;
     text-transform: uppercase;
@@ -186,66 +187,90 @@ const HomePage = () => {
   if (companiesLoading || jobsLoading) {
     return <LinearProgress />;
   }
-  const renderCompanies = _.shuffle(companies).slice(0, 3);
+  const renderCompanies = _.shuffle(
+    companies.filter(company => company.featured)
+  );
   return (
-    <HomePageContainer>
-      <HomeHero>
-        <HeroImage>
-          <CircleText src={circleText} />
-        </HeroImage>
-        <HeroContent>
-          <h2>
-            Join the <strong>most human</strong>
-            <br />
-            tech ecosystem in Florida.
-          </h2>
-          <h3>Welcome to Gainesville</h3>
-          <p>We are always growing, decomposing, and striving even higher.</p>
-          <p>It’s in our nature. It IS our nature.</p>
-          <p>
-            We are building towards the next product launch. We are growing the
-            round of funding. We are learning new languages, training for our
-            first 5K, and investing in people.
-          </p>
-          <p>
-            We know our flaws. We cherish all our triumphs. And like humans in
-            any environment, we are seeking reliability and connection. So... we
-            want to meet YOU - human.
-          </p>
-          <p>
-            We want to hire you, support you and count on you to tell us where
-            we can be better. We need you in our ecosystem.
-          </p>
-          <p>
-            Join us in our growth, help us fill in the gaps and be you. We’re
-            all human, right?
-          </p>
-        </HeroContent>
-      </HomeHero>
-      <RecentBlogPostsContainer>
-        <RecentBlogPosts limit={4} />
-      </RecentBlogPostsContainer>
-      <FeaturedContainer>
-        <FeaturedSection>
-          <FeaturedHeadline>
-            <h3>Featured Companies</h3>
-            <Link to="/companies">View All</Link>
-          </FeaturedHeadline>
-          <CompanyList companies={renderCompanies} showTitle={false} />
-        </FeaturedSection>
-        <FeaturedSection>
-          <FeaturedHeadline>
-            <h3>Featured Jobs</h3>
-            <Link to="/jobs">View All</Link>
-          </FeaturedHeadline>
-          <JobList
-            jobs={jobs.filter(job => job.featured)}
-            companies={companies}
-            showTitle={false}
-          />
-        </FeaturedSection>
-      </FeaturedContainer>
-    </HomePageContainer>
+    <>
+      <Helmet>
+        <title>
+          startGNV - Gainesville's Startup, Tech, and Biotech Community
+        </title>
+        <meta
+          name="description"
+          content="startGNV is an initiative by startupGNV to promote and grow the Gainesville startup, tech, and biotech communities."
+        />
+        <meta
+          name="og:title"
+          property="og:title"
+          content="startGNV - Gainesville's Startup, Tech, and Biotech Community"
+        />
+        <meta
+          name="og:description"
+          property="og:description"
+          content="startGNV is an initiative by startupGNV to promote and grow the Gainesville startup, tech, and biotech communities."
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+      <HomePageContainer>
+        <HomeHero>
+          <HeroImage>
+            <CircleText src={circleText} />
+          </HeroImage>
+          <HeroContent>
+            <h2>
+              Join the <strong>most human</strong>
+              <br />
+              tech ecosystem in Florida.
+            </h2>
+            <h3>Welcome to Gainesville</h3>
+            <p>We are always growing, decomposing, and striving even higher.</p>
+            <p>It’s in our nature. It IS our nature.</p>
+            <p>
+              We are building towards the next product launch. We are growing
+              the round of funding. We are learning new languages, training for
+              our first 5K, and investing in people.
+            </p>
+            <p>
+              We know our flaws. We cherish all our triumphs. And like humans in
+              any environment, we are seeking reliability and connection. So...
+              we want to meet YOU - human.
+            </p>
+            <p>
+              We want to hire you, support you and count on you to tell us where
+              we can be better. We need you in our ecosystem.
+            </p>
+            <p>
+              Join us in our growth, help us fill in the gaps and be you. We’re
+              all human, right?
+            </p>
+          </HeroContent>
+        </HomeHero>
+        <RecentBlogPostsContainer>
+          <RecentBlogPosts limit={4} />
+        </RecentBlogPostsContainer>
+        <FeaturedContainer>
+          <FeaturedSection>
+            <FeaturedHeadline>
+              <h3>Featured Companies</h3>
+              <Link to="/companies">View All</Link>
+            </FeaturedHeadline>
+            <CompanyList companies={renderCompanies} showTitle={false} />
+          </FeaturedSection>
+          <FeaturedSection>
+            <FeaturedHeadline>
+              <h3>Featured Jobs</h3>
+              <Link to="/jobs">View All</Link>
+            </FeaturedHeadline>
+            <JobList
+              jobs={jobs.filter(job => job.featured)}
+              companies={companies}
+              showTitle={false}
+            />
+          </FeaturedSection>
+        </FeaturedContainer>
+      </HomePageContainer>
+    </>
   );
 };
 

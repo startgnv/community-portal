@@ -11,11 +11,11 @@ const CompaniesMap = ({ companies }) => {
     zoom: 10
   });
   const onViewportChange = newViewport => {
-    const viewport = {
+    const vp = {
       ...viewport,
       ...newViewport
     };
-    setViewport(viewport);
+    setViewport(vp);
   };
   return (
     <MapContainer viewport={viewport} onViewportChange={onViewportChange}>
