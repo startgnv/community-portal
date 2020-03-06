@@ -28,6 +28,7 @@ import AdminLogin from './AdminLogin';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
+import Article from './Blog/Article';
 
 ReactGA.initialize('UA-138572620-3');
 
@@ -143,7 +144,8 @@ const publicRoutes = [
   '/about',
   '/ecosystem',
   '/new-to-gainesville',
-  '/add-company'
+  '/add-company',
+  '/blog/:articleId'
 ];
 
 export const App = () => (
@@ -172,6 +174,7 @@ export const App = () => (
                 path="/new-to-gainesville"
                 component={NewToGainesvillePage}
               />
+              <Route exact path="/blog/:articleId" component={Article} />
               <Route exact path="/admin/login" component={AdminLogin} />
               <AdminRoute path="/admin" component={AdminPage} />
             </Switch>

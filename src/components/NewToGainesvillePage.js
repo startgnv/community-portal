@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { device } from './device';
 import PageContent from './PageContent';
 import Hero from './Hero';
-import RecentBlogPosts from './RecentBlogPosts';
+import RecentPosts from './Blog/RecentPosts';
 import Button from './Button';
 import guidePreview from '../assets/images/ecosystem-preview.jpg';
 import { Helmet } from 'react-helmet';
@@ -68,7 +68,7 @@ const NewToGainesvillePage = () => (
       <PageContent>
         <PageInner>
           <BlogPosts>
-            <RecentBlogPosts dir="vertical" limit={0} />
+            <RecentPosts dir="vertical" limit={0} />
           </BlogPosts>
           <GuideContainer>
             <EcosystemPreviewImg

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { device } from './device';
-import Loading from './Loading';
+import { blogApi } from './api';
+import { device } from '../device';
+import Loading from '../Loading';
 
 const PostList = styled.ul`
   display: flex;
@@ -58,7 +59,7 @@ const PostMeta = styled.div`
 const PostType = styled.span`
   display: block;
   margin-bottom: 10px;
-  font-family: benton-sans-wide;
+  font-family: benton-sans-wide, sans-serif;
   font-weight: 500;
   font-size: 0.7rem;
   color: ${({ theme }) => theme.textMedium};
@@ -70,52 +71,37 @@ const PostTitle = styled.span`
   color: ${({ theme }) => theme.textDark};
 `;
 
-const RecentBlogPosts = ({ dir = '', limit = 0 }) => {
+const RecentPosts = ({ dir = '', limit = 0 }) => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(
-      `https://sparkgnv.ghost.io/ghost/api/v3/content/posts/?key=a49362ef6958b6f133bb40ceaa&limit=${limit}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
-      .then(res => {
-        setLoading(false);
-        return res.json();
+    blogApi
+      .getPosts(limit)
+      .then(posts => {
+        setPosts(posts);
       })
-      .then(response => {
-        setPosts(response.posts);
-      })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.error(err.message);
+      });
   }, []);
 
-  let content;
-  if (posts && posts.length > 0) {
-    content = (
-      <PostList direction={dir}>
-        {posts.map(({ title, url, feature_image }, i) => (
-          <Post direction={dir} key={i}>
-            <a href={url} target="_blank">
-              <PostImage bgImg={feature_image} direction={dir} />
-              <PostMeta direction={dir}>
-                <PostType>Article</PostType>
-                <PostTitle>{title}</PostTitle>
-              </PostMeta>
-            </a>
-          </Post>
-        ))}
-      </PostList>
-    );
-  } else {
-    content = <Loading size={60} height={120} />;
-  }
+  if (!posts || posts.length < 1) return <Loading size={60} height={120} />;
 
-  return content;
+  return (
+    <PostList direction={dir}>
+      {posts.map(({ title, id, feature_image }, i) => (
+        <Post direction={dir} key={i}>
+          <a href={`/blog/${id}`}>
+            <PostImage bgImg={feature_image} direction={dir} />
+            <PostMeta direction={dir}>
+              <PostType>Article</PostType>
+              <PostTitle>{title}</PostTitle>
+            </PostMeta>
+          </a>
+        </Post>
+      ))}
+    </PostList>
+  );
 };
 
-export default RecentBlogPosts;
+export default RecentPosts;
