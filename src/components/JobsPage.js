@@ -4,7 +4,7 @@ import AppContext from './AppContext';
 import Hero from './Hero';
 import JobList from './JobList';
 import JobsFilter from './JobsFilter';
-import heroBG from '../assets/images/hero-bg2.jpg';
+import heroBG from '../assets/images/jobs-hero.jpg';
 import { Helmet } from 'react-helmet';
 
 import { LinearProgress } from '@material-ui/core';

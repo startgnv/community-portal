@@ -6,6 +6,7 @@ import Hero from './Hero';
 import RecentBlogPosts from './RecentBlogPosts';
 import Button from './Button';
 import guidePreview from '../assets/images/ecosystem-preview.jpg';
+import heroImg from '../assets/images/sparkgnv-101.jpg';
 import { Helmet } from 'react-helmet';
 
 const pdfURL =
@@ -64,7 +65,7 @@ const NewToGainesvillePage = () => (
       <meta property="og:type" content="website" />
     </Helmet>
     <NewToGNVContainer>
-      <Hero title="New To GNV" />
+      <Hero bgImage={heroImg} title="New To GNV" />
       <PageContent>
         <PageInner>
           <BlogPosts>
