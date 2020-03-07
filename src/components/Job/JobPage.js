@@ -1,22 +1,22 @@
 import _ from 'lodash';
 import React, { useContext } from 'react';
-import { baseContentStyling } from './mixins';
+import { baseContentStyling } from '../mixins';
 import BusinessIcon from '@material-ui/icons/Business';
 import styled from 'styled-components/macro';
-import AppContext from './AppContext';
-import SidebarHeader from './SidebarHeader';
+import AppContext from '../AppContext';
+import Header from './Header';
 import { Link, Redirect } from 'react-router-dom';
 import JobCategories from './JobCategories';
-
-import JobApply from './JobApply';
-
+import ApplyBtn from './ApplyBtn';
 import { LinearProgress } from '@material-ui/core';
 import { Parser } from 'html-to-react';
 import { Helmet } from 'react-helmet';
+import CompanyCard from './CompanyCard';
+import { device } from '../device';
 
 const htmlParser = new Parser();
 
-const MapPageJobContainer = styled.div`
+const Container = styled.div`
   background: ${({ theme }) => theme.uiBackground};
 
   .company-name {
@@ -41,23 +41,32 @@ const MapPageJobContainer = styled.div`
   }
 `;
 
-const JobMainContent = styled.div`
+const Main = styled.div`
   display: flex;
   max-width: ${({ theme }) => theme.contentMaxWidth};
   margin: 0 auto;
   padding: 30px 0 0 0;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    flex-flow: column nowrap;
+  }
 `;
 
-const JobContent = styled.div`
+const ContentContainer = styled.div`
   flex: 5;
   padding: 0 30px 20px;
 `;
 
-const JobSidebar = styled.div`
+const Sidebar = styled.div`
   flex: 2;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 `;
 
-const JobDescription = styled.div`
+const Description = styled.div`
   ${baseContentStyling()}
 `;
 
@@ -65,8 +74,7 @@ const CategoriesContainer = styled.div`
   display: inline-block;
 `;
 
-export const MapPageJob = ({
-  history: { goBack },
+export const JobPage = ({
   match: {
     params: { jobID }
   }
@@ -90,7 +98,9 @@ export const MapPageJob = ({
     name: companyName,
     logoPath: companyLogoPath = '',
     coverPath: companyCoverPath = '',
-    slug: companySlug
+    slug: companySlug,
+    employeeCount: companyEmployeeCount,
+    shortDescription: companyShortDescription
   } = _.find(companies, { id: companyID });
 
   if (!jobTitle) {
@@ -110,8 +120,9 @@ export const MapPageJob = ({
         />
         <meta property="og:type" content="website" />
       </Helmet>
-      <MapPageJobContainer>
-        <SidebarHeader
+
+      <Container>
+        <Header
           coverPath={companyCoverPath}
           logoPath={companyLogoPath}
           coverHeight={160}
@@ -127,18 +138,27 @@ export const MapPageJob = ({
               <JobCategories categories={categories} />
             </CategoriesContainer>
           )}
-        </SidebarHeader>
-        <JobMainContent>
-          <JobContent>
-            <JobDescription>{htmlParser.parse(jobDescription)}</JobDescription>
-          </JobContent>
-          <JobSidebar>
-            <JobApply job={job} companyName={companyName} />
-          </JobSidebar>
-        </JobMainContent>
-      </MapPageJobContainer>
+        </Header>
+
+        <Main>
+          <ContentContainer>
+            <Description>{htmlParser.parse(jobDescription)}</Description>
+          </ContentContainer>
+
+          <Sidebar>
+            <ApplyBtn job={job} companyName={companyName} />
+            <CompanyCard
+              name={companyName}
+              logo={companyLogoPath}
+              employeeCount={companyEmployeeCount}
+              summary={companyShortDescription}
+              slug={companySlug}
+            />
+          </Sidebar>
+        </Main>
+      </Container>
     </>
   );
 };
 
-export default MapPageJob;
+export default JobPage;

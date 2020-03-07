@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { db } from '../firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import AppContext from './AppContext';
-import SidebarHeader from './SidebarHeader';
+import Header from './Job/Header';
 import JobList from './JobList';
 import Error from './Error';
 import MapContainer from './MapContainer';
@@ -109,7 +109,7 @@ export const CompanyPage = ({
         <meta property="og:type" content="website" />
       </Helmet>
       <CompanyPageContainer>
-        <SidebarHeader title={name} coverPath={coverPath} logoPath={logoPath}>
+        <Header title={name} coverPath={coverPath} logoPath={logoPath}>
           {employeeCount && (
             <EmployeeCount>
               <span>{`${employeeCount} Employees`}</span>
@@ -121,7 +121,7 @@ export const CompanyPage = ({
               Open Website
             </a>
           </CompanyLink>
-        </SidebarHeader>
+        </Header>
         <CompanyContent>
           <p className="description">{description}</p>
           {companyJobs && companyJobs.length > 0 && (

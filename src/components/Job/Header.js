@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import StorageImg from './StorageImg';
-import { storage } from '../firebase';
+import StorageImg from '../StorageImg';
+import { storage } from '../../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 
-const SidebarHeaderContainer = styled.div`
+const Container = styled.div`
   position: relative;
   background-image: linear-gradient(
       0deg,
@@ -36,12 +36,12 @@ const HeaderInner = styled.div`
 
 const Title = styled.h1`
   position: absolute;
-  left: ${({ mainImgSize }) => mainImgSize + 50}px;
   bottom: 10px;
   color: white;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
   font-family: 'Montserrat', sans-serif;
   font-size: 36px;
+  padding-left: 30px;
 `;
 
 const HeaderContent = styled.div`
@@ -51,11 +51,11 @@ const HeaderContent = styled.div`
 const ContentInner = styled.div`
   max-width: ${({ theme }) => theme.contentMaxWidth};
   margin: 0 auto;
-  padding: 10px 20px 10px ${({ mainImgSize }) => mainImgSize + 50}px;
+  padding: 10px 30px;
   box-sizing: border-box;
 `;
 
-export const SidebarHeader = ({
+export const Header = ({
   title = '',
   coverPath,
   logoPath,
@@ -65,18 +65,17 @@ export const SidebarHeader = ({
 }) => {
   const [coverURL] = useDownloadURL(coverPath ? storage.ref(coverPath) : '');
   return (
-    <SidebarHeaderContainer coverURL={coverURL} mainImgSize={mainImgSize}>
+    <Container coverURL={coverURL} mainImgSize={mainImgSize}>
       <HeaderInner coverHeight={coverHeight}>
         {title && <Title mainImgSize={mainImgSize}>{title}</Title>}
-        <StorageImg className="logo" path={logoPath} alt="Logo" />
       </HeaderInner>
       {children && (
         <HeaderContent>
           <ContentInner mainImgSize={mainImgSize}>{children}</ContentInner>
         </HeaderContent>
       )}
-    </SidebarHeaderContainer>
+    </Container>
   );
 };
 
-export default SidebarHeader;
+export default Header;

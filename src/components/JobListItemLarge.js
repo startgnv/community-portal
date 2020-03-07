@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { storage } from '../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import StorageImg from './StorageImg';
-import JobCategories from './JobCategories';
+import JobCategories from './Job/JobCategories';
 
 const ItemContainer = styled.div`
   height: 140px;
@@ -56,7 +56,7 @@ const LogoContainer = styled.div`
   width: 140px;
   height: 140px;
   margin-right: 20px;
-  justify-content: center
+  justify-content: center;
   align-items: center;
   background: url(${({ bgImg }) => bgImg});
   background-size: cover;
@@ -75,7 +75,7 @@ const LogoContainer = styled.div`
 const JobInfo = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center
+  justify-content: center;
   align-items: center;
 
   @media ${device.tabletPort}, ${device.mobile} {
