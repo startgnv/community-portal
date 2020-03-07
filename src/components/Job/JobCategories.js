@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { useContext } from 'react';
-import AppContext from './AppContext';
-import Tags from './Tags';
+import AppContext from '../AppContext';
+import Tags from '../Tags';
 
 const JobCategories = ({
   categories,
