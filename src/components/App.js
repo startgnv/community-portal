@@ -18,7 +18,7 @@ import CompaniesPage from './CompaniesPage';
 import CompanyPage from './CompanyPage';
 import AboutPage from './AboutPage';
 import EcosystemPage from './EcosystemPage';
-import JobPage from './JobPage';
+import JobPage from './Job/JobPage';
 import JobsPage from './JobsPage';
 import NewToGainesvillePage from './NewToGainesvillePage';
 import AddCompanyPage from './AddCompanyPage';
