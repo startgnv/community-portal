@@ -1,58 +1,56 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import { device } from './device';
+import { device } from '../device';
 import { clearFix } from 'polished';
-import Logo from './Logo';
+import Logo from '../Logo';
+import NewsletterForm from './NewletterForm';
 
 const FooterContainer = styled.div`
-  position: relative;
   background: ${({ theme }) => theme.deepNavy};
+  padding: 70px 0;
+`;
 
-  &:before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 70%;
-    content: '';
-    background: #1d2d3b;
-    z-index: 1;
+const FooterRow = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 0 50px;
+  max-width: ${({ theme }) => theme.contentMaxWidth};
+  
+  ${clearFix()}
+  
+  @media ${device.tabletPort}, ${device.mobile} {
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 0;
   }
 `;
 
-const FooterContent = styled.div`
+const FooterColumn = styled.div`
   display: flex;
-  max-width: ${({ theme }) => theme.contentMaxWidth};
-  margin: 0 auto;
-  ${clearFix()}
+  flex-flow: column nowrap;
+  align-items: flex-start;
+`;
+
+const Info = styled.div`
+  max-width: 275px;
 
   @media ${device.tabletPort}, ${device.mobile} {
-    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 `;
 
-const EmailSubscribe = styled.div`
-  position: relative;
-  flex: 2;
-  padding: 30px 60px 30px 30px;
-  float: left;
-  background: #1d2d3b;
-  z-index: 10;
-`;
-
-const SubscribeTagline = styled.p`
+const Description = styled.p`
   color: #a3a9b3;
   font-size: 13px;
-`;
-
-const FooterNavContainer = styled.div`
-  flex: 2;
-  padding: 30px 30px 30px 80px;
+  margin-top: 15px;
 `;
 
 const FooterNav = styled.div`
-  ${clearFix()}
+  margin-top: 50px;
 `;
 
 const FooterHeader = styled.h3`
@@ -85,24 +83,20 @@ const NavList = styled.ul`
 `;
 
 const Contact = styled.div`
-  flex: 1;
-  padding: 30px;
-
-  h3 {
-  }
+  margin-top: 50px;
 `;
 
 const Footer = () => (
   <FooterContainer>
-    <FooterContent>
-      <EmailSubscribe>
-        <Logo />
-        <SubscribeTagline>
-          startGNV is an initiative by startupGNV to promote and grow the
-          Gainesville startup, tech, and biotech communities.
-        </SubscribeTagline>
-      </EmailSubscribe>
-      <FooterNavContainer>
+    <FooterRow>
+      <FooterColumn>
+        <Info>
+          <Logo />
+          <Description>
+            startGNV is an initiative by startupGNV to promote and grow the
+            Gainesville startup, tech, and biotech communities.
+          </Description>
+        </Info>
         <FooterNav>
           <FooterHeader>Explore startGNV</FooterHeader>
           <NavList>
@@ -128,18 +122,21 @@ const Footer = () => (
             </li>
           </NavList>
         </FooterNav>
-      </FooterNavContainer>
-      <Contact>
-        <FooterHeader>Contact</FooterHeader>
-        <NavList>
-          <li>
-            <a href="mailto:info@startupgnv.com" class="footer-link">
-              info@startupgnv.com
-            </a>
-          </li>
-        </NavList>
-      </Contact>
-    </FooterContent>
+        <Contact>
+          <FooterHeader>Contact</FooterHeader>
+          <NavList>
+            <li>
+              <a href="mailto:info@startupgnv.com" className="footer-link">
+                info@startupgnv.com
+              </a>
+            </li>
+          </NavList>
+        </Contact>
+      </FooterColumn>
+      <FooterColumn>
+        <NewsletterForm />
+      </FooterColumn>
+    </FooterRow>
   </FooterContainer>
 );
 

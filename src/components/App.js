@@ -18,7 +18,7 @@ import CompaniesPage from './CompaniesPage';
 import CompanyPage from './CompanyPage';
 import AboutPage from './AboutPage';
 import EcosystemPage from './EcosystemPage';
-import JobPage from './JobPage';
+import JobPage from './Job/JobPage';
 import JobsPage from './JobsPage';
 import NewToGainesvillePage from './NewToGainesvillePage';
 import AddCompanyPage from './AddCompanyPage';
@@ -27,7 +27,7 @@ import AdminRoute from './AdminRoute';
 import AdminLogin from './AdminLogin';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import Footer from './Footer';
+import Footer from './Footer/Footer';
 import Article from './Blog/Article';
 
 ReactGA.initialize('UA-138572620-3');

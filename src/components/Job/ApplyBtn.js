@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
-import TextInput from './TextInput';
-import Button from './Button';
+import TextInput from '../TextInput';
+import Button from '../Button';
 
-import { db } from '../firebase';
+import { db } from '../../firebase';
 
-const ApplyContainer = styled.div`
+const Container = styled.div`
   .apply-btn {
     margin: 0 0 10px 0;
   }
@@ -39,7 +39,7 @@ const ApplyContainer = styled.div`
   }
 `;
 
-const JobApply = ({ job, job: { applyUrl, id } = {}, companyName = '' }) => {
+const ApplyBtn = ({ job, job: { applyUrl, id } = {}, companyName = '' }) => {
   const [showForm, setShowForm] = useState(false);
   const [applicantEmail, setApplicantEmail] = useState('');
   const [submitState, setSubmitState] = useState({
@@ -47,6 +47,7 @@ const JobApply = ({ job, job: { applyUrl, id } = {}, companyName = '' }) => {
     error: false,
     success: false
   });
+
   const onApplyClick = () => {
     // setShowForm(true);
     window.ga('send', {
@@ -57,6 +58,7 @@ const JobApply = ({ job, job: { applyUrl, id } = {}, companyName = '' }) => {
     });
     window.open(applyUrl);
   };
+
   const onFormSubmit = e => {
     e.preventDefault();
     setSubmitState({ submitting: true, error: false, success: false });
@@ -77,6 +79,7 @@ const JobApply = ({ job, job: { applyUrl, id } = {}, companyName = '' }) => {
     }, 2000);
     return false;
   };
+
   let content;
   if (submitState.success) {
     content = <p>Success! Taking you to the job application...</p>;
@@ -109,7 +112,8 @@ const JobApply = ({ job, job: { applyUrl, id } = {}, companyName = '' }) => {
       />
     );
   }
-  return <ApplyContainer>{content}</ApplyContainer>;
+
+  return <Container>{content}</Container>;
 };
 
-export default JobApply;
+export default ApplyBtn;
