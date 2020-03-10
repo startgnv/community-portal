@@ -27,7 +27,7 @@ import AdminRoute from './AdminRoute';
 import AdminLogin from './AdminLogin';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import Footer from './Footer';
+import Footer from './Footer/Footer';
 
 ReactGA.initialize('UA-138572620-3');
 
