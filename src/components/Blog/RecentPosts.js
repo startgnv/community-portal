@@ -89,9 +89,9 @@ const RecentPosts = ({ dir = '', limit = 0 }) => {
 
   return (
     <PostList direction={dir}>
-      {posts.map(({ title, id, feature_image }, i) => (
+      {posts.map(({ title, slug, feature_image }, i) => (
         <Post direction={dir} key={i}>
-          <a href={`/blog/${id}`}>
+          <a href={`/blog/${slug}`}>
             <PostImage bgImg={feature_image} direction={dir} />
             <PostMeta direction={dir}>
               <PostType>Article</PostType>

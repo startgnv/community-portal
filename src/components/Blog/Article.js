@@ -5,6 +5,7 @@ import { blogApi } from './api';
 import { Parser } from 'html-to-react';
 import RecentPosts from './RecentPosts';
 import Loading from '../Loading';
+import { formatDate } from '../utils';
 
 const html = new Parser();
 
@@ -154,45 +155,6 @@ const Label = styled.h2`
   margin-bottom: 30px;
 `;
 
-// This could probably be simplified with something like Moment.js, but since we only need to format a month
-// here it's not worth adding an entire additional dependency
-const monthToString = month => {
-  switch (month) {
-    case 0:
-      return 'JAN';
-    case 1:
-      return 'FEB';
-    case 2:
-      return 'MAR';
-    case 3:
-      return 'APR';
-    case 4:
-      return 'MAY';
-    case 5:
-      return 'JUN';
-    case 6:
-      return 'JUL';
-    case 7:
-      return 'AUG';
-    case 8:
-      return 'SEP';
-    case 9:
-      return 'OCT';
-    case 10:
-      return 'NOV';
-    case 11:
-      return 'DEC';
-  }
-};
-
-const formatDate = date => {
-  const day = date.getDate();
-  const month = monthToString(date.getMonth());
-  const year = date.getFullYear();
-
-  return `${month} ${day}, ${year}`;
-};
-
 const mapPostToState = article => ({
   title: article.title,
   subtitle: article.excerpt,
@@ -204,7 +166,7 @@ const mapPostToState = article => ({
 
 const Article = ({
   match: {
-    params: { articleId }
+    params: { articleSlug }
   }
 }) => {
   const [article, setArticle] = React.useState({
@@ -220,7 +182,7 @@ const Article = ({
 
   React.useEffect(() => {
     blogApi
-      .getPost(articleId)
+      .getPost(articleSlug)
       .then(post => {
         setArticle(mapPostToState(post));
         setLoading(false);

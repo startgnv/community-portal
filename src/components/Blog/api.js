@@ -7,9 +7,9 @@ const Api = () => {
     version: 'v3'
   });
 
-  async function getPost(id) {
+  async function getPost(slug) {
     try {
-      return await api.posts.read({ id }, { include: 'authors' });
+      return await api.posts.read({ slug }, { include: 'authors' });
     } catch (err) {
       console.error(err.message);
     }

@@ -145,7 +145,7 @@ const publicRoutes = [
   '/ecosystem',
   '/new-to-gainesville',
   '/add-company',
-  '/blog/:articleId'
+  '/blog/:articleSlug'
 ];
 
 export const App = () => (
@@ -174,7 +174,7 @@ export const App = () => (
                 path="/new-to-gainesville"
                 component={NewToGainesvillePage}
               />
-              <Route exact path="/blog/:articleId" component={Article} />
+              <Route exact path="/blog/:articleSlug" component={Article} />
               <Route exact path="/admin/login" component={AdminLogin} />
               <AdminRoute path="/admin" component={AdminPage} />
             </Switch>
