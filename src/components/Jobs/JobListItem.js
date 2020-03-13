@@ -1,10 +1,10 @@
 import React from 'react';
-import { storage } from '../firebase';
+import { storage } from '../../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import { clearFix } from 'polished';
-import StorageImg from './StorageImg';
+import StorageImg from '../StorageImg';
 
 const JobListItemContainer = styled.div`
   list-style-type: none;

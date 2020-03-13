@@ -2,12 +2,12 @@ import _ from 'lodash';
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components/macro';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import { clearFix } from 'polished';
-import AppContext from './AppContext';
-import Checkbox from './Checkbox';
-import SearchInput from './SearchInput';
-import Dropdown from './Dropdown';
+import AppContext from '../AppContext';
+import Checkbox from '../Checkbox';
+import SearchInput from '../SearchInput';
+import Dropdown from '../Dropdown';
 
 const JobsFilterContainer = styled.div`
   margin-bottom: 30px;

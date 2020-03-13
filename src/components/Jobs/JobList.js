@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import styled from 'styled-components/macro';
 import { clearFix } from 'polished';
-import { device } from './device';
+import { device } from '../device';
 import JobListItem from './JobListItem';
 import JobListItemLarge from './JobListItemLarge';
 import EmptyJobs from './EmptyJobs';
@@ -85,7 +85,7 @@ export const JobList = ({
 
   let listContent;
   if (filteredJobs.length) {
-    listContent = filteredJobs.map(job => {
+    listContent = _.shuffle(filteredJobs).map(job => {
       const jobCompany = _.find(companies, { id: job.companyID });
       return (
         <ItemContainer variant={variant} key={job.id}>
