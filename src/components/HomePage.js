@@ -5,7 +5,7 @@ import { device } from './device';
 import AppContext from './AppContext';
 import { clearFix } from 'polished';
 import { Link } from 'react-router-dom';
-import JobList from './JobList';
+import JobList from './Jobs/JobList';
 import RecentPosts from './Blog/RecentPosts';
 import CompanyList from './CompanyList';
 import homeHero from '../assets/images/home-hero.jpg';
