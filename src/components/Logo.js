@@ -19,7 +19,6 @@ const LogoText = styled.span`
   font-family: 'Montserrat', sans-serif;
   font-size: 22px;
   font-weight: 700;
-  text-transform: uppercase;
   color: ${({ theme }) => theme.textDark};
 `;
 
