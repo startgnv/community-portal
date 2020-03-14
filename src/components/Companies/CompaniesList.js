@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import CompanyListItemLarge from './CompanyListItemLarge';
-import AddCompanyCTA from './AddCompanyCTA';
+import AddCompanyCTA from '../AddCompanyCTA';
 import { SharedMapConsumer } from './CompaniesMapContext';
-import { device } from './device';
+import { device } from '../device';
 
-const MapPageComapniesContainer = styled.div`
+const Container = styled.div`
   width: 60%;
   margin-right: 30px;
   flex: 7;
@@ -15,12 +15,12 @@ const MapPageComapniesContainer = styled.div`
   }
 `;
 
-export const MapPageCompanies = ({
+export const CompaniesList = ({
   companies = [],
   jobs = [],
   onCompanyMouseEnter = () => {}
 }) => (
-  <MapPageComapniesContainer>
+  <Container>
     <SharedMapConsumer>
       {({ setActiveCompany }) => {
         return companies.map(company => {
@@ -37,7 +37,7 @@ export const MapPageCompanies = ({
       }}
     </SharedMapConsumer>
     <AddCompanyCTA />
-  </MapPageComapniesContainer>
+  </Container>
 );
 
-export default MapPageCompanies;
+export default CompaniesList;

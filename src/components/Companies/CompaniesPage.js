@@ -1,18 +1,19 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
-import { device } from './device';
-import AppContext from './AppContext';
-import MapPageCompanies from './MapPageCompanies';
+import { device } from '../device';
+import AppContext from '../AppContext';
+import CompaniesList from './CompaniesList';
 import CompaniesMap from './CompaniesMap';
 import { SharedMapProvider } from './CompaniesMapContext';
-import Hero from './Hero';
+import Hero from '../Hero';
 import { Helmet } from 'react-helmet';
+import _ from 'lodash';
 
 import { LinearProgress } from '@material-ui/core';
 
-const MapPageContainer = styled.div``;
+const Container = styled.main``;
 
-const CompaniesContent = styled.div`
+const ContentContainer = styled.div`
   display: flex;
   margin: 0 auto;
   padding: 30px 20px;
@@ -39,7 +40,7 @@ const CompaniesMapInner = styled.div`
   }
 `;
 
-export const MapPage = () => {
+export const CompaniesPage = () => {
   const { jobs, companies, jobsLoading, companiesLoading } = useContext(
     AppContext
   );
@@ -64,21 +65,21 @@ export const MapPage = () => {
         />
         <meta property="og:type" content="website" />
       </Helmet>
-      <MapPageContainer>
+      <Container>
         <Hero title="Tech Companies in GNV" size="medium" maxWidth="none" />
         <SharedMapProvider>
-          <CompaniesContent>
-            <MapPageCompanies companies={companies} jobs={jobs} />
+          <ContentContainer>
+            <CompaniesList companies={_.shuffle(companies)} jobs={jobs} />
             <CompaniesMapContainer>
               <CompaniesMapInner>
                 <CompaniesMap companies={companies} />
               </CompaniesMapInner>
             </CompaniesMapContainer>
-          </CompaniesContent>
+          </ContentContainer>
         </SharedMapProvider>
-      </MapPageContainer>
+      </Container>
     </>
   );
 };
 
-export default MapPage;
+export default CompaniesPage;
