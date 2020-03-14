@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import MapContainer from './MapContainer';
+import MapContainer from '../MapContainer';
 import { SharedMapConsumer } from './CompaniesMapContext';
-import MapPin from './MapPin';
+import MapPin from '../MapPin';
 import { Marker } from 'react-map-gl';
 
 const CompaniesMap = ({ companies }) => {

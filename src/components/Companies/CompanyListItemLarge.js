@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { device } from './device';
+import { device } from '../device';
 import { Link } from 'react-router-dom';
-import { storage } from '../firebase';
+import { storage } from '../../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
-import StorageImg from './StorageImg';
+import StorageImg from '../StorageImg';
 
 const ItemContainer = styled.div`
   height: 170px;

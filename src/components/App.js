@@ -14,7 +14,7 @@ import ReactGA from 'react-ga';
 
 import { AppProvider } from './AppContext';
 import HomePage from './HomePage';
-import CompaniesPage from './CompaniesPage';
+import CompaniesPage from './Companies/CompaniesPage';
 import CompanyPage from './CompanyPage';
 import AboutPage from './AboutPage';
 import EcosystemPage from './EcosystemPage';
