@@ -170,7 +170,7 @@ const JobsFilter = ({ onChange = noop, filter }) => {
               {renderSelectedCategories &&
                 renderSelectedCategories.length > 0 && <CategoriesDivider />}
               {renderCategories.map(({ name, id }) => (
-                <CheckContainer>
+                <CheckContainer key={id}>
                   <Checkbox
                     label={name}
                     value={id}
@@ -201,7 +201,7 @@ const JobsFilter = ({ onChange = noop, filter }) => {
               {renderSelectedCompanies &&
                 renderSelectedCompanies.length > 0 && <CategoriesDivider />}
               {companies.map(({ name, id }) => (
-                <CheckContainer>
+                <CheckContainer key={id}>
                   <Checkbox
                     label={name}
                     value={id}
