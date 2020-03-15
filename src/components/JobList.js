@@ -58,7 +58,12 @@ export const JobList = ({
 }) => {
   const ItemComponent = variant === 'large' ? JobListItemLarge : JobListItem;
 
-  const searchFilter = job => job.title.toLowerCase().includes(filter.search);
+  const searchFilter = job =>
+    job.title.toLowerCase().includes(filter.search) ||
+    companies
+      .find(c => c.id === job.companyID)
+      .name.toLowerCase()
+      .includes(filter.search);
   const categoryFilter = job =>
     filter.categories.length
       ? _.intersection(filter.categories, job.categories).length
