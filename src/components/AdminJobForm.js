@@ -15,6 +15,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { db } from '../firebase';
 import { useAdminContainer } from './AdminPageContainer';
@@ -150,14 +151,8 @@ export const AdminJobForm = ({
     }
   ];
 
-  const onCategoryChange = ({ target: { checked, value } }) => {
-    let newCategories;
-    if (checked) {
-      newCategories = _.concat(selectedCategories, value);
-    } else {
-      newCategories = _.without(selectedCategories, value);
-    }
-    setSelectedCategories(newCategories);
+  const onCategoryChange = (event, cats) => {
+    setSelectedCategories(cats.map(cat => cat.id));
   };
 
   const onWysiwygStateChange = state => {
@@ -246,22 +241,27 @@ export const AdminJobForm = ({
         </Grid>
 
         <Grid item>
-          <FormLabel>Categories</FormLabel>
-          <FormGroup>
-            {categories.map(cat => (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={selectedCategories.indexOf(cat.id) > -1}
-                    onChange={onCategoryChange}
-                    value={cat.id}
-                  />
-                }
-                label={cat.name}
-                key={cat.id}
-              />
-            ))}
-          </FormGroup>
+          {!loadingJob && (
+            <Autocomplete
+              multiple
+              options={categories}
+              getOptionLabel={option => option.name}
+              filterSelectedOptions
+              defaultValue={categories.filter(cat =>
+                selectedCategories.includes(cat.id)
+              )}
+              onChange={onCategoryChange}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  fullWidth
+                  variant="outlined"
+                  label="Categories"
+                  placeholder="Add Categories..."
+                />
+              )}
+            />
+          )}
         </Grid>
         <Grid item container justify="flex-end">
           <Button

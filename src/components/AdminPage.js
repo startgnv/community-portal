@@ -9,8 +9,7 @@ import AdminEditCompanyPage from './AdminEditCompanyPage';
 import AdminJobPage from './AdminJobPage';
 import AdminPageContainer from './AdminPageContainer';
 import { CssBaseline } from '@material-ui/core';
-
-const AdminSettingsPage = () => 'Settings';
+import SettingsPage from './Admin/Settings';
 
 export const AdminPage = () => (
   <AdminPageContainer>
@@ -34,7 +33,7 @@ export const AdminPage = () => (
       />
       <Route exact path="/admin/jobs" component={AdminJobsPage} />
       <Route path="/admin/jobs" component={AdminJobPage} />
-      <Route exact path="/admin/settings" component={AdminSettingsPage} />
+      <Route exact path="/admin/settings" component={SettingsPage} />
       <Route exact path="/admin" component={AdminIndex} />
     </Switch>
   </AdminPageContainer>
