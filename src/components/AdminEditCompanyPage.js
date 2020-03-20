@@ -5,7 +5,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormLabel from '@material-ui/core/FormLabel';
 import Grid from '@material-ui/core/Grid';
-
 import firebase, { db, storage } from '../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
@@ -14,6 +13,14 @@ import GeocodingInput from './GeocodingInput';
 import { useAdminContainer } from './AdminPageContainer';
 import FormCardPage from './FormCardPage';
 import Select from 'react-select';
+import { Photos } from './Admin/Company/Photos';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  input: {
+    display: 'none'
+  }
+}));
 
 export const AdminEditCompanyPage = ({
   match: {
@@ -21,6 +28,8 @@ export const AdminEditCompanyPage = ({
   },
   history
 }) => {
+  const classes = useStyles();
+
   const [industries = [], loadingIndustries] = useCollectionData(
     db.collection('companyCategories'),
     { idField: 'id' }
@@ -42,6 +51,7 @@ export const AdminEditCompanyPage = ({
   );
   const [logoURL, setLogoURL] = useState('');
   const [coverURL, setCoverURL] = useState('');
+  const [photoURLs, setPhotoURLs] = useState([]);
   const [inputAddress, setInputAddress] = useState('');
   const [slug, setSlug] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -55,8 +65,10 @@ export const AdminEditCompanyPage = ({
   const [isSponsor, setIsSponsor] = useState(false);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [photosToRemove, setPhotosToRemove] = useState([]);
   const logoUploadRef = useRef();
   const coverUploadRef = useRef();
+  const photosUploadRef = useRef();
 
   useEffect(() => {
     setName(company.name || '');
@@ -78,6 +90,7 @@ export const AdminEditCompanyPage = ({
     setFeatured(company.featured || false);
     setIndustryID(company.industryID || '');
     setIsSponsor(company.isSponsor || '');
+    setPhotoURLs(company.photos || []);
   }, [
     company.name,
     company.coordinates,
@@ -88,7 +101,7 @@ export const AdminEditCompanyPage = ({
     company.shortDescription,
     company.founded,
     company.employeeCount,
-    company.feautred,
+    company.featured,
     company.industryID,
     company.isSponsor
   ]);
@@ -121,6 +134,20 @@ export const AdminEditCompanyPage = ({
     }
   }, []);
 
+  const photosChangeHandler = useCallback(() => {
+    const files = photosUploadRef.current.files;
+    setPhotoURLs([]);
+
+    if (FileReader && files) {
+      for (let file of files) {
+        const reader = new FileReader();
+        reader.onload = () =>
+          setPhotoURLs(prevURLs => [...prevURLs, reader.result]);
+        reader.readAsDataURL(file);
+      }
+    }
+  }, []);
+
   useEffect(() => {
     if (logoUploadRef.current) {
       const ref = logoUploadRef.current;
@@ -137,6 +164,14 @@ export const AdminEditCompanyPage = ({
     }
   }, [coverChangeHandler]);
 
+  useEffect(() => {
+    if (photosUploadRef.current) {
+      const ref = photosUploadRef.current;
+      ref.addEventListener('change', photosChangeHandler);
+      return () => ref.removeEventListener('change', logoChangeHandler);
+    }
+  }, [photosChangeHandler]);
+
   useAdminContainer({
     loading: loading || loadingCompany || fbLogoLoading || fbCoverLoading,
     backTo: '/admin/companies'
@@ -146,6 +181,18 @@ export const AdminEditCompanyPage = ({
     value: id,
     label: name
   }));
+
+  const removePhoto = (url, index) => {
+    photosUploadRef.current.value = '';
+    setPhotoURLs(prevState => prevState.filter((_, i) => i !== index));
+    setPhotosToRemove(prevState => {
+      if (!prevState.includes(url)) {
+        return [...prevState, url];
+      } else {
+        return prevState;
+      }
+    });
+  };
 
   const onSubmit = e => {
     e.preventDefault();
@@ -174,8 +221,10 @@ export const AdminEditCompanyPage = ({
     // the images
     doc.current
       .set(companyData, { merge: true })
+      // 1: Upload new images to Firebase storage
       .then(() => {
         const imgUploads = [];
+
         if (coverUploadRef.current.files[0]) {
           const coverRes = storage
             .ref(`companyCovers/${doc.current.id}`)
@@ -184,6 +233,7 @@ export const AdminEditCompanyPage = ({
         } else {
           imgUploads.push(null);
         }
+
         if (logoUploadRef.current.files[0]) {
           const logoRes = storage
             .ref(`companyLogos/${doc.current.id}`)
@@ -192,22 +242,68 @@ export const AdminEditCompanyPage = ({
         } else {
           imgUploads.push(null);
         }
+
+        if (
+          photosUploadRef.current &&
+          photosUploadRef.current.files.length > 0
+        ) {
+          for (let file of photosUploadRef.current.files) {
+            const fileRes = storage
+              .ref(`companyPhotos/${doc.current.id}/${file.name}`)
+              .put(file);
+            imgUploads.push(fileRes);
+          }
+        }
+
         return Promise.all(imgUploads);
       })
-      .then(([newCover, newLogo]) => {
-        if (newCover || newLogo) {
-          const update = {};
-          // only set the fields we changed so we don't overwrite someone
-          // else
-          if (newCover) {
-            update.coverPath = newCover.ref.fullPath;
-          }
-          if (newLogo) {
-            update.logoPath = newLogo.ref.fullPath;
-          }
-          return doc.current.update(update);
+      // 2: Fetch storage URL's for linking photos in database
+      .then(([newCover, newLogo, ...newPhotos]) => {
+        if (newPhotos) {
+          return Promise.all([
+            Promise.resolve(newCover),
+            Promise.resolve(newLogo),
+            Promise.all(
+              newPhotos.map(photo => {
+                return photo.ref.getDownloadURL();
+              })
+            )
+          ]);
         }
+        return Promise.resolve([newCover, newLogo]);
       })
+      // 3: Update doc with all new additions
+      .then(([newCover, newLogo, photoUrls]) => {
+        // only set the fields we changed so we don't overwrite someone
+        // else
+        const update = {};
+
+        if (newCover) {
+          update.coverPath = newCover.ref.fullPath;
+        }
+
+        if (newLogo) {
+          update.logoPath = newLogo.ref.fullPath;
+        }
+
+        if (photoUrls && photoUrls.length > 0) {
+          update.photos = firebase.firestore.FieldValue.arrayUnion(
+            ...photoUrls
+          );
+        }
+
+        return doc.current.update(update);
+      })
+      // 4: Update doc with new deletions (this cannot be done in a single step)
+      .then(() => {
+        if (photosToRemove.length > 0) {
+          return doc.current.update({
+            photos: firebase.firestore.FieldValue.arrayRemove(...photosToRemove)
+          });
+        }
+        return Promise.resolve();
+      })
+      // 5: Update loading state
       .then(() => {
         setSuccess(true);
         setLoading(false);
@@ -361,6 +457,27 @@ export const AdminEditCompanyPage = ({
             label="Employee Count"
             onChange={e => setEmployeeCount(e.target.value)}
           />
+        </Grid>
+        <Grid item container justify="center">
+          <input
+            accept="image/*"
+            className={classes.input}
+            style={{ display: 'none' }}
+            id="contained-button-file"
+            multiple
+            type="file"
+            ref={photosUploadRef}
+          />
+          <label htmlFor="contained-button-file">
+            <Button variant="contained" color="primary" component="span">
+              Upload Photos
+            </Button>
+          </label>
+        </Grid>
+        <Grid item container justify="flex-end">
+          {photoURLs.length > 0 && (
+            <Photos photoURLs={photoURLs || []} onDelete={removePhoto} />
+          )}
         </Grid>
         <Grid item container justify="flex-end">
           <Button

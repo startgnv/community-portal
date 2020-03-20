@@ -10,6 +10,7 @@ import MapContainer from './MapContainer';
 import MapPin from './MapPin';
 import { Marker } from 'react-map-gl';
 import { Helmet } from 'react-helmet';
+import { Gallery } from './Company/Gallery';
 
 import { LinearProgress } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
@@ -82,7 +83,8 @@ export const CompanyPage = ({
     description = '',
     url = '',
     coordinates: { latitude, longitude },
-    employeeCount = 0
+    employeeCount = 0,
+    photos = []
   } = company;
   const viewport = {
     latitude,
@@ -134,6 +136,7 @@ export const CompanyPage = ({
               </Marker>
             </MapContainer>
           </MapWrap>
+          <Gallery photoURLs={photos} />
         </CompanyContent>
       </CompanyPageContainer>
     </>
