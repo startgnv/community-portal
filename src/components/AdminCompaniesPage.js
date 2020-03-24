@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
 import { useAdminContainer } from './AdminPageContainer';
-import AdminCompanyListCard from './AdminCompanyListCard';
+import AdminListCard from './AdminListCard';
 import { db } from '../firebase';
 
 const useStyles = makeStyles({
@@ -38,6 +38,23 @@ export const AdminCompaniesPage = () => {
 
   useAdminContainer({ loading });
 
+  const deleteCompany = companyID => () => {
+    const doc = companies.find(c => c.id === companyID);
+    if (!doc) return;
+
+    delete doc.id;
+
+    db.collection('archivedCompanies')
+      .doc(companyID)
+      .set(doc)
+      .then(() => {
+        db.collection('companies')
+          .doc(companyID)
+          .delete();
+      })
+      .catch(() => {});
+  };
+
   return (
     <>
       <Container className={classes.container} maxWidth="lg">
@@ -64,12 +81,13 @@ export const AdminCompaniesPage = () => {
             })
             .map(({ name, id, coverPath, logoPath }) => (
               <Grid key={id} item md={4} xs={12}>
-                <AdminCompanyListCard
+                <AdminListCard
                   key={id}
                   coverPath={coverPath}
                   logoPath={logoPath}
                   label={name}
                   linkTo={`/admin/companies/${id}/edit`}
+                  onDelete={deleteCompany(id)}
                 />
               </Grid>
             ))}
