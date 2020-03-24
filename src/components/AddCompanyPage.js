@@ -25,6 +25,7 @@ const AddCompanyPage = () => {
   const [email, setEmail] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [companyAddress, setCompanyAddress] = useState('');
+  const [companyURL, setCompanyURL] = useState('');
 
   const onSubmit = ev => {
     ev.preventDefault();
@@ -34,7 +35,8 @@ const AddCompanyPage = () => {
         name,
         email,
         companyName,
-        companyAddress
+        companyAddress,
+        companyURL
       })
       .then(res => {
         setLoading(false);
@@ -86,6 +88,13 @@ const AddCompanyPage = () => {
               placeholder="Company Address"
               onChange={ev => setCompanyAddress(ev.target.value)}
               value={companyAddress}
+            />
+          </Field>
+          <Field>
+            <TextInput
+              placeholder="Company URL"
+              onChange={ev => setCompanyURL(ev.target.value)}
+              value={companyURL}
             />
           </Field>
           <Button label="Submit" type="submit" />
