@@ -23,6 +23,7 @@ import { db, storage } from '../firebase';
 import { useAdminContainer } from './AdminPageContainer';
 import { Parser } from 'html-to-react';
 import moment from 'moment';
+import DeleteDialog from './Admin/DeleteDialog';
 
 const htmlParser = new Parser();
 
@@ -87,7 +88,6 @@ const AdminJobCard = ({
     db.doc(`jobs/${jobID}`)
       .delete()
       .then(() => {
-        setConfirmDelete(false);
         setDeleted(true);
       })
       .catch(() => {});
@@ -104,27 +104,14 @@ const AdminJobCard = ({
 
   return (
     <>
-      <Dialog open={confirmDelete} onClose={() => setConfirmDelete(false)}>
-        <DialogTitle>Delete {job.title}?</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            This job will be gone forever. You need to be really really sure you
-            want to delete it.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => setConfirmDelete(false)}
-            color="primary"
-            autoFocus
-          >
-            Cancel
-          </Button>
-          <Button onClick={onDeleteClick} color="primary">
-            Delete Forever
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DeleteDialog
+        open={confirmDelete}
+        setClose={() => setConfirmDelete(false)}
+        onConfirm={onDeleteClick}
+        label={job.title}
+        message="This job will be gone forever. You need to be really really sure you want to delete it."
+      />
+
       {deleted && (
         <Card className={classes.jobCard}>
           <CardContent>
