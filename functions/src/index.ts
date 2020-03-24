@@ -3,6 +3,7 @@ import * as sgMail from '@sendgrid/mail';
 
 
 interface CompanyResponse {
+  companyURL: string
   companyAddress: string
   companyName: string
   email: string
@@ -28,6 +29,7 @@ exports.emailCompanyResponse = functions.firestore
           <li><strong>Email:</strong> ${response.email}</li>
           <li><strong>Company Name:</strong> ${response.companyName}</li>
           <li><strong>Company Address:</strong> ${response.companyAddress}</li>
+          <li><strong>Company URL:</strong> ${response.companyURL}</li>
         </ul>
       `,
     });
