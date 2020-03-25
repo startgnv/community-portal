@@ -123,6 +123,11 @@ export const AdminPageContainer = ({ children, location }) => {
             label="Jobs"
           />
           <BottomNavigationLink
+            icon={<PeopleIcon />}
+            value="/admin/ecosystem"
+            label="Ecosystem"
+          />
+          <BottomNavigationLink
             icon={<SettingsIcon />}
             value="/admin/settings"
             label="Settings"
@@ -155,6 +160,11 @@ export const AdminPageContainer = ({ children, location }) => {
               to="/admin/jobs"
               activeClassName={classes.active}
               label="Jobs"
+            />
+            <ListItemLink
+              to="/admin/ecosystem"
+              activeClassName={classes.active}
+              label="Ecosystem"
             />
             <ListItemLink
               to="/admin/settings"
