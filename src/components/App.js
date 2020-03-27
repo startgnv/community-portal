@@ -21,7 +21,7 @@ import EcosystemPage from './EcosystemPage';
 import JobPage from './Job/JobPage';
 import JobsPage from './Jobs/JobsPage';
 import NewToGainesvillePage from './NewToGainesvillePage';
-import AddCompanyPage from './AddCompanyPage';
+import AddCompanyPage from './Company/AddCompanyPage';
 import AdminPage from './AdminPage';
 import AdminRoute from './AdminRoute';
 import AdminLogin from './AdminLogin';

@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import { device } from '../device';
 import { validate } from 'email-validator';
 import { db } from '../../firebase';
+import ValidatorInput from '../UI/ValidatorInput';
 
 const Container = styled.div`
   display: flex;
@@ -18,25 +19,7 @@ const Container = styled.div`
   }
 `;
 
-const ErrorLabel = styled.label`
-  color: #ff3333;
-  font-size: 10px;
-  font-family: Arial, sans-serif;
-  margin-top: 20px;
-  margin-bottom: 3px;
-  align-self: flex-start;
-`;
-
-const SubmitLabel = styled.label`
-  color: #00e171;
-  font-size: 10px;
-  font-family: Arial, sans-serif;
-  margin-top: 20px;
-  margin-bottom: 3px;
-  align-self: flex-start;
-`;
-
-const Input = styled.input`
+const Input = styled(ValidatorInput)`
   box-sizing: border-box;
   background: none;
   display: block;
@@ -52,19 +35,6 @@ const Input = styled.input`
   &::placeholder {
     color: rgba(${({ theme }) => theme.lightBlue}, 0.8);
   }
-
-  ${({ error }) =>
-    error &&
-    `
-    border: 1px solid #ff3333;
-    margin-top: 0;
-  `}
-  ${({ submitted }) =>
-    submitted &&
-    `
-    border: 1px solid #00e171;
-    margin-top: 0;
-  `}
 `;
 
 const SubmitBtn = styled.button`
@@ -126,16 +96,13 @@ const NewsletterForm = () => {
   return (
     <Container>
       <Header>SUBSCRIBE TO OUR NEWSLETTER</Header>
-      {error && <ErrorLabel>{error}</ErrorLabel>}
-      {submitted && <SubmitLabel>Thank you for signing up!</SubmitLabel>}
       <Input
-        disabled={submitted}
         submitted={submitted}
         error={error}
-        placeholder="Email"
-        type="text"
+        onChange={setInput}
         value={input}
-        onChange={e => setInput(e.target.value)}
+        placeholder="Email"
+        successMessage="Thank you for signing up!"
       />
       <SubmitBtn onClick={submitInput}>SUBMIT</SubmitBtn>
       <Description>
