@@ -8,6 +8,7 @@ import heroBG from '../../assets/images/jobs-hero.jpg';
 import { Helmet } from 'react-helmet';
 
 import { LinearProgress } from '@material-ui/core';
+import ProgressBar from '../UI/ProgressBar';
 
 const JobsPageContent = styled.div`
   max-width: ${({ theme }) => theme.contentMaxWidth};
@@ -60,6 +61,8 @@ export const JobsPage = () => {
         />
         <meta property="og:type" content="website" />
       </Helmet>
+
+      <ProgressBar />
 
       <Hero bgImage={heroBG} title="Available Positions" size="medium" />
       <JobsPageContent>
