@@ -182,6 +182,10 @@ export const AdminEditCompanyPage = ({
     label: name
   }));
 
+  const sizeOptions = ['<10', '10-50', '50-100', '100-500', '500+'].map(
+    opt => ({ label: opt, value: opt })
+  );
+
   const removePhoto = (url, index) => {
     photosUploadRef.current.value = '';
     setPhotoURLs(prevState => prevState.filter((_, i) => i !== index));
@@ -450,12 +454,12 @@ export const AdminEditCompanyPage = ({
           />
         </Grid>
         <Grid item>
-          <TextField
-            value={employeeCount}
-            fullWidth
-            variant="outlined"
+          <FormLabel>Employee Count</FormLabel>
+          <Select
             label="Employee Count"
-            onChange={e => setEmployeeCount(e.target.value)}
+            options={sizeOptions}
+            value={sizeOptions.find(({ value }) => employeeCount === value)}
+            onChange={({ value }) => setEmployeeCount(value)}
           />
         </Grid>
         <Grid item container justify="center">

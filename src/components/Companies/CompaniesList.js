@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import CompanyListItemLarge from './CompanyListItemLarge';
 import AddCompanyCTA from '../AddCompanyCTA';
 import { SharedMapConsumer } from './CompaniesMapContext';
 import { device } from '../device';
+import CompaniesFilter from './CompaniesFilter';
 
 const Container = styled.div`
   width: 60%;
@@ -17,10 +18,12 @@ const Container = styled.div`
 
 export const CompaniesList = ({
   companies = [],
+  companySizes = [],
   jobs = [],
-  onCompanyMouseEnter = () => {}
+  onChange
 }) => (
   <Container>
+    <CompaniesFilter onChange={onChange} sizeList={companySizes} />
     <SharedMapConsumer>
       {({ setActiveCompany }) => {
         return companies.map(company => {

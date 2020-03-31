@@ -128,9 +128,9 @@ const CompanyListItemLarge = ({
           <EmployeeCount>{employeeCount || '10+'} Employees</EmployeeCount>
           <ShortDescription>{shortDescription}</ShortDescription>
           {jobs.length > 0 && (
-            <Link className="jobs-link" to={'/companies/' + slug}>
+            <p className="jobs-link">
               View {jobs.length} job{jobs.length !== 1 && 's'}
-            </Link>
+            </p>
           )}
         </CompanyInfo>
       </Link>
