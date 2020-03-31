@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Popper } from '@material-ui/core';
-import Button from './Button';
+import Button from '../Button';
 
 const Dropdown = ({
   btnLabel = 'Dropdown',

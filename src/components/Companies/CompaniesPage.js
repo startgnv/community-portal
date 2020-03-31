@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components/macro';
 import { device } from '../device';
 import AppContext from '../AppContext';
@@ -44,6 +44,37 @@ export const CompaniesPage = () => {
   const { jobs, companies, jobsLoading, companiesLoading } = useContext(
     AppContext
   );
+  const [companiesFilter, setCompaniesFilter] = useState({
+    industries: [],
+    sizes: []
+  });
+
+  const companySizeList = [
+    ...new Set(companies.map(c => c.employeeCount).filter(c => c))
+  ];
+  companySizeList.sort();
+
+  const onFilterChange = filterChanged => {
+    setCompaniesFilter({
+      ...companiesFilter,
+      ...filterChanged
+    });
+  };
+
+  const industryFilter = company =>
+    companiesFilter.industries.length
+      ? companiesFilter.industries.includes(company.industryID)
+      : true;
+
+  const sizeFilter = company =>
+    companiesFilter.sizes.length
+      ? companiesFilter.sizes.includes(company.employeeCount)
+      : true;
+
+  const filteredCompanies = companies.filter(
+    company => industryFilter(company) && sizeFilter(company)
+  );
+
   if (companiesLoading || jobsLoading) {
     return <LinearProgress />;
   }
@@ -69,10 +100,15 @@ export const CompaniesPage = () => {
         <Hero title="Tech Companies in GNV" size="medium" maxWidth="none" />
         <SharedMapProvider>
           <ContentContainer>
-            <CompaniesList companies={_.shuffle(companies)} jobs={jobs} />
+            <CompaniesList
+              onChange={onFilterChange}
+              companies={_.shuffle(filteredCompanies)}
+              companySizes={companySizeList}
+              jobs={jobs}
+            />
             <CompaniesMapContainer>
               <CompaniesMapInner>
-                <CompaniesMap companies={companies} />
+                <CompaniesMap companies={filteredCompanies} />
               </CompaniesMapInner>
             </CompaniesMapContainer>
           </ContentContainer>
