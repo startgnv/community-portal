@@ -25,7 +25,7 @@ import AddCompanyPage from './Company/AddCompanyPage';
 import AdminPage from './AdminPage';
 import AdminRoute from './AdminRoute';
 import AdminLogin from './AdminLogin';
-import Header from './Header';
+import Header from './Header/Header';
 import Sidebar from './Sidebar';
 import Article from './Blog/Article';
 import Footer from './Footer/Footer';
