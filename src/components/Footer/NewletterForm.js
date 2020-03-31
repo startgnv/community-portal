@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { device } from '../device';
 import { validate } from 'email-validator';
-import { db } from '../../firebase';
+import { db, functions } from '../../firebase';
 import ValidatorInput from '../UI/ValidatorInput';
 
 const Container = styled.div`
@@ -67,6 +67,10 @@ const Description = styled.p`
   margin-top: 15px;
 `;
 
+const addNewsletterSubscriber = functions.httpsCallable(
+  'addNewsletterSubscriber'
+);
+
 const NewsletterForm = () => {
   const [input, setInput] = useState('');
   const [error, setError] = useState('');
@@ -77,16 +81,12 @@ const NewsletterForm = () => {
       setError('Please enter a valid email address');
     } else {
       try {
-        await db
-          .collection('newsletterSubscribers')
-          .doc(input)
-          .set({});
-        console.log('Document Created!');
+        await addNewsletterSubscriber({ email: input });
         setInput('');
         setError('');
         setSubmitted(true);
       } catch (err) {
-        console.error('Error creating document: ', err);
+        console.error('Error adding subscriber: ', err);
         setError('Unable to submit, please try again later.');
         setInput('');
       }
