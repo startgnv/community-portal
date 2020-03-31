@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { device } from '../device';
 import { clearFix } from 'polished';
-import Logo from '../Logo';
+import Logo from '../UI/Logo';
 import NewsletterForm from './NewletterForm';
 
 const FooterContainer = styled.div`
@@ -91,7 +91,7 @@ const Footer = () => (
     <FooterRow>
       <FooterColumn>
         <Info>
-          <Logo />
+          <Logo variant="light" />
           <Description>
             startGNV is an initiative by startupGNV to promote and grow the
             Gainesville startup, tech, and biotech communities.

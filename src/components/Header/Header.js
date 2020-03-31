@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
-import AppContext from './AppContext';
-import { device } from './device';
-import MainNav from './MainNav';
-import Logo from './Logo';
+import AppContext from '../AppContext';
+import { device } from '../device';
+import MainNav from '../MainNav';
+import Logo from '../UI/Logo';
 
 const HeaderContainer = styled.div`
   height: ${({ theme }) => theme.headerHeight};
