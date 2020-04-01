@@ -111,8 +111,8 @@ const Footer = () => (
               </Link>
             </li>
             <li>
-              <Link to="/new-to-gainesville" className="footer-link">
-                New to Gainesville?
+              <Link to="/ecosystem" className="footer-link">
+                Ecosystem
               </Link>
             </li>
             <li>
