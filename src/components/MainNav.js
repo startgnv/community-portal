@@ -85,11 +85,11 @@ const MainNav = () => {
       <li>
         <NavLink
           className="nav-link"
-          to="/new-to-gainesville"
+          to="/ecosystem"
           activeClassName="active"
           onClick={closeSidebar}
         >
-          New To Gainesville
+          Ecosystem
         </NavLink>
       </li>
     </NavContainer>

@@ -86,7 +86,7 @@ export const EcosysteItemForm = ({
   const onFormSubmit = e => {
     e.preventDefault();
 
-    if (name && description && selectedCategories.length) {
+    if (name && selectedCategories.length) {
       setSaving(true);
       setSavingError(false);
       setSavingSuccess(false);

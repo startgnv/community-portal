@@ -101,22 +101,22 @@ const Footer = () => (
           <FooterHeader>Explore startGNV</FooterHeader>
           <NavList>
             <li>
-              <Link to="/companies" class="footer-link">
+              <Link to="/companies" className="footer-link">
                 Companies
               </Link>
             </li>
             <li>
-              <Link to="/jobs" class="footer-link">
+              <Link to="/jobs" className="footer-link">
                 Jobs
               </Link>
             </li>
             <li>
-              <Link to="/new-to-gainesville" class="footer-link">
+              <Link to="/new-to-gainesville" className="footer-link">
                 New to Gainesville?
               </Link>
             </li>
             <li>
-              <Link to="/about" class="footer-link">
+              <Link to="/about" className="footer-link">
                 About
               </Link>
             </li>

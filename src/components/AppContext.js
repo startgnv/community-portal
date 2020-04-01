@@ -13,6 +13,10 @@ export class AppProvider extends React.Component {
     jobCategoriesLoading: true,
     companyCategories: [],
     companyCategoriesLoading: true,
+    ecosystem: [],
+    ecosystemLoading: true,
+    ecosystemCategories: [],
+    ecosystemCategoriesLoading: true,
     sidebarOpen: false
   };
 
@@ -79,6 +83,32 @@ export class AppProvider extends React.Component {
       .catch(err => {
         console.warn(err);
       });
+    db.collection('ecosystem')
+      .get()
+      .then(ecoRefs => {
+        this.setState({
+          ecosystem: ecoRefs.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          })),
+          ecosystemLoading: false
+        });
+      })
+      .catch(() => {});
+    db.collection('ecosystemCategories')
+      .get()
+      .then(ecoCatRefs => {
+        this.setState({
+          ecosystemCategories: ecoCatRefs.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          })),
+          ecosystemCategoriesLoading: false
+        });
+      })
+      .catch(err => {
+        console.warn(err);
+      });
   };
 
   setActiveCompany = id => {
@@ -102,6 +132,10 @@ export class AppProvider extends React.Component {
       companiesLoading,
       jobCategories,
       companyCategories,
+      ecosystem,
+      ecosystemLoading,
+      ecosystemCategories,
+      ecosystemCategoriesLoading,
       sidebarOpen
     } = this.state;
 
@@ -114,6 +148,10 @@ export class AppProvider extends React.Component {
           companiesLoading,
           jobCategories,
           companyCategories,
+          ecosystem,
+          ecosystemLoading,
+          ecosystemCategories,
+          ecosystemCategoriesLoading,
           sidebarOpen,
           openSidebar: this.openSidebar,
           closeSidebar: this.closeSidebar

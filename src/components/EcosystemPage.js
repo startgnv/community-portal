@@ -1,73 +1,135 @@
-import React from 'react';
-import styled from 'styled-components/macro';
-import Hero from './Hero';
+import _ from 'lodash';
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import { baseContentStyling } from './mixins';
+import { device } from './device';
+import AppContext from './AppContext';
 import PageContent from './PageContent';
+import Hero from './Hero';
+import Button from './Button';
+import Tags from './Tags';
+import heroImg from '../assets/images/sparkgnv-101.jpg';
+import { Helmet } from 'react-helmet';
 
-const EcosystemPageContainer = styled.div``;
+const EcosystemItem = styled.div`
+  display: flex;
+  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.08);
+  transition: 200ms;
+  background: white;
+  justify-content: center;
+  box-sizing: border-box;
 
-const HeroHeadline = styled.h2`
-  font-size: 46px;
-  color: white;
-
-  strong {
-    color: ${({ theme }) => theme.teal};
-    font-weight: 700;
+  .eco-tags {
+    margin-bottom: 10px;
   }
 `;
 
-const EcosystemPage = () => (
-  <EcosystemPageContainer>
-    <Hero>
-      <HeroHeadline>Ecosystem</HeroHeadline>
-    </Hero>
-    <PageContent>
-      <p>
-        Narrative about Gatorade? Grooveshark? History of major exits by
-        companies?
-      </p>
-      <h2>New to the Gainesville tech/startup community?</h2>
-      <ul>
-        <li>Join the GNV Connect Slack: https://gnvconnect.com/</li>
-        <li>
-          Sign up for the startupGNV newsletter:
-          https://startupgnv.com/get-connected/
-        </li>
-      </ul>
-      <h2>Calendars of Tech/Startup Events:</h2>
-      <ul>
-        <li>UF INNOVATE https://innovate.research.ufl.edu/event-calendar/</li>
-        <li>
-          Greater Gainesville Chamber
-          https://members.gainesvillechamber.com/events/calendar/
-        </li>
-      </ul>
-      <h2>Top Monthly Meetups</h2>
-      <ul>
-        <li>Buzz by SharpSpring https://careers.sharpspring.com/buzz/</li>
-        <li>
-          Frontend Awesome!
-          https://www.meetup.com/Gainesville-Front-End-Dev-Meetup/
-        </li>
-        <li>Gainesville UX https://www.meetup.com/Gainesville-UX-Design/</li>
-        <li>
-          PMI - Gainesville Chapter
-          https://www.meetup.com/Gainesville-Project-Management-Meetup/events/gkhdwqyzmbpb/
-        </li>
-        <li>AIGA - Gainesville Chapter https://gainesville.aiga.org/</li>
-      </ul>
-      <h2>Signature Events</h2>
-      <ul>
-        <li>Celebrate GNV</li>
-        <li>Josh Greenberg Day</li>
-        <li>Barcamp</li>
-        <li>Tech Fundraiser Concert</li>
-        <li>ALL IN GNV</li>
-        <li>Startup Weekend</li>
-        <li>Super Meetup</li>
-        <li>Cade Prize: https://www.cademuseum.org/cadeprize.html</li>
-      </ul>
-    </PageContent>
-  </EcosystemPageContainer>
-);
+const PageDescription = styled.span`
+  display: block;
+  margin-bottom: 30px;
+  max-width: 600px;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+`;
+
+const EcoContent = styled.div`
+  flex: 1;
+`;
+
+const EcoActions = styled.div`
+  margin-left: 20px;
+`;
+
+const EcoName = styled.span`
+  display: block;
+  margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: 600;
+`;
+
+const EcoDescription = styled.div`
+  ${baseContentStyling()}
+`;
+
+const EcoCategories = styled.div`
+  font-size: 14px;
+`;
+
+const EcosystemPage = () => {
+  const {
+    ecosystem,
+    ecosystemCategories,
+    ecosystemLoading,
+    ecosystemCategoriesLoading
+  } = useContext(AppContext);
+
+  if (ecosystemLoading || ecosystemCategoriesLoading) {
+    return false;
+  }
+
+  return (
+    <>
+      <Helmet>
+        <title>Ecosystem - startGNV</title>
+        <meta
+          name="description"
+          content="A quick guide to the tech and startup organizations, meetups, events, incubators, support centers and media."
+        />
+        <meta
+          name="og:title"
+          property="og:title"
+          content="Ecosystem - startGNV"
+        />
+        <meta
+          name="og:description"
+          property="og:description"
+          content="startGNV is an initiative by startupGNV to promote and grow the Gainesville startup, tech, and biotech communities."
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+      <>
+        <Hero bgImage={heroImg} title="Ecosystem" />
+        <PageContent>
+          <PageDescription>
+            A quick guide to the tech and startup organizations, meetups,
+            events, incubators, support centers and media.
+          </PageDescription>
+          {ecosystem.map(({ name, description, categories, link }, i) => {
+            const renderCategories = _.filter(ecosystemCategories, category => {
+              return categories.indexOf(category.id) > -1;
+            });
+            return (
+              <EcosystemItem key={i}>
+                <EcoContent>
+                  <EcoName>{name}</EcoName>
+                  <Tags
+                    className="eco-tags"
+                    tags={renderCategories}
+                    size="small"
+                  />
+                  <EcoDescription
+                    dangerouslySetInnerHTML={{ __html: description }}
+                  />
+                </EcoContent>
+                {link && (
+                  <EcoActions>
+                    <Button
+                      label="Visit Site"
+                      onClick={() => window.open(link)}
+                    />
+                  </EcoActions>
+                )}
+              </EcosystemItem>
+            );
+          })}
+        </PageContent>
+      </>
+    </>
+  );
+};
 
 export default EcosystemPage;

@@ -17,6 +17,8 @@ import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import DeleteDialog from '../DeleteDialog';
+import Button from '@material-ui/core/Button';
 
 import { db } from '../../../firebase';
 import { useAdminContainer } from '../../AdminPageContainer';
@@ -59,6 +61,8 @@ export const AdminEcosystemPage = ({ match: { isExact } }) => {
   const classes = useStyles();
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState({ by: 'Updated', asc: false });
+  const [openDelete, setOpenDelete] = useState(false);
+  const [deleteItem, setDeleteItem] = useState({});
   const [ecoItems = [], loadingEcoItems, error] = useCollectionData(
     db.collection('ecosystem'),
     {
@@ -88,8 +92,34 @@ export const AdminEcosystemPage = ({ match: { isExact } }) => {
     <ArrowDownwardIcon fontSize="inherit" />
   );
 
+  const deleteEcosystemItem = () => {
+    const doc = ecoItems.find(c => c.id === deleteItem.id);
+    console.warn(doc);
+    if (!doc) return;
+
+    delete doc.id;
+
+    db.collection('archivedEcosystem')
+      .doc(deleteItem.id)
+      .set(doc)
+      .then(() => {
+        setDeleteItem({});
+        db.collection('ecosystem')
+          .doc(deleteItem.id)
+          .delete();
+      })
+      .catch(() => {});
+  };
+
   return (
     <>
+      <DeleteDialog
+        open={openDelete}
+        setClose={() => setOpenDelete(false)}
+        onConfirm={deleteEcosystemItem}
+        label={deleteItem.name}
+        message="Are you sure you would like to remove this item?"
+      />
       <Container className={classes.container} maxWidth="lg">
         <div className={classes.listActions}>
           <TextField
@@ -143,6 +173,18 @@ export const AdminEcosystemPage = ({ match: { isExact } }) => {
                   key={ecoItem.id}
                 >
                   <ListItemText primary={ecoItem.name} />
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={ev => {
+                      ev.preventDefault();
+                      setOpenDelete(true);
+                      setDeleteItem(ecoItem);
+                      return false;
+                    }}
+                  >
+                    Delete
+                  </Button>
                 </ListItemLink>
               );
             })}
