@@ -5,15 +5,15 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormLabel from '@material-ui/core/FormLabel';
 import Grid from '@material-ui/core/Grid';
-import firebase, { db, storage } from '../firebase';
+import firebase, { db, storage } from '../../../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
-import GeocodingInput from './GeocodingInput';
-import { useAdminContainer } from './AdminPageContainer';
-import FormCardPage from './FormCardPage';
+import GeocodingInput from '../../GeocodingInput';
+import { useAdminContainer } from '../../AdminPageContainer';
+import FormCardPage from '../../FormCardPage';
 import Select from 'react-select';
-import { Photos } from './Admin/Company/Photos';
+import { Photos } from './Photos';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const AdminEditCompanyPage = ({
+export const EditPage = ({
   match: {
     params: { companyID }
   },
@@ -49,8 +49,14 @@ export const AdminEditCompanyPage = ({
   const [fbCoverURL, fbCoverLoading] = useDownloadURL(
     company.coverPath ? storage.ref(company.coverPath) : null
   );
+  const [fbListingURL, fbListingLoading] = useDownloadURL(
+    company.coverPath
+      ? storage.ref(company.coverPath.replace('Covers', 'Listings'))
+      : null
+  );
   const [logoURL, setLogoURL] = useState('');
   const [coverURL, setCoverURL] = useState('');
+  const [listingURL, setListingURL] = useState('');
   const [photoURLs, setPhotoURLs] = useState([]);
   const [inputAddress, setInputAddress] = useState('');
   const [slug, setSlug] = useState('');
@@ -68,6 +74,7 @@ export const AdminEditCompanyPage = ({
   const [photosToRemove, setPhotosToRemove] = useState([]);
   const logoUploadRef = useRef();
   const coverUploadRef = useRef();
+  const listingUploadRef = useRef();
   const photosUploadRef = useRef();
 
   useEffect(() => {
@@ -114,6 +121,10 @@ export const AdminEditCompanyPage = ({
     setCoverURL(fbCoverURL || '');
   }, [fbCoverURL]);
 
+  useEffect(() => {
+    setListingURL(fbListingURL || '');
+  }, [fbListingURL]);
+
   const logoChangeHandler = useCallback(() => {
     const file = logoUploadRef.current.files.item(0);
 
@@ -130,6 +141,16 @@ export const AdminEditCompanyPage = ({
     if (FileReader && file) {
       const reader = new FileReader();
       reader.onload = () => setCoverURL(reader.result);
+      reader.readAsDataURL(file);
+    }
+  }, []);
+
+  const listingChangeHandler = useCallback(() => {
+    const file = listingUploadRef.current.files.item(0);
+
+    if (FileReader && file) {
+      const reader = new FileReader();
+      reader.onload = () => setListingURL(reader.result);
       reader.readAsDataURL(file);
     }
   }, []);
@@ -165,6 +186,14 @@ export const AdminEditCompanyPage = ({
   }, [coverChangeHandler]);
 
   useEffect(() => {
+    if (listingUploadRef.current) {
+      const ref = listingUploadRef.current;
+      ref.addEventListener('change', listingChangeHandler);
+      return () => ref.removeEventListener('change', listingChangeHandler);
+    }
+  }, [listingChangeHandler]);
+
+  useEffect(() => {
     if (photosUploadRef.current) {
       const ref = photosUploadRef.current;
       ref.addEventListener('change', photosChangeHandler);
@@ -173,7 +202,12 @@ export const AdminEditCompanyPage = ({
   }, [photosChangeHandler]);
 
   useAdminContainer({
-    loading: loading || loadingCompany || fbLogoLoading || fbCoverLoading,
+    loading:
+      loading ||
+      loadingCompany ||
+      fbLogoLoading ||
+      fbCoverLoading ||
+      fbListingLoading,
     backTo: '/admin/companies'
   });
 
@@ -238,6 +272,15 @@ export const AdminEditCompanyPage = ({
           imgUploads.push(null);
         }
 
+        if (listingUploadRef.current.files[0]) {
+          const listingRes = storage
+            .ref(`companyListings/${doc.current.id}`)
+            .put(listingUploadRef.current.files[0]);
+          imgUploads.push(listingRes);
+        } else {
+          imgUploads.push(null);
+        }
+
         if (logoUploadRef.current.files[0]) {
           const logoRes = storage
             .ref(`companyLogos/${doc.current.id}`)
@@ -262,10 +305,11 @@ export const AdminEditCompanyPage = ({
         return Promise.all(imgUploads);
       })
       // 2: Fetch storage URL's for linking photos in database
-      .then(([newCover, newLogo, ...newPhotos]) => {
+      .then(([newCover, newListing, newLogo, ...newPhotos]) => {
         if (newPhotos) {
           return Promise.all([
             Promise.resolve(newCover),
+            Promise.resolve(newListing),
             Promise.resolve(newLogo),
             Promise.all(
               newPhotos.map(photo => {
@@ -277,13 +321,17 @@ export const AdminEditCompanyPage = ({
         return Promise.resolve([newCover, newLogo]);
       })
       // 3: Update doc with all new additions
-      .then(([newCover, newLogo, photoUrls]) => {
+      .then(([newCover, newListing, newLogo, photoUrls]) => {
         // only set the fields we changed so we don't overwrite someone
         // else
         const update = {};
 
         if (newCover) {
           update.coverPath = newCover.ref.fullPath;
+        }
+
+        if (newListing) {
+          update.listingPath = newListing.ref.fullPath;
         }
 
         if (newLogo) {
@@ -328,6 +376,17 @@ export const AdminEditCompanyPage = ({
               alt={`${name} cover`}
               style={{ height: 'auto', width: 'auto', maxWidth: 300 }}
               src={coverURL}
+            />
+          )}
+        </Grid>
+        <Grid item>
+          <FormLabel>Listing</FormLabel>
+          <input type="file" ref={listingUploadRef} />
+          {listingURL && (
+            <img
+              alt={`${name} listing photo`}
+              style={{ height: 'auto', width: 'auto', maxWidth: 300 }}
+              src={listingURL}
             />
           )}
         </Grid>
@@ -505,4 +564,4 @@ export const AdminEditCompanyPage = ({
   );
 };
 
-export default AdminEditCompanyPage;
+export default EditPage;

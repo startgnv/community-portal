@@ -83,7 +83,7 @@ export const AdminCompaniesPage = () => {
               <Grid key={id} item md={4} xs={12}>
                 <AdminListCard
                   key={id}
-                  coverPath={coverPath}
+                  coverPath={coverPath.replace('Cover', 'Listing')}
                   logoPath={logoPath}
                   label={name}
                   linkTo={`/admin/companies/${id}/edit`}
