@@ -8,18 +8,11 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardHeader from '@material-ui/core/CardHeader';
 import { Helmet } from 'react-helmet';
+import { device } from './device';
 
 //Sponsors
-import uf from '../assets/images/sponsors/uf.png';
-import sharpspring from '../assets/images/sponsors/sharpspring.png';
-import fracture from '../assets/images/sponsors/fracture.png';
-import infotech from '../assets/images/sponsors/infotech.png';
-import infiniteenergy from '../assets/images/sponsors/infiniteenergy.png';
-import digitalbrands from '../assets/images/sponsors/digitalbrands.png';
-import chamber from '../assets/images/sponsors/chamber.png';
-import feathr from '../assets/images/sponsors/feathr.png';
-import opie from '../assets/images/sponsors/opiesoftware.jpg';
-import gville from '../assets/images/sponsors/gville-logo.png';
+import hutchison from '../assets/images/sponsors/HutchisonPLLC.png';
+import threeFiveTwo from '../assets/images/sponsors/ThreeFiveTwo.png';
 
 //Board Members
 import aidan from '../assets/images/board/aidan.jpeg';
@@ -146,6 +139,12 @@ const Sponsors = styled.div`
   h3 {
     margin-bottom: 20px;
   }
+
+  @media ${device.mobile} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Programs = styled.div`
@@ -184,10 +183,15 @@ const Board = styled.div`
 `;
 
 const CardContainer = styled.div`
-  width: ${100 / 5}%;
+  width: 205px;
   padding: 0 30px 30px 0;
   float: left;
   box-sizing: border-box;
+
+  @media ${device.mobile} {
+    padding-right: 0;
+    width: 100%;
+  }
 `;
 
 const BoardMember = styled.div`
@@ -237,13 +241,13 @@ const AboutPage = () => (
           </p>
         </HeroContent>
         <Sponsors>
-          <h3>Sponsors</h3>
+          <h3>Annual Partners</h3>
           <CardContainer>
             <Card className="sponsor-card">
               <CardMedia
                 className="sponsor-img"
-                image={uf}
-                title="University of Florida"
+                image={hutchison}
+                title="Hutchinson, PLLC"
               />
             </Card>
           </CardContainer>
@@ -251,80 +255,8 @@ const AboutPage = () => (
             <Card className="sponsor-card">
               <CardMedia
                 className="sponsor-img"
-                image={gville}
-                title="City of Gainesville"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={sharpspring}
-                title="Sharpspring"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={fracture}
-                title="Fracture"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={infotech}
-                title="InfoTech"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={infiniteenergy}
-                title="Infinite Energy"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={digitalbrands}
-                title="Digital Brands"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={chamber}
-                title="Gainesville Chamber of Commerce"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={feathr}
-                title="Feathr"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={opie}
-                title="OPIE Softwares"
+                image={threeFiveTwo}
+                title="Three Five Two, Inc"
               />
             </Card>
           </CardContainer>
