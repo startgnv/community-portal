@@ -6,12 +6,12 @@ import { clearFix } from 'polished';
 import Logo from '../UI/Logo';
 import NewsletterForm from './NewletterForm';
 
-const FooterContainer = styled.div`
+const Container = styled.div`
   background: ${({ theme }) => theme.deepNavy};
   padding: 70px 0;
 `;
 
-const FooterRow = styled.div`
+const Row = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
@@ -28,18 +28,25 @@ const FooterRow = styled.div`
   }
 `;
 
-const FooterColumn = styled.div`
+const Column = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
 `;
 
 const Info = styled.div`
-  max-width: 275px;
+  max-width: 250px;
 
   @media ${device.tabletPort}, ${device.mobile} {
     align-items: center;
     text-align: center;
+  }
+`;
+
+const LogoContainer = styled.div`
+  @media ${device.tabletPort}, ${device.mobile} {
+    display: flex;
+    justify-content: center;
   }
 `;
 
@@ -49,11 +56,11 @@ const Description = styled.p`
   margin-top: 15px;
 `;
 
-const FooterNav = styled.div`
+const Nav = styled.div`
   margin-top: 50px;
 `;
 
-const FooterHeader = styled.h3`
+const Header = styled.h3`
   margin-bottom: 5px;
   color: #a3a9b3;
   font-size: 13px;
@@ -87,18 +94,25 @@ const Contact = styled.div`
 `;
 
 const Footer = () => (
-  <FooterContainer>
-    <FooterRow>
-      <FooterColumn>
+  <Container>
+    <Row>
+      <Column>
         <Info>
-          <Logo variant="light" />
+          <LogoContainer>
+            <Logo variant="light" />
+          </LogoContainer>
           <Description>
-            startGNV is an initiative by startupGNV to promote and grow the
-            Gainesville startup, tech, and biotech communities.
+            startGNV is a 501(c)(3) non-profit dedicated to growing the
+            innovation ecosystem of Greater Gainesville.
+          </Description>
+          <Description>
+            This website was only possible thanks to contributions from The
+            University of Florida, The Greater Gainesville Chamber of Commerce
+            and The City of Gainesville.
           </Description>
         </Info>
-        <FooterNav>
-          <FooterHeader>Explore startGNV</FooterHeader>
+        <Nav>
+          <Header>Explore startGNV</Header>
           <NavList>
             <li>
               <Link to="/companies" className="footer-link">
@@ -121,9 +135,9 @@ const Footer = () => (
               </Link>
             </li>
           </NavList>
-        </FooterNav>
+        </Nav>
         <Contact>
-          <FooterHeader>Contact</FooterHeader>
+          <Header>Contact</Header>
           <NavList>
             <li>
               <a href="mailto:info@startupgnv.com" className="footer-link">
@@ -132,12 +146,12 @@ const Footer = () => (
             </li>
           </NavList>
         </Contact>
-      </FooterColumn>
-      <FooterColumn>
+      </Column>
+      <Column>
         <NewsletterForm />
-      </FooterColumn>
-    </FooterRow>
-  </FooterContainer>
+      </Column>
+    </Row>
+  </Container>
 );
 
 export default Footer;
