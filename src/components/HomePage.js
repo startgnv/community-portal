@@ -184,12 +184,17 @@ const HomePage = () => {
   const { jobs, companies, jobsLoading, companiesLoading } = useContext(
     AppContext
   );
+
   if (companiesLoading || jobsLoading) {
     return <LinearProgress />;
   }
+
   const renderCompanies = _.shuffle(
     companies.filter(company => company.featured)
   );
+
+  const renderJobs = _.shuffle(jobs.filter(j => j.featured));
+
   return (
     <>
       <Helmet>
@@ -255,7 +260,14 @@ const HomePage = () => {
               <h3>Featured Companies</h3>
               <Link to="/companies">View All</Link>
             </FeaturedHeadline>
-            <CompanyList companies={renderCompanies} showTitle={false} />
+            <CompanyList
+              companies={
+                renderCompanies.length > 6
+                  ? renderCompanies.slice(0, 6)
+                  : renderCompanies
+              }
+              showTitle={false}
+            />
           </FeaturedSection>
           <FeaturedSection>
             <FeaturedHeadline>
@@ -263,7 +275,7 @@ const HomePage = () => {
               <Link to="/jobs">View All</Link>
             </FeaturedHeadline>
             <JobList
-              jobs={jobs.filter(job => job.featured)}
+              jobs={renderJobs.length > 3 ? renderJobs.slice(0, 3) : renderJobs}
               companies={companies}
               showTitle={false}
             />
