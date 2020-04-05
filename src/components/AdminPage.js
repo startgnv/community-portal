@@ -5,7 +5,7 @@ import AdminCompanyPage from './AdminCompanyPage';
 import AdminCompaniesPage from './AdminCompaniesPage';
 import AdminIndex from './AdminIndex';
 import AdminJobsPage from './AdminJobsPage';
-import AdminEditCompanyPage from './AdminEditCompanyPage';
+import EditPage from './Admin/Company/EditPage';
 import AdminJobPage from './AdminJobPage';
 import EcosystemPage from './Admin/Ecosystem';
 import AdminPageContainer from './AdminPageContainer';
@@ -17,15 +17,11 @@ export const AdminPage = () => (
     <CssBaseline />
     <Switch>
       <Route exact path="/admin/companies" component={AdminCompaniesPage} />
-      <Route
-        exact
-        path="/admin/companies/new"
-        component={AdminEditCompanyPage}
-      />
+      <Route exact path="/admin/companies/new" component={EditPage} />
       <Route
         exact
         path="/admin/companies/:companyID/edit"
-        component={AdminEditCompanyPage}
+        component={EditPage}
       />
       <Route
         exact

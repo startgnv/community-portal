@@ -120,7 +120,9 @@ const CompanyListItemLarge = ({
   return (
     <ItemContainer onMouseEnter={onMouseEnter}>
       <Link className="container-link" to={'/companies/' + slug}>
-        <Images coverImg={coverUrl}>
+        <Images
+          coverImg={coverUrl ? coverUrl.replace('Cover', 'Listing') : coverUrl}
+        >
           <StorageImg className="logo" alt={name} path={logoPath} />
         </Images>
         <CompanyInfo>
