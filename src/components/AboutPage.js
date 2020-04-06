@@ -35,6 +35,7 @@ import melissa from '../assets/images/board/melissa.jpeg';
 import mikayla from '../assets/images/board/mikayla.png';
 import seyi from '../assets/images/board/seyi.jpeg';
 import will from '../assets/images/board/will.jpeg';
+import curtis from '../assets/images/board/curtis.jpg';
 
 const boardMembers = [
   {
@@ -88,6 +89,10 @@ const boardMembers = [
   {
     name: 'William Richardson',
     img: will
+  },
+  {
+    name: 'Curtis McMillen',
+    img: curtis
   }
 ];
 
