@@ -26,7 +26,6 @@ import aidan from '../assets/images/board/aidan.jpeg';
 import benny from '../assets/images/board/benny.jpeg';
 import bryan from '../assets/images/board/bryan.jpeg';
 import elliot from '../assets/images/board/elliot.png';
-import empty from '../assets/images/board/empty.png';
 import gregg from '../assets/images/board/gregg.jpeg';
 import hannah from '../assets/images/board/hannah.jpeg';
 import james from '../assets/images/board/james.png';
@@ -53,10 +52,6 @@ const boardMembers = [
   {
     name: 'Elliot Welker',
     img: elliot
-  },
-  {
-    name: 'Curtis McMillen',
-    img: empty
   },
   {
     name: 'Hannah Yeargan',
