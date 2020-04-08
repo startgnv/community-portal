@@ -75,6 +75,10 @@ export const CompaniesPage = () => {
     company => industryFilter(company) && sizeFilter(company)
   );
 
+  const sortedCompanies = _.shuffle(filteredCompanies).sort((a, b) => {
+    return a.featured === b.featured ? 0 : a.featured ? -1 : 1;
+  });
+
   if (companiesLoading || jobsLoading) {
     return <LinearProgress />;
   }
@@ -102,7 +106,7 @@ export const CompaniesPage = () => {
           <ContentContainer>
             <CompaniesList
               onChange={onFilterChange}
-              companies={_.shuffle(filteredCompanies)}
+              companies={sortedCompanies}
               companySizes={companySizeList}
               jobs={jobs}
             />

@@ -83,9 +83,19 @@ export const JobList = ({
       typeFilter(job)
   );
 
+  const sortedJobs = _.shuffle(filteredJobs).sort((a, b) => {
+    const companyA = companies.find(company => company.id === a.companyID);
+    const companyB = companies.find(company => company.id === b.companyID);
+    return companyA.featured === companyB.featured
+      ? 0
+      : companyA.featured
+      ? -1
+      : 1;
+  });
+
   let listContent;
   if (filteredJobs.length) {
-    listContent = _.shuffle(filteredJobs).map(job => {
+    listContent = sortedJobs.map(job => {
       const jobCompany = _.find(companies, { id: job.companyID });
       return (
         <ItemContainer variant={variant} key={job.id}>
