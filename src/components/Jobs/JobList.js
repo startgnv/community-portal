@@ -75,7 +75,7 @@ export const JobList = ({
   const typeFilter = job =>
     filter.types.length ? filter.types.includes(job.type) : true;
 
-  const filteredJobs = jobs.filter(
+  let displayJobs = jobs.filter(
     job =>
       searchFilter(job) &&
       categoryFilter(job) &&
@@ -83,19 +83,21 @@ export const JobList = ({
       typeFilter(job)
   );
 
-  const sortedJobs = _.shuffle(filteredJobs).sort((a, b) => {
-    const companyA = companies.find(company => company.id === a.companyID);
-    const companyB = companies.find(company => company.id === b.companyID);
-    return companyA.featured === companyB.featured
-      ? 0
-      : companyA.featured
-      ? -1
-      : 1;
-  });
+  if (companies && companies.length) {
+    displayJobs = _.shuffle(displayJobs || []).sort((a, b) => {
+      const companyA = companies.find(company => company.id === a.companyID);
+      const companyB = companies.find(company => company.id === b.companyID);
+      return companyA.featured === companyB.featured
+        ? 0
+        : companyA.featured
+        ? -1
+        : 1;
+    });
+  }
 
   let listContent;
-  if (filteredJobs.length) {
-    listContent = sortedJobs.map(job => {
+  if (displayJobs.length) {
+    listContent = displayJobs.map(job => {
       const jobCompany = _.find(companies, { id: job.companyID });
       return (
         <ItemContainer variant={variant} key={job.id}>
@@ -114,7 +116,7 @@ export const JobList = ({
 
   return (
     <JobListContainer className={className}>
-      {showTitle && <ListTitle>Jobs ({filteredJobs.length})</ListTitle>}
+      {showTitle && <ListTitle>Jobs ({displayJobs.length})</ListTitle>}
       <ListContainer>{listContent}</ListContainer>
     </JobListContainer>
   );
