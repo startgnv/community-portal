@@ -22,11 +22,7 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 import { db } from '../firebase';
 import { useAdminContainer } from './AdminPageContainer';
-
-const sortKeys = {
-  Updated: 'TSUpdated',
-  Created: 'TSCreated'
-};
+import ListFilter, { sortKeys } from './Admin/UI/ListFilter';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -40,16 +36,6 @@ const useStyles = makeStyles(theme => ({
   progress: {
     display: 'block',
     margin: 'auto'
-  },
-  listActions: {
-    display: 'flex'
-  },
-  search: {
-    flex: '2',
-    marginRight: '20px'
-  },
-  sort: {
-    flex: '1'
   }
 }));
 
@@ -78,53 +64,16 @@ export const AdminJobsPage = ({ match: { isExact } }) => {
 
   const companiesByID = _.keyBy(companies, company => company.id);
 
-  const onSortChange = ({ target: { value } }) => {
-    if (value === sort.by) {
-      setSort({
-        ...sort,
-        asc: !sort.asc
-      });
-      return;
-    }
-    setSort({
-      by: value,
-      asc: false
-    });
-  };
-
-  const sortIcon = sort.asc ? (
-    <ArrowUpwardIcon fontSize="inherit" />
-  ) : (
-    <ArrowDownwardIcon fontSize="inherit" />
-  );
-
   return (
     <>
       <Container className={classes.container} maxWidth="lg">
-        <div className={classes.listActions}>
-          <TextField
-            className={classes.search}
-            type="search"
-            label="Search Jobs"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
-          <FormControl className={classes.sort}>
-            <InputLabel htmlFor="age-simple">Sort By</InputLabel>
-            <Select
-              value={sort.by}
-              renderValue={value => (
-                <>
-                  {sortIcon} {value}
-                </>
-              )}
-              onChange={onSortChange}
-            >
-              <MenuItem value="Updated">Updated</MenuItem>
-              <MenuItem value="Created">Created</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
+        <ListFilter
+          search={search}
+          setSearch={setSearch}
+          sort={sort}
+          setSort={setSort}
+        />
+
         <List>
           {jobs
             .filter(({ title, companyID, featured }) => {

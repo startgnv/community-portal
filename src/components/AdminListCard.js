@@ -14,7 +14,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import { db, storage } from '../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
-import DeleteDialog from './Admin/DeleteDialog';
+import DeleteDialog from './Admin/UI/DeleteDialog';
 
 const useStyles = makeStyles({
   listItemArea: {

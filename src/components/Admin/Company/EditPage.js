@@ -253,7 +253,8 @@ export const EditPage = ({
       industryID,
       featured,
       isSponsor,
-      TSUpdated: Date.now()
+      TSUpdated: Date.now(),
+      TSCreated: company.TSCreated ? company.TSCreated : Date.now()
     };
     // after we create or update the doc, we'll have the ID which we need for
     // the images
