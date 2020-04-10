@@ -7,11 +7,11 @@ import Fab from '@material-ui/core/Fab';
 import Container from '@material-ui/core/Container';
 import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 
 import { useAdminContainer } from './AdminPageContainer';
 import AdminListCard from './AdminListCard';
 import { db } from '../firebase';
+import ListFilter, { sortKeys } from './Admin/UI/ListFilter';
 
 const useStyles = makeStyles({
   fab: {
@@ -31,6 +31,7 @@ const useStyles = makeStyles({
 export const AdminCompaniesPage = () => {
   const classes = useStyles();
   const [search, setSearch] = useState('');
+  const [sort, setSort] = useState({ by: 'Updated', asc: false });
   const [companies = [], loading, error] = useCollectionData(
     db.collection('companies'),
     { idField: 'id' }
@@ -60,13 +61,11 @@ export const AdminCompaniesPage = () => {
       <Container className={classes.container} maxWidth="lg">
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TextField
-              type="search"
-              fullWidth
-              margin="normal"
-              label="Search Companies"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
+            <ListFilter
+              search={search}
+              sort={sort}
+              setSearch={setSearch}
+              setSort={setSort}
             />
           </Grid>
           {companies
@@ -78,6 +77,16 @@ export const AdminCompaniesPage = () => {
                 name.toLowerCase().includes(normalizedSearch) ||
                 isFeatured.includes(normalizedSearch);
               return match;
+            })
+            .sort((a, b) => {
+              const sortAttr = sortKeys[sort.by];
+              const aVal = a[sortAttr] || 0;
+              const bVal = b[sortAttr] || 0;
+              if (sort.asc) {
+                return aVal - bVal;
+              } else {
+                return bVal - aVal;
+              }
             })
             .map(({ name, id, coverPath, logoPath }) => (
               <Grid key={id} item md={4} xs={12}>

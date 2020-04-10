@@ -17,7 +17,7 @@ import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import DeleteDialog from '../DeleteDialog';
+import DeleteDialog from '../UI/DeleteDialog';
 import Button from '@material-ui/core/Button';
 
 import { db } from '../../../firebase';

@@ -23,7 +23,7 @@ import { db, storage } from '../firebase';
 import { useAdminContainer } from './AdminPageContainer';
 import { Parser } from 'html-to-react';
 import moment from 'moment';
-import DeleteDialog from './Admin/DeleteDialog';
+import DeleteDialog from './Admin/UI/DeleteDialog';
 
 const htmlParser = new Parser();
 
