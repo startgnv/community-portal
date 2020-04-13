@@ -32,7 +32,6 @@ export const MapContainer = ({
         doubleClickZoom={false}
         width={'100%'}
         height={'100%'}
-        scrollZoom={false}
         onViewportChange={onViewportChange}
       >
         {children}
