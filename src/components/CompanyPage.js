@@ -7,7 +7,7 @@ import Header from './Job/Header';
 import JobList from './Jobs/JobList';
 import Error from './Error';
 import MapContainer from './MapContainer';
-import MapPin from './MapPin';
+import MapPin from './UI/MapPin';
 import { Marker } from 'react-map-gl';
 import { Helmet } from 'react-helmet';
 import { Gallery } from './Company/Gallery';

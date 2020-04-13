@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MapContainer from '../MapContainer';
 import { SharedMapConsumer } from './CompaniesMapContext';
-import MapPin from '../MapPin';
+import MapPin from '../UI/MapPin';
 import { Marker } from 'react-map-gl';
 
 const CompaniesMap = ({ companies }) => {
@@ -23,17 +23,20 @@ const CompaniesMap = ({ companies }) => {
         {({ activeCompanyID }) =>
           companies
             .filter(({ coordinates }) => coordinates)
-            .map(({ id, name, coordinates: { latitude, longitude }, slug }) => (
+            // Order determines z-index for pins, this prevents pins from overlapping info boxes
+            .sort((a, b) => a.coordinates.latitude - b.coordinates.latitude)
+            .map(company => (
               <Marker
-                key={name}
-                longitude={longitude}
-                latitude={latitude}
-                className={activeCompanyID === id ? 'active-pin' : ''}
+                key={company.name}
+                longitude={company.coordinates.longitude}
+                latitude={company.coordinates.latitude}
+                className={activeCompanyID === company.id ? 'active-pin' : ''}
               >
                 <MapPin
-                  linkTo={'/companies/' + slug}
+                  linkTo={'/companies/' + company.slug}
                   size={36}
-                  active={activeCompanyID === id}
+                  active={activeCompanyID === company.id}
+                  company={company}
                 />
               </Marker>
             ))

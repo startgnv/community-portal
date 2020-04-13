@@ -75,7 +75,7 @@ const IndustryTitle = styled.span`
   text-decoration: none;
 `;
 
-export const JobListItem = ({
+export const CompanyListItem = ({
   company: {
     id,
     name = 'No Name',
@@ -104,4 +104,4 @@ export const JobListItem = ({
   );
 };
 
-export default JobListItem;
+export default CompanyListItem;
