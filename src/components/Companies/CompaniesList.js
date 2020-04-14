@@ -23,7 +23,11 @@ export const CompaniesList = ({
   onChange
 }) => (
   <Container>
-    <CompaniesFilter onChange={onChange} sizeList={companySizes} />
+    <CompaniesFilter
+      onChange={onChange}
+      sizeList={companySizes}
+      filteredCount={companies.length}
+    />
     <SharedMapConsumer>
       {({ setActiveCompany }) => {
         return companies.map(company => {

@@ -30,7 +30,7 @@ const Title = styled.h3`
 `;
 
 const Item = styled.div`
-  display: inline-block;
+  flex: ${({ full }) => (full ? 1 : 0)};
   margin-right: 10px;
 `;
 
@@ -54,7 +54,11 @@ const DropdownTitle = styled.h6`
   text-transform: uppercase;
 `;
 
-const Controls = styled.div``;
+const Controls = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+`;
 
 const CheckContainer = styled.div``;
 
@@ -108,4 +112,6 @@ export const FilterItem = ({
   </Item>
 );
 
-export const FilterItemCustom = ({ children }) => <Item>{children}</Item>;
+export const FilterItemCustom = ({ children, full }) => (
+  <Item full={full}>{children}</Item>
+);

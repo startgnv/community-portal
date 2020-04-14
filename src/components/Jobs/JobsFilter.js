@@ -10,10 +10,18 @@ import {
   FilterItemCustom,
   onFilterChange
 } from '../UI/Filter';
+import styled from 'styled-components/macro';
+
+const Label = styled.p`
+  font-family: Arial, sans-serif;
+  color: rgba(19, 21, 22, 0.6);
+  font-size: 14px;
+  text-align: right;
+`;
 
 const noop = () => {};
 
-const JobsFilter = ({ onChange = noop }) => {
+const JobsFilter = ({ onChange = noop, filteredCount }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
@@ -32,15 +40,6 @@ const JobsFilter = ({ onChange = noop }) => {
   const renderCategories = _.filter(
     categoriesSrc,
     category => !category.parentID
-  );
-  const renderSelectedCategories = _.filter(
-    categoriesSrc,
-    category =>
-      !category.parentID && selectedCategories.indexOf(category.id) > -1
-  );
-  const renderSelectedCompanies = _.filter(
-    companies,
-    company => selectedCompanies.indexOf(company.id) > -1
   );
 
   const onCategoryChange = onFilterChange(
@@ -104,6 +103,12 @@ const JobsFilter = ({ onChange = noop }) => {
           name="filter"
           onChange={value => onChange({ search: value })}
         />
+      </FilterItemCustom>
+
+      <FilterItemCustom full>
+        <Label>
+          {filteredCount} {filteredCount !== 1 ? 'Jobs' : 'Job'}
+        </Label>
       </FilterItemCustom>
     </Filter>
   );

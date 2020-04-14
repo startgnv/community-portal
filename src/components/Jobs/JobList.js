@@ -54,7 +54,8 @@ export const JobList = ({
     companies: [],
     types: []
   },
-  variant = ''
+  variant = '',
+  setJobCount
 }) => {
   const ItemComponent = variant === 'large' ? JobListItemLarge : JobListItem;
 
@@ -94,6 +95,8 @@ export const JobList = ({
         : 1;
     });
   }
+
+  setJobCount(displayJobs.length);
 
   let listContent;
   if (displayJobs.length) {
