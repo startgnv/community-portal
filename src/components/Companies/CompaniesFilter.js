@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../../firebase';
-import { Filter, FilterItem, onFilterChange } from '../UI/Filter';
+import {
+  Filter,
+  FilterItem,
+  FilterItemCustom,
+  onFilterChange
+} from '../UI/Filter';
+import styled from 'styled-components/macro';
 
 const noop = () => {};
 
-const CompaniesFilter = ({ onChange = noop, sizeList }) => {
+const Label = styled.p`
+  font-family: Arial, sans-serif;
+  color: rgba(19, 21, 22, 0.6);
+  font-size: 14px;
+  text-align: right;
+`;
+
+const CompaniesFilter = ({ onChange = noop, sizeList, filteredCount }) => {
   const [selectedIndustries, setSelectedIndustries] = useState([]);
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [industriesValue, industriesLoading, industriesError] = useCollection(
@@ -52,6 +65,12 @@ const CompaniesFilter = ({ onChange = noop, sizeList }) => {
         selectedItems={selectedSizes}
         onChange={onSizeChange}
       />
+
+      <FilterItemCustom full>
+        <Label>
+          {filteredCount} {filteredCount !== 1 ? 'Companies' : 'Company'}
+        </Label>
+      </FilterItemCustom>
     </Filter>
   );
 };

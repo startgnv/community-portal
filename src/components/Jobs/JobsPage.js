@@ -29,6 +29,8 @@ export const JobsPage = () => {
     types: []
   });
 
+  const [displayJobCount, setJobCount] = useState(0);
+
   const { jobs, companies, jobsLoading, companiesLoading } = useContext(
     AppContext
   );
@@ -67,7 +69,10 @@ export const JobsPage = () => {
       <Hero bgImage={heroBG} title="Available Positions" size="medium" />
       <JobsPageContent>
         <FilterContainer>
-          <JobsFilter onChange={onFilterChange} />
+          <JobsFilter
+            onChange={onFilterChange}
+            filteredCount={displayJobCount}
+          />
         </FilterContainer>
         <JobList
           jobs={jobs}
@@ -76,6 +81,7 @@ export const JobsPage = () => {
           showDescription={false}
           showTitle={false}
           variant="large"
+          setJobCount={setJobCount}
         />
       </JobsPageContent>
     </>
