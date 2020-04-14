@@ -53,17 +53,6 @@ const MainNav = () => {
       <li>
         <NavLink
           className="nav-link"
-          to="/"
-          activeClassName="active"
-          exact
-          onClick={closeSidebar}
-        >
-          Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className="nav-link"
           to="/companies"
           activeClassName="active"
           onClick={closeSidebar}
@@ -90,6 +79,17 @@ const MainNav = () => {
           onClick={closeSidebar}
         >
           Ecosystem
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className="nav-link"
+          to="/about"
+          activeClassName="active"
+          exact
+          onClick={closeSidebar}
+        >
+          About
         </NavLink>
       </li>
     </NavContainer>

@@ -223,31 +223,32 @@ const HomePage = () => {
             <CircleText src={circleText} />
           </HeroImage>
           <HeroContent>
-            <h2>
-              Join the <strong>most human</strong>
-              <br />
-              tech ecosystem in Florida.
-            </h2>
-            <h3>Welcome to Gainesville</h3>
+            <h2>Start exploring Gainesville’s innovation spheres.</h2>
+            <h3>Welcome to startGNV</h3>
+            <p>
+              Whether you are looking for a new meetup, promoting your
+              innovative company, finding a new position, hiring or learning
+              about what to expect if you are relocating to GNV, we want to
+              help.
+            </p>
+            <p>
+              Whatever journey it is. Whatever sphere it’s in. Start with us.
+            </p>
             <p>We are always growing, decomposing, and striving even higher.</p>
             <p>It’s in our nature. It IS our nature.</p>
             <p>
-              We are building towards the next product launch. We are growing
-              the round of funding. We are learning new languages, training for
-              our first 5K, and investing in people.
+              We are starting again every day. Starting again at reaching our
+              goals, reentering our processes, building relationships and
+              preparing for the next product launch.
             </p>
             <p>
-              We know our flaws. We cherish all our triumphs. And like humans in
-              any environment, we are seeking reliability and connection. So...
-              we want to meet YOU - human.
+              We want to continue starting, expanding and learning…so we need
+              you. We want to hire you, support you and count on you to tell us
+              where we can be better.
             </p>
             <p>
-              We want to hire you, support you and count on you to tell us where
-              we can be better. We need you in our ecosystem.
-            </p>
-            <p>
-              Join us in our growth, help us fill in the gaps and be you. We’re
-              all human, right?
+              So, join us in our growth. Join us in our next chapters. Start
+              here.
             </p>
           </HeroContent>
         </HomeHero>

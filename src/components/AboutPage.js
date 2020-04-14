@@ -6,13 +6,16 @@ import Hero from './Hero';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardHeader from '@material-ui/core/CardHeader';
 import { Helmet } from 'react-helmet';
 import { device } from './device';
 
 //Sponsors
 import hutchison from '../assets/images/sponsors/HutchisonPLLC.png';
 import threeFiveTwo from '../assets/images/sponsors/ThreeFiveTwo.png';
+import opie from '../assets/images/sponsors/opiesoftware.jpg';
+import feathr from '../assets/images/sponsors/feathr.png';
+import infoTech from '../assets/images/sponsors/infotech.png';
+import interactiveResources from '../assets/images/sponsors/interactive-resources.png';
 
 //Board Members
 import aidan from '../assets/images/board/aidan.jpeg';
@@ -130,6 +133,10 @@ const HeroContent = styled.div`
   margin: 0 auto;
   padding: 60px 0;
   text-align: center;
+
+  p {
+    margin-top: 7px;
+  }
 `;
 
 const Sponsors = styled.div`
@@ -239,6 +246,11 @@ const AboutPage = () => (
             startGNV is a 501(c)(3) dedicated to fostering and growing the
             Gainesville innovation community.
           </p>
+          <p>
+            This website was only possible thanks to contributions from The
+            University of Florida, The Greater Gainesville Chamber of Commerce
+            and The City of Gainesville.
+          </p>
         </HeroContent>
         <Sponsors>
           <h3>Annual Partners</h3>
@@ -257,6 +269,42 @@ const AboutPage = () => (
                 className="sponsor-img"
                 image={threeFiveTwo}
                 title="Three Five Two, Inc"
+              />
+            </Card>
+          </CardContainer>
+          <CardContainer>
+            <Card className="sponsor-card">
+              <CardMedia
+                className="sponsor-img"
+                image={opie}
+                title="OPIE Software"
+              />
+            </Card>
+          </CardContainer>
+          <CardContainer>
+            <Card className="sponsor-card">
+              <CardMedia
+                className="sponsor-img"
+                image={feathr}
+                title="Feathr"
+              />
+            </Card>
+          </CardContainer>
+          <CardContainer>
+            <Card className="sponsor-card">
+              <CardMedia
+                className="sponsor-img"
+                image={infoTech}
+                title="InfoTech"
+              />
+            </Card>
+          </CardContainer>
+          <CardContainer>
+            <Card className="sponsor-card">
+              <CardMedia
+                className="sponsor-img"
+                image={interactiveResources}
+                title="Interactive Resources"
               />
             </Card>
           </CardContainer>
