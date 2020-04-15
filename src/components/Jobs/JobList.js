@@ -96,7 +96,7 @@ export const JobList = ({
     });
   }
 
-  setJobCount(displayJobs.length);
+  setJobCount && setJobCount(displayJobs.length);
 
   let listContent;
   if (displayJobs.length) {
