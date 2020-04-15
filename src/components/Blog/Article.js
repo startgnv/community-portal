@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
+import { Helmet } from 'react-helmet';
 import { device } from '../device';
 import { blogApi } from './api';
 import { Parser } from 'html-to-react';
@@ -196,6 +197,22 @@ const Article = ({
 
   return (
     <>
+      <Helmet>
+        <title>startGNV - {article.title}</title>
+        <meta name="description" content={article.subtitle} />
+        <meta
+          name="og:title"
+          property="og:title"
+          content={`${article.title} - startGNV`}
+        />
+        <meta
+          name="og:description"
+          property="og:description"
+          content={article.subtitle}
+        />
+        <meta name="og:image" propert="og:image" content={article.imageURL} />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <Header backgroundImg={article.imageURL}>
         <TitleCardContainer>
           <TitleCard>
