@@ -27,7 +27,7 @@ import hannah from '../assets/images/board/hannah.jpeg';
 import james from '../assets/images/board/james.png';
 import lindsey from '../assets/images/board/lindsey.jpeg';
 import melissa from '../assets/images/board/melissa.jpeg';
-import mikayla from '../assets/images/board/mikayla.png';
+import mikayla from '../assets/images/board/mikayla.jpg';
 import seyi from '../assets/images/board/seyi.jpeg';
 import will from '../assets/images/board/will.jpeg';
 import curtis from '../assets/images/board/curtis.jpg';
