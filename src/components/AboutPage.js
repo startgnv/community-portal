@@ -70,7 +70,7 @@ const boardMembers = [
     img: melissa
   },
   {
-    name: 'Mikayla Dawn',
+    name: 'Mikayla Paisley',
     img: mikayla
   },
   {
