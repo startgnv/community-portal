@@ -134,6 +134,15 @@ const Footer = () => (
                 About
               </Link>
             </li>
+            <li>
+              <a
+                className="footer-link"
+                href="https://www.iubenda.com/privacy-policy/40668682"
+                target="_blank"
+              >
+                Privacy Policy
+              </a>
+            </li>
           </NavList>
         </Nav>
         <Contact>
