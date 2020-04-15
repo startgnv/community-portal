@@ -56,12 +56,12 @@ const CircleText = styled.img`
 
 const HeroContent = styled.div`
   flex: 1;
-  padding: 60px 30px 60px;
+  padding: 150px 30px;
   margin-left: 80px;
 
   h2 {
     font-size: 3.4rem;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 
     strong {
       position: relative;
@@ -85,19 +85,19 @@ const HeroContent = styled.div`
   }
 
   h3 {
-    font-size: 0.8rem;
+    font-size: 16px;
     letter-spacing: 0.2rem;
     text-transform: uppercase;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
     font-family: benton-sans-wide;
     font-weight: 500;
   }
 
   p {
-    font-size: 1.2rem;
-    max-width: 460px;
-    line-height: 1.6rem;
-    margin-bottom: 16px;
+    font-size: 26px;
+    max-width: 480px;
+    line-height: 1.8rem;
+    margin-bottom: 20px;
   }
 
   strong {
@@ -113,8 +113,13 @@ const HeroContent = styled.div`
       font-size: 2rem;
     }
 
+    h3 {
+      font-size: 0.8rem;
+    }
+
     p {
       max-width: none;
+      font-size: 1.2rem;
     }
   }
 `;
@@ -223,33 +228,17 @@ const HomePage = () => {
             <CircleText src={circleText} />
           </HeroImage>
           <HeroContent>
-            <h2>Start exploring Gainesville’s innovation spheres.</h2>
+            <h2>
+              Start exploring Gainesville’s <strong>innovation spheres.</strong>
+            </h2>
             <h3>Welcome to startGNV</h3>
             <p>
               Whether you are looking for a new meetup, promoting your
-              innovative company, finding a new position, hiring or learning
-              about what to expect if you are relocating to GNV, we want to
+              innovative company, or finding a new position in GNV we want to
               help.
             </p>
-            <p>
-              Whatever journey it is. Whatever sphere it’s in. Start with us.
-            </p>
-            <p>We are always growing, decomposing, and striving even higher.</p>
-            <p>It’s in our nature. It IS our nature.</p>
-            <p>
-              We are starting again every day. Starting again at reaching our
-              goals, reentering our processes, building relationships and
-              preparing for the next product launch.
-            </p>
-            <p>
-              We want to continue starting, expanding and learning…so we need
-              you. We want to hire you, support you and count on you to tell us
-              where we can be better.
-            </p>
-            <p>
-              So, join us in our growth. Join us in our next chapters. Start
-              here.
-            </p>
+            <p>Whatever journey it is. Whatever sphere it’s in.</p>
+            <p>Start with us.</p>
           </HeroContent>
         </HomeHero>
         <RecentBlogPostsContainer>

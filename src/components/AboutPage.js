@@ -243,13 +243,8 @@ const AboutPage = () => (
         <HeroContent>
           <h3>Mission</h3>
           <p>
-            startGNV is a 501(c)(3) dedicated to fostering and growing the
-            Gainesville innovation community.
-          </p>
-          <p>
-            This website was only possible thanks to contributions from The
-            University of Florida, The Greater Gainesville Chamber of Commerce
-            and The City of Gainesville.
+            startGNV is a 501(c)(3) non-profit dedicated to growing the
+            innovation ecosystem of Greater Gainesville.
           </p>
         </HeroContent>
         <Sponsors>
