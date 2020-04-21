@@ -21,7 +21,7 @@ import DeleteDialog from '../UI/DeleteDialog';
 import Button from '@material-ui/core/Button';
 
 import { db } from '../../../firebase';
-import { useAdminContainer } from '../../AdminPageContainer';
+import { useAdminContainer } from '../UI/PageContainer';
 
 const sortKeys = {
   Updated: 'TSUpdated',

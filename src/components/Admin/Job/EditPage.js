@@ -1,14 +1,13 @@
-import _ from 'lodash';
 import React, { useState, useRef, useEffect } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Select from 'react-select';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -33,41 +32,48 @@ const wysiwygToolbar = {
   }
 };
 
-export const EcosysteItemForm = ({
+export const EditPage = ({
   match: {
-    params: { ecoID }
+    params: { jobID }
   },
   history: { replace = () => {}, push = () => {} }
 }) => {
   const [categories = [], loadingCategories] = useCollectionData(
-    db.collection('ecosystemCategories').orderBy('name', 'asc'),
+    db.collection('jobCategories').orderBy('name', 'asc'),
+    { idField: 'id' }
+  );
+  const [companies = [], loadingCompanies] = useCollectionData(
+    db.collection('companies').orderBy('name', 'asc'),
     { idField: 'id' }
   );
 
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [companyID, setCompanyID] = useState();
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [applyUrl, setApplyUrl] = useState('');
+  const [type, setType] = useState('');
   const [featured, setFeatured] = useState(false);
-  const [link, setLink] = useState('');
   const [saving, setSaving] = useState(false);
   const [savingSuccess, setSavingSuccess] = useState(false);
   const [savingError, setSavingError] = useState(false);
   const [wysiwygState, setWysiwygState] = useState(EditorState.createEmpty());
 
-  const doc = useRef(db.collection('ecosystem').doc(...(ecoID ? [ecoID] : [])));
-  const [loadingEcoItem, setLoadingEcoItem] = useState(!!ecoID);
+  const doc = useRef(db.collection('jobs').doc(...(jobID ? [jobID] : [])));
+  const [loadingJob, setLoadingJob] = useState(!!jobID);
   useEffect(() => {
-    if (ecoID) {
+    if (jobID) {
       doc.current.get().then(snapshot => {
-        const ecoItem = snapshot.data();
-        console.warn(ecoItem);
-        setName(ecoItem.name || '');
-        setDescription(ecoItem.description || '');
-        setSelectedCategories(ecoItem.categories || []);
-        setFeatured(ecoItem.featured || false);
-        setLink(ecoItem.link || '');
-        setLoadingEcoItem(false);
-        const contentBlock = htmlToDraft(ecoItem.description);
+        const job = snapshot.data();
+        setTitle(job.title || '');
+        setDescription(job.description || '');
+        setCompanyID(job.companyID || '');
+        setSelectedCategories(job.categories || []);
+        setApplyUrl(job.applyUrl || '');
+        setType(job.type || 'fullTime');
+        setFeatured(job.featured || false);
+        setLoadingJob(false);
+        const contentBlock = htmlToDraft(job.description);
         const contentState = ContentState.createFromBlockArray(
           contentBlock.contentBlocks
         );
@@ -75,49 +81,73 @@ export const EcosysteItemForm = ({
         setWysiwygState(editorState);
       });
     }
-  }, [ecoID]);
+  }, [jobID]);
 
-  const backTo = ecoID ? `/admin/ecosystem/${ecoID}` : '/admin/ecosystem';
+  const backTo = jobID ? `/admin/jobs/${jobID}` : '/admin/jobs';
   useAdminContainer({
     backTo,
-    loading: loadingCategories || loadingEcoItem
+    loading: loadingCategories || loadingCompanies || loadingJob
   });
 
   const onFormSubmit = e => {
     e.preventDefault();
 
-    if (name && selectedCategories.length) {
+    if (
+      title &&
+      description &&
+      selectedCategories.length &&
+      companyID &&
+      applyUrl
+    ) {
       setSaving(true);
       setSavingError(false);
       setSavingSuccess(false);
-      const ecoItemData = {
-        name,
+      const jobData = {
+        title,
         description,
         categories: selectedCategories,
+        companyID,
+        applyUrl,
+        type,
         featured,
-        link,
         TSUpdated: Date.now()
       };
       let updatePromise;
       let redirect = false;
-      if (ecoID) {
-        updatePromise = doc.current.update(ecoItemData);
+      if (jobID) {
+        updatePromise = doc.current.update(jobData);
       } else {
-        ecoItemData.TSCreated = Date.now();
-        updatePromise = db.collection('ecosystem').add(ecoItemData);
+        jobData.TSCreated = Date.now();
+        updatePromise = db.collection('jobs').add(jobData);
         redirect = true;
       }
 
-      updatePromise.then(ecoItemRef => {
+      updatePromise.then(jobRef => {
         setSaving(false);
         setSavingSuccess(true);
         setSavingError(false);
         if (redirect) {
-          setTimeout(() => push('/admin/ecosystem/' + ecoItemRef.id), 1000);
+          setTimeout(() => push('/admin/jobs/' + jobRef.id), 1000);
         }
       });
     }
   };
+
+  const companyOptions = companies.map(({ id, name }) => ({
+    value: id,
+    label: name
+  }));
+
+  const typeOptions = [
+    {
+      value: 'fullTime',
+      label: 'Full Time'
+    },
+    {
+      value: 'partTime',
+      label: 'Part Time'
+    }
+  ];
 
   const onCategoryChange = (event, cats) => {
     setSelectedCategories(cats.map(cat => cat.id));
@@ -129,16 +159,16 @@ export const EcosysteItemForm = ({
   };
 
   return (
-    <FormCardPage title="Ecosystem Item Details" onSubmit={onFormSubmit}>
+    <FormCardPage title="Job Details" onSubmit={onFormSubmit}>
       <Grid container spacing={2} direction="column" justify="center">
         <Grid item>
           <TextField
             required
             variant="outlined"
             fullWidth
-            label="Name"
-            value={name}
-            onChange={e => setName(e.target.value)}
+            label="Job Title"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
           />
         </Grid>
         <Grid item>
@@ -163,6 +193,37 @@ export const EcosysteItemForm = ({
             onEditorStateChange={onWysiwygStateChange}
           />
         </Grid>
+        <Grid item>
+          <TextField
+            required
+            variant="outlined"
+            fullWidth
+            label="Application URL"
+            value={applyUrl}
+            onChange={e => setApplyUrl(e.target.value)}
+          />
+        </Grid>
+        <Grid item>
+          <FormLabel>Type</FormLabel>
+          <Select
+            label="Type"
+            options={typeOptions}
+            value={typeOptions.find(({ value }) => type === value)}
+            onChange={({ value }) => {
+              setType(value);
+            }}
+          />
+        </Grid>
+        <Grid item>
+          <FormLabel>Company</FormLabel>
+          <Select
+            label="Company"
+            disabled={loadingCompanies}
+            options={companyOptions}
+            value={companyOptions.find(({ value }) => companyID === value)}
+            onChange={({ value }) => setCompanyID(value)}
+          />
+        </Grid>
 
         <Grid item>
           <FormControlLabel
@@ -176,17 +237,9 @@ export const EcosysteItemForm = ({
             label="Featured"
           />
         </Grid>
+
         <Grid item>
-          <TextField
-            variant="outlined"
-            fullWidth
-            label="Link"
-            value={link}
-            onChange={e => setLink(e.target.value)}
-          />
-        </Grid>
-        <Grid item>
-          {!loadingEcoItem && (
+          {!loadingJob && (
             <Autocomplete
               multiple
               options={categories}
@@ -233,4 +286,4 @@ export const EcosysteItemForm = ({
   );
 };
 
-export default EcosysteItemForm;
+export default EditPage;

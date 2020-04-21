@@ -163,5 +163,4 @@ export class AppProvider extends React.Component {
   }
 }
 
-export const AppConsumer = AppContext.Consumer;
 export default AppContext;

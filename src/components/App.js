@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { createGlobalStyle } from 'styled-components/macro';
 import { ThemeProvider } from 'styled-components';
-import theme from './theme';
-import { usePrevious } from '../components/hooks';
-
+import theme from './utils/theme';
 import {
   BrowserRouter as Router,
   Route,
@@ -11,23 +9,22 @@ import {
   withRouter
 } from 'react-router-dom';
 import ReactGA from 'react-ga';
-
 import { AppProvider } from './AppContext';
-import HomePage from './HomePage';
-import CompaniesPage from './Companies/CompaniesPage';
-import CompanyPage from './CompanyPage';
-import AboutPage from './AboutPage';
-import EcosystemPage from './EcosystemPage';
-import JobPage from './Job/JobPage';
-import JobsPage from './Jobs/JobsPage';
-import AddCompanyPage from './Company/AddCompanyPage';
-import AdminPage from './AdminPage';
+import HomePage from './Site/Home/HomePage';
+import CompaniesPage from './Site/Companies/CompaniesPage';
+import CompanyPage from './Site/Company/CompanyPage';
+import AboutPage from './Site/About/AboutPage';
+import EcosystemPage from './Site/Ecosystem/EcosystemPage';
+import JobPage from './Site/Job/JobPage';
+import JobsPage from './Site/Jobs/JobsPage';
+import AddCompanyPage from './Site/Company/AddCompanyPage';
+import Admin from './Admin/Admin';
 import AdminRoute from './AdminRoute';
-import AdminLogin from './AdminLogin';
-import Header from './Header/Header';
-import Sidebar from './Sidebar';
-import Article from './Blog/Article';
-import Footer from './Footer/Footer';
+import LoginPage from './Admin/LoginPage';
+import Header from './Site/Header/Header';
+import Sidebar from './Site/UI/Sidebar';
+import Article from './Site/Blog/Article';
+import Footer from './Site/Footer/Footer';
 
 ReactGA.initialize('UA-138572620-3');
 
@@ -39,6 +36,16 @@ const ScrollToTop = withRouter(({ location: { pathname = '' }, children }) => {
   }
   return children;
 });
+
+export const usePrevious = value => {
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current = value;
+  });
+
+  return ref.current;
+};
 
 const GlobalStyle = createGlobalStyle`
 
@@ -170,8 +177,8 @@ export const App = () => (
               <Route exact path="/add-company" component={AddCompanyPage} />
               <Route exact path="/ecosystem" component={EcosystemPage} />
               <Route exact path="/blog/:articleSlug" component={Article} />
-              <Route exact path="/admin/login" component={AdminLogin} />
-              <AdminRoute path="/admin" component={AdminPage} />
+              <Route exact path="/admin/login" component={LoginPage} />
+              <AdminRoute path="/admin" component={Admin} />
             </Switch>
             <Route exact path={publicRoutes} component={Footer} />
           </ScrollToTop>

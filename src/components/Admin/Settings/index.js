@@ -1,5 +1,5 @@
 import React from 'react';
-import FormCardPage from '../../FormCardPage';
+import FormCardPage from '../UI/FormCardPage';
 import Grid from '@material-ui/core/Grid';
 import { IndustryForm } from './IndustryForm';
 import { Expandable } from './Expandable';
