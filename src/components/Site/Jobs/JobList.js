@@ -1,0 +1,128 @@
+import _ from 'lodash';
+import React from 'react';
+import styled from 'styled-components/macro';
+import { clearFix } from 'polished';
+import { device } from '../../utils/device';
+import JobListItem from './JobListItem';
+import JobListItemLarge from './JobListItemLarge';
+import EmptyJobs from './EmptyJobs';
+
+const JobListContainer = styled.div`
+  padding: 0;
+`;
+
+const ListTitle = styled.h3`
+  display: block;
+  margin: 0 0 15px 10px;
+  font-size: 1.6rem;
+`;
+
+const ListContainer = styled.ul`
+  padding: 0;
+  margin: 0 -30px -30px 0;
+  list-style: none;
+  ${clearFix()}
+`;
+
+const ItemContainer = styled.li`
+  width: ${({ variant }) => (variant === 'large' ? '100' : 100 / 3)}%;
+  padding: ${({ variant }) => (variant === 'large' ? '0' : '0 30px 30px 0')};
+  float: ${({ variant }) => (variant === 'large' ? 'none' : 'left')};
+  box-sizing: border-box;
+  list-style-type: none;
+
+  @media ${device.tabletPort} {
+    width: ${({ variant }) => (variant === 'large' ? '100%' : '50%')};
+  }
+
+  @media ${device.mobile} {
+    width: 100%;
+    float: none;
+  }
+`;
+
+export const JobList = ({
+  jobs,
+  companies,
+  className,
+  showTitle = true,
+  showCompanyInfo = true,
+  showDescription = true,
+  filter = {
+    search: '',
+    categories: [],
+    companies: [],
+    types: []
+  },
+  variant = '',
+  setJobCount
+}) => {
+  const ItemComponent = variant === 'large' ? JobListItemLarge : JobListItem;
+
+  const searchFilter = job =>
+    job.title.toLowerCase().includes(filter.search) ||
+    companies
+      .find(c => c.id === job.companyID)
+      .name.toLowerCase()
+      .includes(filter.search);
+  const categoryFilter = job =>
+    filter.categories.length
+      ? _.intersection(filter.categories, job.categories).length
+      : true;
+  const companyFilter = job =>
+    filter.companies.length
+      ? filter.companies.indexOf(job.companyID) > -1
+      : true;
+  const typeFilter = job =>
+    filter.types.length ? filter.types.includes(job.type) : true;
+
+  let displayJobs = jobs.filter(
+    job =>
+      searchFilter(job) &&
+      categoryFilter(job) &&
+      companyFilter(job) &&
+      typeFilter(job)
+  );
+
+  if (companies && companies.length) {
+    displayJobs = _.shuffle(displayJobs || []).sort((a, b) => {
+      const companyA = companies.find(company => company.id === a.companyID);
+      const companyB = companies.find(company => company.id === b.companyID);
+      return companyA.featured === companyB.featured
+        ? 0
+        : companyA.featured
+        ? -1
+        : 1;
+    });
+  }
+
+  setJobCount && setJobCount(displayJobs.length);
+
+  let listContent;
+  if (displayJobs.length) {
+    listContent = displayJobs.map(job => {
+      const jobCompany = _.find(companies, { id: job.companyID });
+      return (
+        <ItemContainer variant={variant} key={job.id}>
+          <ItemComponent
+            job={job}
+            company={jobCompany}
+            showDescription={showDescription}
+            showCompanyInfo={showCompanyInfo}
+          />
+        </ItemContainer>
+      );
+    });
+  } else {
+    listContent = <EmptyJobs />;
+  }
+
+  return (
+    <JobListContainer className={className}>
+      {showTitle && <ListTitle>Jobs ({displayJobs.length})</ListTitle>}
+      <ListContainer>{listContent}</ListContainer>
+    </JobListContainer>
+  );
+};
+
+export default JobList;
