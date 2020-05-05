@@ -16,6 +16,7 @@ import opie from '../../../assets/images/sponsors/opiesoftware.jpg';
 import feathr from '../../../assets/images/sponsors/feathr.png';
 import infoTech from '../../../assets/images/sponsors/infotech.png';
 import interactiveResources from '../../../assets/images/sponsors/interactive-resources.png';
+import santeFe from '../../../assets/images/sponsors/sante-fe.png';
 
 //Board Members
 import aidan from '../../../assets/images/board/aidan.jpeg';
@@ -35,55 +36,68 @@ import curtis from '../../../assets/images/board/curtis.jpg';
 const boardMembers = [
   {
     name: 'Aidan Augustin',
-    img: aidan
+    img: aidan,
+    linkedIn: 'https://www.linkedin.com/in/aidanaugustin/'
   },
   {
     name: 'Benny Torres',
-    img: benny
+    img: benny,
+    linkedIn: 'https://www.linkedin.com/in/bienvenidotorres/'
   },
   {
     name: 'Bryan Tobin',
-    img: bryan
+    img: bryan,
+    linkedIn: 'https://www.linkedin.com/in/bryan-tobin/'
   },
   {
     name: 'Elliot Welker',
-    img: elliot
+    img: elliot,
+    linkedIn: 'https://www.linkedin.com/in/elliottwelker/'
   },
   {
     name: 'Hannah Yeargan',
-    img: hannah
+    img: hannah,
+    linkedIn: 'https://www.linkedin.com/in/hannahyeargan/'
   },
   {
     name: 'Gregg Robinson',
-    img: gregg
+    img: gregg,
+    linkedIn: 'https://www.linkedin.com/in/robinsongregg/'
   },
   {
     name: 'James Gibson',
-    img: james
+    img: james,
+    linkedIn: 'https://www.linkedin.com/in/james-c-gibson/'
   },
   {
     name: 'Lindsey Day',
-    img: lindsey
+    img: lindsey,
+    linkedIn: 'https://www.linkedin.com/in/magneticcareers/'
   },
   {
     name: 'Melissa White',
-    img: melissa
+    img: melissa,
+    linkedIn: 'https://www.linkedin.com/in/melissamaewhite/'
   },
   {
     name: 'Mikayla Paisley',
-    img: mikayla
+    img: mikayla,
+    linkedIn: 'https://www.linkedin.com/in/mikayla-paisley/'
   },
   {
     name: 'Seyi Oluwaleimu',
-    img: seyi
+    img: seyi,
+    linkedIn: 'https://www.linkedin.com/in/oluwaseyi-oluwaleimu-307503142/'
   },
   {
     name: 'William Richardson',
-    img: will
+    img: will,
+    linkedIn: 'https://www.linkedin.com/in/williamrichardson1/'
   },
   {
     name: 'Curtis McMillen',
-    img: curtis
+    img: curtis,
+    linkedIn: 'https://www.linkedin.com/in/curtismcmillen/'
   }
 ];
 
@@ -216,6 +230,7 @@ const BoardMember = styled.div`
 
   .member-name {
     font-size: 1.4rem;
+    color: #131516;
   }
 `;
 
@@ -303,6 +318,15 @@ const AboutPage = () => (
               />
             </Card>
           </CardContainer>
+          <CardContainer>
+            <Card className="sponsor-card">
+              <CardMedia
+                className="sponsor-img"
+                image={santeFe}
+                title="Interactive Resources"
+              />
+            </Card>
+          </CardContainer>
         </Sponsors>
         <Programs>
           <h3>Programs</h3>
@@ -322,7 +346,9 @@ const AboutPage = () => (
                 src={member.img}
                 alt={member.name}
               />
-              <span className="member-name">{member.name}</span>
+              <a className="member-name" href={member.linkedIn}>
+                {member.name}
+              </a>
             </BoardMember>
           ))}
         </Board>
