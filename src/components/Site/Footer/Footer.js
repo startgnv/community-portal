@@ -5,6 +5,7 @@ import { device } from '../../utils/device';
 import { clearFix } from 'polished';
 import Logo from '../UI/Logo';
 import NewsletterForm from './NewletterForm';
+import { Facebook, Instagram, Twitter } from '../UI/SocialIcons';
 
 const Container = styled.div`
   background: ${({ theme }) => theme.deepNavy};
@@ -16,11 +17,8 @@ const Row = styled.div`
   flex-flow: row wrap;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 0 50px;
   max-width: ${({ theme }) => theme.contentMaxWidth};
-  
-  ${clearFix()}
-  
+
   @media ${device.tabletPort}, ${device.mobile} {
     flex-flow: column nowrap;
     align-items: center;
@@ -32,6 +30,10 @@ const Column = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
+
+  @media ${device.tabletPort}, ${device.mobile} {
+    margin-bottom: 50px;
+  }
 `;
 
 const Info = styled.div`
@@ -44,6 +46,8 @@ const Info = styled.div`
 `;
 
 const LogoContainer = styled.div`
+  margin-bottom: 25px;
+
   @media ${device.tabletPort}, ${device.mobile} {
     display: flex;
     justify-content: center;
@@ -53,12 +57,9 @@ const LogoContainer = styled.div`
 const Description = styled.p`
   color: #a3a9b3;
   font-size: 13px;
-  margin-top: 15px;
 `;
 
-const Nav = styled.div`
-  margin-top: 50px;
-`;
+const Nav = styled.div``;
 
 const Header = styled.h3`
   margin-bottom: 5px;
@@ -69,7 +70,9 @@ const Header = styled.h3`
 `;
 
 const NavList = styled.ul`
-  ${clearFix()}
+  ${clearFix()};
+
+  max-width: 150px;
 
   li {
     width: 50%;
@@ -90,17 +93,29 @@ const NavList = styled.ul`
 `;
 
 const Contact = styled.div`
-  margin-top: 50px;
+  margin-top: 25px;
+`;
+
+const Social = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  margin-top: 10px;
+
+  img {
+    margin-right: 15px;
+  }
 `;
 
 const Footer = () => (
   <Container>
     <Row>
+      <LogoContainer>
+        <Logo variant="light" />
+      </LogoContainer>
+    </Row>
+    <Row>
       <Column>
         <Info>
-          <LogoContainer>
-            <Logo variant="light" />
-          </LogoContainer>
           <Description>
             startGNV is a 501(c)(3) non-profit dedicated to growing the
             innovation ecosystem of Greater Gainesville.
@@ -111,6 +126,8 @@ const Footer = () => (
             and The City of Gainesville.
           </Description>
         </Info>
+      </Column>
+      <Column>
         <Nav>
           <Header>Explore startGNV</Header>
           <NavList>
@@ -155,6 +172,23 @@ const Footer = () => (
             </li>
           </NavList>
         </Contact>
+        <Social>
+          <Facebook
+            fill="#A3A9B3"
+            hoverFill="white"
+            to="https://www.facebook.com/startgnv"
+          />
+          <Instagram
+            fill="#A3A9B3"
+            hoverFill="white"
+            to="https://www.instagram.com/startgnv/?hl=en"
+          />
+          <Twitter
+            fill="#A3A9B3"
+            hoverFill="white"
+            to="https://twitter.com/startupgnv"
+          />
+        </Social>
       </Column>
       <Column>
         <NewsletterForm />
