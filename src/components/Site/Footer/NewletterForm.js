@@ -15,7 +15,6 @@ const Container = styled.div`
     align-items: center;
     padding: 10px;
     max-width: 275px;
-    margin-top: 50px;
   }
 `;
 
