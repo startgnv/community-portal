@@ -25,6 +25,7 @@ const ButtonContainer = styled.button`
     color: white;
     font-weight: 600;
     font-size: ${({ theme, size }) => theme.buttonSizes[size].fontSize};
+    white-space: nowrap;
   }
 
   &.outline {

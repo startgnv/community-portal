@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../../../firebase';
 import AppContext from '../../AppContext';
-import SearchInput from './SearchInput';
+import SearchInput from '../UI/SearchInput';
 import {
   Filter,
   FilterItem,

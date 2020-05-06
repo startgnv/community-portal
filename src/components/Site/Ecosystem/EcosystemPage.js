@@ -1,9 +1,10 @@
 import _ from 'lodash';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { baseContentStyling } from '../../utils/mixins';
 import AppContext from '../../AppContext';
 import PageContainer from '../UI/PageContainer';
+import EcosystemFilter from './EcosystemFilter';
 import Hero from '../UI/Hero';
 import Button from '../UI/Button';
 import Tags from '../UI/Tags';
@@ -65,10 +66,33 @@ const EcosystemPage = () => {
     ecosystemLoading,
     ecosystemCategoriesLoading
   } = useContext(AppContext);
+  const [ecoFilter, setEcoFilter] = useState({
+    search: '',
+    categories: []
+  });
 
   if (ecosystemLoading || ecosystemCategoriesLoading) {
     return false;
   }
+
+  const onFilterChange = filterChanged => {
+    setEcoFilter({
+      ...ecoFilter,
+      ...filterChanged
+    });
+  };
+
+  const searchFilter = ecoItem =>
+    ecoItem.name.toLowerCase().includes(ecoFilter.search);
+
+  const categoryFilter = ecoItem =>
+    ecoFilter.categories.length
+      ? _.intersection(ecoFilter.categories, ecoItem.categories).length
+      : true;
+
+  const renderEcoItems = ecosystem.filter(
+    ecoItem => searchFilter(ecoItem) && categoryFilter(ecoItem)
+  );
 
   return (
     <>
@@ -97,7 +121,8 @@ const EcosystemPage = () => {
             A quick guide to the tech and startup organizations, meetups,
             events, incubators, support centers and media.
           </PageDescription>
-          {ecosystem.map(({ name, description, categories, link }, i) => {
+          <EcosystemFilter onChange={onFilterChange} />
+          {renderEcoItems.map(({ name, description, categories, link }, i) => {
             const renderCategories = _.filter(ecosystemCategories, category => {
               return categories.indexOf(category.id) > -1;
             });
