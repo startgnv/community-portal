@@ -6,6 +6,7 @@ import { clearFix } from 'polished';
 import Logo from '../UI/Logo';
 import NewsletterForm from './NewletterForm';
 import { Facebook, Instagram, Twitter } from '../UI/SocialIcons';
+import NewsletterPopup from '../Home/NewletterPopup';
 
 const Container = styled.div`
   background: ${({ theme }) => theme.deepNavy};
@@ -106,95 +107,118 @@ const Social = styled.div`
   }
 `;
 
-const Footer = () => (
-  <Container>
-    <Row>
-      <LogoContainer>
-        <Logo variant="light" />
-      </LogoContainer>
-    </Row>
-    <Row>
-      <Column>
-        <Info>
-          <Description>
-            startGNV is a 501(c)(3) non-profit dedicated to growing the
-            innovation ecosystem of Greater Gainesville.
-          </Description>
-          <Description>
-            This website was only possible thanks to contributions from The
-            University of Florida, The Greater Gainesville Chamber of Commerce
-            and The City of Gainesville.
-          </Description>
-        </Info>
-      </Column>
-      <Column>
-        <Nav>
-          <Header>Explore startGNV</Header>
-          <NavList>
-            <li>
-              <Link to="/companies" className="footer-link">
-                Companies
-              </Link>
-            </li>
-            <li>
-              <Link to="/jobs" className="footer-link">
-                Jobs
-              </Link>
-            </li>
-            <li>
-              <Link to="/ecosystem" className="footer-link">
-                Ecosystem
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" className="footer-link">
-                About
-              </Link>
-            </li>
-            <li>
-              <a
-                className="footer-link"
-                href="https://www.iubenda.com/privacy-policy/40668682"
-                target="_blank"
-              >
-                Privacy Policy
-              </a>
-            </li>
-          </NavList>
-        </Nav>
-        <Contact>
-          <Header>Contact</Header>
-          <NavList>
-            <li>
-              <a href="mailto:info@startupgnv.com" className="footer-link">
-                info@startupgnv.com
-              </a>
-            </li>
-          </NavList>
-        </Contact>
-        <Social>
-          <Facebook
-            fill="#A3A9B3"
-            hoverFill="white"
-            to="https://www.facebook.com/startgnv"
-          />
-          <Instagram
-            fill="#A3A9B3"
-            hoverFill="white"
-            to="https://www.instagram.com/startgnv/?hl=en"
-          />
-          <Twitter
-            fill="#A3A9B3"
-            hoverFill="white"
-            to="https://twitter.com/startupgnv"
-          />
-        </Social>
-      </Column>
-      <Column>
-        <NewsletterForm />
-      </Column>
-    </Row>
-  </Container>
-);
+const Footer = () => {
+  const [showPopup, setPopupVisibility] = React.useState(false);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        // isIntersecting is true when element and viewport are overlapping
+        if (entries[0].isIntersecting === true) {
+          setPopupVisibility(false);
+        } else {
+          setPopupVisibility(true);
+        }
+      },
+      { threshold: [0] }
+    );
+
+    observer.observe(document.querySelector('#footer'));
+  });
+
+  return (
+    <>
+      <NewsletterPopup canBeVisible={showPopup} />
+      <Container id="footer">
+        <Row>
+          <LogoContainer>
+            <Logo variant="light" />
+          </LogoContainer>
+        </Row>
+        <Row>
+          <Column>
+            <Info>
+              <Description>
+                startGNV is a 501(c)(3) non-profit dedicated to growing the
+                innovation ecosystem of Greater Gainesville.
+              </Description>
+              <Description>
+                This website was only possible thanks to contributions from The
+                University of Florida, The Greater Gainesville Chamber of
+                Commerce and The City of Gainesville.
+              </Description>
+            </Info>
+          </Column>
+          <Column>
+            <Nav>
+              <Header>Explore startGNV</Header>
+              <NavList>
+                <li>
+                  <Link to="/companies" className="footer-link">
+                    Companies
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/jobs" className="footer-link">
+                    Jobs
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/ecosystem" className="footer-link">
+                    Ecosystem
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/about" className="footer-link">
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    className="footer-link"
+                    href="https://www.iubenda.com/privacy-policy/40668682"
+                    target="_blank"
+                  >
+                    Privacy Policy
+                  </a>
+                </li>
+              </NavList>
+            </Nav>
+            <Contact>
+              <Header>Contact</Header>
+              <NavList>
+                <li>
+                  <a href="mailto:info@startupgnv.com" className="footer-link">
+                    info@startupgnv.com
+                  </a>
+                </li>
+              </NavList>
+            </Contact>
+            <Social>
+              <Facebook
+                fill="#A3A9B3"
+                hoverFill="white"
+                to="https://www.facebook.com/startgnv"
+              />
+              <Instagram
+                fill="#A3A9B3"
+                hoverFill="white"
+                to="https://www.instagram.com/startgnv/?hl=en"
+              />
+              <Twitter
+                fill="#A3A9B3"
+                hoverFill="white"
+                to="https://twitter.com/startupgnv"
+              />
+            </Social>
+          </Column>
+          <Column>
+            <NewsletterForm />
+          </Column>
+        </Row>
+      </Container>
+    </>
+  );
+};
 
 export default Footer;

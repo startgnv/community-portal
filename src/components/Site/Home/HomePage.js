@@ -12,7 +12,7 @@ import homeHero from '../../../assets/images/home-hero.jpg';
 import homeFeaturedBG from '../../../assets/images/jobs-bg.jpg';
 import circleText from '../../../assets/images/circle-text.png';
 import { Helmet } from 'react-helmet';
-
+import NewsletterPopup from './NewletterPopup';
 import { LinearProgress } from '@material-ui/core';
 
 const HomePageContainer = styled.div``;
