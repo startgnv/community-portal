@@ -13,8 +13,8 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-
+import { Tree } from 'antd';
+import 'antd/dist/antd.css';
 import { db } from '../../../firebase';
 import { useAdminContainer } from '../UI/PageContainer';
 import FormCardPage from '../UI/FormCardPage';
@@ -58,6 +58,12 @@ export const EditPage = ({
   const [savingSuccess, setSavingSuccess] = useState(false);
   const [savingError, setSavingError] = useState(false);
   const [wysiwygState, setWysiwygState] = useState(EditorState.createEmpty());
+
+  // Tree view state
+  const [expandedKeys, setExpandedKeys] = React.useState([]);
+  const [selectedKeys, setSelectedKeys] = React.useState([]);
+  const [autoExpandParent, setAutoExpandParent] = React.useState(true);
+  const tree = categories.reduce(categoryToNode, []);
 
   const doc = useRef(db.collection('jobs').doc(...(jobID ? [jobID] : [])));
   const [loadingJob, setLoadingJob] = useState(!!jobID);
@@ -158,6 +164,49 @@ export const EditPage = ({
     setWysiwygState(state);
   };
 
+  // Used to fold a list of categories into a tree
+  function categoryToNode(tree, category) {
+    const node = {
+      title: category.name,
+      key: category.id
+    };
+
+    if (category.hasChildren && !category.parentID) {
+      node.children = category.childrenById
+        .map(childId => {
+          // Create a child copy without the parent id, leaf nodes
+          // with no parent will attach to their local root
+          const { id, hasChildren, childrenById, name } = categories.find(
+            cat => cat.id === childId
+          );
+          return { id, hasChildren, childrenById, name };
+        })
+        .reduce(categoryToNode, []);
+
+      return [...tree, node];
+    }
+
+    // If no parent, add the node to the current level
+    if (!category.parentID) {
+      return [...tree, node];
+    }
+
+    return tree;
+  }
+
+  const onExpand = expandedKeys => {
+    setExpandedKeys(expandedKeys);
+    setAutoExpandParent(false);
+  };
+
+  const onSelect = (selectedKeys, info) => {
+    setSelectedKeys(selectedKeys);
+  };
+
+  const onCheck = checkedKeys => {
+    setSelectedCategories(checkedKeys);
+  };
+
   return (
     <FormCardPage title="Job Details" onSubmit={onFormSubmit}>
       <Grid container spacing={2} direction="column" justify="center">
@@ -239,27 +288,17 @@ export const EditPage = ({
         </Grid>
 
         <Grid item>
-          {!loadingJob && (
-            <Autocomplete
-              multiple
-              options={categories}
-              getOptionLabel={option => option.name}
-              filterSelectedOptions
-              defaultValue={categories.filter(cat =>
-                selectedCategories.includes(cat.id)
-              )}
-              onChange={onCategoryChange}
-              renderInput={params => (
-                <TextField
-                  {...params}
-                  fullWidth
-                  variant="outlined"
-                  label="Categories"
-                  placeholder="Add Categories..."
-                />
-              )}
-            />
-          )}
+          <Tree
+            checkable
+            onExpand={onExpand}
+            expandedKeys={expandedKeys}
+            autoExpandParent={autoExpandParent}
+            onCheck={onCheck}
+            checkedKeys={selectedCategories}
+            onSelect={onSelect}
+            selectedKeys={selectedKeys}
+            treeData={tree}
+          />
         </Grid>
         <Grid item container justify="flex-end">
           <Button

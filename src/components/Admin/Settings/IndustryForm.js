@@ -50,7 +50,7 @@ export const IndustryForm = () => {
 
   return (
     <>
-      <Input onSubmit={addIndustry} />
+      <Input onSubmit={addIndustry} placeholder="Add an Industry" />
       <div className={classes.chipContainer}>
         {industries.map(({ name, id }) => (
           <Chip

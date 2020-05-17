@@ -60,6 +60,10 @@ const Controls = styled.div`
   align-items: center;
 `;
 
+const Indent = styled.div`
+  padding-left: 20px;
+`;
+
 const CheckContainer = styled.div``;
 
 // Helper Functions
@@ -90,27 +94,52 @@ export const FilterItem = ({
   title,
   items,
   selectedItems,
-  onChange
-}) => (
-  <Item>
-    <Dropdown btnLabel={label}>
-      <DropdownContainer>
-        <DropdownTitle>{title}</DropdownTitle>
-        {items.map(({ name, id }) => (
-          <CheckContainer key={id}>
-            <Checkbox
-              label={name}
-              value={id}
-              onChange={onChange}
-              checked={selectedItems.indexOf(id) > -1}
-              key={id}
-            />
-          </CheckContainer>
-        ))}
-      </DropdownContainer>
-    </Dropdown>
-  </Item>
-);
+  onChange,
+  tree
+}) => {
+  const ItemTree = ({ name, id, children }) => {
+    let childComponents = [];
+    if (children) {
+      childComponents = <Indent>{children && children.map(ItemTree)}</Indent>;
+    }
+
+    return (
+      <CheckContainer key={id}>
+        <Checkbox
+          label={name}
+          value={id}
+          onChange={onChange}
+          checked={selectedItems.indexOf(id) > -1}
+          key={id}
+        />
+        {childComponents}
+      </CheckContainer>
+    );
+  };
+
+  return (
+    <Item>
+      <Dropdown btnLabel={label}>
+        <DropdownContainer>
+          <DropdownTitle>{title}</DropdownTitle>
+          {!tree &&
+            items.map(({ name, id }) => (
+              <CheckContainer key={id}>
+                <Checkbox
+                  label={name}
+                  value={id}
+                  onChange={onChange}
+                  checked={selectedItems.indexOf(id) > -1}
+                  key={id}
+                />
+              </CheckContainer>
+            ))}
+          {tree && items.map(ItemTree)}
+        </DropdownContainer>
+      </Dropdown>
+    </Item>
+  );
+};
 
 export const FilterItemCustom = ({ children, full }) => (
   <Item full={full}>{children}</Item>

@@ -83,7 +83,7 @@ export const BottomNavigationLink = props => (
 );
 
 const ListItemLink = ({ label, ...props }) => (
-  <ListItem component={React.forwardRef(NavLink)} {...props}>
+  <ListItem key={label} component={NavLink} {...props}>
     <ListItemText color="text.primary" fontWeight="200">
       {label}
     </ListItemText>
