@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "startupgnv-39bca"
+    "default": "startupgnv-39bca",
+    "dev": "startgnv-dev"
   }
 }
