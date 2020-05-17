@@ -31,9 +31,14 @@ export const JobsPage = () => {
 
   const [displayJobCount, setJobCount] = useState(0);
 
-  const { jobs, companies, jobsLoading, companiesLoading } = useContext(
-    AppContext
-  );
+  const {
+    jobs,
+    companies,
+    jobsLoading,
+    companiesLoading,
+    jobCategories,
+    jobCategoriesLoading
+  } = useContext(AppContext);
 
   const onFilterChange = filterChanged => {
     setJobsFilter({
@@ -42,7 +47,7 @@ export const JobsPage = () => {
     });
   };
 
-  if (jobsLoading || companiesLoading) {
+  if (jobsLoading || companiesLoading || jobCategoriesLoading) {
     return <LinearProgress />;
   }
 
@@ -72,11 +77,14 @@ export const JobsPage = () => {
           <JobsFilter
             onChange={onFilterChange}
             filteredCount={displayJobCount}
+            companies={companies}
+            categories={jobCategories}
           />
         </FilterContainer>
         <JobList
           jobs={jobs}
           companies={companies}
+          categories={jobCategories}
           filter={jobsFilter}
           showDescription={false}
           showTitle={false}

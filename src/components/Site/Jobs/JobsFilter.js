@@ -21,24 +21,17 @@ const Label = styled.p`
 
 const noop = () => {};
 
-const JobsFilter = ({ onChange = noop, filteredCount }) => {
+const JobsFilter = ({
+  onChange = noop,
+  filteredCount,
+  companies,
+  categories
+}) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
-  const { companies, companiesLoading } = useContext(AppContext);
-  const [categoriesValue, categoriesLoading, categoriesError] = useCollection(
-    db.collection('jobCategories')
-  );
 
-  if (categoriesLoading || categoriesError || companiesLoading) {
-    return false;
-  }
-  const categoriesSrc = categoriesValue.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
-
-  const renderCategories = categoriesSrc.reduce(categoriesToTree, []);
+  const renderCategories = categories.reduce(categoriesToTree, []);
 
   function categoriesToTree(tree, category) {
     const node = {
@@ -49,7 +42,7 @@ const JobsFilter = ({ onChange = noop, filteredCount }) => {
     if (category.hasChildren && !category.parentID) {
       node.children = category.childrenById
         .map(childId => {
-          const { id, hasChildren, childrenById, name } = categoriesSrc.find(
+          const { id, hasChildren, childrenById, name } = categories.find(
             cat => cat.id === childId
           );
           return { id, hasChildren, childrenById, name };
@@ -67,7 +60,7 @@ const JobsFilter = ({ onChange = noop, filteredCount }) => {
   }
 
   const toggleChildren = (selectedIds, categoryId) => {
-    const category = categoriesSrc.find(cat => cat.id === categoryId);
+    const category = categories.find(cat => cat.id === categoryId);
 
     if (!category) return selectedIds;
 
@@ -83,7 +76,7 @@ const JobsFilter = ({ onChange = noop, filteredCount }) => {
     // Before a category can be toggled, its children must be toggled as well,
     // if it has any
     const { value, checked } = event.target;
-    const category = categoriesSrc.find(cat => cat.id === value);
+    const category = categories.find(cat => cat.id === value);
     let selectedWithChildren = [...selectedCategories];
     if (category && category.hasChildren && checked) {
       selectedWithChildren = selectedWithChildren.concat(
