@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Input = ({ onSubmit }) => {
+export const Input = ({ onSubmit, placeholder }) => {
   const classes = useStyles();
   const [input, setInput] = React.useState('');
 
@@ -40,7 +40,7 @@ export const Input = ({ onSubmit }) => {
         value={input}
         onChange={e => setInput(e.target.value)}
         className={classes.input}
-        placeholder="Add an Industry"
+        placeholder={placeholder}
         inputProps={{ 'aria-label': 'add an industry' }}
       />
       <Divider className={classes.divider} orientation="vertical" />
