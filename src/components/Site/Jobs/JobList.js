@@ -44,6 +44,7 @@ const ItemContainer = styled.li`
 export const JobList = ({
   jobs,
   companies,
+  categories,
   className,
   showTitle = true,
   showCompanyInfo = true,
@@ -60,11 +61,21 @@ export const JobList = ({
   const ItemComponent = variant === 'large' ? JobListItemLarge : JobListItem;
 
   const searchFilter = job =>
-    job.title.toLowerCase().includes(filter.search) ||
+    // Search by job name
+    job.title.toLowerCase().includes(filter.search.toLowerCase()) ||
+    // Search by company name
     companies
       .find(c => c.id === job.companyID)
       .name.toLowerCase()
-      .includes(filter.search);
+      .includes(filter.search) ||
+    // Search by job categories
+    job.categories.reduce((acc, cat) => {
+      const candidate = categories.find(c => c.id === cat);
+      return candidate
+        ? acc ||
+            candidate.name.toLowerCase().includes(filter.search.toLowerCase())
+        : acc;
+    }, false);
   const categoryFilter = job =>
     filter.categories.length
       ? _.intersection(filter.categories, job.categories).length
