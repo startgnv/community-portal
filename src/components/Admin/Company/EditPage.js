@@ -16,30 +16,49 @@ import Select from 'react-select';
 import { Photos } from './Photos';
 import { makeStyles } from '@material-ui/core/styles';
 
+const EditPageWrapper = ({
+  match: {
+    params: { companyID }
+  },
+  history
+}) => {
+  const [doc, setDoc] = useState(
+    db.collection('companies').doc(...(companyID ? [companyID] : []))
+  );
+  const [loading, setLoading] = useState(true);
+
+  if (companyID) {
+    db.collection('companyDrafts')
+      .doc(companyID)
+      .get()
+      .then(snapshot => {
+        setLoading(false);
+        if (snapshot.exists && snapshot.data().TSCreated) {
+          setDoc(db.collection('companyDrafts').doc(companyID));
+        }
+      });
+  }
+
+  if (loading) return <h1>Loading...</h1>;
+
+  return <EditPage doc={doc} history={history} />;
+};
+
 const useStyles = makeStyles(theme => ({
   input: {
     display: 'none'
   }
 }));
 
-export const EditPage = ({
-  match: {
-    params: { companyID }
-  },
-  history
-}) => {
+export const EditPage = ({ doc, history }) => {
   const classes = useStyles();
 
   const [industries = [], loadingIndustries] = useCollectionData(
     db.collection('companyCategories'),
     { idField: 'id' }
   );
-  const doc = useRef(
-    // we do the spread trick to "trick" firebase into giving us a doc with a
-    // random ID but it only does that if you pass _nothing_ to it
-    db.collection('companies').doc(...(companyID ? [companyID] : []))
-  );
-  const [companyData, loadingCompany] = useDocumentData(doc.current);
+
+  const [companyData, loadingCompany] = useDocumentData(doc);
   const company = companyData || {};
   const [name, setName] = useState('');
   const [address, setAddress] = useState({});
@@ -76,6 +95,8 @@ export const EditPage = ({
   const coverUploadRef = useRef();
   const listingUploadRef = useRef();
   const photosUploadRef = useRef();
+
+  const [isDraft, setDraft] = useState(false);
 
   useEffect(() => {
     setName(company.name || '');
@@ -254,11 +275,29 @@ export const EditPage = ({
       featured,
       isSponsor,
       TSUpdated: Date.now(),
-      TSCreated: company.TSCreated ? company.TSCreated : Date.now()
+      TSCreated: company.TSCreated ? company.TSCreated : Date.now(),
+      coverPath: company.coverPath,
+      logoPath: company.logoPath,
+      listingPath: company.listingPath ? company.listingPath : company.coverPath
     };
+
+    let newDoc;
+    if (isDraft) {
+      newDoc = db.collection('companyDrafts').doc(doc.id);
+    } else {
+      // If a doc is being published, delete its temporary draft
+      db.collection('companyDrafts')
+        .doc(doc.id)
+        .delete()
+        .then(() => {
+          console.log('Deleted Draft');
+        });
+
+      newDoc = db.collection('companies').doc(doc.id);
+    }
     // after we create or update the doc, we'll have the ID which we need for
     // the images
-    doc.current
+    newDoc
       .set(companyData, { merge: true })
       // 1: Upload new images to Firebase storage
       .then(() => {
@@ -266,7 +305,7 @@ export const EditPage = ({
 
         if (coverUploadRef.current.files[0]) {
           const coverRes = storage
-            .ref(`companyCovers/${doc.current.id}`)
+            .ref(`companyCovers/${doc.id}`)
             .put(coverUploadRef.current.files[0]);
           imgUploads.push(coverRes);
         } else {
@@ -275,7 +314,7 @@ export const EditPage = ({
 
         if (listingUploadRef.current.files[0]) {
           const listingRes = storage
-            .ref(`companyListings/${doc.current.id}`)
+            .ref(`companyListings/${doc.id}`)
             .put(listingUploadRef.current.files[0]);
           imgUploads.push(listingRes);
         } else {
@@ -284,7 +323,7 @@ export const EditPage = ({
 
         if (logoUploadRef.current.files[0]) {
           const logoRes = storage
-            .ref(`companyLogos/${doc.current.id}`)
+            .ref(`companyLogos/${doc.id}`)
             .put(logoUploadRef.current.files[0]);
           imgUploads.push(logoRes);
         } else {
@@ -297,7 +336,7 @@ export const EditPage = ({
         ) {
           for (let file of photosUploadRef.current.files) {
             const fileRes = storage
-              .ref(`companyPhotos/${doc.current.id}/${file.name}`)
+              .ref(`companyPhotos/${doc.id}/${file.name}`)
               .put(file);
             imgUploads.push(fileRes);
           }
@@ -345,12 +384,12 @@ export const EditPage = ({
           );
         }
 
-        return doc.current.update(update);
+        return doc.set(update, { merge: true });
       })
       // 4: Update doc with new deletions (this cannot be done in a single step)
       .then(() => {
         if (photosToRemove.length > 0) {
-          return doc.current.update({
+          return doc.update({
             photos: firebase.firestore.FieldValue.arrayRemove(...photosToRemove)
           });
         }
@@ -364,6 +403,10 @@ export const EditPage = ({
           history.goBack();
         }, 800);
       });
+  };
+
+  const saveAsDraft = () => {
+    setDraft(true);
   };
 
   return (
@@ -553,11 +596,19 @@ export const EditPage = ({
           </Button>
           <Button
             disabled={success || loading}
+            variant="text"
+            type="submit"
+            onClick={saveAsDraft}
+          >
+            {success ? 'Saved' : doc.id ? 'Save As Draft' : 'Create As Draft'}
+          </Button>
+          <Button
+            disabled={success || loading}
             variant="contained"
             color="primary"
             type="submit"
           >
-            {success ? 'Saved' : companyID ? 'Save' : 'Create'}
+            {success ? 'Published' : doc.id ? 'Publish' : 'Create'}
           </Button>
         </Grid>
       </Grid>
@@ -565,4 +616,4 @@ export const EditPage = ({
   );
 };
 
-export default EditPage;
+export default EditPageWrapper;
