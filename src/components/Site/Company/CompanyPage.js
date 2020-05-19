@@ -10,7 +10,7 @@ import MapPin from '../UI/MapPin';
 import { Marker } from 'react-map-gl';
 import { Helmet } from 'react-helmet';
 import { Gallery } from './Gallery';
-
+import Instagram from './Instagram';
 import { LinearProgress } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
@@ -63,17 +63,22 @@ export const CompanyPage = ({
   const [companyValue, companyLoading, companyError] = useCollection(
     db.collection('companies').where('slug', '==', companySlug)
   );
+
   const { jobs, jobsLoading } = useContext(AppContext);
+
   if (companyLoading || jobsLoading) {
     return <LinearProgress />;
   }
+
   if (companyError || companyValue.empty) {
     return <h1>Error</h1>;
   }
+
   const company = {
     id: companyValue.docs[0].id,
     ...companyValue.docs[0].data()
   };
+
   const {
     id,
     name,
@@ -81,6 +86,7 @@ export const CompanyPage = ({
     coverPath = '',
     description = '',
     url = '',
+    instagram,
     coordinates: { latitude, longitude },
     employeeCount = 0,
     photos = []
@@ -90,6 +96,7 @@ export const CompanyPage = ({
     longitude,
     zoom: 12
   };
+
   const companyJobs = jobs.filter(job => job.companyID === id);
 
   return (
@@ -137,6 +144,8 @@ export const CompanyPage = ({
           </MapWrap>
           <Gallery photoURLs={photos} />
         </CompanyContent>
+
+        <Instagram username={instagram ? instagram : null} />
       </CompanyPageContainer>
     </>
   );

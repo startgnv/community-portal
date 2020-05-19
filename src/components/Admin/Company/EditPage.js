@@ -66,6 +66,7 @@ export const EditPage = ({
   const [description, setDescription] = useState('');
   const [shortDescription, setShortDescription] = useState('');
   const [founded, setFounded] = useState('');
+  const [instagram, setInstagram] = useState('');
   const [employeeCount, setEmployeeCount] = useState('');
   const [featured, setFeatured] = useState(false);
   const [isSponsor, setIsSponsor] = useState(false);
@@ -93,6 +94,7 @@ export const EditPage = ({
     setDescription(company.description || '');
     setShortDescription(company.shortDescription || '');
     setFounded(company.founded || '');
+    setInstagram(company.instagram || '');
     setEmployeeCount(company.employeeCount || '');
     setFeatured(company.featured || false);
     setIndustryID(company.industryID || '');
@@ -107,6 +109,7 @@ export const EditPage = ({
     company.description,
     company.shortDescription,
     company.founded,
+    company.instagram,
     company.employeeCount,
     company.featured,
     company.industryID,
@@ -247,6 +250,7 @@ export const EditPage = ({
         : null,
       url,
       founded,
+      instagram,
       employeeCount,
       description,
       shortDescription,
@@ -522,6 +526,16 @@ export const EditPage = ({
             onChange={({ value }) => setEmployeeCount(value)}
           />
         </Grid>
+        <Grid item>
+          <TextField
+            value={instagram}
+            fullWidth
+            variant="outlined"
+            label="Instagram Username"
+            onChange={e => setInstagram(e.target.value)}
+          />
+        </Grid>
+
         <Grid item container justify="center">
           <input
             accept="image/*"
