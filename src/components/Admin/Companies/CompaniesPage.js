@@ -32,24 +32,43 @@ export const CompaniesPage = () => {
   const classes = useStyles();
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState({ by: 'Updated', asc: false });
-  const [companies = [], loading, error] = useCollectionData(
+  const [companiesSrc = [], loading, error] = useCollectionData(
     db.collection('companies'),
     { idField: 'id' }
   );
 
-  useAdminContainer({ loading });
+  const [drafts = [], draftsLoading] = useCollectionData(
+    db.collection('companyDrafts'),
+    { idField: 'id' }
+  );
+
+  const companies = companiesSrc.map(company => {
+    const draft = drafts.find(d => d.id === company.id);
+
+    if (draft && draft.TSCreated) {
+      console.log(draft);
+      return draft;
+    } else return company;
+  });
+
+  useAdminContainer({ loading: loading || draftsLoading });
 
   const deleteCompany = companyID => () => {
-    const doc = companies.find(c => c.id === companyID);
-    if (!doc) return;
+    const companyDoc = companiesSrc.find(c => c.id === companyID);
+    if (!companyDoc) return;
 
-    delete doc.id;
+    // Remove the id key so it isn't stored twice in firestore
+    delete companyDoc.id;
 
     db.collection('archivedCompanies')
       .doc(companyID)
-      .set(doc)
+      .set(companyDoc)
       .then(() => {
         db.collection('companies')
+          .doc(companyID)
+          .delete();
+
+        db.collection('companyDrafts')
           .doc(companyID)
           .delete();
       })
