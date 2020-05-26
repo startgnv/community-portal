@@ -24,6 +24,7 @@ import LoginPage from './Admin/LoginPage';
 import Header from './Site/Header/Header';
 import Sidebar from './Site/UI/Sidebar';
 import Article from './Site/Blog/Article';
+import Catalog from './Site/Blog/Catalog';
 import Footer from './Site/Footer/Footer';
 
 ReactGA.initialize('UA-138572620-3');
@@ -151,7 +152,8 @@ const publicRoutes = [
   '/ecosystem',
   '/new-to-gainesville',
   '/add-company',
-  '/blog/:articleSlug'
+  '/blog/:articleSlug',
+  '/blog'
 ];
 
 export const App = () => (
@@ -176,6 +178,7 @@ export const App = () => (
               />
               <Route exact path="/add-company" component={AddCompanyPage} />
               <Route exact path="/ecosystem" component={EcosystemPage} />
+              <Route exact path="/blog" component={Catalog} />
               <Route exact path="/blog/:articleSlug" component={Article} />
               <Route exact path="/admin/login" component={LoginPage} />
               <AdminRoute path="/admin" component={Admin} />

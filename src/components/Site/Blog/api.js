@@ -17,7 +17,7 @@ const Api = () => {
 
   async function getPosts(limit) {
     try {
-      return await api.posts.browse({ limit });
+      return await api.posts.browse({ limit, include: 'tags,authors' });
     } catch (err) {
       console.error(err.message);
     }
