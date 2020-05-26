@@ -128,6 +128,9 @@ const RecentBlogPostsContainer = styled.div`
   padding: 60px;
   display: flex;
   justify-content: center;
+  flex-flow: column nowrap;
+  max-width: 1080px;
+  margin: auto;
 
   @media ${device.tabletPort}, ${device.mobile} {
     padding: 20px;
@@ -242,7 +245,13 @@ const HomePage = () => {
           </HeroContent>
         </HomeHero>
         <RecentBlogPostsContainer>
-          <RecentPosts limit={4} />
+          <FeaturedHeadline>
+            <h3>StartGNV Blog</h3>
+            <Link to="/blog">View All</Link>
+          </FeaturedHeadline>
+          <div>
+            <RecentPosts limit={4} />
+          </div>
         </RecentBlogPostsContainer>
         <FeaturedContainer>
           <FeaturedSection>

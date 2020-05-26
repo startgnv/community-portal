@@ -27,6 +27,9 @@ const EditPageWrapper = ({
   );
   const [loading, setLoading] = useState(true);
 
+  // This will run when creating a new company, otherwise it will load forever
+  if (!companyID) return <EditPage doc={doc} history={history} />;
+
   if (companyID) {
     db.collection('companyDrafts')
       .doc(companyID)

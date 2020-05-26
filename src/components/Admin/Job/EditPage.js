@@ -14,7 +14,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import { Tree } from 'antd';
-import 'antd/dist/antd.css';
+import 'antd/lib/tree/style/index.css';
 import { db } from '../../../firebase';
 import { useAdminContainer } from '../UI/PageContainer';
 import FormCardPage from '../UI/FormCardPage';

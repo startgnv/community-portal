@@ -4,7 +4,7 @@ import firebase, { db } from '../../../firebase';
 import { makeStyles } from '@material-ui/core';
 import { Input } from './Input';
 import { Tree } from 'antd';
-import 'antd/dist/antd.css';
+import 'antd/lib/tree/style/index.css';
 import DeleteDialog from '../UI/DeleteDialog';
 
 const useStyles = makeStyles(theme => ({
