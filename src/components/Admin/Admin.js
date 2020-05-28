@@ -11,13 +11,14 @@ import EcosystemPage from './Ecosystem';
 import AdminPageContainer from './UI/PageContainer';
 import { CssBaseline } from '@material-ui/core';
 import SettingsPage from './Settings';
+import CreatePage from './Company/CreatePage';
 
 export const Admin = () => (
   <AdminPageContainer>
     <CssBaseline />
     <Switch>
       <Route exact path="/admin/companies" component={CompaniesPage} />
-      <Route exact path="/admin/companies/new" component={EditPage} />
+      <Route exact path="/admin/companies/new" component={CreatePage} />
       <Route
         exact
         path="/admin/companies/:companyID/edit"

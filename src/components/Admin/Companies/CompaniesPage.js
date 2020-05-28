@@ -42,19 +42,23 @@ export const CompaniesPage = () => {
     { idField: 'id' }
   );
 
-  const companies = companiesSrc.map(company => {
-    const draft = drafts.find(d => d.id === company.id);
+  const companies = companiesSrc.reduce(
+    (acc, company) => {
+      const draft = acc.find(d => d.id === company.id);
 
-    if (draft && draft.TSCreated) {
-      console.log(draft);
-      return draft;
-    } else return company;
-  });
+      if (!draft) {
+        return [...acc, company];
+      }
+
+      return acc;
+    },
+    [...drafts]
+  );
 
   useAdminContainer({ loading: loading || draftsLoading });
 
   const deleteCompany = companyID => () => {
-    const companyDoc = companiesSrc.find(c => c.id === companyID);
+    const companyDoc = companies.find(c => c.id === companyID);
     if (!companyDoc) return;
 
     // Remove the id key so it isn't stored twice in firestore
