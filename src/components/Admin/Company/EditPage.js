@@ -60,7 +60,9 @@ export const EditPage = ({ company, history }) => {
   const [coverImg, setCoverImg] = useState({ isString: true, value: '' }); // { isString: boolean, value: string | Blob }
   const [listingImg, setListingImg] = useState({ isString: true, value: '' }); // { isString: boolean, value: string | Blob }
   const [photos, setPhotos] = useState(
-    company.photos.map(photoUrl => ({ isString: true, value: photoUrl }))
+    company.photos
+      ? company.photos.map(photoUrl => ({ isString: true, value: photoUrl }))
+      : []
   ); // { isString: boolean, value: string | Blob }[]
   const [photosToDelete, setPhotosToDelete] = useState([]); // string[]
   const [inputAddress, setInputAddress] = useState(company.address || '');
@@ -84,18 +86,22 @@ export const EditPage = ({ company, history }) => {
   // These images are referenced in Firestore by their relative storage path,
   // thus their actual image URL must be fetched
   useEffect(() => {
-    const coverRef = storage.ref(company.coverPath);
-    const listingPath = storage.ref(company.listingPath);
-    const logoPath = storage.ref(company.logoPath);
-
     Promise.all([
-      coverRef.getDownloadURL(),
-      listingPath.getDownloadURL(),
-      logoPath.getDownloadURL()
+      company.coverPath
+        ? storage.ref(company.coverPath).getDownloadURL()
+        : Promise.resolve(null),
+      company.listingPath
+        ? storage.ref(company.listingPath).getDownloadURL()
+        : Promise.resolve(null),
+      company.logoPath
+        ? storage.ref(company.logoPath).getDownloadURL()
+        : Promise.resolve(null)
     ]).then(([coverUrl, listingUrl, logoUrl]) => {
-      setCoverImg({ isString: true, value: coverUrl });
-      setListingImg({ isString: true, value: listingUrl });
-      setLogoImg({ isString: true, value: logoUrl });
+      if (coverUrl) setCoverImg({ isString: true, value: coverUrl });
+
+      if (listingUrl) setListingImg({ isString: true, value: listingUrl });
+
+      if (logoUrl) setLogoImg({ isString: true, value: logoUrl });
     });
   }, []);
 
