@@ -5,6 +5,7 @@ import CompanyPage from './Company/CompanyPage';
 import CompaniesPage from './Companies/CompaniesPage';
 import WelcomePage from './WelcomePage';
 import JobsPage from './Jobs/JobsPage';
+import JobImporter from './Jobs/Importer';
 import EditPage from './Company/EditPage';
 import Router from './Job/Router';
 import EcosystemPage from './Ecosystem';
@@ -26,6 +27,7 @@ export const Admin = () => (
       />
       <Route exact path="/admin/companies/:companyID" component={CompanyPage} />
       <Route exact path="/admin/jobs" component={JobsPage} />
+      <Route exact path="/admin/jobs/import" component={JobImporter} />
       <Route path="/admin/jobs" component={Router} />
       <Route path="/admin/ecosystem" component={EcosystemPage} />
       <Route exact path="/admin/settings" component={SettingsPage} />
