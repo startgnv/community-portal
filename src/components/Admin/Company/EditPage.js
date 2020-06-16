@@ -147,7 +147,7 @@ export const EditPage = ({ company, history }) => {
       listingPath: company.listingPath
         ? company.listingPath
         : company.coverPath,
-      photos: company.photos
+      photos: company.photos || []
     };
 
     let doc;
