@@ -1,12 +1,19 @@
 import theme from './theme';
 
 export const baseContentStyling = props => `
+  line-height: 1.4rem;
+
   p {
     margin-bottom: 20px;
     color: ${theme.textDark};
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  h4, h5, h6 {
     margin-bottom: 10px;
   }
 
