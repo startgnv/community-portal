@@ -18,10 +18,10 @@ const NavContainer = styled.ul`
     display: block;
     height: 30px;
     padding: 0 20px;
-    color: white;
     text-decoration: none;
     line-height: 30px;
-    color: ${({ theme }) => theme.textDark};
+    color: ${({ variant, theme }) =>
+      variant === 'light' ? 'white' : theme.textDark};
     font-size: 0.8rem;
     font-family: benton-sans-wide;
     font-weight: 500;
@@ -46,10 +46,10 @@ const NavContainer = styled.ul`
   }
 `;
 
-const MainNav = () => {
+const MainNav = ({ variant }) => {
   const { closeSidebar } = useContext(AppContext);
   return (
-    <NavContainer>
+    <NavContainer variant={variant}>
       <li>
         <NavLink
           className="nav-link"
@@ -79,6 +79,16 @@ const MainNav = () => {
           onClick={closeSidebar}
         >
           Ecosystem
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className="nav-link"
+          to="/sponsorship"
+          activeClassName="active"
+          onClick={closeSidebar}
+        >
+          Sponsorship
         </NavLink>
       </li>
       <li>

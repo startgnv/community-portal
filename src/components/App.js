@@ -18,6 +18,7 @@ import EcosystemPage from './Site/Ecosystem/EcosystemPage';
 import JobPage from './Site/Job/JobPage';
 import JobsPage from './Site/Jobs/JobsPage';
 import AddCompanyPage from './Site/Company/AddCompanyPage';
+import SponsorshipPage from './Site/Sponsorship/SponsorshipPage';
 import Admin from './Admin/Admin';
 import AdminRoute from './AdminRoute';
 import LoginPage from './Admin/LoginPage';
@@ -153,7 +154,8 @@ const publicRoutes = [
   '/new-to-gainesville',
   '/add-company',
   '/blog/:articleSlug',
-  '/blog'
+  '/blog',
+  '/sponsorship'
 ];
 
 export const App = () => (
@@ -162,7 +164,11 @@ export const App = () => (
       <>
         <Router>
           <ScrollToTop>
-            <Route exact path={publicRoutes} component={Header} />
+            <Route
+              exact
+              path={publicRoutes.filter(r => r !== '/sponsorship')}
+              component={Header}
+            />
             <Route exact path={publicRoutes} component={Sidebar} />
             <Switch>
               <Route exact path="/" component={HomePage} />
@@ -180,6 +186,7 @@ export const App = () => (
               <Route exact path="/ecosystem" component={EcosystemPage} />
               <Route exact path="/blog" component={Catalog} />
               <Route exact path="/blog/:articleSlug" component={Article} />
+              <Route exact path="/sponsorship" component={SponsorshipPage} />
               <Route exact path="/admin/login" component={LoginPage} />
               <AdminRoute path="/admin" component={Admin} />
             </Switch>
