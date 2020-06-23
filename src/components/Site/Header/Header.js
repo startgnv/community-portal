@@ -67,14 +67,14 @@ const Hamburger = styled.div`
   }
 `;
 
-export const Header = ({ className }) => {
+export const Header = ({ className, transparent }) => {
   const { sidebarOpen, openSidebar, closeSidebar } = useContext(AppContext);
   return (
     <HeaderContainer className={className}>
       <HeaderContent>
-        <Logo />
+        <Logo variant={transparent ? 'light' : 'dark'} />
         <NavContainer>
-          <MainNav />
+          <MainNav variant={transparent ? 'light' : 'dark'} />
         </NavContainer>
         <HamburgerContainer onClick={sidebarOpen ? closeSidebar : openSidebar}>
           <Hamburger />
