@@ -16,7 +16,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Select from 'react-select';
 import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
+import TextField from '@material-ui/core/TextField';
 
+// Convert the Lever job type into our own job type
 const getLeverJobType = leverJob => {
   let type = '';
   if (leverJob && leverJob.categories && leverJob.categories.commitment) {
@@ -31,6 +33,9 @@ const getLeverJobType = leverJob => {
   }
   return type;
 };
+
+// Lever breaks up their content into a few different fields
+// Combine them so it plays nice with our wysiwyg
 const getLeverDescription = ({ description, lists }) => {
   let listHTML = '';
   lists.forEach(
@@ -38,6 +43,9 @@ const getLeverDescription = ({ description, lists }) => {
   );
   return description + listHTML;
 };
+
+// Convert Lever jobs to portal jobs
+// Store the original Lever data
 const leverToPortal = (companyID, leverJob) => {
   const portalJob = {
     companyID,
@@ -55,65 +63,80 @@ const leverToPortal = (companyID, leverJob) => {
 
 const getRemoteJobsInfo = company => {
   let url;
-  let type;
   let format;
+  const manualUrl = company.manualImportUrl;
+  const type = company.ats || '';
 
   if (company.leverID) {
     url = `https://api.lever.co/v0/postings/${company.leverID}?mode=json`;
-    type = 'lever';
     format = 'json';
   } else if (company.greenhouseID) {
     url = `https://boards-api.greenhouse.io/v1/boards/${
       company.greenhouseID
     }/jobs`;
-    type = 'greenhouse';
     format = 'json';
   } else if (company.ultiproID) {
+    // Unfortunately, UltiPro has no public API for this yet
+    // The below request requires CORS, which they don't have enabled
     url = `https://recruiting.ultipro.com/${
       company.ultiproID
     }/JobBoard/a1f626ce-9a88-4c30-86ee-6562ee8ea030/JobBoardView/LoadSearchResults`;
-    type = 'ultipro';
     format = 'json';
   }
 
   return {
     url,
     type,
-    format
+    format,
+    manualUrl
   };
 };
 
+// Match jobs we already have listed to jobs we got from the ATS
 const matchJobs = (remoteJobs, portalJobs) => {
-  return remoteJobs.map(remoteJob => {
-    let matchingPortalJobs = [];
-    let matchType = 'none';
-    // Check if there is an exact job match
-    const exactMatch = portalJobs.find(
-      portalJob =>
-        portalJob.leverData && portalJob.leverData.id === remoteJob.remoteID
-    );
-    if (exactMatch) {
-      matchingPortalJobs = [exactMatch];
-    }
-    if (matchingPortalJobs.length) {
-      matchType = 'exact';
-    } else {
-      // If there is no exact job match look for a close match based on the job title
-      matchingPortalJobs = portalJobs.filter(
+  return remoteJobs
+    .map(remoteJob => {
+      let matchingPortalJobs = [];
+      let matchType = 'none';
+      // Check if there is an exact job match
+      const exactMatch = portalJobs.find(
         portalJob =>
-          stringSimilarity.compareTwoStrings(remoteJob.title, portalJob.title) >
-          0.75
+          portalJob.leverData && portalJob.leverData.id === remoteJob.remoteID
       );
-      if (matchingPortalJobs.length) {
-        matchType = 'title';
+      if (exactMatch) {
+        matchingPortalJobs = [exactMatch];
       }
-    }
-    return {
-      remoteJob,
-      matches: matchingPortalJobs,
-      matchType
-    };
-  });
+      if (matchingPortalJobs.length) {
+        matchType = 'exact';
+      } else {
+        // If there is no exact job match look for a close match based on the job title
+        matchingPortalJobs = portalJobs.filter(
+          portalJob =>
+            stringSimilarity.compareTwoStrings(
+              remoteJob.title,
+              portalJob.title
+            ) > 1
+        );
+        if (!matchingPortalJobs.length) {
+          matchingPortalJobs = portalJobs.filter(
+            portalJob =>
+              stringSimilarity.compareTwoStrings(
+                remoteJob.title,
+                portalJob.title
+              ) > 0.75
+          );
+        }
+        if (matchingPortalJobs.length) {
+          matchType = 'title';
+        }
+      }
+      return {
+        remote: remoteJob,
+        portal: matchingPortalJobs[0],
+        matchType
+      };
+    })
+    .filter(match => match.portal && match.remote);
 };
 
 const AdminJobsSyncPage = () => {
@@ -134,12 +157,18 @@ const AdminJobsSyncPage = () => {
     loading: companiesLoading || jobsLoading
   });
 
+  const [view, setView] = useState({ value: 'new', label: 'New Jobs' });
   const [fetchingJobs, setFetchingJobs] = useState(false);
   const [importingJobs, setImportingJobs] = useState(false);
-  const [pendingJobsByCompany, setPendingJobsByCompany] = useState([]);
+  const [pendingJobs, setPendingJobs] = useState([]);
+  const [matchingJobs, setMatchingJobs] = useState([]);
   const [importCompany, setImportCompany] = useState('');
   const importableCompanies = companies.filter(
-    company => company.leverID || company.greenhouseID || company.ultiproID
+    company =>
+      company.leverID ||
+      company.greenhouseID ||
+      company.ultiproID ||
+      company.manualImportUrl
   );
   const [selectedJobs, setSelectedJobs] = useState({});
 
@@ -149,15 +178,12 @@ const AdminJobsSyncPage = () => {
         leverToPortal(companyID, job)
       );
       const matchedJobs = matchJobs(formattedJobs, jobs);
-      return {
-        jobs: matchedJobs,
-        companyID
-      };
+      setMatchingJobs([...matchingJobs, ...matchedJobs]);
+      return formattedJobs;
     });
   };
 
   const processUltiproResponse = (companyID, res) => {
-    console.warn(companyID, res);
     return res.json().then(remoteJobs => {
       /*const formattedJobs = remoteJobs.map(job =>
         leverToPortal(companyID, job)
@@ -191,21 +217,9 @@ const AdminJobsSyncPage = () => {
               switch (remoteInfo.type) {
                 case 'lever':
                   processLeverResponse(company.id, res).then(formattedJobs => {
-                    setPendingJobsByCompany([
-                      ...pendingJobsByCompany,
-                      formattedJobs
-                    ]);
+                    setPendingJobs([...pendingJobs, ...formattedJobs]);
                   });
                   break;
-                case 'ultipro':
-                  processUltiproResponse(company.id, res).then(
-                    formattedJobs => {
-                      setPendingJobsByCompany([
-                        ...pendingJobsByCompany,
-                        formattedJobs
-                      ]);
-                    }
-                  );
               }
             })
             .catch(err => {
@@ -222,10 +236,6 @@ const AdminJobsSyncPage = () => {
     value: id,
     label: name
   }));
-  companyOptions.unshift({
-    value: '',
-    label: 'All Companies'
-  });
 
   const jobActionOptions = [
     {
@@ -242,6 +252,21 @@ const AdminJobsSyncPage = () => {
     }
   ];
 
+  const viewOptions = [
+    {
+      value: 'new',
+      label: 'New Jobs'
+    },
+    {
+      value: 'matches',
+      label: 'Matching Jobs'
+    },
+    {
+      value: 'old',
+      label: 'Old Jobs'
+    }
+  ];
+
   const onJobActionChange = (value, remoteID) => {
     setSelectedJobs({
       ...selectedJobs,
@@ -252,25 +277,23 @@ const AdminJobsSyncPage = () => {
   const onImportClick = () => {
     setImportingJobs(true);
     const importPromises = [];
-    pendingJobsByCompany.forEach(companyJobs => {
-      companyJobs.jobs.forEach(job => {
-        const selectedJob = selectedJobs[job.remoteJob.remoteID];
-        if (selectedJob) {
-          switch (selectedJob.value) {
-            case 'replace':
-              break;
-            case 'import':
-              importPromises.push(
-                db.collection('jobs').add({
-                  ...job.remoteJob,
-                  TSCreated: Date.now(),
-                  imported: true
-                })
-              );
-              break;
-          }
+    pendingJobs.forEach(job => {
+      const selectedJob = selectedJobs[job.remoteID];
+      if (selectedJob) {
+        switch (selectedJob.value) {
+          case 'replace':
+            break;
+          case 'import':
+            importPromises.push(
+              db.collection('jobs').add({
+                ...job,
+                TSCreated: Date.now(),
+                imported: true
+              })
+            );
+            break;
         }
-      });
+      }
     });
     Promise.all(importPromises).then(res => {
       setImportingJobs(false);
@@ -292,90 +315,106 @@ const AdminJobsSyncPage = () => {
     }
   });
 
+  let renderJobs = [];
+  if (view.value === 'new') {
+    if (matchingJobs.length) {
+      renderJobs = pendingJobs.filter(
+        pendingJob =>
+          !matchingJobs.find(
+            matchingJob => pendingJob.remoteID === matchingJob.remote.remoteID
+          )
+      );
+    } else {
+      renderJobs = pendingJobs;
+    }
+  } else if (view.value === 'matches') {
+    renderJobs = matchingJobs.map(match => match.portal);
+  } else {
+    const filteredJobs = jobs.filter(job => importCompany === job.companyID);
+    if (matchingJobs.length) {
+      renderJobs = filteredJobs.filter(
+        portalJob =>
+          !matchingJobs.find(
+            matchingJob => portalJob.id === matchingJob.portal.id
+          )
+      );
+    } else {
+      renderJobs = filteredJobs;
+    }
+  }
+
+  const onViewChange = selected => {
+    setView(selected);
+    setSelectedJobs([]);
+  };
+
   return (
     <Container>
       <Typography variant="h3">Import Jobs</Typography>
-      {pendingJobsByCompany && !!pendingJobsByCompany.length ? (
+      {pendingJobs && !!pendingJobs.length ? (
         <>
-          {pendingJobsByCompany.map(companyJobs => {
-            const company = companies.find(
-              company => company.id === companyJobs.companyID
-            );
-            return (
-              <>
-                <Typography variant="h5">{company.name}</Typography>
-                <List>
-                  {companyJobs.jobs.map(jobWithMatches => {
-                    return (
-                      <ListItem
-                        key={jobWithMatches.remoteJob.remoteID}
-                        selected={
-                          selectedJobs[jobWithMatches.remoteJob.remoteID] &&
-                          selectedJobs[jobWithMatches.remoteJob.remoteID]
-                            .value !== 'skip'
+          <Select options={viewOptions} onChange={onViewChange} value={view} />
+          <List>
+            {renderJobs.map(job => {
+              const company = companies.find(
+                company => company.id === job.companyID
+              );
+              return (
+                <ListItem
+                  key={job.remoteID}
+                  selected={
+                    selectedJobs[job.remoteID] &&
+                    selectedJobs[job.remoteID].value !== 'skip'
+                  }
+                >
+                  <div style={{ display: 'flex', flex: 3 }}>
+                    <ListItemAvatar>
+                      <StorageAvatar
+                        path={company.logoPath}
+                        avatarProps={{ style: { width: '40px' } }}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={job.title}
+                      secondary={company.name}
+                    />
+                  </div>
+                  <div style={{ flex: 1 }} className="actions">
+                    <Select
+                      options={jobActionOptions}
+                      onChange={selected =>
+                        onJobActionChange(selected, job.remoteID)
+                      }
+                      value={
+                        selectedJobs[job.remoteID] || {
+                          value: 'skip',
+                          label: 'Skip'
                         }
+                      }
+                    />
+                  </div>
+                  {job.id && (
+                    <>
+                      <Button
+                        variant="outlined"
+                        href={'/jobs/' + job.id}
+                        target="_blank"
                       >
-                        <div style={{ display: 'flex', flex: 3 }}>
-                          <ListItemAvatar>
-                            <StorageAvatar
-                              path={company.logoPath}
-                              avatarProps={{ style: { width: '40px' } }}
-                            />
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={jobWithMatches.remoteJob.title}
-                            secondary={company.name}
-                          />
-                        </div>
-                        <div style={{ flex: 1 }} className="actions">
-                          <Select
-                            options={jobActionOptions}
-                            onChange={selected =>
-                              onJobActionChange(
-                                selected,
-                                jobWithMatches.remoteJob.remoteID
-                              )
-                            }
-                            value={
-                              selectedJobs[
-                                jobWithMatches.remoteJob.remoteID
-                              ] || {
-                                value: 'skip',
-                                label: 'Skip'
-                              }
-                            }
-                          />
-                        </div>
-                        <div style={{ display: 'flex', flex: 3 }}>
-                          {jobWithMatches.matches &&
-                            jobWithMatches.matches.length > 0 && (
-                              <List>
-                                {jobWithMatches.matches.map(jobMatch => (
-                                  <ListItem key={jobMatch.id}>
-                                    <ListItemAvatar>
-                                      <StorageAvatar
-                                        path={company.logoPath}
-                                        avatarProps={{
-                                          style: { width: '40px' }
-                                        }}
-                                      />
-                                    </ListItemAvatar>
-                                    <ListItemText
-                                      primary={jobMatch.title}
-                                      secondary={company.name}
-                                    />
-                                  </ListItem>
-                                ))}
-                              </List>
-                            )}
-                        </div>
-                      </ListItem>
-                    );
-                  })}
-                </List>
-              </>
-            );
-          })}
+                        View Job
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        href={'/admin/jobs/' + job.id}
+                        target="_blank"
+                      >
+                        Edit Job
+                      </Button>
+                    </>
+                  )}
+                </ListItem>
+              );
+            })}
+          </List>
         </>
       ) : (
         <Grid item>
@@ -412,7 +451,7 @@ const AdminJobsSyncPage = () => {
             {importingJobs ? 'Importing Jobs...' : 'Import'}
           </Button>
         )}
-        {pendingJobsByCompany.length === 0 && (
+        {pendingJobs.length === 0 && (
           <Button
             onClick={onGetJobsClick}
             disabled={fetchingJobs}
