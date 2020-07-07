@@ -629,8 +629,12 @@ const SponsorshipPage = () => {
               </PerkColumn>
             </SponsorshipPerks>
             <Divider />
-            <SponsorButton href="mailto:info@startgnv.com?subject=Sponsorship">
-              Contact Us
+            <SponsorButton
+              href="https://pages.donately.com/startgnv/form/frm_8b556d28619c"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Donate Online
             </SponsorButton>
           </Card>
         </CardContainer>
@@ -690,8 +694,12 @@ const SponsorshipPage = () => {
               </PerkColumn>
             </SponsorshipPerks>
             <Divider />
-            <SponsorButton href="mailto:info@startgnv.com?subject=Sponsorship">
-              Contact Us
+            <SponsorButton
+              href="https://pages.donately.com/startgnv/form/frm_d24f9bb21f88"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Donate Online
             </SponsorButton>
           </Card>
         </CardContainer>
@@ -741,8 +749,12 @@ const SponsorshipPage = () => {
               </PerkColumn>
             </SponsorshipPerks>
             <Divider />
-            <SponsorButton href="mailto:info@startgnv.com?subject=Sponsorship">
-              Contact Us
+            <SponsorButton
+              href="https://pages.donately.com/startgnv/form/frm_33d0b129593e"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Donate Online
             </SponsorButton>
           </Card>
         </CardContainer>
