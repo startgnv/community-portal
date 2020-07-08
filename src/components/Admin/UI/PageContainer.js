@@ -161,6 +161,13 @@ export const PageContainer = ({ children, location }) => {
               activeClassName={classes.active}
               label="Jobs"
             />
+            <List className={classes.drawerList}>
+              <ListItemLink
+                to="/admin/jobs/import"
+                activeClassName={classes.active}
+                label="Import Jobs"
+              />
+            </List>
             <ListItemLink
               to="/admin/ecosystem"
               activeClassName={classes.active}
