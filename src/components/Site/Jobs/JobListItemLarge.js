@@ -125,7 +125,7 @@ const JobListItemLarge = ({
           <div>
             <JobName>{title}</JobName>
             <CategoriesContainer>
-              <JobCategories categories={categories} size="small" />
+              <JobCategories categories={categories} limit={5} size="small" />
             </CategoriesContainer>
             <Link className="company" to={`/companies/${company.slug}`}>
               {company.name}
