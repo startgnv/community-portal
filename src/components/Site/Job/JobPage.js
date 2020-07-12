@@ -135,7 +135,7 @@ export const JobPage = ({
           </Link>
           {categories && categories.length > 0 && (
             <CategoriesContainer>
-              <JobCategories categories={categories} />
+              <JobCategories limit={5} categories={categories} />
             </CategoriesContainer>
           )}
         </Header>
