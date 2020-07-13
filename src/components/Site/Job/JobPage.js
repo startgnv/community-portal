@@ -13,6 +13,7 @@ import { Parser } from 'html-to-react';
 import { Helmet } from 'react-helmet';
 import CompanyCard from './CompanyCard';
 import { device } from '../../utils/device';
+import info from '../../../assets/images/info.svg';
 
 const htmlParser = new Parser();
 
@@ -72,6 +73,33 @@ const Description = styled.div`
 
 const CategoriesContainer = styled.div`
   display: inline-block;
+`;
+
+const InfoBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  border-radius: 3px;
+  border-left: 3px solid #f35b1a;
+  box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.15);
+  background-color: white;
+  padding: 12px 30px 12px 0;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+`;
+
+const InfoBoxMessage = styled.p`
+  font-family: Montserrat, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #f35b1a;
+`;
+
+const InfoIcon = styled.img`
+  margin: 0 16px;
 `;
 
 export const JobPage = ({
@@ -147,6 +175,13 @@ export const JobPage = ({
 
           <Sidebar>
             <ApplyBtn job={job} companyName={companyName} />
+            <InfoBox>
+              <InfoIcon src={info} alt="Info" />
+              <InfoBoxMessage>
+                Let them know you heard about the role from 'startGNV's Job
+                Board'.
+              </InfoBoxMessage>
+            </InfoBox>
             <CompanyCard
               name={companyName}
               logo={companyLogoPath}
