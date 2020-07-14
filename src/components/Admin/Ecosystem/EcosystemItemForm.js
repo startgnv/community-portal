@@ -1,11 +1,10 @@
-import _ from 'lodash';
 import React, { useState, useRef, useEffect } from 'react';
+import { db, storage } from '../../../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -15,10 +14,17 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker
+} from '@material-ui/pickers';
 
-import { db } from '../../../firebase';
 import { useAdminContainer } from '../UI/PageContainer';
 import FormCardPage from '../UI/FormCardPage';
+import { Switch } from '@material-ui/core';
+import ThumbnailUpload from './ThumbnailUpload';
 
 const wysiwygToolbar = {
   options: ['inline', 'blockType', 'list'],
@@ -45,6 +51,10 @@ export const EcosysteItemForm = ({
   );
 
   const [name, setName] = useState('');
+  const [isEvent, setIsEvent] = useState(false);
+  const [eventDate, setEventDate] = useState(new Date(Date.now()));
+  const [location, setLocation] = useState('');
+  const [thumbnail, setThumbnail] = useState({ isString: true, value: '' });
   const [description, setDescription] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [featured, setFeatured] = useState(false);
@@ -56,12 +66,20 @@ export const EcosysteItemForm = ({
 
   const doc = useRef(db.collection('ecosystem').doc(...(ecoID ? [ecoID] : [])));
   const [loadingEcoItem, setLoadingEcoItem] = useState(!!ecoID);
+
   useEffect(() => {
     if (ecoID) {
       doc.current.get().then(snapshot => {
         const ecoItem = snapshot.data();
-        console.warn(ecoItem);
         setName(ecoItem.name || '');
+        setIsEvent(ecoItem.isEvent || false);
+        if (isEvent) setEventDate(ecoItem.eventDate);
+        setLocation(ecoItem.location || '');
+        setThumbnail(
+          ecoItem.thumbnail
+            ? { isString: true, value: ecoItem.thumbnail }
+            : { isString: true, value: '' }
+        );
         setDescription(ecoItem.description || '');
         setSelectedCategories(ecoItem.categories || []);
         setFeatured(ecoItem.featured || false);
@@ -90,32 +108,65 @@ export const EcosysteItemForm = ({
       setSaving(true);
       setSavingError(false);
       setSavingSuccess(false);
-      const ecoItemData = {
+      let ecoItemData = {
         name,
+        isEvent,
+        location,
         description,
         categories: selectedCategories,
         featured,
         link,
         TSUpdated: Date.now()
       };
-      let updatePromise;
-      let redirect = false;
-      if (ecoID) {
-        updatePromise = doc.current.update(ecoItemData);
-      } else {
-        ecoItemData.TSCreated = Date.now();
-        updatePromise = db.collection('ecosystem').add(ecoItemData);
-        redirect = true;
+
+      if (isEvent) {
+        ecoItemData.eventDate = eventDate.getTime();
       }
 
-      updatePromise.then(ecoItemRef => {
-        setSaving(false);
-        setSavingSuccess(true);
-        setSavingError(false);
-        if (redirect) {
-          setTimeout(() => push('/admin/ecosystem/' + ecoItemRef.id), 1000);
-        }
-      });
+      let uploadThumbnail = Promise.resolve();
+      if (!thumbnail.isString) {
+        uploadThumbnail = storage
+          .ref(`ecosystemThumbnails/${ecoID}`)
+          .put(thumbnail.value);
+      }
+
+      // Upload thumbnail image to storage if necessary
+      uploadThumbnail
+        // Fetch the absolute URL for the image
+        .then(thumbnailFile => {
+          if (thumbnailFile) {
+            return thumbnailFile.ref.getDownloadURL();
+          }
+
+          return Promise.resolve();
+        })
+        // Add the thumbnail URL and update the db
+        .then(thumbnailUrl => {
+          if (thumbnailUrl) {
+            ecoItemData.thumbnail = thumbnailUrl;
+          }
+
+          let updatePromise;
+          let redirect = false;
+          if (ecoID) {
+            updatePromise = doc.current.update(ecoItemData);
+          } else {
+            ecoItemData.TSCreated = Date.now();
+            updatePromise = db.collection('ecosystem').add(ecoItemData);
+            redirect = true;
+          }
+
+          return Promise.all([updatePromise, Promise.resolve(redirect)]);
+        })
+        // Update UI state
+        .then(([ecoItemRef, redirect]) => {
+          setSaving(false);
+          setSavingSuccess(true);
+          setSavingError(false);
+          if (redirect) {
+            setTimeout(() => push('/admin/ecosystem/' + ecoItemRef.id), 1000);
+          }
+        });
     }
   };
 
@@ -127,6 +178,9 @@ export const EcosysteItemForm = ({
     setDescription(draftToHtml(convertToRaw(state.getCurrentContent())));
     setWysiwygState(state);
   };
+
+  const updateThumbnail = thumbnailBlob =>
+    setThumbnail({ isString: false, value: thumbnailBlob });
 
   return (
     <FormCardPage title="Ecosystem Item Details" onSubmit={onFormSubmit}>
@@ -141,6 +195,67 @@ export const EcosysteItemForm = ({
             onChange={e => setName(e.target.value)}
           />
         </Grid>
+
+        <Grid item>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={isEvent}
+                onChange={e => setIsEvent(e.target.checked)}
+              />
+            }
+            label="Set Date and Time (for events)"
+          />
+        </Grid>
+
+        <Grid item>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid container justify="space-around">
+              <KeyboardDatePicker
+                disabled={!isEvent}
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                label="Event Date"
+                value={eventDate}
+                onChange={setEventDate}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date'
+                }}
+              />
+              <KeyboardTimePicker
+                disabled={!isEvent}
+                margin="normal"
+                id="time-picker"
+                label="Event Time"
+                value={eventDate}
+                onChange={setEventDate}
+                KeyboardButtonProps={{
+                  'aria-label': 'change time'
+                }}
+              />
+            </Grid>
+          </MuiPickersUtilsProvider>
+        </Grid>
+
+        <Grid item>
+          <TextField
+            required
+            variant="outlined"
+            fullWidth
+            label="Location"
+            value={location}
+            onChange={e => setLocation(e.target.value)}
+          />
+        </Grid>
+
+        <Grid item>
+          <ThumbnailUpload
+            onChange={updateThumbnail}
+            defaultValue={thumbnail.value}
+          />
+        </Grid>
+
         <Grid item>
           <FormLabel>Description</FormLabel>
           <Editor

@@ -44,6 +44,7 @@ const Dropdown = ({
         size={btnSize}
       />
       <Popper
+        style={{ zIndex: '1' }}
         id={elID}
         open={isOpen}
         anchorEl={anchorEl}

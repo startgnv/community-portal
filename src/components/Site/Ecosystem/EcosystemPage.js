@@ -10,6 +10,7 @@ import Button from '../UI/Button';
 import Tags from '../UI/Tags';
 import heroImg from '../../../assets/images/sparkgnv-101.jpg';
 import { Helmet } from 'react-helmet';
+import EcosystemCard from './EcosystemCard';
 
 const EcosystemItem = styled.div`
   display: flex;
@@ -57,6 +58,24 @@ const EcoDescription = styled.div`
 
 const EcoCategories = styled.div`
   font-size: 14px;
+`;
+
+const SectionHeader = styled.h2`
+  font-family: Montserrat, sans-serif;
+  font-size: 28px;
+  color: ${props => props.theme.textDark};
+  margin-bottom: 20px;
+  margin-top: 50px;
+`;
+
+const ItemGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
+
+  @media screen and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const EcosystemPage = () => {
@@ -122,34 +141,75 @@ const EcosystemPage = () => {
             events, incubators, support centers and media.
           </PageDescription>
           <EcosystemFilter onChange={onFilterChange} />
-          {renderEcoItems.map(({ name, description, categories, link }, i) => {
-            const renderCategories = _.filter(ecosystemCategories, category => {
-              return categories.indexOf(category.id) > -1;
-            });
-            return (
-              <EcosystemItem key={i}>
-                <EcoContent>
-                  <EcoName>{name}</EcoName>
-                  <Tags
-                    className="eco-tags"
-                    tags={renderCategories}
-                    size="small"
-                  />
-                  <EcoDescription
-                    dangerouslySetInnerHTML={{ __html: description }}
-                  />
-                </EcoContent>
-                {link && (
-                  <EcoActions>
-                    <Button
-                      label="Visit Site"
-                      onClick={() => window.open(link)}
+          <SectionHeader>Featured Events</SectionHeader>
+          <ItemGrid>
+            {renderEcoItems
+              .filter(item => item.featured)
+              .map(
+                ({
+                  name,
+                  description,
+                  categories,
+                  link,
+                  location,
+                  eventDate,
+                  thumbnail
+                }) => {
+                  const renderCategories = _.filter(
+                    ecosystemCategories,
+                    category => {
+                      return categories.indexOf(category.id) > -1;
+                    }
+                  );
+
+                  return (
+                    <EcosystemCard
+                      key={name}
+                      name={name}
+                      description={description}
+                      link={link}
+                      location={location}
+                      eventDate={eventDate}
+                      thumbnail={thumbnail}
                     />
-                  </EcoActions>
-                )}
-              </EcosystemItem>
-            );
-          })}
+                  );
+                }
+              )}
+          </ItemGrid>
+
+          <SectionHeader>Categories</SectionHeader>
+          <ItemGrid>
+            {renderEcoItems.map(
+              ({
+                name,
+                description,
+                categories,
+                link,
+                location,
+                eventDate,
+                thumbnail
+              }) => {
+                const renderCategories = _.filter(
+                  ecosystemCategories,
+                  category => {
+                    return categories.indexOf(category.id) > -1;
+                  }
+                );
+
+                return (
+                  <EcosystemCard
+                    key={name}
+                    name={name}
+                    description={description}
+                    link={link}
+                    location={location}
+                    eventDate={eventDate}
+                    thumbnail={thumbnail}
+                  />
+                );
+              }
+            )}
+          </ItemGrid>
         </PageContainer>
       </>
     </>
