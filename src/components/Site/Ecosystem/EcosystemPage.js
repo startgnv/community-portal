@@ -112,6 +112,7 @@ const EcosystemPage = () => {
   const renderEcoItems = ecosystem.filter(
     ecoItem => searchFilter(ecoItem) && categoryFilter(ecoItem)
   );
+  const featuredEcoItems = renderEcoItems.filter(item => item.featured);
 
   return (
     <>
@@ -141,43 +142,47 @@ const EcosystemPage = () => {
             events, incubators, support centers and media.
           </PageDescription>
           <EcosystemFilter onChange={onFilterChange} />
-          <SectionHeader>Featured Events</SectionHeader>
-          <ItemGrid>
-            {renderEcoItems
-              .filter(item => item.featured)
-              .map(
-                ({
-                  name,
-                  description,
-                  categories,
-                  link,
-                  location,
-                  eventDate,
-                  thumbnail
-                }) => {
-                  const renderCategories = _.filter(
-                    ecosystemCategories,
-                    category => {
-                      return categories.indexOf(category.id) > -1;
-                    }
-                  );
+          {featuredEcoItems.length > 0 && (
+            <>
+              <SectionHeader>Featured Events</SectionHeader>
+              <ItemGrid>
+                {featuredEcoItems.map(
+                  ({
+                    name,
+                    description,
+                    categories,
+                    link,
+                    location,
+                    eventDate,
+                    thumbnail
+                  }) => {
+                    const renderCategories = _.filter(
+                      ecosystemCategories,
+                      category => {
+                        return categories.indexOf(category.id) > -1;
+                      }
+                    );
 
-                  return (
-                    <EcosystemCard
-                      key={name}
-                      name={name}
-                      description={description}
-                      link={link}
-                      location={location}
-                      eventDate={eventDate}
-                      thumbnail={thumbnail}
-                    />
-                  );
-                }
-              )}
-          </ItemGrid>
+                    return (
+                      <EcosystemCard
+                        key={name}
+                        name={name}
+                        description={description}
+                        link={link}
+                        location={location}
+                        eventDate={eventDate}
+                        thumbnail={thumbnail}
+                      />
+                    );
+                  }
+                )}
+              </ItemGrid>
+            </>
+          )}
 
-          <SectionHeader>Categories</SectionHeader>
+          {featuredEcoItems.length > 0 && (
+            <SectionHeader>All Ecosystem</SectionHeader>
+          )}
           <ItemGrid>
             {renderEcoItems.map(
               ({
