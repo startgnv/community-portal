@@ -316,6 +316,7 @@ const AdminJobsSyncPage = () => {
   });
 
   let renderJobs = [];
+  let viewDescription = '';
   if (view.value === 'new') {
     if (matchingJobs.length) {
       renderJobs = pendingJobs.filter(
@@ -327,8 +328,12 @@ const AdminJobsSyncPage = () => {
     } else {
       renderJobs = pendingJobs;
     }
+    viewDescription =
+      'Jobs listed below are listed in the ATS and do not exist in the portal.';
   } else if (view.value === 'matches') {
     renderJobs = matchingJobs.map(match => match.portal);
+    viewDescription =
+      'Jobs listed below exist in the portal and match up with a job listed in the ATS.';
   } else {
     const filteredJobs = jobs.filter(job => importCompany === job.companyID);
     if (matchingJobs.length) {
@@ -341,6 +346,8 @@ const AdminJobsSyncPage = () => {
     } else {
       renderJobs = filteredJobs;
     }
+    viewDescription =
+      'Jobs listed below exist in the portal but do not match any jobs listed in the ATS.';
   }
 
   const onViewChange = selected => {
@@ -354,66 +361,71 @@ const AdminJobsSyncPage = () => {
       {pendingJobs && !!pendingJobs.length ? (
         <>
           <Select options={viewOptions} onChange={onViewChange} value={view} />
+          <p>{viewDescription}</p>
           <List>
-            {renderJobs.map(job => {
-              const company = companies.find(
-                company => company.id === job.companyID
-              );
-              return (
-                <ListItem
-                  key={job.remoteID}
-                  selected={
-                    selectedJobs[job.remoteID] &&
-                    selectedJobs[job.remoteID].value !== 'skip'
-                  }
-                >
-                  <div style={{ display: 'flex', flex: 3 }}>
-                    <ListItemAvatar>
-                      <StorageAvatar
-                        path={company.logoPath}
-                        avatarProps={{ style: { width: '40px' } }}
+            {renderJobs && renderJobs.length > 0 ? (
+              renderJobs.map(job => {
+                const company = companies.find(
+                  company => company.id === job.companyID
+                );
+                return (
+                  <ListItem
+                    key={job.remoteID}
+                    selected={
+                      selectedJobs[job.remoteID] &&
+                      selectedJobs[job.remoteID].value !== 'skip'
+                    }
+                  >
+                    <div style={{ display: 'flex', flex: 3 }}>
+                      <ListItemAvatar>
+                        <StorageAvatar
+                          path={company.logoPath}
+                          avatarProps={{ style: { width: '40px' } }}
+                        />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={job.title}
+                        secondary={company.name}
                       />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={job.title}
-                      secondary={company.name}
-                    />
-                  </div>
-                  <div style={{ flex: 1 }} className="actions">
-                    <Select
-                      options={jobActionOptions}
-                      onChange={selected =>
-                        onJobActionChange(selected, job.remoteID)
-                      }
-                      value={
-                        selectedJobs[job.remoteID] || {
-                          value: 'skip',
-                          label: 'Skip'
+                    </div>
+                    <div style={{ flex: 1 }} className="actions">
+                      <Select
+                        options={jobActionOptions}
+                        onChange={selected =>
+                          onJobActionChange(selected, job.remoteID)
                         }
-                      }
-                    />
-                  </div>
-                  {job.id && (
-                    <>
-                      <Button
-                        variant="outlined"
-                        href={'/jobs/' + job.id}
-                        target="_blank"
-                      >
-                        View Job
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        href={'/admin/jobs/' + job.id}
-                        target="_blank"
-                      >
-                        Edit Job
-                      </Button>
-                    </>
-                  )}
-                </ListItem>
-              );
-            })}
+                        value={
+                          selectedJobs[job.remoteID] || {
+                            value: 'skip',
+                            label: 'Skip'
+                          }
+                        }
+                      />
+                    </div>
+                    {job.id && (
+                      <>
+                        <Button
+                          variant="outlined"
+                          href={'/jobs/' + job.id}
+                          target="_blank"
+                        >
+                          View Job
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          href={'/admin/jobs/' + job.id}
+                          target="_blank"
+                        >
+                          Edit Job
+                        </Button>
+                      </>
+                    )}
+                  </ListItem>
+                );
+              })
+            ) : (
+              <p>There are no jobs that match the above criteria.</p>
+            )}
           </List>
         </>
       ) : (
