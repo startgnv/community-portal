@@ -15,7 +15,7 @@
     ],
     "rewrites": [
       {
-        "source": "/blog/*",
+        "source": "/blog/prod-testing/*",
         "function": "prerenderArticle"
       },
       {
