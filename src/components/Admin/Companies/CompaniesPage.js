@@ -118,6 +118,7 @@ export const CompaniesPage = () => {
                   coverPath={coverPath.replace('Cover', 'Listing')}
                   logoPath={logoPath}
                   label={name}
+                  isDraft={!!drafts.find(d => d.id === id)}
                   linkTo={`/admin/companies/${id}/edit`}
                   onDelete={deleteCompany(id)}
                 />
