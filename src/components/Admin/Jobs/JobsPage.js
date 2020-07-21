@@ -16,6 +16,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { db } from '../../../firebase';
 import { useAdminContainer } from '../UI/PageContainer';
 import ListFilter, { sortKeys } from '../UI/ListFilter';
+import Badge from '@material-ui/core/Badge';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -40,20 +41,65 @@ export const JobsPage = ({ match: { isExact } }) => {
   const classes = useStyles();
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState({ by: 'Updated', asc: false });
-  const [jobs = [], loadingJobs, errorJobs] = useCollectionData(
+
+  const [draftJobs = [], draftJobsLoading] = useCollectionData(
+    db.collection('draftJobs'),
+    { idField: 'id' }
+  );
+
+  const [jobsSrc = [], loadingJobs, errorJobs] = useCollectionData(
     db.collection('jobs'),
     {
       idField: 'id'
     }
   );
-  const [companies = [], loadingCompanies, errorCompanies] = useCollectionData(
-    db.collection('companies'),
-    {
-      idField: 'id'
-    }
+
+  const [draftCompanies = [], draftCompaniesLoading] = useCollectionData(
+    db.collection('companyDrafts'),
+    { idField: 'id' }
   );
 
-  useAdminContainer({ loading: loadingJobs || loadingCompanies });
+  const [
+    companiesSrc = [],
+    loadingCompanies,
+    errorCompanies
+  ] = useCollectionData(db.collection('companies'), {
+    idField: 'id'
+  });
+
+  const jobs = jobsSrc.reduce(
+    (acc, job) => {
+      const draft = acc.find(d => d.id === job.id);
+
+      if (!draft) {
+        return [...acc, job];
+      }
+
+      return acc;
+    },
+    [...draftJobs]
+  );
+
+  const companies = companiesSrc.reduce(
+    (acc, company) => {
+      const draft = acc.find(d => d.id === company.id);
+
+      if (!draft) {
+        return [...acc, company];
+      }
+
+      return acc;
+    },
+    [...draftCompanies]
+  );
+
+  useAdminContainer({
+    loading:
+      loadingJobs ||
+      loadingCompanies ||
+      draftJobsLoading ||
+      draftCompaniesLoading
+  });
 
   const companiesByID = _.keyBy(companies, company => company.id);
 
@@ -97,10 +143,17 @@ export const JobsPage = ({ match: { isExact } }) => {
               return (
                 <ListItemLink href={`/admin/jobs/${job.id}`} key={job.id}>
                   <ListItemAvatar>
-                    <StorageAvatar
-                      path={company.logoPath}
-                      avatarProps={{ style: { width: '40px' } }}
-                    />
+                    <Badge
+                      color="secondary"
+                      badgeContent=" "
+                      variant="dot"
+                      invisible={!draftJobs.find(d => d.id === job.id)}
+                    >
+                      <StorageAvatar
+                        path={company.logoPath}
+                        avatarProps={{ style: { width: '40px' } }}
+                      />
+                    </Badge>
                   </ListItemAvatar>
                   <ListItemText primary={job.title} secondary={company.name} />
                 </ListItemLink>
