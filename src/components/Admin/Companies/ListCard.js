@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import { storage } from '../../../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import DeleteDialog from '../UI/DeleteDialog';
+import Badge from '@material-ui/core/Badge';
 
 const useStyles = makeStyles({
   listItemArea: {
@@ -35,6 +36,7 @@ export const ListCard = ({
   logoPath,
   coverPath,
   label,
+  isDraft,
   labelVariant = 'h6',
   onDelete
 }) => {
@@ -63,11 +65,18 @@ export const ListCard = ({
           <CardContent>
             <Grid container direction="column" alignItems="center">
               <Grid item>
-                <Avatar
-                  src={logoSrc}
-                  size={40}
-                  className={classes.listItemAvatar}
-                />
+                <Badge
+                  color="secondary"
+                  overlap="circle"
+                  badgeContent="Draft"
+                  invisible={!isDraft}
+                >
+                  <Avatar
+                    src={logoSrc}
+                    size={40}
+                    className={classes.listItemAvatar}
+                  />
+                </Badge>
               </Grid>
               <Box maxWidth="100%" clone>
                 <Grid item>
