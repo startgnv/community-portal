@@ -32,28 +32,94 @@ const wysiwygToolbar = {
   }
 };
 
-export const EditPage = ({
+const EditPageWrapper = ({
   match: {
     params: { jobID }
   },
-  history: { replace = () => {}, push = () => {} }
+  history
 }) => {
+  const [job, setJob] = useState(null);
+  const [loadingJob, setLoadingJob] = useState(true);
+  const [wasDraft, setWasDraft] = useState(false);
+
   const [categories = [], loadingCategories] = useCollectionData(
     db.collection('jobCategories').orderBy('name', 'asc'),
     { idField: 'id' }
   );
+
   const [companies = [], loadingCompanies] = useCollectionData(
     db.collection('companies').orderBy('name', 'asc'),
     { idField: 'id' }
   );
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [companyID, setCompanyID] = useState();
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [applyUrl, setApplyUrl] = useState('');
-  const [type, setType] = useState('');
-  const [featured, setFeatured] = useState(false);
+  useEffect(() => {
+    if (jobID) {
+      db.collection('draftJobs')
+        .doc(jobID)
+        .get()
+        .then(snapshot => {
+          if (snapshot.exists && snapshot.data().TSCreated) {
+            setJob({ id: snapshot.id, ...snapshot.data() });
+            setLoadingJob(false);
+            setWasDraft(true);
+          } else {
+            console.log('Here');
+            return db
+              .collection('jobs')
+              .doc(jobID)
+              .get();
+          }
+        })
+        .then(snapshot => {
+          setJob({ id: snapshot.id, ...snapshot.data() });
+          setLoadingJob(false);
+        })
+        .catch(() => {
+          setLoadingJob(false);
+        });
+    }
+  }, [jobID]);
+
+  if (loadingJob || loadingCompanies || loadingCategories)
+    return <h1>Loading...</h1>;
+
+  return (
+    <EditPage
+      job={job || {}}
+      wasDraft={wasDraft}
+      companies={companies}
+      categories={categories}
+      history={history}
+      setWasDraft={setWasDraft}
+      loading={loadingJob || loadingCompanies || loadingCategories}
+    />
+  );
+};
+
+export const EditPage = ({
+  job,
+  companies,
+  categories,
+  history: { replace = () => {}, push = () => {} },
+  loading,
+  wasDraft,
+  setWasDraft
+}) => {
+  // Draft state
+  const [isDraft, setDraft] = useState(false);
+
+  // Job form state
+  const [title, setTitle] = useState(job.title || '');
+  const [description, setDescription] = useState(job.description || '');
+  const [companyID, setCompanyID] = useState(job.companyID || null);
+  const [selectedCategories, setSelectedCategories] = useState(
+    job.categories || []
+  );
+  const [applyUrl, setApplyUrl] = useState(job.applyUrl || '');
+  const [type, setType] = useState(job.type || 'fullTime');
+  const [featured, setFeatured] = useState(!!job.featured);
+
+  // Editor state
   const [saving, setSaving] = useState(false);
   const [savingSuccess, setSavingSuccess] = useState(false);
   const [savingError, setSavingError] = useState(false);
@@ -65,34 +131,21 @@ export const EditPage = ({
   const [autoExpandParent, setAutoExpandParent] = React.useState(true);
   const tree = categories.reduce(categoryToNode, []);
 
-  const doc = useRef(db.collection('jobs').doc(...(jobID ? [jobID] : [])));
-  const [loadingJob, setLoadingJob] = useState(!!jobID);
   useEffect(() => {
-    if (jobID) {
-      doc.current.get().then(snapshot => {
-        const job = snapshot.data();
-        setTitle(job.title || '');
-        setDescription(job.description || '');
-        setCompanyID(job.companyID || '');
-        setSelectedCategories(job.categories || []);
-        setApplyUrl(job.applyUrl || '');
-        setType(job.type || 'fullTime');
-        setFeatured(job.featured || false);
-        setLoadingJob(false);
-        const contentBlock = htmlToDraft(job.description);
-        const contentState = ContentState.createFromBlockArray(
-          contentBlock.contentBlocks
-        );
-        const editorState = EditorState.createWithContent(contentState);
-        setWysiwygState(editorState);
-      });
+    if (job && job.description) {
+      const contentBlock = htmlToDraft(job.description);
+      const contentState = ContentState.createFromBlockArray(
+        contentBlock.contentBlocks
+      );
+      const editorState = EditorState.createWithContent(contentState);
+      setWysiwygState(editorState);
     }
-  }, [jobID]);
+  }, [job]);
 
-  const backTo = jobID ? `/admin/jobs/${jobID}` : '/admin/jobs';
+  const backTo = job && job.id ? `/admin/jobs/${job.id}` : '/admin/jobs';
   useAdminContainer({
     backTo,
-    loading: loadingCategories || loadingCompanies || loadingJob
+    loading
   });
 
   const onFormSubmit = e => {
@@ -118,24 +171,66 @@ export const EditPage = ({
         featured,
         TSUpdated: Date.now()
       };
-      let updatePromise;
+      let updatePromise = Promise.resolve();
+      let clearDraft = Promise.resolve();
       let redirect = false;
-      if (jobID) {
-        updatePromise = doc.current.update(jobData);
-      } else {
+
+      if (!job) {
         jobData.TSCreated = Date.now();
-        updatePromise = db.collection('jobs').add(jobData);
         redirect = true;
+
+        if (isDraft) {
+          updatePromise = db.collection('draftJobs').add(jobData);
+        } else {
+          updatePromise = db.collection('jobs').add(jobData);
+        }
       }
 
-      updatePromise.then(jobRef => {
-        setSaving(false);
-        setSavingSuccess(true);
-        setSavingError(false);
-        if (redirect) {
-          setTimeout(() => push('/admin/jobs/' + jobRef.id), 1000);
+      if (isDraft) {
+        if (wasDraft) {
+          updatePromise = db
+            .collection('draftJobs')
+            .doc(job.id)
+            .update(jobData);
+        } else {
+          jobData.TSCreated = Date.now();
+          redirect = true;
+          updatePromise = db
+            .collection('draftJobs')
+            .doc(job.id)
+            .set(jobData);
         }
-      });
+      } else {
+        updatePromise = db
+          .collection('jobs')
+          .doc(job.id)
+          .update(jobData);
+
+        if (wasDraft) {
+          clearDraft = db
+            .collection('draftJobs')
+            .doc(job.id)
+            .delete();
+
+          setWasDraft(false);
+        }
+      }
+
+      clearDraft
+        .then(() => {
+          return updatePromise;
+        })
+        .then(jobRef => {
+          setSaving(false);
+          setSavingSuccess(true);
+          setSavingError(false);
+          if (redirect) {
+            setTimeout(
+              () => push('/admin/jobs/' + (jobRef ? jobRef.id : job.id)),
+              1000
+            );
+          }
+        });
     }
   };
 
@@ -207,6 +302,10 @@ export const EditPage = ({
     setSelectedCategories(checkedKeys);
   };
 
+  const toggleDraft = () => {
+    setDraft(true);
+  };
+
   return (
     <FormCardPage title="Job Details" onSubmit={onFormSubmit}>
       <Grid container spacing={2} direction="column" justify="center">
@@ -267,7 +366,7 @@ export const EditPage = ({
           <FormLabel>Company</FormLabel>
           <Select
             label="Company"
-            disabled={loadingCompanies}
+            disabled={loading}
             options={companyOptions}
             value={companyOptions.find(({ value }) => companyID === value)}
             onChange={({ value }) => setCompanyID(value)}
@@ -309,6 +408,14 @@ export const EditPage = ({
             Cancel
           </Button>
           <Button
+            disabled={saving || loading}
+            variant="text"
+            type="submit"
+            onClick={toggleDraft}
+          >
+            Save As Draft
+          </Button>
+          <Button
             variant="contained"
             color="primary"
             disabled={saving}
@@ -325,4 +432,4 @@ export const EditPage = ({
   );
 };
 
-export default EditPage;
+export default EditPageWrapper;

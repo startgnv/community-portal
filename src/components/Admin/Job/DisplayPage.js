@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import { Link } from 'react-router-dom';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
@@ -51,9 +51,34 @@ const DisplayPage = ({
   }
 }) => {
   const classes = useStyles();
-  let [job, loading] = useDocumentDataOnce(db.doc(`jobs/${jobID}`), {
-    idField: 'id'
-  });
+  const [job, setJob] = useState(null);
+  const [isDraft, setDraft] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    db.collection('draftJobs')
+      .doc(jobID)
+      .get()
+      .then(snapshot => {
+        if (snapshot.exists && snapshot.data().TSCreated) {
+          setJob({ id: snapshot.id, ...snapshot.data() });
+          setDraft(true);
+          setLoading(false);
+        } else {
+          return db
+            .collection('jobs')
+            .doc(jobID)
+            .get();
+        }
+      })
+      .then(snapshot => {
+        setJob({ id: snapshot.id, ...snapshot.data() });
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
 
   const [company, loadingCompany] = useDocumentDataOnce(
     job && db.doc(`companies/${job.companyID}`)
@@ -82,6 +107,13 @@ const DisplayPage = ({
     db.doc(`jobs/${jobID}`)
       .delete()
       .then(() => {
+        if (isDraft) {
+          return db.doc(`draftJobs/${jobID}`).delete();
+        } else {
+          setDeleted(true);
+        }
+      })
+      .then(() => {
         setDeleted(true);
       })
       .catch(() => {});
@@ -90,6 +122,13 @@ const DisplayPage = ({
   const onUndeleteClick = () => {
     db.doc(`jobs/${jobID}`)
       .set(job)
+      .then(() => {
+        if (isDraft) {
+          return db.doc(`draftJobs/${jobID}`).set(job);
+        } else {
+          setDeleted(false);
+        }
+      })
       .then(() => {
         setDeleted(false);
       });
