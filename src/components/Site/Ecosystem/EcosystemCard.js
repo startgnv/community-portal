@@ -1,6 +1,4 @@
 import React from 'react';
-import calendarIcon from '../../../assets/images/calendar.svg';
-import gradient from '../../../assets/images/ecosystem-item-gradient.png';
 import styled from 'styled-components';
 import { baseContentStyling } from '../../utils/mixins';
 import { Parser } from 'html-to-react';
@@ -16,13 +14,12 @@ const EcoItem = styled.div`
   box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.08);
   overflow: hidden;
 
-  height: 300px;
   position: relative;
 `;
 
 const EcoItemImg = styled.div`
   background-image: url(${props => props.src});
-  height: 40%;
+  height: 120px;
   background-size: cover;
   position: relative;
 
@@ -116,12 +113,6 @@ const EcoItemDescription = styled.div`
   }
 `;
 
-const Gradient = styled.img`
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-`;
-
 const EcosystemCard = ({
   name,
   thumbnail,
@@ -150,7 +141,6 @@ const EcosystemCard = ({
         </EcoItemHead>
         <EcoItemDescription>{html.parse(description)}</EcoItemDescription>
       </EcoItemContent>
-      <Gradient src={gradient} alt="." />
     </EcoItem>
   );
 };
