@@ -1,33 +1,13 @@
 import _ from 'lodash';
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { baseContentStyling } from '../../utils/mixins';
 import AppContext from '../../AppContext';
 import PageContainer from '../UI/PageContainer';
 import EcosystemFilter from './EcosystemFilter';
 import Hero from '../UI/Hero';
-import Button from '../UI/Button';
-import Tags from '../UI/Tags';
 import heroImg from '../../../assets/images/sparkgnv-101.jpg';
 import { Helmet } from 'react-helmet';
 import EcosystemCard from './EcosystemCard';
-
-const EcosystemItem = styled.div`
-  display: flex;
-  margin-bottom: 30px;
-  padding: 20px;
-  border-radius: 3px;
-  overflow: hidden;
-  box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.08);
-  transition: 200ms;
-  background: white;
-  justify-content: center;
-  box-sizing: border-box;
-
-  .eco-tags {
-    margin-bottom: 10px;
-  }
-`;
 
 const PageDescription = styled.span`
   display: block;
@@ -35,29 +15,6 @@ const PageDescription = styled.span`
   max-width: 600px;
   font-size: 1.6rem;
   line-height: 2.2rem;
-`;
-
-const EcoContent = styled.div`
-  flex: 1;
-`;
-
-const EcoActions = styled.div`
-  margin-left: 20px;
-`;
-
-const EcoName = styled.span`
-  display: block;
-  margin-bottom: 10px;
-  font-size: 22px;
-  font-weight: 600;
-`;
-
-const EcoDescription = styled.div`
-  ${baseContentStyling()}
-`;
-
-const EcoCategories = styled.div`
-  font-size: 14px;
 `;
 
 const SectionHeader = styled.h2`
@@ -90,10 +47,6 @@ const EcosystemPage = () => {
     categories: []
   });
 
-  if (ecosystemLoading || ecosystemCategoriesLoading) {
-    return false;
-  }
-
   const onFilterChange = filterChanged => {
     setEcoFilter({
       ...ecoFilter,
@@ -109,10 +62,15 @@ const EcosystemPage = () => {
       ? _.intersection(ecoFilter.categories, ecoItem.categories).length
       : true;
 
-  const renderEcoItems = ecosystem.filter(
-    ecoItem => searchFilter(ecoItem) && categoryFilter(ecoItem)
-  );
+  const renderEcoItems = ecosystem
+    .filter(ecoItem => searchFilter(ecoItem) && categoryFilter(ecoItem))
+    .sort((a, b) => a.description.length - b.description.length);
+
   const featuredEcoItems = renderEcoItems.filter(item => item.featured);
+
+  if (ecosystemLoading || ecosystemCategoriesLoading) {
+    return false;
+  }
 
   return (
     <>
