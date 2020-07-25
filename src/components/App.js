@@ -27,6 +27,7 @@ import Sidebar from './Site/UI/Sidebar';
 import Article from './Site/Blog/Article';
 import Catalog from './Site/Blog/Catalog';
 import Footer from './Site/Footer/Footer';
+import RequestJobPage from './Site/Job/RequestJobPage';
 
 ReactGA.initialize('UA-138572620-3');
 
@@ -149,6 +150,7 @@ const publicRoutes = [
   '/companies/:companySlug',
   '/jobs',
   '/jobs/:jobId',
+  '/request-job',
   '/about',
   '/ecosystem',
   '/new-to-gainesville',
@@ -176,6 +178,7 @@ export const App = () => (
               <Route exact path="/ecosystem" component={EcosystemPage} />
               <Route exact path="/jobs" component={JobsPage} />
               <Route exact path="/jobs/:jobID" component={JobPage} />
+              <Route exact path="/request-job" component={RequestJobPage} />
               <Route exact path="/companies" component={CompaniesPage} />
               <Route
                 exact

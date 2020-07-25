@@ -38,9 +38,11 @@ const EditPageWrapper = ({
   },
   history
 }) => {
+  const [draftJob, setDraftJob] = useState(null);
   const [job, setJob] = useState(null);
   const [loadingJob, setLoadingJob] = useState(true);
   const [wasDraft, setWasDraft] = useState(false);
+  const [isUnpublished, setIsUnpublished] = useState(false);
 
   const [categories = [], loadingCategories] = useCollectionData(
     db.collection('jobCategories').orderBy('name', 'asc'),
@@ -58,20 +60,24 @@ const EditPageWrapper = ({
         .doc(jobID)
         .get()
         .then(snapshot => {
-          if (snapshot.exists && snapshot.data().TSCreated) {
-            setJob({ id: snapshot.id, ...snapshot.data() });
-            setLoadingJob(false);
+          if (snapshot.exists && snapshot.data().title) {
+            setDraftJob({ id: snapshot.id, ...snapshot.data() });
             setWasDraft(true);
-          } else {
-            console.log('Here');
-            return db
-              .collection('jobs')
-              .doc(jobID)
-              .get();
           }
+
+          return db
+            .collection('jobs')
+            .doc(jobID)
+            .get();
         })
         .then(snapshot => {
-          setJob({ id: snapshot.id, ...snapshot.data() });
+          if (snapshot.exists && snapshot.data().title) {
+            setJob({ id: snapshot.id, ...snapshot.data() });
+          } else {
+            // Set a job as unpublished if there is a draft but no associated
+            // published version
+            setIsUnpublished(true);
+          }
           setLoadingJob(false);
         })
         .catch(() => {
@@ -85,12 +91,14 @@ const EditPageWrapper = ({
 
   return (
     <EditPage
-      job={job || {}}
+      job={draftJob ? draftJob : job ? job : {}}
       wasDraft={wasDraft}
+      setWasDraft={setWasDraft}
+      isUnpublished={isUnpublished}
+      setIsUnpublished={setIsUnpublished}
       companies={companies}
       categories={categories}
       history={history}
-      setWasDraft={setWasDraft}
       loading={loadingJob || loadingCompanies || loadingCategories}
     />
   );
@@ -103,14 +111,19 @@ export const EditPage = ({
   history: { replace = () => {}, push = () => {} },
   loading,
   wasDraft,
-  setWasDraft
+  setWasDraft,
+  isUnpublished,
+  setIsUnpublished
 }) => {
+  console.log(job);
+
   // Draft state
   const [isDraft, setDraft] = useState(false);
 
   // Job form state
   const [title, setTitle] = useState(job.title || '');
   const [description, setDescription] = useState(job.description || '');
+  const [wysiwygState, setWysiwygState] = useState(EditorState.createEmpty());
   const [companyID, setCompanyID] = useState(job.companyID || null);
   const [selectedCategories, setSelectedCategories] = useState(
     job.categories || []
@@ -122,8 +135,7 @@ export const EditPage = ({
   // Editor state
   const [saving, setSaving] = useState(false);
   const [savingSuccess, setSavingSuccess] = useState(false);
-  const [savingError, setSavingError] = useState(false);
-  const [wysiwygState, setWysiwygState] = useState(EditorState.createEmpty());
+  const [savingError, setSavingError] = useState('');
 
   // Tree view state
   const [expandedKeys, setExpandedKeys] = React.useState([]);
@@ -151,15 +163,15 @@ export const EditPage = ({
   const onFormSubmit = e => {
     e.preventDefault();
 
-    if (
-      title &&
-      description &&
-      selectedCategories.length &&
-      companyID &&
-      applyUrl
-    ) {
+    if (!title) {
+      setSaving(false);
+      setSavingError('Could not save, a job must have a title');
+      return;
+    }
+
+    if (title) {
       setSaving(true);
-      setSavingError(false);
+      setSavingError('');
       setSavingSuccess(false);
       const jobData = {
         title,
@@ -175,6 +187,8 @@ export const EditPage = ({
       let clearDraft = Promise.resolve();
       let redirect = false;
 
+      // If the job is new, or if the job is a draft without a creation
+      // date (i.e. a job from the requests page)
       if (!job) {
         jobData.TSCreated = Date.now();
         redirect = true;
@@ -186,6 +200,9 @@ export const EditPage = ({
         }
       }
 
+      if (!jobData.TSCreated) job.TSCreated = Date.now();
+
+      // Upload to Firestore in the drafts collection
       if (isDraft) {
         if (wasDraft) {
           updatePromise = db
@@ -200,12 +217,52 @@ export const EditPage = ({
             .doc(job.id)
             .set(jobData);
         }
-      } else {
-        updatePromise = db
-          .collection('jobs')
-          .doc(job.id)
-          .update(jobData);
+      }
+      // Upload to Firestore in the jobs collection, if possible
+      else {
+        if (!description) {
+          setSaving(false);
+          setSavingError('Could not publish, a job must have a description');
+          return;
+        }
 
+        if (!selectedCategories.length) {
+          setSaving(false);
+          setSavingError(
+            'Could not not publish, a job must have at least one category'
+          );
+          return;
+        }
+
+        if (!companyID) {
+          setSaving(false);
+          setSavingError('Could not publish, company is not chosen');
+          return;
+        }
+
+        if (!applyUrl) {
+          setSaving(false);
+          setSavingError(
+            'Could not not publish, a job must have an application URL'
+          );
+          return;
+        }
+
+        // Job is being published for the first time
+        if (isUnpublished) {
+          updatePromise = db.collection('jobs').add(jobData);
+
+          setIsUnpublished(false);
+        }
+        // An already published job is being updated
+        else {
+          updatePromise = db
+            .collection('jobs')
+            .doc(job.id)
+            .update(jobData);
+        }
+
+        // Delete the now unnecessary drafted version if it exists
         if (wasDraft) {
           clearDraft = db
             .collection('draftJobs')
@@ -223,7 +280,7 @@ export const EditPage = ({
         .then(jobRef => {
           setSaving(false);
           setSavingSuccess(true);
-          setSavingError(false);
+          setSavingError('');
           if (redirect) {
             setTimeout(
               () => push('/admin/jobs/' + (jobRef ? jobRef.id : job.id)),
@@ -302,10 +359,6 @@ export const EditPage = ({
     setSelectedCategories(checkedKeys);
   };
 
-  const toggleDraft = () => {
-    setDraft(true);
-  };
-
   return (
     <FormCardPage title="Job Details" onSubmit={onFormSubmit}>
       <Grid container spacing={2} direction="column" justify="center">
@@ -366,6 +419,7 @@ export const EditPage = ({
           <FormLabel>Company</FormLabel>
           <Select
             label="Company"
+            placeholder={job && job.companyName ? job.companyName : 'Select...'}
             disabled={loading}
             options={companyOptions}
             value={companyOptions.find(({ value }) => companyID === value)}
@@ -411,7 +465,7 @@ export const EditPage = ({
             disabled={saving || loading}
             variant="text"
             type="submit"
-            onClick={toggleDraft}
+            onClick={() => setDraft(true)}
           >
             Save As Draft
           </Button>
@@ -419,14 +473,15 @@ export const EditPage = ({
             variant="contained"
             color="primary"
             disabled={saving}
+            onClick={() => setDraft(false)}
             type="submit"
           >
-            Submit
+            Publish
           </Button>
         </Grid>
         {saving && <LinearProgress />}
         {savingSuccess && 'Saved!'}
-        {savingError && 'Failed to save!'}
+        {savingError}
       </Grid>
     </FormCardPage>
   );

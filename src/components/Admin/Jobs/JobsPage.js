@@ -39,8 +39,17 @@ function ListItemLink(props) {
 
 export const JobsPage = ({ match: { isExact } }) => {
   const classes = useStyles();
+
+  // Jobs controls
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState({ by: 'Updated', asc: false });
+
+  // Requests controls
+  const [unpublishedSearch, setUnpublishedSearch] = useState('');
+  const [unpublishedSort, setUnpublishedSort] = useState({
+    dy: 'Updated',
+    asc: false
+  });
 
   const [draftJobs = [], draftJobsLoading] = useCollectionData(
     db.collection('draftJobs'),
@@ -67,18 +76,21 @@ export const JobsPage = ({ match: { isExact } }) => {
     idField: 'id'
   });
 
-  const jobs = jobsSrc.reduce(
-    (acc, job) => {
-      const draft = acc.find(d => d.id === job.id);
-
-      if (!draft) {
-        return [...acc, job];
-      }
-
-      return acc;
-    },
-    [...draftJobs]
+  // Include only jobs that are are in the drafts list, but not the published list,
+  // implying it's a new job that has not yet been released
+  const unpublishedJobs = draftJobs.filter(
+    job => !jobsSrc.find(j => j.id === job.id)
   );
+
+  const publishedJobs = jobsSrc.reduce((acc, job) => {
+    const draft = draftJobs.find(d => d.id === job.id);
+
+    if (!draft) {
+      return [...acc, job];
+    }
+
+    return draft ? [...acc, draft] : [...acc, job];
+  }, []);
 
   const companies = companiesSrc.reduce(
     (acc, company) => {
@@ -106,15 +118,64 @@ export const JobsPage = ({ match: { isExact } }) => {
   return (
     <>
       <Container className={classes.container} maxWidth="lg">
+        {unpublishedJobs && unpublishedJobs.length > 0 && (
+          <ListFilter
+            search={unpublishedSearch}
+            searchLabel="Search Unpublished Jobs"
+            setSearch={setUnpublishedSearch}
+            sort={unpublishedSort}
+            setSort={setUnpublishedSort}
+          />
+        )}
+
+        <List>
+          {unpublishedJobs
+            .filter(({ title }) =>
+              title.toLowerCase().includes(unpublishedSearch.toLowerCase())
+            )
+            .sort((a, b) => {
+              const sortAttr = sortKeys[unpublishedSort.by];
+              const aVal = a[sortAttr] || 0;
+              const bVal = b[sortAttr] || 0;
+              if (unpublishedSort.asc) {
+                return aVal - bVal;
+              } else {
+                return bVal - aVal;
+              }
+            })
+            .map(job => {
+              const company = companiesByID[job.companyID] || {};
+              return (
+                <ListItemLink href={`/admin/jobs/${job.id}`} key={job.id}>
+                  <ListItemAvatar>
+                    <StorageAvatar
+                      path={company.logoPath}
+                      avatarProps={{ style: { width: '40px' } }}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={job.title}
+                    secondary={
+                      company.name
+                        ? company.name
+                        : `${job.companyName} (unverified)`
+                    }
+                  />
+                </ListItemLink>
+              );
+            })}
+        </List>
+
         <ListFilter
           search={search}
+          searchLabel="Search Jobs"
           setSearch={setSearch}
           sort={sort}
           setSort={setSort}
         />
 
         <List>
-          {jobs
+          {publishedJobs
             .filter(({ title, companyID, featured }) => {
               let match;
               const normalizedSearch = search.toLowerCase();

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PageContainer from '../UI/PageContainer';
 import Button from '../UI/Button';
-import { validate } from 'email-validator';
 import { db } from '../../../firebase';
-import ValidatorInput from '../UI/ValidatorInput';
+import ValidatorInput from '../UI/validation/ValidatorInput';
+import { validate, Validators } from '../UI/validation/useValidation';
 
 const Field = styled.div`
   margin-bottom: 10px;
@@ -46,38 +46,19 @@ const AddCompanyPage = () => {
   const [companyAddressError, setCompanyAddressError] = useState('');
 
   const [companyURL, setCompanyURL] = useState('');
-  const [companyURLError, setCompanyURLError] = useState('');
-
-  const validateRequired = (field, setError) => () => {
-    if (field.length < 1) {
-      setError('Required');
-      return false;
-    }
-    setError('');
-    return true;
-  };
-
-  const validateEmail = (e, setError) => () => {
-    if (!validate(e)) {
-      setError('Please enter a valid email');
-      return false;
-    }
-    setError('');
-    return true;
-  };
+  const [companyURLError] = useState('');
 
   const validators = [
-    validateRequired(name, setNameError),
-    validateRequired(email, setEmailError),
-    validateEmail(email, setEmailError),
-    validateRequired(companyName, setCompanyNameError),
-    validateRequired(companyAddress, setCompanyAddressError)
+    [name, setNameError, Validators.required],
+    [email, setEmailError, Validators.required, Validators.email],
+    [companyName, setCompanyNameError, Validators.required],
+    [companyAddress, setCompanyAddressError, Validators.required]
   ];
 
   const onSubmit = ev => {
     ev.preventDefault();
 
-    const valid = validators.map(v => v()).reduce((acc, v) => acc && v, true);
+    const valid = validate(validators);
 
     if (valid) {
       setLoading(true);

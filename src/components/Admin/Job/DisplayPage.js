@@ -51,6 +51,8 @@ const DisplayPage = ({
   }
 }) => {
   const classes = useStyles();
+  const [publishedJob, setPublishedJob] = useState(null);
+  const [draftJob, setDraftJob] = useState(null);
   const [job, setJob] = useState(null);
   const [isDraft, setDraft] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -60,8 +62,8 @@ const DisplayPage = ({
       .doc(jobID)
       .get()
       .then(snapshot => {
-        if (snapshot.exists && snapshot.data().TSCreated) {
-          setJob({ id: snapshot.id, ...snapshot.data() });
+        if (snapshot.exists && snapshot.data().title) {
+          setDraftJob({ id: snapshot.id, ...snapshot.data() });
           setDraft(true);
           setLoading(false);
         } else {
@@ -72,13 +74,21 @@ const DisplayPage = ({
         }
       })
       .then(snapshot => {
-        setJob({ id: snapshot.id, ...snapshot.data() });
+        setPublishedJob({ id: snapshot.id, ...snapshot.data() });
         setLoading(false);
       })
       .catch(() => {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    if (draftJob) {
+      setJob(draftJob);
+    } else if (publishedJob) {
+      setJob(publishedJob);
+    }
+  }, [publishedJob, draftJob]);
 
   const [company, loadingCompany] = useDocumentDataOnce(
     job && db.doc(`companies/${job.companyID}`)
@@ -160,7 +170,7 @@ const DisplayPage = ({
           subheader={
             <JobSubHeader
               category={job.category}
-              company={company ? company.name : undefined}
+              company={company ? company.name : job.companyName}
               salary={job.salary}
               applyURL={job.applyURL}
             />
