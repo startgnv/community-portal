@@ -11,7 +11,7 @@ import { LinearProgress } from '@material-ui/core';
 import ProgressBar from '../UI/ProgressBar';
 
 const JobsPageContent = styled.div`
-  max-width: ${({ theme }) => theme.contentMaxWidth};
+  max-width: calc(${({ theme }) => theme.contentMaxWidth} + 60px);
   min-height: 400px;
   margin: 0 auto;
   padding: 30px;

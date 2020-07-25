@@ -19,7 +19,7 @@ const ListTitle = styled.h3`
 
 const ListContainer = styled.ul`
   padding: 0;
-  margin: 0 -30px -30px 0;
+  margin: 0 0 -30px 0;
   list-style: none;
   ${clearFix()}
 `;

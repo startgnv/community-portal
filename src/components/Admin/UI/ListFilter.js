@@ -33,7 +33,7 @@ const sortIcon = isAscending =>
     <ArrowDownwardIcon fontSize="inherit" />
   );
 
-const ListFilter = ({ search, setSearch, sort, setSort }) => {
+const ListFilter = ({ search, searchLabel, setSearch, sort, setSort }) => {
   const classes = useStyles();
 
   const onSortChange = ({ target: { value } }) => {
@@ -55,7 +55,7 @@ const ListFilter = ({ search, setSearch, sort, setSort }) => {
       <TextField
         className={classes.search}
         type="search"
-        label="Search Jobs"
+        label={searchLabel}
         value={search}
         onChange={e => setSearch(e.target.value)}
       />

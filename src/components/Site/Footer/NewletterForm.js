@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { device } from '../../utils/device';
 import { validate } from 'email-validator';
 import { db, functions } from '../../../firebase';
-import ValidatorInput from '../UI/ValidatorInput';
+import ValidatorInput from '../UI/validation/ValidatorInput';
 
 const Container = styled.div`
   display: flex;
