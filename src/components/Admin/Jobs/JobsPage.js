@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
+import moment from 'moment';
 import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import StorageAvatar from './StorageAvatar';
+import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AddIcon from '@material-ui/icons/Add';
@@ -145,6 +147,10 @@ export const JobsPage = ({ match: { isExact } }) => {
             })
             .map(job => {
               const company = companiesByID[job.companyID] || {};
+              const daysOld = moment().diff(job.TSCreated, 'days');
+              const olderThanThirty =
+                job.TSCreated &&
+                parseInt(moment().diff(job.TSCreated, 'days'), 10) > 30;
               return (
                 <ListItemLink href={`/admin/jobs/${job.id}`} key={job.id}>
                   <ListItemAvatar>
@@ -216,7 +222,31 @@ export const JobsPage = ({ match: { isExact } }) => {
                       />
                     </Badge>
                   </ListItemAvatar>
-                  <ListItemText primary={job.title} secondary={company.name} />
+                  <ListItemText
+                    primary={job.title}
+                    secondary={
+                      <>
+                        <Typography
+                          component="span"
+                          variant="body"
+                          className={classes.inline}
+                          color="textPrimary"
+                        >
+                          {company.name}
+                        </Typography>
+                        {olderThanThirty && (
+                          <Typography
+                            component="span"
+                            variant="body"
+                            className={classes.inline}
+                            color="error"
+                          >
+                            {` ${daysOld} days old`}
+                          </Typography>
+                        )}
+                      </>
+                    }
+                  />
                 </ListItemLink>
               );
             })}
