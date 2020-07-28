@@ -188,8 +188,8 @@ const Footer = () => {
               <Header>Contact</Header>
               <NavList>
                 <li>
-                  <a href="mailto:info@startupgnv.com" className="footer-link">
-                    info@startupgnv.com
+                  <a href="mailto:team@startgnv.com" className="footer-link">
+                    team@startgnv.com
                   </a>
                 </li>
               </NavList>
