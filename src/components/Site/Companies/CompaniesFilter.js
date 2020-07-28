@@ -8,6 +8,7 @@ import {
   onFilterChange
 } from '../UI/Filter';
 import styled from 'styled-components/macro';
+import SearchInput from '../UI/SearchInput';
 
 const noop = () => {};
 
@@ -65,6 +66,14 @@ const CompaniesFilter = ({ onChange = noop, sizeList, filteredCount }) => {
         selectedItems={selectedSizes}
         onChange={onSizeChange}
       />
+
+      <FilterItemCustom>
+        <SearchInput
+          placeholder="Search Companies"
+          name="filter"
+          onChange={value => onChange({ search: value })}
+        />
+      </FilterItemCustom>
 
       <FilterItemCustom full>
         <Label>

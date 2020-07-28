@@ -45,6 +45,7 @@ export const CompaniesPage = () => {
     AppContext
   );
   const [companiesFilter, setCompaniesFilter] = useState({
+    search: '',
     industries: [],
     sizes: []
   });
@@ -71,8 +72,13 @@ export const CompaniesPage = () => {
       ? companiesFilter.sizes.includes(company.employeeCount)
       : true;
 
+  const searchFilter = company =>
+    // Search by company name
+    company.name.toLowerCase().includes(companiesFilter.search.toLowerCase());
+
   const filteredCompanies = companies.filter(
-    company => industryFilter(company) && sizeFilter(company)
+    company =>
+      industryFilter(company) && sizeFilter(company) && searchFilter(company)
   );
 
   const sortedCompanies = _.shuffle(filteredCompanies).sort((a, b) => {
