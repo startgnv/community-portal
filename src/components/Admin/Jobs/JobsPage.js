@@ -147,10 +147,6 @@ export const JobsPage = ({ match: { isExact } }) => {
             })
             .map(job => {
               const company = companiesByID[job.companyID] || {};
-              const daysOld = moment().diff(job.TSCreated, 'days');
-              const olderThanThirty =
-                job.TSCreated &&
-                parseInt(moment().diff(job.TSCreated, 'days'), 10) > 30;
               return (
                 <ListItemLink href={`/admin/jobs/${job.id}`} key={job.id}>
                   <ListItemAvatar>
@@ -207,6 +203,10 @@ export const JobsPage = ({ match: { isExact } }) => {
             })
             .map(job => {
               const company = companiesByID[job.companyID] || {};
+              const daysOld = moment().diff(job.TSCreated, 'days');
+              const olderThanThirty =
+                job.TSCreated &&
+                parseInt(moment().diff(job.TSCreated, 'days'), 10) > 30;
               return (
                 <ListItemLink href={`/admin/jobs/${job.id}`} key={job.id}>
                   <ListItemAvatar>
