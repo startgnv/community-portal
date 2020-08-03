@@ -15,10 +15,14 @@ import { Link } from 'react-router-dom';
 
 const Field = styled.div`
   margin-bottom: 10px;
+  flex: 1;
+  width: 100%;
+  min-width: 190px;
 `;
 
 const FieldRow = styled.div`
   display: flex;
+  flex-flow: row wrap;
   justify-content: space-between;
   align-items: flex-end;
 `;
@@ -39,17 +43,19 @@ const Input = styled(ValidatorInput)`
   box-shadow: inset 0 0 0 1px ${({ theme }) => theme.uiBorder};
   box-sizing: border-box;
   border-radius: 3px;
+  width: 100%;
 `;
 
 const Select = styled(ValidatorSelect)`
   display: block;
-  width: 200px;
+  width: 100%;
   height: 40px;
   padding: 0 15px;
   border: 0;
   box-shadow: inset 0 0 0 1px ${({ theme }) => theme.uiBorder};
   box-sizing: border-box;
   border-radius: 3px;
+  flex: 1;
 
   // Removes the default arrow icon
   -moz-appearance: none;
