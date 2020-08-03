@@ -83,6 +83,10 @@ const EditPageWrapper = ({
         .catch(() => {
           setLoadingJob(false);
         });
+    } else {
+      setLoadingJob(false);
+      setWasDraft(false);
+      setIsUnpublished(true);
     }
   }, [jobID]);
 
@@ -115,8 +119,6 @@ export const EditPage = ({
   isUnpublished,
   setIsUnpublished
 }) => {
-  console.log(job);
-
   // Draft state
   const [isDraft, setDraft] = useState(false);
 
@@ -189,7 +191,7 @@ export const EditPage = ({
 
       // If the job is new, or if the job is a draft without a creation
       // date (i.e. a job from the requests page)
-      if (!job) {
+      if (!job.TSCreated) {
         jobData.TSCreated = Date.now();
         redirect = true;
 
@@ -200,10 +202,10 @@ export const EditPage = ({
         }
       }
 
-      if (!jobData.TSCreated) job.TSCreated = Date.now();
+      if (!jobData.TSCreated) jobData.TSCreated = Date.now();
 
       // Upload to Firestore in the drafts collection
-      if (isDraft) {
+      if (job.TSCreated && isDraft) {
         if (wasDraft) {
           updatePromise = db
             .collection('draftJobs')
@@ -219,7 +221,7 @@ export const EditPage = ({
         }
       }
       // Upload to Firestore in the jobs collection, if possible
-      else {
+      else if (job.TSCreated && !isDraft) {
         if (!description) {
           setSaving(false);
           setSavingError('Could not publish, a job must have a description');
@@ -250,7 +252,10 @@ export const EditPage = ({
 
         // Job is being published for the first time
         if (isUnpublished) {
-          updatePromise = db.collection('jobs').add(jobData);
+          updatePromise = db
+            .collection('jobs')
+            .doc(job.id)
+            .set(jobData);
 
           setIsUnpublished(false);
         }
