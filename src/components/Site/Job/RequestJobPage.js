@@ -12,19 +12,14 @@ import { ContentState, convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import { Link } from 'react-router-dom';
+import Checkbox from '../UI/Checkbox';
+import NewCompanyForm from '../Company/NewCompanyForm';
+import Field from '../UI/Form/Field';
+import FieldRow from '../UI/Form/FieldRow';
 
-const Field = styled.div`
-  margin-bottom: 10px;
-  flex: 1;
-  width: 100%;
-  min-width: 190px;
-`;
-
-const FieldRow = styled.div`
+const CheckContainer = styled.div`
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: flex-end;
+  flex-flow: row nowrap;
 `;
 
 const Title = styled.h3`
@@ -38,12 +33,14 @@ const Description = styled.p`
 const Input = styled(ValidatorInput)`
   display: block;
   height: 40px;
-  padding: 0 15px;
+  padding: 12px 15px;
   border: 0;
   box-shadow: inset 0 0 0 1px ${({ theme }) => theme.uiBorder};
   box-sizing: border-box;
   border-radius: 3px;
   width: 100%;
+  font-family: WilliamsCaslonText, serif;
+  resize: vertical;
 `;
 
 const Select = styled(ValidatorSelect)`
@@ -86,6 +83,27 @@ const RequestJobPage = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  // Company Information
+  const [isNewCompany, setIsNewCompany] = useState(false);
+
+  const [companyAddress, setCompanyAddress] = useState('');
+  const [companyAddressError, setCompanyAddressError] = useState('');
+
+  const [companyUrl, setCompanyUrl] = useState('');
+  const [companyUrlError, setCompanyUrlError] = useState('');
+
+  const [companyYearFounded, setCompanyYearFounded] = useState('');
+  const [companyYearFoundedError, setCompanyYearFoundedError] = useState('');
+
+  const [companyEmployeeCount, setCompanyEmployeeCount] = useState('<10');
+  const [companyEmployeeCountError, setCompanyEmployeeCountError] = useState(
+    ''
+  );
+
+  const [companyDescription, setCompanyDescription] = useState('');
+  const [companyDescriptionError] = useState('');
+
+  // Job Information
   const [jobTitle, setJobTitle] = React.useState('');
   const [jobTitleError, setJobTitleError] = React.useState('');
 
@@ -110,7 +128,7 @@ const RequestJobPage = () => {
 
   const [wysiwygState, setWysiwygState] = useState(EditorState.createEmpty());
 
-  const validators = [
+  const jobValidators = [
     [jobTitle, setJobTitleError, Validators.required],
     [applyUrl, setApplyUrlError, Validators.required],
     [jobType, setJobTypeError, Validators.required],
@@ -121,6 +139,13 @@ const RequestJobPage = () => {
       Validators.email
     ],
     [companyName, setCompanyNameError, Validators.required]
+  ];
+
+  const companyValidators = [
+    [companyAddress, setCompanyAddressError, Validators.required],
+    [companyUrl, setCompanyUrlError, Validators.required],
+    [companyYearFounded, setCompanyYearFoundedError, Validators.required],
+    [companyEmployeeCount, setCompanyEmployeeCountError, Validators.required]
   ];
 
   useEffect(() => {
@@ -140,20 +165,38 @@ const RequestJobPage = () => {
   const onSubmit = e => {
     e.preventDefault();
 
-    const isValid = validate(validators);
+    const isJobValid = validate(jobValidators);
 
-    if (!isValid) return;
+    if (!isJobValid) return;
+
+    if (isNewCompany && !validate(companyValidators)) return;
 
     setLoading(true);
-    db.collection('draftJobs')
-      .add({
-        title: jobTitle,
-        description: jobDescription,
-        applyUrl,
-        type: jobType,
-        companyContactEmail,
-        companyName
-      })
+    const jobPromise = db.collection('draftJobs').add({
+      title: jobTitle,
+      description: jobDescription,
+      applyUrl,
+      type: jobType,
+      companyContactEmail,
+      companyName
+    });
+
+    const companyPromise = !isNewCompany
+      ? Promise.resolve()
+      : db.collection('companyDrafts').add({
+          address: companyAddress,
+          description: companyDescription,
+          employeeCount: companyEmployeeCount,
+          founded: companyYearFounded,
+          name: companyName,
+          slug: companyName
+            .split(' ')
+            .join('-')
+            .toLowerCase(),
+          url: companyUrl
+        });
+
+    Promise.all([jobPromise, companyPromise])
       .then(() => {
         setLoading(false);
         setSuccess(true);
@@ -178,10 +221,35 @@ const RequestJobPage = () => {
             publishing your application to confirm all the details. If you've
             never posted a job here before, you're required to submit some
             additional information about your company for verification before
-            your job application can be considered.{' '}
-            <Link to="/add-company">Get verified</Link>
+            your job application can be considered.
           </Description>
           <form onSubmit={onSubmit}>
+            <CheckContainer>
+              <Checkbox
+                checked={isNewCompany}
+                onChange={() => setIsNewCompany(!isNewCompany)}
+                label="I have yet submitted my companies information"
+              />
+            </CheckContainer>
+            {isNewCompany && (
+              <NewCompanyForm
+                companyAddress={companyAddress}
+                setCompanyAddress={setCompanyAddress}
+                companyAddressError={companyAddressError}
+                companyUrl={companyUrl}
+                setCompanyUrl={setCompanyUrl}
+                companyUrlError={companyUrlError}
+                companyYearFounded={companyYearFounded}
+                setCompanyYearFounded={setCompanyYearFounded}
+                companyYearFoundedError={companyYearFoundedError}
+                companyEmployeeCount={companyEmployeeCount}
+                setCompanyEmployeeCount={setCompanyEmployeeCount}
+                companyEmployeeCountError={companyEmployeeCountError}
+                companyDescription={companyDescription}
+                setCompanyDescription={setCompanyDescription}
+                companyDescriptionError={companyDescriptionError}
+              />
+            )}
             <FieldRow>
               <Field>
                 <Input

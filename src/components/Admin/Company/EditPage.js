@@ -18,7 +18,7 @@ const EditPageWrapper = ({
       .doc(companyID)
       .get()
       .then(snapshot => {
-        if (snapshot.exists && snapshot.data().TSCreated) {
+        if (snapshot.exists && snapshot.data().name) {
           setCompany({ id: snapshot.id, ...snapshot.data() });
           setLoading(false);
         } else {
@@ -53,7 +53,7 @@ export const EditPage = ({ company, history }) => {
   const [address, setAddress] = useState({
     center: company.coordinates
       ? [company.coordinates.longitude, company.coordinates.latitude]
-      : null,
+      : [29.6516, 82.3248], // Default to coordinates for Gainesville, FL
     place_name: company.address || ''
   });
   const [logoImg, setLogoImg] = useState({ isString: true, value: '' }); // { isString: boolean, value: string | Blob }
@@ -82,6 +82,7 @@ export const EditPage = ({ company, history }) => {
   const [isSponsor, setIsSponsor] = useState(company.isSponsor || '');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   // These images are referenced in Firestore by their relative storage path,
   // thus their actual image URL must be fetched
@@ -142,18 +143,38 @@ export const EditPage = ({ company, history }) => {
       isSponsor,
       TSUpdated: Date.now(),
       TSCreated: company.TSCreated ? company.TSCreated : Date.now(),
-      coverPath: company.coverPath,
-      logoPath: company.logoPath,
+      coverPath: company.coverPath ? company.coverPath : '',
+      logoPath: company.logoPath ? company.logoPath : '',
       listingPath: company.listingPath
         ? company.listingPath
-        : company.coverPath,
-      photos: company.photos || []
+        : company.coverPath
+        ? company.coverPath
+        : '',
+      photos: company.photos ? company.photos : []
     };
 
     let doc;
     if (isDraft) {
       doc = db.collection('companyDrafts').doc(company.id);
     } else {
+      if (!company.coverPath && !coverImg.value) {
+        setLoading(false);
+        setError('Could not publish, company must have a cover image');
+        return;
+      }
+
+      if (!company.logoPath && !logoImg.value) {
+        setLoading(false);
+        setError('Could not publish, company must have a logo image');
+        return;
+      }
+
+      if (!industryID) {
+        setLoading(false);
+        setError('Could not publish, company must be designated an industry');
+        return;
+      }
+
       // If a doc is being published, delete its temporary draft
       db.collection('companyDrafts')
         .doc(company.id)
@@ -290,6 +311,7 @@ export const EditPage = ({ company, history }) => {
       onSubmit={onSubmit}
       toggleDraft={toggleDraft}
       success={success}
+      error={error}
       loading={loading || loadingIndustries}
       onCancel={history.goBack}
       coverImg={coverImg.value}

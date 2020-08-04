@@ -42,11 +42,11 @@ function ListItemLink(props) {
 export const JobsPage = ({ match: { isExact } }) => {
   const classes = useStyles();
 
-  // Jobs controls
+  // Published controls
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState({ by: 'Updated', asc: false });
 
-  // Requests controls
+  // Unpublished controls
   const [unpublishedSearch, setUnpublishedSearch] = useState('');
   const [unpublishedSort, setUnpublishedSort] = useState({
     dy: 'Updated',

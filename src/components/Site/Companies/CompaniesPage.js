@@ -10,8 +10,13 @@ import { Helmet } from 'react-helmet';
 import _ from 'lodash';
 
 import { LinearProgress } from '@material-ui/core';
+import CompaniesFilter from './CompaniesFilter';
 
 const Container = styled.main``;
+
+const FilterContainer = styled.div`
+  padding: 30px 20px 0 20px;
+`;
 
 const ContentContainer = styled.div`
   display: flex;
@@ -108,14 +113,16 @@ export const CompaniesPage = () => {
       </Helmet>
       <Container>
         <Hero title="Tech Companies in GNV" size="medium" maxWidth="none" />
+        <FilterContainer>
+          <CompaniesFilter
+            onChange={onFilterChange}
+            sizeList={companySizeList}
+            filteredCount={companies.length}
+          />
+        </FilterContainer>
         <SharedMapProvider>
           <ContentContainer>
-            <CompaniesList
-              onChange={onFilterChange}
-              companies={sortedCompanies}
-              companySizes={companySizeList}
-              jobs={jobs}
-            />
+            <CompaniesList companies={sortedCompanies} jobs={jobs} />
             <CompaniesMapContainer>
               <CompaniesMapInner>
                 <CompaniesMap companies={filteredCompanies} />
