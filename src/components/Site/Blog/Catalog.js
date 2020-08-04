@@ -139,19 +139,7 @@ const Excerpt = styled.p`
   }
 
   figure {
-    margin: 60px 0;
-  }
-
-  figure img {
-    width: 100%;
-    height: 100%;
-  }
-
-  figure figcaption {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    margin-top: 5px;
+    display: none;
   }
 
   blockquote {
