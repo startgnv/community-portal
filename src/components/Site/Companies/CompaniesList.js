@@ -27,18 +27,8 @@ const CTAHeadline = styled.h3`
   margin-bottom: 20px;
 `;
 
-export const CompaniesList = ({
-  companies = [],
-  companySizes = [],
-  jobs = [],
-  onChange
-}) => (
+export const CompaniesList = ({ companies = [], jobs = [] }) => (
   <Container>
-    <CompaniesFilter
-      onChange={onChange}
-      sizeList={companySizes}
-      filteredCount={companies.length}
-    />
     <SharedMapConsumer>
       {({ setActiveCompany }) => {
         return companies.map(company => {

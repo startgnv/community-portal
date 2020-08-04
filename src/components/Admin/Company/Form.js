@@ -15,6 +15,7 @@ const Form = ({
   onSubmit,
   toggleDraft,
   success,
+  error,
   loading,
   onCancel,
 
@@ -245,6 +246,7 @@ const Form = ({
             {success ? 'Published' : 'Publish'}
           </Button>
         </Grid>
+        {error}
       </Grid>
     </FormCardPage>
   );

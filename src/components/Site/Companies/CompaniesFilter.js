@@ -9,6 +9,7 @@ import {
 } from '../UI/Filter';
 import styled from 'styled-components/macro';
 import SearchInput from '../UI/SearchInput';
+import RequestButton from '../UI/RequestButton';
 
 const noop = () => {};
 
@@ -76,9 +77,9 @@ const CompaniesFilter = ({ onChange = noop, sizeList, filteredCount }) => {
       </FilterItemCustom>
 
       <FilterItemCustom full>
-        <Label>
-          {filteredCount} {filteredCount !== 1 ? 'Companies' : 'Company'}
-        </Label>
+        <RequestButton to="/add-company" label="Don't see your company here?">
+          Add Your Company!
+        </RequestButton>
       </FilterItemCustom>
     </Filter>
   );
