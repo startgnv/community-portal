@@ -13,7 +13,7 @@ import { Parser } from 'html-to-react';
 import { Helmet } from 'react-helmet';
 import CompanyCard from './CompanyCard';
 import { device } from '../../utils/device';
-import info from '../../../assets/images/info.svg';
+import heart from '../../../assets/images/heart.svg';
 
 const htmlParser = new Parser();
 
@@ -82,7 +82,7 @@ const InfoBox = styled.div`
   align-items: center;
 
   border-radius: 3px;
-  border-left: 3px solid #f35b1a;
+  border-left: 3px solid #709dae;
   box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.15);
   background-color: white;
   padding: 12px 30px 12px 0;
@@ -95,7 +95,7 @@ const InfoBoxMessage = styled.p`
   font-size: 13px;
   font-weight: 400;
   line-height: 20px;
-  color: #f35b1a;
+  color: #709dae;
 `;
 
 const InfoIcon = styled.img`
@@ -176,7 +176,7 @@ export const JobPage = ({
           <Sidebar>
             <ApplyBtn job={job} companyName={companyName} />
             <InfoBox>
-              <InfoIcon src={info} alt="Info" />
+              <InfoIcon src={heart} alt="Heart" />
               <InfoBoxMessage>
                 Let them know you heard about the role from 'startGNV's Job
                 Board'.
