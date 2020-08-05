@@ -124,6 +124,9 @@ export const EditPage = ({
 
   // Job form state
   const [title, setTitle] = useState(job.title || '');
+  const [companyContactEmail, setCompanyContactEmail] = useState(
+    job.companyContactEmail || ''
+  );
   const [description, setDescription] = useState(job.description || '');
   const [wysiwygState, setWysiwygState] = useState(EditorState.createEmpty());
   const [companyID, setCompanyID] = useState(job.companyID || null);
@@ -177,6 +180,7 @@ export const EditPage = ({
       setSavingSuccess(false);
       const jobData = {
         title,
+        companyContactEmail,
         description,
         categories: selectedCategories,
         companyID,
@@ -187,41 +191,26 @@ export const EditPage = ({
       };
       let updatePromise = Promise.resolve();
       let clearDraft = Promise.resolve();
-      let redirect = false;
-
-      // If the job is new, or if the job is a draft without a creation
-      // date (i.e. a job from the requests page)
-      if (!job.TSCreated) {
-        jobData.TSCreated = Date.now();
-        redirect = true;
-
-        if (isDraft) {
-          updatePromise = db.collection('draftJobs').add(jobData);
-        } else {
-          updatePromise = db.collection('jobs').add(jobData);
-        }
-      }
 
       if (!jobData.TSCreated) jobData.TSCreated = Date.now();
 
-      // Upload to Firestore in the drafts collection
-      if (job.TSCreated && isDraft) {
+      if (isDraft) {
         if (wasDraft) {
           updatePromise = db
             .collection('draftJobs')
             .doc(job.id)
             .update(jobData);
         } else {
-          jobData.TSCreated = Date.now();
-          redirect = true;
-          updatePromise = db
-            .collection('draftJobs')
-            .doc(job.id)
-            .set(jobData);
+          if (isUnpublished) {
+            updatePromise = db.collection('draftJobs').add(jobData);
+          } else {
+            updatePromise = db
+              .collection('draftJobs')
+              .doc(job.id)
+              .set(jobData);
+          }
         }
-      }
-      // Upload to Firestore in the jobs collection, if possible
-      else if (job.TSCreated && !isDraft) {
+      } else {
         if (!description) {
           setSaving(false);
           setSavingError('Could not publish, a job must have a description');
@@ -286,12 +275,10 @@ export const EditPage = ({
           setSaving(false);
           setSavingSuccess(true);
           setSavingError('');
-          if (redirect) {
-            setTimeout(
-              () => push('/admin/jobs/' + (jobRef ? jobRef.id : job.id)),
-              1000
-            );
-          }
+          setTimeout(
+            () => push('/admin/jobs/' + (jobRef ? jobRef.id : job.id)),
+            1000
+          );
         });
     }
   };
@@ -375,6 +362,16 @@ export const EditPage = ({
             label="Job Title"
             value={title}
             onChange={e => setTitle(e.target.value)}
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            required
+            variant="outlined"
+            fullWidth
+            label="Company Contact Email"
+            value={companyContactEmail}
+            onChange={e => setCompanyContactEmail(e.target.value)}
           />
         </Grid>
         <Grid item>
