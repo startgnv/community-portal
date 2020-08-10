@@ -64,6 +64,7 @@ const NewCompanyForm = ({
       <FieldRow>
         <Field>
           <Input
+            testId="field-company-address"
             placeholder="Company Address"
             onChange={setCompanyAddress}
             value={companyAddress}

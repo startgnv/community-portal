@@ -56,7 +56,11 @@ const EditPageWrapper = ({
 
   useEffect(() => {
     if (jobID) {
-      db.collection('draftJobs')
+      db.collection(
+        process.env.REACT_APP_ENVIRONMENT === 'test'
+          ? 'draftJobsTest'
+          : 'draftJobs'
+      )
         .doc(jobID)
         .get()
         .then(snapshot => {
@@ -66,7 +70,9 @@ const EditPageWrapper = ({
           }
 
           return db
-            .collection('jobs')
+            .collection(
+              process.env.REACT_APP_ENVIRONMENT === 'test' ? 'jobsTest' : 'jobs'
+            )
             .doc(jobID)
             .get();
         })
@@ -197,15 +203,29 @@ export const EditPage = ({
       if (isDraft) {
         if (wasDraft) {
           updatePromise = db
-            .collection('draftJobs')
+            .collection(
+              process.env.REACT_APP_ENVIRONMENT === 'test'
+                ? 'draftJobsTest'
+                : 'draftJobs'
+            )
             .doc(job.id)
             .update(jobData);
         } else {
           if (isUnpublished) {
-            updatePromise = db.collection('draftJobs').add(jobData);
+            updatePromise = db
+              .collection(
+                process.env.REACT_APP_ENVIRONMENT === 'test'
+                  ? 'draftJobsTest'
+                  : 'draftJobs'
+              )
+              .add(jobData);
           } else {
             updatePromise = db
-              .collection('draftJobs')
+              .collection(
+                process.env.REACT_APP_ENVIRONMENT === 'test'
+                  ? 'draftJobsTest'
+                  : 'draftJobs'
+              )
               .doc(job.id)
               .set(jobData);
           }
@@ -242,16 +262,19 @@ export const EditPage = ({
         // Job is being published for the first time
         if (isUnpublished) {
           updatePromise = db
-            .collection('jobs')
-            .doc(job.id)
-            .set(jobData);
+            .collection(
+              process.env.REACT_APP_ENVIRONMENT === 'test' ? 'jobsTest' : 'jobs'
+            )
+            .add(jobData);
 
           setIsUnpublished(false);
         }
         // An already published job is being updated
         else {
           updatePromise = db
-            .collection('jobs')
+            .collection(
+              process.env.REACT_APP_ENVIRONMENT === 'test' ? 'jobsTest' : 'jobs'
+            )
             .doc(job.id)
             .update(jobData);
         }
@@ -259,7 +282,11 @@ export const EditPage = ({
         // Delete the now unnecessary drafted version if it exists
         if (wasDraft) {
           clearDraft = db
-            .collection('draftJobs')
+            .collection(
+              process.env.REACT_APP_ENVIRONMENT === 'test'
+                ? 'draftJobsTest'
+                : 'draftJobs'
+            )
             .doc(job.id)
             .delete();
 
@@ -356,6 +383,7 @@ export const EditPage = ({
       <Grid container spacing={2} direction="column" justify="center">
         <Grid item>
           <TextField
+            data-test-id="field-title"
             required
             variant="outlined"
             fullWidth
@@ -366,6 +394,7 @@ export const EditPage = ({
         </Grid>
         <Grid item>
           <TextField
+            data-test-id="field-contact-email"
             required
             variant="outlined"
             fullWidth
@@ -377,6 +406,7 @@ export const EditPage = ({
         <Grid item>
           <FormLabel>Description</FormLabel>
           <Editor
+            webDriverTestID="field-description"
             editorState={wysiwygState}
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
@@ -398,6 +428,7 @@ export const EditPage = ({
         </Grid>
         <Grid item>
           <TextField
+            data-test-id="field-application-url"
             required
             variant="outlined"
             fullWidth
@@ -409,6 +440,7 @@ export const EditPage = ({
         <Grid item>
           <FormLabel>Type</FormLabel>
           <Select
+            data-test-id="field-job-type"
             label="Type"
             options={typeOptions}
             value={typeOptions.find(({ value }) => type === value)}
@@ -433,6 +465,7 @@ export const EditPage = ({
           <FormControlLabel
             control={
               <Checkbox
+                data-test-id="field-featured"
                 checked={featured}
                 onChange={e => setFeatured(e.target.checked)}
                 value="featured"
@@ -464,6 +497,7 @@ export const EditPage = ({
             Cancel
           </Button>
           <Button
+            data-test-id="draft-button"
             disabled={saving || loading}
             variant="text"
             type="submit"
@@ -472,6 +506,7 @@ export const EditPage = ({
             Save As Draft
           </Button>
           <Button
+            data-test-id="publish-button"
             variant="contained"
             color="primary"
             disabled={saving}

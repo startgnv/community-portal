@@ -3,7 +3,9 @@ import styled from 'styled-components/macro';
 import { lighten } from 'polished';
 import classnames from 'classnames';
 
-const ButtonContainer = styled.button`
+const ButtonContainer = styled.button.attrs(props => ({
+  'data-test-id': props.testId
+}))`
   display: inline-block;
   height: ${({ theme, size }) => theme.buttonSizes[size].height};
   width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
@@ -43,6 +45,7 @@ const ButtonContainer = styled.button`
 `;
 
 export const Button = ({
+  testId,
   label = 'Button',
   className,
   fullWidth = false,
@@ -55,6 +58,7 @@ export const Button = ({
   });
   return (
     <ButtonContainer
+      testId={testId}
       className={btnClasses}
       fullWidth={fullWidth}
       size={size}
