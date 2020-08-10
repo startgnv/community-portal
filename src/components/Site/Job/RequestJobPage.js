@@ -172,14 +172,20 @@ const RequestJobPage = () => {
     if (isNewCompany && !validate(companyValidators)) return;
 
     setLoading(true);
-    const jobPromise = db.collection('draftJobs').add({
-      title: jobTitle,
-      description: jobDescription,
-      applyUrl,
-      type: jobType,
-      companyContactEmail,
-      companyName
-    });
+    const jobPromise = db
+      .collection(
+        process.env.REACT_APP_ENVIRONMENT === 'test'
+          ? 'draftJobsTest'
+          : 'draftJobs'
+      )
+      .add({
+        title: jobTitle,
+        description: jobDescription,
+        applyUrl,
+        type: jobType,
+        companyContactEmail,
+        companyName
+      });
 
     const companyPromise = !isNewCompany
       ? Promise.resolve()
@@ -253,6 +259,7 @@ const RequestJobPage = () => {
             <FieldRow>
               <Field>
                 <Input
+                  testId="field-job-title"
                   placeholder="Job Title"
                   onChange={setJobTitle}
                   value={jobTitle}
@@ -261,6 +268,7 @@ const RequestJobPage = () => {
               </Field>
               <Field>
                 <Input
+                  testId="field-application-url"
                   placeholder="Application Url"
                   onChange={setApplyUrl}
                   value={applyUrl}
@@ -280,6 +288,7 @@ const RequestJobPage = () => {
               </Field>
               <Field>
                 <Input
+                  testId="field-contact-email"
                   placeholder="Company Contact Email"
                   onChange={setCompanyContactEmail}
                   value={companyContactEmail}
@@ -288,6 +297,7 @@ const RequestJobPage = () => {
               </Field>
               <Field>
                 <Input
+                  testId="field-company-name"
                   placeholder="Company Name"
                   onChange={setCompanyName}
                   value={companyName}
@@ -297,6 +307,7 @@ const RequestJobPage = () => {
             </FieldRow>
             <Field>
               <Editor
+                webDriverTestID="field-description"
                 editorState={wysiwygState}
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
@@ -316,7 +327,7 @@ const RequestJobPage = () => {
                 onEditorStateChange={onWysiwygStateChange}
               />
             </Field>
-            <Button label="Submit" type="submit" />
+            <Button testId="submit" label="Submit" type="submit" />
           </form>
         </>
       )}

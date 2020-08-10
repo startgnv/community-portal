@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-const Input = styled.input`
+const Input = styled.input.attrs(props => ({
+  'data-test-id': props.testId
+}))`
   ${({ error }) =>
     error &&
     `
@@ -50,6 +52,7 @@ const SubmitLabel = styled.label`
 `;
 
 const ValidatorInput = ({
+  testId,
   submitted,
   error,
   onChange,
@@ -65,6 +68,7 @@ const ValidatorInput = ({
       {submitted && <SubmitLabel>{successMessage}</SubmitLabel>}
       {type === 'text' && (
         <Input
+          testId={testId}
           className={className}
           disabled={submitted}
           submitted={submitted}

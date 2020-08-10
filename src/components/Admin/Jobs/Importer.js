@@ -145,7 +145,9 @@ const AdminJobsSyncPage = () => {
     { idField: 'id' }
   );
   const [jobs = [], jobsLoading, jobsError] = useCollectionData(
-    db.collection('jobs'),
+    db.collection(
+      process.env.REACT_APP_ENVIRONMENT === 'test' ? 'jobsTest' : 'jobs'
+    ),
     { idField: 'id' }
   );
   const [
@@ -285,11 +287,17 @@ const AdminJobsSyncPage = () => {
             break;
           case 'import':
             importPromises.push(
-              db.collection('jobs').add({
-                ...job,
-                TSCreated: Date.now(),
-                imported: true
-              })
+              db
+                .collection(
+                  process.env.REACT_APP_ENVIRONMENT === 'test'
+                    ? 'jobsTest'
+                    : 'jobs'
+                )
+                .add({
+                  ...job,
+                  TSCreated: Date.now(),
+                  imported: true
+                })
             );
             break;
         }

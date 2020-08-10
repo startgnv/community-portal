@@ -54,12 +54,18 @@ export const JobsPage = ({ match: { isExact } }) => {
   });
 
   const [draftJobs = [], draftJobsLoading] = useCollectionData(
-    db.collection('draftJobs'),
+    db.collection(
+      process.env.REACT_APP_ENVIRONMENT === 'test'
+        ? 'draftJobsTest'
+        : 'draftJobs'
+    ),
     { idField: 'id' }
   );
 
   const [jobsSrc = [], loadingJobs, errorJobs] = useCollectionData(
-    db.collection('jobs'),
+    db.collection(
+      process.env.REACT_APP_ENVIRONMENT === 'test' ? 'jobsTest' : 'jobs'
+    ),
     {
       idField: 'id'
     }
@@ -148,7 +154,11 @@ export const JobsPage = ({ match: { isExact } }) => {
             .map(job => {
               const company = companiesByID[job.companyID] || {};
               return (
-                <ListItemLink href={`/admin/jobs/${job.id}`} key={job.id}>
+                <ListItemLink
+                  href={`/admin/jobs/${job.id}`}
+                  key={job.id}
+                  data-test-id={`job-unpublished-${job.id}`}
+                >
                   <ListItemAvatar>
                     <StorageAvatar
                       path={company.logoPath}
@@ -208,7 +218,11 @@ export const JobsPage = ({ match: { isExact } }) => {
                 job.TSCreated &&
                 parseInt(moment().diff(job.TSCreated, 'days'), 10) > 30;
               return (
-                <ListItemLink href={`/admin/jobs/${job.id}`} key={job.id}>
+                <ListItemLink
+                  href={`/admin/jobs/${job.id}`}
+                  key={job.id}
+                  data-test-id={`job-published-${job.id}`}
+                >
                   <ListItemAvatar>
                     <Badge
                       color="secondary"
@@ -261,6 +275,7 @@ export const JobsPage = ({ match: { isExact } }) => {
       </Container>
 
       <Fab
+        data-test-id="add-icon"
         className={classes.fab}
         color="primary"
         component={Link}

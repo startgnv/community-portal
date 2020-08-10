@@ -58,7 +58,11 @@ const DisplayPage = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    db.collection('draftJobs')
+    db.collection(
+      process.env.REACT_APP_ENVIRONMENT === 'test'
+        ? 'draftJobsTest'
+        : 'draftJobs'
+    )
       .doc(jobID)
       .get()
       .then(snapshot => {
@@ -68,7 +72,9 @@ const DisplayPage = ({
           setLoading(false);
         } else {
           return db
-            .collection('jobs')
+            .collection(
+              process.env.REACT_APP_ENVIRONMENT === 'test' ? 'jobsTest' : 'jobs'
+            )
             .doc(jobID)
             .get();
         }

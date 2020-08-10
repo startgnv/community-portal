@@ -21,7 +21,9 @@ export class AppProvider extends React.Component {
   };
 
   componentDidMount = () => {
-    db.collection('jobs')
+    db.collection(
+      process.env.REACT_APP_ENVIRONMENT === 'test' ? 'jobsTest' : 'jobs'
+    )
       .get()
       .then(jobRefs => {
         this.setState({
