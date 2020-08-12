@@ -209,26 +209,28 @@ const RequestJobPage = () => {
 
   return (
     <PageContainer>
-      <Title>Submit A Job Application</Title>
+      <Title>Submit Your Available Position</Title>
 
       {success && <p>Success! We'll be in touch soon!</p>}
       {loading && <p>Submitting...</p>}
       {!loading && !success && (
         <>
           <Description>
-            Input all the information you can here about the position you're
-            looking to fill. We will most likely reach out to you prior to
-            publishing your application to confirm all the details. If you've
-            never posted a job here before, you're required to submit some
-            additional information about your company for verification before
-            your job application can be considered.
+            Please fill out all the fields below. If there are any issues
+            withyour submission, we will reach out to you at the Company Contact
+            Email you provide prior to posting. Postings will stay live for at
+            least 30 days unless notified.
+            <br />
+            <br />
+            Please note in order to share a job listing, your company must also
+            be listed on the site.
           </Description>
           <form onSubmit={onSubmit}>
             <CheckContainer>
               <Checkbox
                 checked={isNewCompany}
                 onChange={() => setIsNewCompany(!isNewCompany)}
-                label="I have yet submitted my companies information"
+                label="I also need to list my company."
               />
             </CheckContainer>
             {isNewCompany && (
