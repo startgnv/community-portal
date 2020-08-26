@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import AppContext from '../../AppContext';
 import Hero from '../UI/Hero';
@@ -6,6 +6,7 @@ import JobList from './JobList';
 import JobsFilter from './JobsFilter';
 import heroBG from '../../../assets/images/jobs-hero.jpg';
 import { Helmet } from 'react-helmet';
+import EmptyJobs from './EmptyJobs';
 
 import { LinearProgress } from '@material-ui/core';
 import ProgressBar from '../UI/ProgressBar';
@@ -21,6 +22,14 @@ const FilterContainer = styled.div`
   margin-bottom: 20px;
 `;
 
+const ListContainer = styled.div`
+  margin-bottom: 40px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
 export const JobsPage = () => {
   const [jobsFilter, setJobsFilter] = useState({
     search: '',
@@ -29,7 +38,8 @@ export const JobsPage = () => {
     types: []
   });
 
-  const [displayJobCount, setJobCount] = useState(0);
+  const [featuredJobsCount, setFeaturedJobCount] = useState(0);
+  const [allJobsCount, setAllJobCount] = useState(0);
 
   const {
     jobs,
@@ -50,6 +60,10 @@ export const JobsPage = () => {
   if (jobsLoading || companiesLoading || jobCategoriesLoading) {
     return <LinearProgress />;
   }
+
+  const featuredJobs = jobs.filter(job => job.featured);
+  const nonFeaturedJobs = jobs.filter(job => !job.featured);
+  console.warn(featuredJobsCount, allJobsCount);
 
   return (
     <>
@@ -76,21 +90,40 @@ export const JobsPage = () => {
         <FilterContainer>
           <JobsFilter
             onChange={onFilterChange}
-            filteredCount={displayJobCount}
+            filteredCount={featuredJobsCount + allJobsCount}
             companies={companies}
             categories={jobCategories}
           />
         </FilterContainer>
-        <JobList
-          jobs={jobs}
-          companies={companies}
-          categories={jobCategories}
-          filter={jobsFilter}
-          showDescription={false}
-          showTitle={false}
-          variant="large"
-          setJobCount={setJobCount}
-        />
+        <ListContainer>
+          <JobList
+            jobs={featuredJobs}
+            companies={companies}
+            categories={jobCategories}
+            filter={jobsFilter}
+            showDescription={false}
+            title="Featured Jobs"
+            showCount
+            variant="large"
+            setJobCount={setFeaturedJobCount}
+            hideWhenEmpty
+          />
+        </ListContainer>
+        <ListContainer>
+          <JobList
+            jobs={nonFeaturedJobs}
+            companies={companies}
+            categories={jobCategories}
+            filter={jobsFilter}
+            showDescription={false}
+            title="All Jobs"
+            showCount
+            variant="large"
+            setJobCount={setAllJobCount}
+            hideWhenEmpty
+          />
+        </ListContainer>
+        {featuredJobsCount === 0 && allJobsCount === 0 && <EmptyJobs />}
       </JobsPageContent>
     </>
   );

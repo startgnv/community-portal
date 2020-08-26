@@ -276,7 +276,7 @@ const HomePage = () => {
             <JobList
               jobs={renderJobs.length > 3 ? renderJobs.slice(0, 3) : renderJobs}
               companies={companies}
-              showTitle={false}
+              title=""
             />
           </FeaturedSection>
         </FeaturedContainer>

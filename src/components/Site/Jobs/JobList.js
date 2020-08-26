@@ -46,7 +46,8 @@ export const JobList = ({
   companies,
   categories,
   className,
-  showTitle = true,
+  title = '',
+  showCount = false,
   showCompanyInfo = true,
   showDescription = true,
   filter = {
@@ -56,7 +57,8 @@ export const JobList = ({
     types: []
   },
   variant = '',
-  setJobCount
+  setJobCount,
+  hideWhenEmpty = false
 }) => {
   const ItemComponent = variant === 'large' ? JobListItemLarge : JobListItem;
 
@@ -124,13 +126,20 @@ export const JobList = ({
         </ItemContainer>
       );
     });
+  } else if (hideWhenEmpty) {
+    return false;
   } else {
     listContent = <EmptyJobs />;
   }
 
   return (
     <JobListContainer className={className}>
-      {showTitle && <ListTitle>Jobs ({displayJobs.length})</ListTitle>}
+      {title && (
+        <ListTitle>
+          {title}
+          {showCount && ` (${displayJobs.length})`}
+        </ListTitle>
+      )}
       <ListContainer>{listContent}</ListContainer>
     </JobListContainer>
   );

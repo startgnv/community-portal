@@ -133,7 +133,12 @@ export const CompanyPage = ({
         <CompanyContent>
           <p className="description">{description}</p>
           {companyJobs && companyJobs.length > 0 && (
-            <JobList jobs={companyJobs} showCompanyInfo={false} />
+            <JobList
+              jobs={companyJobs}
+              showCompanyInfo={false}
+              title="Jobs"
+              showCount
+            />
           )}
           <MapWrap>
             <MapContainer viewport={viewport}>

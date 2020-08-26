@@ -146,12 +146,7 @@ const JobsFilter = ({
       </FilterItemCustom>
 
       <FilterItemCustom full>
-        <RequestButton
-          to="/request-job"
-          label="Want to post your available positions?"
-        >
-          Post Your Job!
-        </RequestButton>
+        <RequestButton to="/request-job">Post Your Job!</RequestButton>
       </FilterItemCustom>
     </Filter>
   );
