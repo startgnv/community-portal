@@ -1,10 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withStyles } from '@material-ui/core/styles';
 import { device } from '../../utils/device';
 import { Link } from 'react-router-dom';
 import { storage } from '../../../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import StorageImg from '../UI/StorageImg';
+import Tooltip from '@material-ui/core/Tooltip';
+import sponsorBadge from '../../../assets/images/sponsorBadge.svg';
+
+const SponsorTooltip = withStyles(theme => ({
+  tooltip: {
+    backgroundColor: '#218100',
+    color: '#fff'
+  }
+}))(Tooltip);
 
 const ItemContainer = styled.div`
   height: 170px;
@@ -83,13 +93,13 @@ const CompanyInfo = styled.div`
 `;
 
 const CompanyName = styled.span`
-  display: block;
-  margin-bottom: 5px;
+  display: inline-block;
   font-size: 1rem;
   color: ${({ theme }) => theme.deepNavy};
-  line-height: 16px;
+  line-height: 24px;
   text-transform: uppercase;
   font-weight: bold;
+  vertical-align: top;
 `;
 
 const ShortDescription = styled.p`
@@ -111,7 +121,8 @@ const CompanyListItemLarge = ({
     slug = '',
     logoPath = '',
     coverPath = '',
-    shortDescription = ''
+    shortDescription = '',
+    isSponsor = false
   } = {},
   jobs = [],
   onMouseEnter = () => {}
@@ -126,7 +137,22 @@ const CompanyListItemLarge = ({
           <StorageImg className="logo" alt={name} path={logoPath} />
         </Images>
         <CompanyInfo>
-          <CompanyName>{name}</CompanyName>
+          <div style={{ lineHeight: '24px', marginBottom: '5px' }}>
+            <CompanyName>{name}</CompanyName>
+            {isSponsor && (
+              <SponsorTooltip title="Sponsor" placement="top" color="#218100">
+                <img
+                  src={sponsorBadge}
+                  width="24"
+                  style={{
+                    display: 'inline-block',
+                    marginLeft: '8px',
+                    verticalAlign: 'middle'
+                  }}
+                />
+              </SponsorTooltip>
+            )}
+          </div>
           <EmployeeCount>{employeeCount || '10+'} Employees</EmployeeCount>
           <ShortDescription>{shortDescription}</ShortDescription>
           {jobs.length > 0 && (
