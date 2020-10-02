@@ -395,7 +395,6 @@ export const EditPage = ({
         <Grid item>
           <TextField
             data-test-id="field-contact-email"
-            required
             variant="outlined"
             fullWidth
             label="Company Contact Email"
