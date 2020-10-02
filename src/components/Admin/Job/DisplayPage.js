@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+import {
+  useDocumentDataOnce,
+  useCollectionData
+} from 'react-firebase-hooks/firestore';
 import { Link } from 'react-router-dom';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import {
@@ -53,9 +56,45 @@ const DisplayPage = ({
   const classes = useStyles();
   const [publishedJob, setPublishedJob] = useState(null);
   const [draftJob, setDraftJob] = useState(null);
+  const [archivedJob, setArchivedJob] = useState(null);
   const [job, setJob] = useState(null);
   const [isDraft, setDraft] = useState(false);
+  const [isArchived, setIsArchived] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const [jobsSrc = [], jobsLoading, error] = useCollectionData(
+    db.collection('jobs'),
+    { idField: 'id' }
+  );
+
+  const [drafts = [], draftsLoading] = useCollectionData(
+    db.collection('jobDrafts'),
+    { idField: 'id' }
+  );
+
+  const jobs = jobsSrc.reduce((acc, job) => {
+    const draft = drafts.find(d => d.id === job.id);
+
+    if (!draft) {
+      return [...acc, job];
+    }
+
+    return draft ? [...acc, draft] : [...acc, job];
+  }, []);
+
+  const unpublishedJobs = drafts.filter(
+    job => !jobsSrc.find(j => j.id === job.id)
+  );
+
+  const publishedJobs = jobsSrc.reduce((acc, job) => {
+    const draft = drafts.find(d => d.id === job.id);
+
+    if (!draft) {
+      return [...acc, job];
+    }
+
+    return draft ? [...acc, draft] : [...acc, job];
+  }, []);
 
   useEffect(() => {
     db.collection(
@@ -71,17 +110,38 @@ const DisplayPage = ({
           setDraft(true);
           setLoading(false);
         } else {
-          return db
-            .collection(
-              process.env.REACT_APP_ENVIRONMENT === 'test' ? 'jobsTest' : 'jobs'
-            )
+          console.warn('No test job found, trying archivedJobs');
+          db.collection(
+            process.env.REACT_APP_ENVIRONMENT === 'test'
+              ? 'archivedJobsTest'
+              : 'archivedJobs'
+          )
             .doc(jobID)
-            .get();
+            .get()
+            .then(snapshot => {
+              if (snapshot.exists && snapshot.data().title) {
+                setArchivedJob({ id: snapshot.id, ...snapshot.data() });
+                setIsArchived(true);
+                setLoading(false);
+              } else {
+                return db
+                  .collection(
+                    process.env.REACT_APP_ENVIRONMENT === 'test'
+                      ? 'jobsTest'
+                      : 'jobs'
+                  )
+                  .doc(jobID)
+                  .get();
+              }
+            })
+            .then(snapshot => {
+              setPublishedJob({ id: snapshot.id, ...snapshot.data() });
+              setLoading(false);
+            })
+            .catch(() => {
+              setLoading(false);
+            });
         }
-      })
-      .then(snapshot => {
-        setPublishedJob({ id: snapshot.id, ...snapshot.data() });
-        setLoading(false);
       })
       .catch(() => {
         setLoading(false);
@@ -91,10 +151,12 @@ const DisplayPage = ({
   useEffect(() => {
     if (draftJob) {
       setJob(draftJob);
+    } else if (archivedJob) {
+      setJob(archivedJob);
     } else if (publishedJob) {
       setJob(publishedJob);
     }
-  }, [publishedJob, draftJob]);
+  }, [publishedJob, draftJob, archivedJob]);
 
   const [company, loadingCompany] = useDocumentDataOnce(
     job && db.doc(`companies/${job.companyID}`)
@@ -120,17 +182,34 @@ const DisplayPage = ({
   }
 
   const onDeleteClick = () => {
-    db.doc(`jobs/${jobID}`)
-      .delete()
+    const jobDoc = [...publishedJobs, ...unpublishedJobs].find(
+      j => j.id === jobID
+    );
+    if (!jobDoc) return;
+
+    // Remove the id key so it isn't stored twice in firestore
+    delete jobDoc.id;
+    db.collection(
+      process.env.REACT_APP_ENVIRONMENT === 'test'
+        ? 'archivedJobsTest'
+        : 'archivedJobs'
+    )
+      .doc(jobID)
+      .set(jobDoc)
       .then(() => {
-        if (isDraft) {
-          return db.doc(`draftJobs/${jobID}`).delete();
-        } else {
-          setDeleted(true);
-        }
-      })
-      .then(() => {
-        setDeleted(true);
+        db.collection('jobs')
+          .doc(jobID)
+          .delete()
+          .then(() => {
+            setDeleted(true);
+          });
+
+        db.collection('jobDrafts')
+          .doc(jobID)
+          .delete()
+          .then(() => {
+            setDeleted(true);
+          });
       })
       .catch(() => {});
   };
@@ -141,6 +220,8 @@ const DisplayPage = ({
       .then(() => {
         if (isDraft) {
           return db.doc(`draftJobs/${jobID}`).set(job);
+        } else if (isArchived) {
+          return db.doc(`archivedJobs/${jobID}`).set(job);
         } else {
           setDeleted(false);
         }

@@ -53,6 +53,13 @@ export const JobsPage = ({ match: { isExact } }) => {
     asc: false
   });
 
+  // Archived controls
+  const [archivedSearch, setArchivedSearch] = useState('');
+  const [archivedSort, setArchivedSort] = useState({
+    dy: 'Updated',
+    asc: false
+  });
+
   const [draftJobs = [], draftJobsLoading] = useCollectionData(
     db.collection(
       process.env.REACT_APP_ENVIRONMENT === 'test'
@@ -65,6 +72,17 @@ export const JobsPage = ({ match: { isExact } }) => {
   const [jobsSrc = [], loadingJobs, errorJobs] = useCollectionData(
     db.collection(
       process.env.REACT_APP_ENVIRONMENT === 'test' ? 'jobsTest' : 'jobs'
+    ),
+    {
+      idField: 'id'
+    }
+  );
+
+  const [archivedJobs = [], archivedLoading, archivedError] = useCollectionData(
+    db.collection(
+      process.env.REACT_APP_ENVIRONMENT === 'test'
+        ? 'archivedJobsTest'
+        : 'archivedJobs'
     ),
     {
       idField: 'id'
@@ -118,7 +136,8 @@ export const JobsPage = ({ match: { isExact } }) => {
       loadingJobs ||
       loadingCompanies ||
       draftJobsLoading ||
-      draftCompaniesLoading
+      draftCompaniesLoading ||
+      archivedLoading
   });
 
   const companiesByID = _.keyBy(companies, company => company.id);
@@ -265,6 +284,59 @@ export const JobsPage = ({ match: { isExact } }) => {
               );
             })}
         </List>
+
+        {archivedJobs && archivedJobs.length > 0 && (
+          <ListFilter
+            search={archivedSearch}
+            searchLabel="Search Archived Jobs"
+            setSearch={setArchivedSearch}
+            sort={archivedSort}
+            setSort={setArchivedSort}
+          />
+        )}
+
+        <List>
+          {archivedJobs
+            .filter(({ title }) =>
+              title.toLowerCase().includes(archivedSearch.toLowerCase())
+            )
+            .sort((a, b) => {
+              const sortAttr = sortKeys[archivedSort.by];
+              const aVal = a[sortAttr] || 0;
+              const bVal = b[sortAttr] || 0;
+              if (unpublishedSort.asc) {
+                return aVal - bVal;
+              } else {
+                return bVal - aVal;
+              }
+            })
+            .map(job => {
+              const company = companiesByID[job.companyID] || {};
+              return (
+                <ListItemLink
+                  href={`/admin/jobs/${job.id}`}
+                  key={job.id}
+                  data-test-id={`job-unpublished-${job.id}`}
+                >
+                  <ListItemAvatar>
+                    <StorageAvatar
+                      path={company.logoPath}
+                      avatarProps={{ style: { width: '40px' } }}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={job.title}
+                    secondary={
+                      company.name
+                        ? company.name
+                        : `${job.companyName} (unverified)`
+                    }
+                  />
+                </ListItemLink>
+              );
+            })}
+        </List>
+
         {(errorJobs || errorCompanies) && (
           <CircularProgress
             value="75"
