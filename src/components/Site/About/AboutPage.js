@@ -115,7 +115,7 @@ const programs = [
   {
     title: 'celebrateGNV',
     description:
-      "Celebrate the successes of startGNV land the local innovation community over dinner and drinks. Recognize early stage startups that compete in Cox's pitch competition Startup Showcase."
+      "Celebrate the successes of startGNV and the local innovation community over dinner and drinks. Recognize early stage startups that compete in Cox's pitch competition Startup Showcase."
   },
   {
     title: "Founders' Dinner Series",

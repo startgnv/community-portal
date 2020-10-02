@@ -110,7 +110,6 @@ const DisplayPage = ({
           setDraft(true);
           setLoading(false);
         } else {
-          console.warn('No test job found, trying archivedJobs');
           db.collection(
             process.env.REACT_APP_ENVIRONMENT === 'test'
               ? 'archivedJobsTest'
