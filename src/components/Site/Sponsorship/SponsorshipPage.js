@@ -630,11 +630,11 @@ const SponsorshipPage = () => {
             </SponsorshipPerks>
             <Divider />
             <SponsorButton
-              href="https://pages.donately.com/startgnv/form/frm_8b556d28619c"
+              href="mailto:lauren.asmus@startgnv.com?subject=Community%20Champion%20Sponsorship"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Donate Online
+              Become a Sponsor
             </SponsorButton>
           </Card>
         </CardContainer>
@@ -695,11 +695,11 @@ const SponsorshipPage = () => {
             </SponsorshipPerks>
             <Divider />
             <SponsorButton
-              href="https://pages.donately.com/startgnv/form/frm_d24f9bb21f88"
+              href="mailto:lauren.asmus@startgnv.com?subject=Annual%20Partner%20Sponsorship"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Donate Online
+              Become a Sponsor
             </SponsorButton>
           </Card>
         </CardContainer>
@@ -750,11 +750,11 @@ const SponsorshipPage = () => {
             </SponsorshipPerks>
             <Divider />
             <SponsorButton
-              href="https://pages.donately.com/startgnv/form/frm_33d0b129593e"
+              href="mailto:lauren.asmus@startgnv.com?subject=Annual%20Supporter%20Sponsorship"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Donate Online
+              Become a Sponsor
             </SponsorButton>
           </Card>
         </CardContainer>
