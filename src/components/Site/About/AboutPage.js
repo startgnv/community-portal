@@ -22,54 +22,30 @@ import betterme from '../../../assets/images/sponsors/betterme.png';
 
 //Board Members
 import aidan from '../../../assets/images/board/aidan.jpeg';
-import benny from '../../../assets/images/board/benny.jpeg';
-import bryan from '../../../assets/images/board/bryan.jpeg';
 import elliot from '../../../assets/images/board/elliot.png';
-import gregg from '../../../assets/images/board/gregg.jpeg';
-import hannah from '../../../assets/images/board/hannah.jpeg';
 import james from '../../../assets/images/board/james.png';
 import lindsey from '../../../assets/images/board/lindsey.jpeg';
 import melissa from '../../../assets/images/board/melissa.jpeg';
-import mikayla from '../../../assets/images/board/mikayla.jpg';
 import seyi from '../../../assets/images/board/seyi.jpeg';
 import will from '../../../assets/images/board/will.jpeg';
-import curtis from '../../../assets/images/board/curtis.jpg';
+import aaron from '../../../assets/images/board/aarond.jpeg';
+import christine from '../../../assets/images/board/christinec.jpeg';
+import clara from '../../../assets/images/board/clara.jpeg';
+import jasmine from '../../../assets/images/board/jasmineb.jpeg';
+import keira from '../../../assets/images/board/keiras.jpeg';
+import matthew from '../../../assets/images/board/matthewl.jpeg';
+import michelle from '../../../assets/images/board/michelleb.jpeg';
 
 const boardMembers = [
-  {
-    name: 'Aidan Augustin',
-    img: aidan,
-    linkedIn: 'https://www.linkedin.com/in/aidanaugustin/'
-  },
-  {
-    name: 'Benny Torres',
-    img: benny,
-    linkedIn: 'https://www.linkedin.com/in/bienvenidotorres/'
-  },
-  {
-    name: 'Bryan Tobin',
-    img: bryan,
-    linkedIn: 'https://www.linkedin.com/in/bryan-tobin/'
-  },
-  {
-    name: 'Elliot Welker',
-    img: elliot,
-    linkedIn: 'https://www.linkedin.com/in/elliottwelker/'
-  },
-  {
-    name: 'Hannah Yeargan',
-    img: hannah,
-    linkedIn: 'https://www.linkedin.com/in/hannahyeargan/'
-  },
-  {
-    name: 'Gregg Robinson',
-    img: gregg,
-    linkedIn: 'https://www.linkedin.com/in/robinsongregg/'
-  },
   {
     name: 'James Gibson',
     img: james,
     linkedIn: 'https://www.linkedin.com/in/james-c-gibson/'
+  },
+  {
+    name: 'Aidan Augustin',
+    img: aidan,
+    linkedIn: 'https://www.linkedin.com/in/aidanaugustin/'
   },
   {
     name: 'Lindsey Day',
@@ -77,14 +53,14 @@ const boardMembers = [
     linkedIn: 'https://www.linkedin.com/in/magneticcareers/'
   },
   {
+    name: 'Michelle Brownstein',
+    img: michelle,
+    linkedIn: 'https://www.linkedin.com/in/michelle-brownstein/'
+  },
+  {
     name: 'Melissa White',
     img: melissa,
     linkedIn: 'https://www.linkedin.com/in/melissamaewhite/'
-  },
-  {
-    name: 'Mikayla Paisley',
-    img: mikayla,
-    linkedIn: 'https://www.linkedin.com/in/mikayla-paisley/'
   },
   {
     name: 'Seyi Oluwaleimu',
@@ -97,9 +73,39 @@ const boardMembers = [
     linkedIn: 'https://www.linkedin.com/in/williamrichardson1/'
   },
   {
-    name: 'Curtis McMillen',
-    img: curtis,
-    linkedIn: 'https://www.linkedin.com/in/curtismcmillen/'
+    name: 'Aaron Dixon',
+    img: aaron,
+    linkedIn: 'https://www.linkedin.com/in/aaronbenjamindixon/'
+  },
+  {
+    name: 'Christine Caven',
+    img: christine,
+    linkedIn: 'https://www.linkedin.com/in/christinecaven/'
+  },
+  {
+    name: 'Jasmine Banks',
+    img: jasmine,
+    linkedIn: 'https://www.linkedin.com/in/jsbanks/'
+  },
+  {
+    name: 'Clara Edwards',
+    img: clara,
+    linkedIn: 'https://www.linkedin.com/in/clara-edwards-77161435/'
+  },
+  {
+    name: 'Elliot Welker',
+    img: elliot,
+    linkedIn: 'https://www.linkedin.com/in/elliottwelker/'
+  },
+  {
+    name: 'Keira Simmonds',
+    img: keira,
+    linkedIn: 'https://www.linkedin.com/in/keirasimmonds/'
+  },
+  {
+    name: 'Matthew Luedecke',
+    img: matthew,
+    linkedIn: 'https://www.linkedin.com/in/matthew-luedecke/'
   }
 ];
 
