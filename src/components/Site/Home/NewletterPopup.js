@@ -185,7 +185,7 @@ const NewsletterPopup = ({ canBeVisible }) => {
         <SubHeader>Get the latest on events, jobs and more.</SubHeader>
         <Input
           error={error}
-          onChange={setInput}
+          onChange={ev => setInput(ev.target.value)}
           value={input}
           placeholder="Email"
           successMessage="Thank you for signing up!"
