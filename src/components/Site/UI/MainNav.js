@@ -74,6 +74,17 @@ const MainNav = ({ variant }) => {
       <li>
         <NavLink
           className="nav-link"
+          to="/blog"
+          activeClassName="active"
+          exact
+          onClick={closeSidebar}
+        >
+          Blog
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className="nav-link"
           to="/ecosystem"
           activeClassName="active"
           onClick={closeSidebar}
