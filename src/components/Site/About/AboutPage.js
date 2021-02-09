@@ -17,6 +17,8 @@ import feathr from '../../../assets/images/sponsors/feathr.png';
 import infoTech from '../../../assets/images/sponsors/infotech.png';
 import interactiveResources from '../../../assets/images/sponsors/interactive-resources.png';
 import santeFe from '../../../assets/images/sponsors/sante-fe.png';
+import trimark from '../../../assets/images/sponsors/trimark.png';
+import betterme from '../../../assets/images/sponsors/betterme.png';
 
 //Board Members
 import aidan from '../../../assets/images/board/aidan.jpeg';
@@ -324,6 +326,24 @@ const AboutPage = () => (
                 className="sponsor-img"
                 image={santeFe}
                 title="Interactive Resources"
+              />
+            </Card>
+          </CardContainer>
+          <CardContainer>
+            <Card className="sponsor-card">
+              <CardMedia
+                className="sponsor-img"
+                image={trimark}
+                title="Trimark Properties"
+              />
+            </Card>
+          </CardContainer>
+          <CardContainer>
+            <Card className="sponsor-card">
+              <CardMedia
+                className="sponsor-img"
+                image={betterme}
+                title="Betterme Productions"
               />
             </Card>
           </CardContainer>
