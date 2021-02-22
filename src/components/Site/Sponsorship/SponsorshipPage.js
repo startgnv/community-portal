@@ -338,7 +338,8 @@ const SponsorshipPerk = styled.li`
   line-height: 24px;
 
   img {
-    margin-right: 15px;
+    align-self: start;
+    margin: 7px 15px 0 0;
   }
 `;
 
@@ -355,7 +356,8 @@ const SponsorshipSubperk = styled.li`
   font-size: 14px;
 
   img {
-    margin-right: 15px;
+    align-self: start;
+    margin: 7px 15px 0 0;
   }
 `;
 
@@ -586,46 +588,79 @@ const SponsorshipPage = () => {
           <Card class="tier">
             <SponsorshipTitle>Community Champion</SponsorshipTitle>
             <SponsorshipSummary>
-              Be a main force in growing the opportunities for innovation in
-              Gainesville. As one of our champions you will help us expand our
-              major programs like BarCamp and more while enjoying premier
-              exposure on our platforms.
+              You're invested in Greater Gainesville's growth, and we're here to
+              make sure everyone knows it. As one of our premium sponsors, we'll
+              offer you an on-brand, authentic, and exciting opportunity to
+              engage with the innovation ecosystem and to build brand trust
+              within our community.
             </SponsorshipSummary>
             <SponsorshipPrice>
-              $10,000<span>/yr</span>
+              $11,000<span>/yr</span>
             </SponsorshipPrice>
             <SponsorshipPerks>
               <PerkColumn>
                 <SponsorshipPerk>
                   <img src={send} alt=">" />
-                  Featured as a sponsor of
+                  Concierge creative service and copywriting from startGNVs
+                  brand stewards
                 </SponsorshipPerk>
-                <SponsorshipSubperk>
-                  <img src={dash} alt="-" />
-                  Four (4) Major programs
-                </SponsorshipSubperk>
-                <SponsorshipSubperk>
-                  <img src={dash} alt="-" />
-                  Four (4) Minor programs
-                </SponsorshipSubperk>
                 <SponsorshipPerk>
                   <img src={send} alt=">" />
-                  Two (2) VIP tables at CelebrateGNV
+                  Host an exclusive AMA -- or -- serve as a keynote speaker at a
+                  large event
+                </SponsorshipPerk>
+                <SponsorshipPerk>
+                  <img src={send} alt=">" />
+                  TWO (2) blog spotlights about your company
+                </SponsorshipPerk>
+                <SponsorshipPerk>
+                  <img src={send} alt=">" />
+                  Booth, table, or creative presence at larger events
+                </SponsorshipPerk>
+                <SponsorshipPerk>
+                  <img src={send} alt=">" />
+                  Swag giveaway social promotion
+                </SponsorshipPerk>
+                <SponsorshipPerk>
+                  <img src={send} alt=">" />
+                  ONE (1) specialized social media campaign
+                </SponsorshipPerk>
+                <SponsorshipPerk>
+                  <img src={send} alt=">" />
+                  ONE (1) VIP table at CelebrateGNV
                 </SponsorshipPerk>
               </PerkColumn>
               <PerkColumn>
                 <SponsorshipPerk>
                   <img src={send} alt=">" />
+                  Premiere Brand Recognition
+                </SponsorshipPerk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Multichannel promotion across the startGNV newsletter and
+                  social media
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Top-level exposure at all startGNV programs
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
                   Top-level exposure at CelebrateGNV
-                </SponsorshipPerk>
-                <SponsorshipPerk>
-                  <img src={send} alt=">" />
-                  Top-level exposure on website and newsletter
-                </SponsorshipPerk>
-                <SponsorshipPerk>
-                  <img src={send} alt=">" />
-                  Two blog spotlights written about company
-                </SponsorshipPerk>
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Top-level logo exposure on startGNV website, newsletter, and
+                  annual report
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Large logo on startGNV event promotional materials
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />A quote or company recognition in
+                  one startGNV press pitch
+                </SponsorshipSubperk>
               </PerkColumn>
             </SponsorshipPerks>
             <Divider />
@@ -634,7 +669,7 @@ const SponsorshipPage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Become a Sponsor
+              Become a Champion
             </SponsorButton>
           </Card>
         </CardContainer>
@@ -651,46 +686,64 @@ const SponsorshipPage = () => {
           <Card class="tier">
             <SponsorshipTitle>Annual Partner</SponsorshipTitle>
             <SponsorshipSummary>
-              Partner with us to strengthen Gainesville’s innovation ecosystem.
-              As an Annual Partner, you will help us deliver programs like our
-              AMA Series and more while sharing your company with hundreds of
-              community members.
+              Together, we can help the innovation ecosystem of Greater
+              Gainesville grow in leaps and bounds! Let us position and promote
+              you as a key partner in all startGNV efforts.
             </SponsorshipSummary>
             <SponsorshipPrice>
-              $6,000<span>/yr</span>
+              $6,500<span>/yr</span>
             </SponsorshipPrice>
             <SponsorshipPerks>
               <PerkColumn>
                 <SponsorshipPerk>
                   <img src={send} alt=">" />
-                  Featured as a sponsor of
+                  Serve as an AMA panelist -- or -- give a speech about your
+                  company at a small event
                 </SponsorshipPerk>
-                <SponsorshipSubperk>
-                  <img src={dash} alt="-" />
-                  Two (2) Major programs
-                </SponsorshipSubperk>
-                <SponsorshipSubperk>
-                  <img src={dash} alt="-" />
-                  Two (2) Minor programs
-                </SponsorshipSubperk>
                 <SponsorshipPerk>
                   <img src={send} alt=">" />
-                  One (1) VIP tables at CelebrateGNV
+                  ONE (1) blog spotlight about your company
+                </SponsorshipPerk>
+                <SponsorshipPerk>
+                  <img src={send} alt=">" />
+                  Swag giveaway social promotion
+                </SponsorshipPerk>
+                <SponsorshipPerk>
+                  <img src={send} alt=">" />
+                  FOUR (4) creative social media features about your company
+                </SponsorshipPerk>
+                <SponsorshipPerk>
+                  <img src={send} alt=">" />
+                  FOUR (4) tickets to CelebrateGNV
                 </SponsorshipPerk>
               </PerkColumn>
               <PerkColumn>
                 <SponsorshipPerk>
                   <img src={send} alt=">" />
+                  Premium Brand Recognition
+                </SponsorshipPerk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Multichannel promotion across the startGNV newsletter and
+                  social media
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Featured at all startGNV programs
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
                   Featured at CelebrateGNV
-                </SponsorshipPerk>
-                <SponsorshipPerk>
-                  <img src={send} alt=">" />
-                  Logo featured on website and newsletter
-                </SponsorshipPerk>
-                <SponsorshipPerk>
-                  <img src={send} alt=">" />
-                  One (1) blog spotlights written about company
-                </SponsorshipPerk>
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Logo exposure on startGNV website, newsletter, and annual
+                  report
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Medium logo on startGNV event promotional materials
+                </SponsorshipSubperk>
               </PerkColumn>
             </SponsorshipPerks>
             <Divider />
@@ -699,7 +752,7 @@ const SponsorshipPage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Become a Sponsor
+              Become a Partner
             </SponsorButton>
           </Card>
         </CardContainer>
@@ -710,42 +763,55 @@ const SponsorshipPage = () => {
           <Card class="tier">
             <SponsorshipTitle>Annual Supporter</SponsorshipTitle>
             <SponsorshipSummary>
-              Support us on continuing to build and connect the innovation
-              community together from startups and tech companies to
-              Gainesville’s bright minds. As an Annual Supporter you will help
-              us serve these audiences while gaining company exposure.
+              Whether you're in the lean and mean growth phase or just testing
+              the sponsorship waters, we value your investment in startGNV and
+              our community. Our team is here to go the extra mile to show
+              gratitude and love to companies like you!
             </SponsorshipSummary>
             <SponsorshipPrice>
-              $3,500<span>/yr</span>
+              $2,250<span>/yr</span>
             </SponsorshipPrice>
             <SponsorshipPerks>
               <PerkColumn>
                 <SponsorshipPerk>
                   <img src={send} alt=">" />
-                  Featured as a sponsor of
+                  One creative social media feature about your company
                 </SponsorshipPerk>
-                <SponsorshipSubperk>
-                  <img src={dash} alt="-" />
-                  One (1) Major programs
-                </SponsorshipSubperk>
-                <SponsorshipSubperk>
-                  <img src={dash} alt="-" />
-                  One (1) Minor programs
-                </SponsorshipSubperk>
                 <SponsorshipPerk>
                   <img src={send} alt=">" />
-                  Two (2) tickets to our table at CelebrateGNV
+                  Swag giveaway social promotion
+                </SponsorshipPerk>
+                <SponsorshipPerk>
+                  <img src={send} alt=">" />
+                  TWO (2) tickets to CelebrateGNV
                 </SponsorshipPerk>
               </PerkColumn>
               <PerkColumn>
                 <SponsorshipPerk>
                   <img src={send} alt=">" />
-                  Thanked at CelebrateGNV
+                  Brand Recognition
                 </SponsorshipPerk>
-                <SponsorshipPerk>
-                  <img src={send} alt=">" />
-                  Thanked on our website and newsletter
-                </SponsorshipPerk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Multichannel promotion across the startGNV newsletter and
+                  social media
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Featured at all startGNV programs
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Small feature at CelebrateGNV
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Name listed on startGNV website, newsletter, and annual report
+                </SponsorshipSubperk>
+                <SponsorshipSubperk>
+                  <img src={dash} alt="-" />
+                  Small logo on startGNV event promotional materials
+                </SponsorshipSubperk>
               </PerkColumn>
             </SponsorshipPerks>
             <Divider />
@@ -754,7 +820,7 @@ const SponsorshipPage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Become a Sponsor
+              Become a Supporter
             </SponsorButton>
           </Card>
         </CardContainer>
@@ -763,14 +829,7 @@ const SponsorshipPage = () => {
         </TierImg>
       </Tier>
 
-      <Header
-        ref={linkRef}
-        style={{ marginBottom: '60px', marginTop: '100px' }}
-      >
-        Sponsorship Package Comparison
-      </Header>
-
-      <TableContainer>
+      <TableContainer style={{ display: 'none' }}>
         <Table>
           <TableColumn>
             <TableLabel />
