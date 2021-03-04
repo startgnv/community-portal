@@ -203,7 +203,9 @@ export const CompaniesPage = () => {
               <Grid key={id} item md={4} xs={12}>
                 <ListCard
                   key={id}
-                  coverPath={coverPath.replace('Cover', 'Listing')}
+                  coverPath={
+                    coverPath ? coverPath.replace('Cover', 'Listing') : ''
+                  }
                   logoPath={logoPath}
                   label={name}
                   isDraft={!!drafts.find(d => d.id === id)}
