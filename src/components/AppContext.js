@@ -1,5 +1,5 @@
 import React from 'react';
-import { db } from '../firebase';
+import { firebaseClient } from 'src/firebase/client';
 
 const AppContext = new React.createContext();
 
@@ -21,6 +21,7 @@ export class AppProvider extends React.Component {
   };
 
   componentDidMount = () => {
+    const db = firebaseClient.firestore();
     db.collection(
       process.env.REACT_APP_ENVIRONMENT === 'test' ? 'jobsTest' : 'jobs'
     )

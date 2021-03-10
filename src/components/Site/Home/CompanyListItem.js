@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { storage } from '../../../firebase';
+import Link from 'next/link';
+// import { storage } from '../../../firebase';
+import firebaseClient from 'src/firebase/client';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
-import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { clearFix } from 'polished';
-import AppContext from '../../AppContext';
+// import AppContext from '../../AppContext';
 import StorageImg from '../UI/StorageImg';
 
 const CompanyListItemContainer = styled.li`
@@ -75,30 +76,29 @@ const IndustryTitle = styled.span`
   text-decoration: none;
 `;
 
-export const CompanyListItem = ({
-  company: {
-    id,
-    name = 'No Name',
-    logoPath = '',
-    coverPath = '',
-    slug = '',
-    industryID
-  } = {}
-}) => {
-  const [coverUrl] = useDownloadURL(coverPath ? storage.ref(coverPath) : '');
-  const { companyCategories } = useContext(AppContext);
-  const category = companyCategories.find(cat => cat.id === industryID) || {};
+export const CompanyListItem = ({ company }) => {
+  const [coverUrl] = useDownloadURL(
+    company.coverPath ? firebaseClient.storage().ref(company.coverPath) : ''
+  );
+  // const { companyCategories } = useContext(AppContext);
+  // const category = companyCategories.find(cat => cat.id === industryID) || {};
   return (
     <CompanyListItemContainer>
-      <Link className="link-container" to={`/companies/${slug}`}>
-        <Images>
-          <CompanyCover coverImg={coverUrl} />
-          <StorageImg className="company-img" alt={`${name}`} path={logoPath} />
-        </Images>
-        <CompanyInfo>
-          <CompanyTitle>{name}</CompanyTitle>
-          <IndustryTitle>{category.name}</IndustryTitle>
-        </CompanyInfo>
+      <Link className="link-container" href={`/companies/${company.slug}`}>
+        <>
+          <Images>
+            <CompanyCover coverImg={coverUrl} />
+            <StorageImg
+              className="company-img"
+              alt={`${company.name}`}
+              path={company.logoPath}
+            />
+          </Images>
+          <CompanyInfo>
+            <CompanyTitle>{company.name}</CompanyTitle>
+            {/* <IndustryTitle>{category.name}</IndustryTitle> */}
+          </CompanyInfo>
+        </>
       </Link>
     </CompanyListItemContainer>
   );

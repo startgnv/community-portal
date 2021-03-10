@@ -1,18 +1,21 @@
 import _ from 'lodash';
-import React, { useContext } from 'react';
-import styled from 'styled-components/macro';
+import React, { useContext, useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { device } from 'src/components/utils/device';
-import AppContext from 'src/components/AppContext';
+// import AppContext from 'src/components/AppContext';
 import { clearFix } from 'polished';
-import { Link } from 'react-router-dom';
 // import JobList from 'src/components/Site/Jobs/JobList';
 // import RecentPosts from 'src/components/Site/Blog/RecentPosts';
-// import CompanyList from 'src/components/Site/CompanyList';
+import CompanyList from 'src/components/Site/Home/CompanyList';
 // import homeHero from '../../../assets/images/home-hero.jpg';
 // import homeFeaturedBG from '../../../assets/images/jobs-bg.jpg';
-// import circleText from '../../../assets/images/circle-text.png';
+// import circleText from 'src/assets/images/circle-text.png';
 import { Helmet } from 'react-helmet';
 import { LinearProgress } from '@material-ui/core';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import firebaseClient from 'src/firebase/client';
+// import { getCompanies } from "src/store/companies";
+
 
 const HomePageContainer = styled.div``;
 
@@ -188,19 +191,50 @@ const FeaturedHeadline = styled.div`
 `;
 
 const HomePage = () => {
-  const { jobs, companies, jobsLoading, companiesLoading } = useContext(
-    AppContext
+  // const context = useContext(AppContext);
+  // console.log(context);
+  // const { jobs, companies, jobsLoading, companiesLoading } = useContext(
+  //   AppContext
+  // );
+
+  // if (companiesLoading || jobsLoading) {
+  //   return <LinearProgress />;
+  // }
+
+  // const renderCompanies = _.shuffle(
+  //   companies.filter(company => company.featured)
+  // );
+
+  // const renderJobs = _.shuffle(jobs.filter(j => j.featured));
+
+  // const [companies, setCompanies] = useState([]);
+
+  // useEffect(() =>  {
+  //   async function init() {
+  //     const c = await getCompanies();
+  //     console.log(c);
+  //   }
+
+  //   init();
+  // }, []);
+
+  const [value, loading, error] = useCollection(
+    firebaseClient.firestore().collection('companies'),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
   );
 
-  if (companiesLoading || jobsLoading) {
-    return <LinearProgress />;
+  function getCompanies(docs) {
+    const companies = docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const renderCompanies = _.shuffle(
+      companies.filter(company => company.featured)
+    );
+    console.log(companies);
+console.log(renderCompanies);
+    if (renderCompanies.length > 6) return renderCompanies.slice(0, 6);
+    return renderCompanies;
   }
-
-  const renderCompanies = _.shuffle(
-    companies.filter(company => company.featured)
-  );
-
-  const renderJobs = _.shuffle(jobs.filter(j => j.featured));
 
   return (
     <>
@@ -224,6 +258,7 @@ const HomePage = () => {
         />
         <meta property="og:type" content="website" />
       </Helmet>
+
       <HomePageContainer>
         <HomeHero>
           <HeroImage>
@@ -246,7 +281,7 @@ const HomePage = () => {
         <RecentBlogPostsContainer>
           <FeaturedHeadline>
             <h3>StartGNV Blog</h3>
-            <Link to="/blog">View All</Link>
+            {/* <Link to="/blog">View All</Link> */}
           </FeaturedHeadline>
           <div>
             {/* <RecentPosts limit={4} /> */}
@@ -256,21 +291,22 @@ const HomePage = () => {
           <FeaturedSection>
             <FeaturedHeadline>
               <h3>Featured Companies</h3>
-              <Link to="/companies">View All</Link>
+              {/* <Link to="/companies">View All</Link> */}
             </FeaturedHeadline>
-            {/* <CompanyList
-              companies={
-                renderCompanies.length > 6
-                  ? renderCompanies.slice(0, 6)
-                  : renderCompanies
-              }
-              showTitle={false}
-            /> */}
+            {
+              !loading && !error && (
+                <CompanyList
+                  companies={getCompanies(value.docs)}
+                  showTitle={false}
+                />
+              )
+            }
+            
           </FeaturedSection>
           <FeaturedSection>
             <FeaturedHeadline>
               <h3>Featured Jobs</h3>
-              <Link to="/jobs">View All</Link>
+              {/* <Link to="/jobs">View All</Link> */}
             </FeaturedHeadline>
             {/* <JobList
               jobs={renderJobs.length > 3 ? renderJobs.slice(0, 3) : renderJobs}

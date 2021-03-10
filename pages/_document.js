@@ -1,12 +1,34 @@
 import Document, { Html, Head, Main, NextScript } from "next/document"
+import { ServerStyleSheet } from 'styled-components'
 
 const APP_NAME = "startGNV";
 const APP_DESCRIPTION = "Gainesville's Startup, Tech, and Biotech Community";
 
 export default class extends Document {
   static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx)
-    return { ...initialProps };
+    const sheet = new ServerStyleSheet()
+    const originalRenderPage = ctx.renderPage
+
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) =>
+            sheet.collectStyles(<App {...props} />),
+        })
+
+      const initialProps = await Document.getInitialProps(ctx)
+      return {
+        ...initialProps,
+        styles: (
+          <>
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </>
+        ),
+      }
+    } finally {
+      sheet.seal()
+    }
   }
 
   render() {
@@ -42,6 +64,13 @@ export default class extends Document {
           <link rel="stylesheet" href="https://use.typekit.net/urt4ozf.css" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="shortcut icon" href="/favicon.ico" />
+
+          <script src="/__/firebase/8.2.6/firebase-app.js"></script>
+          <script src="/__/firebase/8.2.6/firebase-auth.js"></script>
+          <script src="/__/firebase/8.2.6/firebase-firestore.js"></script>
+          <script src="/__/firebase/8.2.6/firebase-storage.js"></script>
+          <script src="/__/firebase/8.2.6/firebase-functions.js"></script>
+          <script src="/__/firebase/init.js"></script>
         </Head>
         <body>
           <Main />
