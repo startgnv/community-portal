@@ -11,6 +11,7 @@ service firebase.storage {
       allow write: if request.auth.token.email == "lauren@startupgnv.com";
       allow write: if request.auth.token.email == "jacob@studioreach.io";
       allow write: if request.auth.token.email == "s.oluwaleimu@gmail.com";
+      allow write: if request.auth.token.email == "lauren.asmus@startgnv.com";
       allow read: if true;
     }
   }
