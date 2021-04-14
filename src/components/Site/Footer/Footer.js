@@ -139,8 +139,9 @@ const Footer = () => {
           <Column>
             <Info>
               <Description>
-                startGNV is a 501(c)(3) non-profit dedicated to growing the
-                innovation ecosystem of Greater Gainesville.
+                Gainesville Area Innovation Network, DBA startGNV, is a
+                501(c)(3) non-profit dedicated to growing the innovation
+                ecosystem of Greater Gainesville.
               </Description>
               <Description>
                 This website was only possible thanks to contributions from The
