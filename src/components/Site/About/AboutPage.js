@@ -15,10 +15,13 @@ import threeFiveTwo from '../../../assets/images/sponsors/ThreeFiveTwo.png';
 import opie from '../../../assets/images/sponsors/opiesoftware.jpg';
 import feathr from '../../../assets/images/sponsors/feathr.png';
 import infoTech from '../../../assets/images/sponsors/infotech.png';
-import interactiveResources from '../../../assets/images/sponsors/interactive-resources.png';
 import santeFe from '../../../assets/images/sponsors/sante-fe.png';
 import trimark from '../../../assets/images/sponsors/trimark.png';
 import betterme from '../../../assets/images/sponsors/betterme.png';
+import ps27 from '../../../assets/images/sponsors/ps27.png';
+import alertTrace from '../../../assets/images/sponsors/AlertTrace.jpg';
+import fcu from '../../../assets/images/sponsors/fcu.jpg';
+import sharpspring from '../../../assets/images/sponsors/sharpspring.png';
 
 //Board Members
 import aidan from '../../../assets/images/board/aidan.jpeg';
@@ -321,15 +324,6 @@ const AboutPage = () => (
             <Card className="sponsor-card">
               <CardMedia
                 className="sponsor-img"
-                image={interactiveResources}
-                title="Interactive Resources"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
                 image={santeFe}
                 title="Interactive Resources"
               />
@@ -350,6 +344,34 @@ const AboutPage = () => (
                 className="sponsor-img"
                 image={betterme}
                 title="Betterme Productions"
+              />
+            </Card>
+          </CardContainer>
+          <CardContainer>
+            <Card className="sponsor-card">
+              <CardMedia className="sponsor-img" image={ps27} title="PS27" />
+            </Card>
+          </CardContainer>
+          <CardContainer>
+            <Card className="sponsor-card">
+              <CardMedia
+                className="sponsor-img"
+                image={alertTrace}
+                title="AlertTrace"
+              />
+            </Card>
+          </CardContainer>
+          <CardContainer>
+            <Card className="sponsor-card">
+              <CardMedia className="sponsor-img" image={fcu} title="fcu" />
+            </Card>
+          </CardContainer>
+          <CardContainer>
+            <Card className="sponsor-card">
+              <CardMedia
+                className="sponsor-img"
+                image={sharpspring}
+                title="SharpSpring"
               />
             </Card>
           </CardContainer>
