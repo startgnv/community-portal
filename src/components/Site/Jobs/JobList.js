@@ -101,7 +101,7 @@ export const JobList = ({
     displayJobs = _.shuffle(displayJobs || []).sort((a, b) => {
       const companyA = companies.find(company => company.id === a.companyID);
       const companyB = companies.find(company => company.id === b.companyID);
-      return companyA.featured === companyB.featured
+      return companyA && companyB && companyA.featured === companyB.featured //temporary fix, startGNV site is down
         ? 0
         : companyA.featured
         ? -1
