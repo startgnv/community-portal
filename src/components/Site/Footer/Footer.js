@@ -209,7 +209,7 @@ const Footer = () => {
               <Twitter
                 fill="#A3A9B3"
                 hoverFill="white"
-                to="https://twitter.com/startupgnv"
+                to="https://twitter.com/startgnv"
               />
             </Social>
           </Column>

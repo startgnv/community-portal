@@ -38,6 +38,7 @@ import jasmine from '../../../assets/images/board/jasmineb.jpeg';
 import keira from '../../../assets/images/board/keiras.jpeg';
 import matthew from '../../../assets/images/board/matthewl.jpeg';
 import michelle from '../../../assets/images/board/michelleb.jpeg';
+import steve from '../../../assets/images/board/steve.jpeg';
 
 const boardMembers = [
   {
@@ -109,6 +110,11 @@ const boardMembers = [
     name: 'Matthew Luedecke',
     img: matthew,
     linkedIn: 'https://www.linkedin.com/in/matthew-luedecke/'
+  },
+  {
+    name: 'Steve Shepard',
+    img: steve,
+    linkedIn: 'https://www.linkedin.com/in/stephenshepherd/'
   }
 ];
 
