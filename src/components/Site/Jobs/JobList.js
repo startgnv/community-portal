@@ -60,6 +60,12 @@ export const JobList = ({
   setJobCount,
   hideWhenEmpty = false
 }) => {
+  if (companies) {
+    const companyIds = new Set();
+    companies.forEach(company => companyIds.add(company.id));
+    jobs = jobs.filter(job => companyIds.has(job.companyID));
+  }
+
   const ItemComponent = variant === 'large' ? JobListItemLarge : JobListItem;
 
   const searchFilter = job =>
@@ -101,7 +107,7 @@ export const JobList = ({
     displayJobs = _.shuffle(displayJobs || []).sort((a, b) => {
       const companyA = companies.find(company => company.id === a.companyID);
       const companyB = companies.find(company => company.id === b.companyID);
-      return companyA && companyB && companyA.featured === companyB.featured //temporary fix, startGNV site is down
+      return companyA.featured === companyB.featured
         ? 0
         : companyA.featured
         ? -1
