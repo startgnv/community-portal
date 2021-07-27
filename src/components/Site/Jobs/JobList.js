@@ -60,9 +60,11 @@ export const JobList = ({
   setJobCount,
   hideWhenEmpty = false
 }) => {
-  const companyIds = new Set();
-  companies.forEach(company => companyIds.add(company.id));
-  jobs = jobs.filter(job => companyIds.has(job.companyID));
+  if (companies) {
+    const companyIds = new Set();
+    companies.forEach(company => companyIds.add(company.id));
+    jobs = jobs.filter(job => companyIds.has(job.companyID));
+  }
 
   const ItemComponent = variant === 'large' ? JobListItemLarge : JobListItem;
 
