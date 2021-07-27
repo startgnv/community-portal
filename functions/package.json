@@ -15,7 +15,7 @@
   "dependencies": {
     "@sendgrid/mail": "^6.5.4",
     "@tryghost/content-api": "^1.4.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "firebase": "^8.2.6",
     "firebase-admin": "^8.6.0",
