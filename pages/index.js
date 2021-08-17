@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { device } from 'src/components/utils/device';
 import AppContext from 'src/components/AppContext';
@@ -184,19 +184,25 @@ const FeaturedHeadline = styled.div`
 `;
 
 const HomePage = () => {
-  const { jobs, companies, jobsLoading, companiesLoading } = useContext(
-    AppContext
-  );
+  let [data, setData] = useState({jobs: null, companies: null});
+  const { jobs, companies, jobsLoading, companiesLoading } = data;
 
-//   if (companiesLoading || jobsLoading) {
-//     return <LinearProgress />;
-//   }
+  if (companiesLoading || jobsLoading) {
+    return <LinearProgress />;
+  }
 
-//   const renderCompanies = _.shuffle(
-//     companies.filter(company => company.featured)
-//   );
+  const renderCompanies = companies ? _.shuffle(
+    companies.filter(company => company.featured)
+  ) : [];
 
-//   const renderJobs = _.shuffle(jobs.filter(j => j.featured));
+  const renderJobs = jobs ? _.shuffle(jobs.filter(j => j.featured)) : [];
+
+  useEffect(()=>{
+    const init = () => {
+      setData(useContext(AppContext))
+    }
+    if (!data) init();
+  })
 
   return (
     <>

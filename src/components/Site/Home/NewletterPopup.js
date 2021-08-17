@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { validate } from 'email-validator';
 import { functions } from '../../../firebase';
 import { device } from '../../utils/device';
 import { useRouter } from 'next/dist/client/router';
-import { checkWindow } from 'src/components/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -124,10 +123,6 @@ const Subscribe = styled.button`
   }
 `;
 
-const addNewsletterSubscriber = functions.httpsCallable(
-  'addNewsletterSubscriber'
-);
-
 const NewsletterPopup = ({ canBeVisible }) => {
   const [input, setInput] = useState('');
   const [error, setError] = useState('');
@@ -135,6 +130,15 @@ const NewsletterPopup = ({ canBeVisible }) => {
   const [scrollHeight, setScrollHeight] = useState(null);
   const [isClosed, setClosed] = useState(false);
   const { pathname } = useRouter();
+
+  let addNewsletterSubscriber;
+
+  useEffect(() => {
+    if (!functions) return;
+    addNewsletterSubscriber = functions.httpsCallable(
+      'addNewsletterSubscriber'
+    );
+  });
 
   const submitInput = async e => {
     e.preventDefault();
