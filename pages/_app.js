@@ -1,12 +1,13 @@
 import React from 'react';
 import Head from "next/head";
 import Header from "src/components/Site/Header/Header";
-import { theme } from 'src/components/utils/theme';
+import theme from 'src/components/utils/theme';
 
 import { createGlobalStyle } from 'styled-components';
 import { ThemeProvider } from 'styled-components';
 import ReactGA from 'react-ga';
 import { AppProvider } from 'src/components/AppContext';
+import Footer from 'src/components/Site/Footer/Footer';
 
 ReactGA.initialize('UA-138572620-3');
 
@@ -138,12 +139,13 @@ function startGNV(props) {
   
     return (
         <AppProvider>
-            <ThemeProvider theme={{theme}}>
+            <ThemeProvider theme={{...theme}}>
                 <Head>
                 <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover, user-scalable=no' />
                 </Head>
                 <Header/>
                 <Component {...pageProps} />
+                <Footer/>
                 <GlobalStyle />
             </ThemeProvider>
         </AppProvider>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'src/components/Site/UI/Link';
 import styled from 'styled-components/macro';
 import { device } from '../../utils/device';
 import { clearFix } from 'polished';

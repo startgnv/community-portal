@@ -5,17 +5,32 @@ const APP_NAME = "startGNV";
 const APP_DESCRIPTION = "Gainesville's Startup, Tech, and Biotech Community";
 
 export default class MyDocument extends Document {
-  static getInitialProps({ renderPage }) {
+  static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet();
+    const originalRenderPage = ctx.renderPage;
 
-    const page = renderPage((Component) => (props) => sheet.collectStyles(<Component {...props} />));
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) =>
+            sheet.collectStyles(<App {...props} />),
+        });
 
-    const styleElements = sheet.getStyleElement();
-    return { ...page, styleElements };
+      const initialProps = await Document.getInitialProps(ctx);
+      return {
+        ...initialProps,
+        styles: (
+          <>
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </>
+        ),
+      };
+    } finally {
+      sheet.seal();
+    }
   }
-
   render() {
-    const { styleElements } = this.props;
       return(
         <Html lang="en" dir="ltr">
             <Head>
@@ -49,7 +64,6 @@ export default class MyDocument extends Document {
               <link rel="manifest" href="/manifest.json" />
               <link rel="shortcut icon" href="/favicon.ico" />
 
-              {styleElements}
             </Head>
             <body>
               <Main />
