@@ -13,9 +13,10 @@
     "now-dev": "react-scripts start",
     "now-build": "react-scripts build",
     "dev": "next dev",
-    "build": "next build",
-    "start:next": "next start",
-    "lint": "next lint"
+    "build": "npm run getConfig && next build",
+    "start:next": "npm run getConfig && next start",
+    "lint": "next lint",
+    "getConfig": "firebase apps:sdkconfig web --json > ./firebase-config.json"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "latest",
