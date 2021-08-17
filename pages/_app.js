@@ -141,6 +141,7 @@ function startGNV(props) {
         <AppProvider>
             <ThemeProvider theme={{...theme}}>
                 <Head>
+                <title>startGNV - Gainesville's Startup, Tech, and Biotech Community</title>
                 <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover, user-scalable=no' />
                 </Head>
                 <Header/>

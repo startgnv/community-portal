@@ -35,15 +35,9 @@ export default class MyDocument extends Document {
         <Html lang="en" dir="ltr">
           <Head>
             <meta charset="utf-8" />
-            <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
             <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet"/>
             <link rel="stylesheet" href="https://use.typekit.net/urt4ozf.css"/>
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1, shrink-to-fit=no"
-            />
             <meta name="theme-color" content="#000000" />
-            <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
             <meta
               name="og:title"
               property="og:title"
@@ -56,19 +50,14 @@ export default class MyDocument extends Document {
             />
             <meta name="og:image" property="og:image" content="https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/home-hero.jpg?alt=media&token=29ee21af-5f63-4bb6-8198-dd29d48769f2" />
             <meta property="og:type" content="website" />
-            <title>startGNV - Gainesville's Startup, Tech, and Biotech Community</title>
-            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
-            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
-            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-            <link rel="manifest" href="/site.webmanifest"/>
             <meta name="msapplication-TileColor" content="#da532c"/>
             <meta name="theme-color" content="#ffffff"/>
             <script src="/__/firebase/8.2.6/firebase-app.js"></script>
             <script src="/__/firebase/8.2.6/firebase-auth.js"></script>
             <script src="/__/firebase/8.2.6/firebase-firestore.js"></script>
             <script src="/__/firebase/8.2.6/firebase-storage.js"></script>
-            <script src="/__/firebase/8.2.6/firebase-functions.js"></script>
-            <script src="/__/firebase/init.js"></script>
+            <script src="/__/firebase/8.2.6/firebase-functions.js"></script> 
+            {/* <script src="/__/firebase/init.js"></script> */}
 ¸
             <script src="static/facebook.js"></script>
             <noscript>
@@ -79,7 +68,7 @@ export default class MyDocument extends Document {
             {/* <!-- End Facebook Pixel Code --> */}
 
             {/* <!-- Mailchimp --> */}
-            <script id="mcjs" src = "/static/mailchimp"></script>
+            <script id="mcjs" src = "/static/mailchimp.js"></script>
             {/* <!-- End Mailchimp --> */}
 
             {/* <!-- Hotjar Tracking Code for startgnv.com --> */}
