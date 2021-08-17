@@ -2,7 +2,7 @@ import React from 'react';
 import { clearFix } from 'polished';
 import { device } from '../../utils/device';
 import CompanyListItem from './CompanyListItem';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const CompanyListContainer = styled.div``;
 

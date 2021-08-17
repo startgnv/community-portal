@@ -1,6 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import logoDark from '../../../assets/images/startgnv-logo.png';
 import logoLight from '../../../assets/images/startgnv-logo-white.png';
 
@@ -22,9 +21,9 @@ const Img = styled.img`
 
 const Logo = ({ variant }) => (
   <Container>
-    <Link className="logo-link" to="/">
+    {/* <Link className="logo-link" to="/">
       <Img src={variant === 'light' ? logoLight : logoDark} alt="startGNV" />
-    </Link>
+    </Link> */}
   </Container>
 );
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { firebaseClient } from 'src/firebase/client';
+import { db } from '../firebase';
 
 const AppContext = new React.createContext();
 
@@ -21,8 +21,7 @@ export class AppProvider extends React.Component {
   };
 
   componentDidMount = () => {
-    const db = firebaseClient.firestore();
-    db.collection(
+    db?.collection(
       process.env.REACT_APP_ENVIRONMENT === 'test' ? 'jobsTest' : 'jobs'
     )
       .get()
@@ -36,7 +35,7 @@ export class AppProvider extends React.Component {
         });
       })
       .catch(() => {});
-    db.collection('companies')
+    db?.collection('companies')
       .get()
       .then(companyRefs => {
         this.setState({
@@ -60,7 +59,7 @@ export class AppProvider extends React.Component {
         });
       })
       .catch(() => {});
-    db.collection('jobCategories')
+    db?.collection('jobCategories')
       .get()
       .then(jobCatRefs => {
         this.setState({
@@ -72,7 +71,7 @@ export class AppProvider extends React.Component {
         });
       })
       .catch(() => {});
-    db.collection('companyCategories')
+    db?.collection('companyCategories')
       .get()
       .then(companyCatRefs => {
         this.setState({
@@ -86,7 +85,7 @@ export class AppProvider extends React.Component {
       .catch(err => {
         console.warn(err);
       });
-    db.collection('ecosystem')
+    db?.collection('ecosystem')
       .get()
       .then(ecoRefs => {
         this.setState({
@@ -98,7 +97,7 @@ export class AppProvider extends React.Component {
         });
       })
       .catch(() => {});
-    db.collection('ecosystemCategories')
+    db?.collection('ecosystemCategories')
       .get()
       .then(ecoCatRefs => {
         this.setState({

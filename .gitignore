@@ -29,6 +29,4 @@ yarn-error.log*
 
 firebase-debug.log
 .firebase
-
-# nextjs
 .next

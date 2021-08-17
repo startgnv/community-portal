@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import loadingAnimation from '../../../assets/images/loading.svg';
 
 const Container = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ const Container = styled.div`
 
 const Loading = ({ size = 40, containerHeight = 'auto' }) => (
   <Container height={containerHeight}>
-    <img src="/assets/images/loading.svg" width={size} />
+    <img src={loadingAnimation} width={size} />
   </Container>
 );
 

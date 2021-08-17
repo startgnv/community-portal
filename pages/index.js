@@ -1,21 +1,18 @@
 import _ from 'lodash';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { device } from 'src/components/utils/device';
 // import AppContext from 'src/components/AppContext';
 import { clearFix } from 'polished';
-// import JobList from 'src/components/Site/Jobs/JobList';
-// import RecentPosts from 'src/components/Site/Blog/RecentPosts';
-import CompanyList from 'src/components/Site/Home/CompanyList';
-// import homeHero from '../../../assets/images/home-hero.jpg';
-// import homeFeaturedBG from '../../../assets/images/jobs-bg.jpg';
-// import circleText from 'src/assets/images/circle-text.png';
+// import { Link } from 'react-router-dom';
+// import JobList from 'src/components/site/Jobs/JobList';
+import RecentPosts from 'src/components/Site/Blog/RecentPosts';
+// import CompanyList from 'src/components/site/home/CompanyList';
+import homeHero from 'src/assets/images/home-hero.jpg';
+import homeFeaturedBG from 'src/assets/images/jobs-bg.jpg';
+import circleText from 'src/assets/images/circle-text.png';
 import { Helmet } from 'react-helmet';
 import { LinearProgress } from '@material-ui/core';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import firebaseClient from 'src/firebase/client';
-// import { getCompanies } from "src/store/companies";
-
 
 const HomePageContainer = styled.div``;
 
@@ -33,7 +30,7 @@ const HomeHero = styled.div`
 const HeroImage = styled.div`
   position: relative;
   flex: 1;
-  background-image: url("/assets/images/home-hero.jpg");
+  background-image: url(${homeHero});
   background-size: cover;
   background-position: center;
 
@@ -141,7 +138,7 @@ const RecentBlogPostsContainer = styled.div`
 
 const FeaturedContainer = styled.div`
   padding: 60px 20px;
-  background-image: url("/assets/images/jobs-bg.jpg");
+  background-image: url(${homeFeaturedBG});
   background-size: cover;
   background-position: center;
 `;
@@ -191,50 +188,19 @@ const FeaturedHeadline = styled.div`
 `;
 
 const HomePage = () => {
-  // const context = useContext(AppContext);
-  // console.log(context);
-  // const { jobs, companies, jobsLoading, companiesLoading } = useContext(
-  //   AppContext
-  // );
+//   const { jobs, companies, jobsLoading, companiesLoading } = useContext(
+//     AppContext
+//   );
 
-  // if (companiesLoading || jobsLoading) {
-  //   return <LinearProgress />;
-  // }
+//   if (companiesLoading || jobsLoading) {
+//     return <LinearProgress />;
+//   }
 
-  // const renderCompanies = _.shuffle(
-  //   companies.filter(company => company.featured)
-  // );
+//   const renderCompanies = _.shuffle(
+//     companies.filter(company => company.featured)
+//   );
 
-  // const renderJobs = _.shuffle(jobs.filter(j => j.featured));
-
-  // const [companies, setCompanies] = useState([]);
-
-  // useEffect(() =>  {
-  //   async function init() {
-  //     const c = await getCompanies();
-  //     console.log(c);
-  //   }
-
-  //   init();
-  // }, []);
-
-  const [value, loading, error] = useCollection(
-    firebaseClient.firestore().collection('companies'),
-    {
-      snapshotListenOptions: { includeMetadataChanges: true },
-    }
-  );
-
-  function getCompanies(docs) {
-    const companies = docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    const renderCompanies = _.shuffle(
-      companies.filter(company => company.featured)
-    );
-    console.log(companies);
-console.log(renderCompanies);
-    if (renderCompanies.length > 6) return renderCompanies.slice(0, 6);
-    return renderCompanies;
-  }
+//   const renderJobs = _.shuffle(jobs.filter(j => j.featured));
 
   return (
     <>
@@ -258,11 +224,10 @@ console.log(renderCompanies);
         />
         <meta property="og:type" content="website" />
       </Helmet>
-
       <HomePageContainer>
         <HomeHero>
           <HeroImage>
-            <CircleText src={"/assets/images/circle-text.png"} />
+            <CircleText src={circleText} />
           </HeroImage>
           <HeroContent>
             <h2>
@@ -284,7 +249,7 @@ console.log(renderCompanies);
             {/* <Link to="/blog">View All</Link> */}
           </FeaturedHeadline>
           <div>
-            {/* <RecentPosts limit={4} /> */}
+            <RecentPosts limit={4} />
           </div>
         </RecentBlogPostsContainer>
         <FeaturedContainer>
@@ -293,15 +258,14 @@ console.log(renderCompanies);
               <h3>Featured Companies</h3>
               {/* <Link to="/companies">View All</Link> */}
             </FeaturedHeadline>
-            {
-              !loading && !error && (
-                <CompanyList
-                  companies={getCompanies(value.docs)}
-                  showTitle={false}
-                />
-              )
-            }
-            
+            {/* <CompanyList
+              companies={
+                renderCompanies.length > 6
+                  ? renderCompanies.slice(0, 6)
+                  : renderCompanies
+              }
+              showTitle={false}
+            /> */}
           </FeaturedSection>
           <FeaturedSection>
             <FeaturedHeadline>
@@ -321,4 +285,3 @@ console.log(renderCompanies);
 };
 
 export default HomePage;
-
