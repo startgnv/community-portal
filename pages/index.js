@@ -2,15 +2,11 @@ import _ from 'lodash';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { device } from 'src/components/utils/device';
-// import AppContext from 'src/components/AppContext';
+import AppContext from 'src/components/AppContext';
 import { clearFix } from 'polished';
-// import { Link } from 'react-router-dom';
 // import JobList from 'src/components/site/Jobs/JobList';
 import RecentPosts from 'src/components/Site/Blog/RecentPosts';
 // import CompanyList from 'src/components/site/home/CompanyList';
-import homeHero from 'src/assets/images/home-hero.jpg';
-import homeFeaturedBG from 'src/assets/images/jobs-bg.jpg';
-import circleText from 'src/assets/images/circle-text.png';
 import { Helmet } from 'react-helmet';
 import { LinearProgress } from '@material-ui/core';
 
@@ -30,7 +26,7 @@ const HomeHero = styled.div`
 const HeroImage = styled.div`
   position: relative;
   flex: 1;
-  background-image: url(${homeHero});
+  background-image: url(${'/assets/images/home-hero.jpg'});
   background-size: cover;
   background-position: center;
 
@@ -138,7 +134,7 @@ const RecentBlogPostsContainer = styled.div`
 
 const FeaturedContainer = styled.div`
   padding: 60px 20px;
-  background-image: url(${homeFeaturedBG});
+  background-image: url(${'assets/images/jobs-bg.jpg'});
   background-size: cover;
   background-position: center;
 `;
@@ -188,9 +184,9 @@ const FeaturedHeadline = styled.div`
 `;
 
 const HomePage = () => {
-//   const { jobs, companies, jobsLoading, companiesLoading } = useContext(
-//     AppContext
-//   );
+  const { jobs, companies, jobsLoading, companiesLoading } = useContext(
+    AppContext
+  );
 
 //   if (companiesLoading || jobsLoading) {
 //     return <LinearProgress />;
@@ -227,7 +223,7 @@ const HomePage = () => {
       <HomePageContainer>
         <HomeHero>
           <HeroImage>
-            <CircleText src={circleText} />
+            <CircleText src={'/assets/images/circle-text.png'} />
           </HeroImage>
           <HeroContent>
             <h2>
