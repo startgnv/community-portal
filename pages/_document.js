@@ -52,11 +52,11 @@ export default class MyDocument extends Document {
             <meta property="og:type" content="website" />
             <meta name="msapplication-TileColor" content="#da532c"/>
             <meta name="theme-color" content="#ffffff"/>
-            <script src="/__/firebase/8.2.6/firebase-app.js"></script>
+            {/* <script src="/__/firebase/8.2.6/firebase-app.js"></script>
             <script src="/__/firebase/8.2.6/firebase-auth.js"></script>
             <script src="/__/firebase/8.2.6/firebase-firestore.js"></script>
             <script src="/__/firebase/8.2.6/firebase-storage.js"></script>
-            <script src="/__/firebase/8.2.6/firebase-functions.js"></script> 
+            <script src="/__/firebase/8.2.6/firebase-functions.js"></script>  */}
             {/* <script src="/__/firebase/init.js"></script> */}
 ¸
             <script src="static/facebook.js"></script>

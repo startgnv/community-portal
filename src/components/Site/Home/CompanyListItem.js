@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { storage } from '../../../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom';
+import Link from '../UI/Link';
 import { clearFix } from 'polished';
 import AppContext from '../../AppContext';
 import StorageImg from '../UI/StorageImg';

@@ -21,14 +21,12 @@ export class AppProvider extends React.Component {
   };
 
   componentDidMount = () => {
-    if (!db) return;
-
-    console.log(db);
     db.collection(
       process.env.REACT_APP_ENVIRONMENT === 'test' ? 'jobsTest' : 'jobs'
     )
       .get()
       .then(jobRefs => {
+        console.log(jobRefs);
         this.setState({
           jobs: jobRefs.docs.map(doc => ({
             id: doc.id,

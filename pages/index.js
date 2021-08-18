@@ -1,14 +1,16 @@
 import _ from 'lodash';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { device } from 'src/components/utils/device';
 import AppContext from 'src/components/AppContext';
 import { clearFix } from 'polished';
-// import JobList from 'src/components/site/Jobs/JobList';
+import JobList from 'src/components/Site/Jobs/JobList';
 import RecentPosts from 'src/components/Site/Blog/RecentPosts';
-// import CompanyList from 'src/components/site/home/CompanyList';
+import CompanyList from 'src/components/Site/Home/CompanyList';
 import { Helmet } from 'react-helmet';
 import { LinearProgress } from '@material-ui/core';
+import Link from 'src/components/Site/UI/Link';
+
 
 const HomePageContainer = styled.div``;
 
@@ -26,7 +28,7 @@ const HomeHero = styled.div`
 const HeroImage = styled.div`
   position: relative;
   flex: 1;
-  background-image: url(${'/assets/images/home-hero.jpg'});
+  background-image: url("/assets/images/home-hero.jpg");
   background-size: cover;
   background-position: center;
 
@@ -134,7 +136,7 @@ const RecentBlogPostsContainer = styled.div`
 
 const FeaturedContainer = styled.div`
   padding: 60px 20px;
-  background-image: url(${'assets/images/jobs-bg.jpg'});
+  background-image: url("/assets/images/jobs-bg.jpg");
   background-size: cover;
   background-position: center;
 `;
@@ -184,25 +186,19 @@ const FeaturedHeadline = styled.div`
 `;
 
 const HomePage = () => {
-  let [data, setData] = useState({jobs: null, companies: null});
-  const { jobs, companies, jobsLoading, companiesLoading } = data;
+  const { jobs, companies, jobsLoading, companiesLoading } = useContext(
+    AppContext
+  );
 
   if (companiesLoading || jobsLoading) {
     return <LinearProgress />;
   }
 
-  const renderCompanies = companies ? _.shuffle(
+  const renderCompanies = _.shuffle(
     companies.filter(company => company.featured)
-  ) : [];
+  );
 
-  const renderJobs = jobs ? _.shuffle(jobs.filter(j => j.featured)) : [];
-
-  useEffect(()=>{
-    const init = () => {
-      setData(useContext(AppContext))
-    }
-    if (!data) init();
-  })
+  const renderJobs = _.shuffle(jobs.filter(j => j.featured));
 
   return (
     <>
@@ -226,10 +222,11 @@ const HomePage = () => {
         />
         <meta property="og:type" content="website" />
       </Helmet>
+
       <HomePageContainer>
         <HomeHero>
           <HeroImage>
-            <CircleText src={'/assets/images/circle-text.png'} />
+            <CircleText src={"/assets/images/circle-text.png"} />
           </HeroImage>
           <HeroContent>
             <h2>
@@ -248,7 +245,7 @@ const HomePage = () => {
         <RecentBlogPostsContainer>
           <FeaturedHeadline>
             <h3>StartGNV Blog</h3>
-            {/* <Link to="/blog">View All</Link> */}
+            <Link to="/blog">View All</Link>
           </FeaturedHeadline>
           <div>
             <RecentPosts limit={4} />
@@ -258,27 +255,27 @@ const HomePage = () => {
           <FeaturedSection>
             <FeaturedHeadline>
               <h3>Featured Companies</h3>
-              {/* <Link to="/companies">View All</Link> */}
+              <Link to="/companies">View All</Link>
             </FeaturedHeadline>
-            {/* <CompanyList
+            <CompanyList
               companies={
                 renderCompanies.length > 6
                   ? renderCompanies.slice(0, 6)
                   : renderCompanies
               }
               showTitle={false}
-            /> */}
+            />
           </FeaturedSection>
           <FeaturedSection>
             <FeaturedHeadline>
               <h3>Featured Jobs</h3>
-              {/* <Link to="/jobs">View All</Link> */}
+              <Link to="/jobs">View All</Link>
             </FeaturedHeadline>
-            {/* <JobList
+            <JobList
               jobs={renderJobs.length > 3 ? renderJobs.slice(0, 3) : renderJobs}
               companies={companies}
               title=""
-            /> */}
+            />
           </FeaturedSection>
         </FeaturedContainer>
       </HomePageContainer>
@@ -287,3 +284,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
