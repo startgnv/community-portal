@@ -34,7 +34,7 @@ export default class MyDocument extends Document {
       return(
         <Html lang="en" dir="ltr">
           <Head>
-            <meta charset="utf-8" />
+            <meta charSet="utf-8" />
             <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet"/>
             <link rel="stylesheet" href="https://use.typekit.net/urt4ozf.css"/>
             <meta name="theme-color" content="#000000" />
@@ -52,26 +52,12 @@ export default class MyDocument extends Document {
             <meta property="og:type" content="website" />
             <meta name="msapplication-TileColor" content="#da532c"/>
             <meta name="theme-color" content="#ffffff"/>
-            {/* <script src="/__/firebase/8.2.6/firebase-app.js"></script>
-            <script src="/__/firebase/8.2.6/firebase-auth.js"></script>
-            <script src="/__/firebase/8.2.6/firebase-firestore.js"></script>
-            <script src="/__/firebase/8.2.6/firebase-storage.js"></script>
-            <script src="/__/firebase/8.2.6/firebase-functions.js"></script>  */}
-            {/* <script src="/__/firebase/init.js"></script> */}
 ¸
             <script src="static/facebook.js"></script>
             <noscript>
-              <img height="1" width="1"
-            src="https://www.facebook.com/tr?id=2699241636756946&ev=PageView
-            &noscript=1"/>
+              <img height="1" width="1" src="https://www.facebook.com/tr?id=2699241636756946&ev=PageView&noscript=1"/>
             </noscript>
-            {/* <!-- End Facebook Pixel Code --> */}
-
-            {/* <!-- Mailchimp --> */}
             <script id="mcjs" src = "/static/mailchimp.js"></script>
-            {/* <!-- End Mailchimp --> */}
-
-            {/* <!-- Hotjar Tracking Code for startgnv.com --> */}
             <script src="/static/hotjar.js"></script>
           </Head>
           <body>

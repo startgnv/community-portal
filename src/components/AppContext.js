@@ -26,7 +26,6 @@ export class AppProvider extends React.Component {
     )
       .get()
       .then(jobRefs => {
-        console.log(jobRefs);
         this.setState({
           jobs: jobRefs.docs.map(doc => ({
             id: doc.id,

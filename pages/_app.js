@@ -87,14 +87,6 @@ const GlobalStyle = createGlobalStyle`
     background: white;
   }
 
-  a{
-    color: inherit;
-  }
-
-  a:visited{
-    color: unset;
-  }
-
   p {
     color: ${({ theme }) => theme.textDark};
     line-height: 1.4rem;
