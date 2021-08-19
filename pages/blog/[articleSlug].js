@@ -183,7 +183,8 @@ const Article = () => {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    blogApi
+    if(articleSlug){
+      blogApi
       .getPost(articleSlug)
       .then(post => {
         setArticle(mapPostToState(post));
@@ -192,7 +193,8 @@ const Article = () => {
       .catch(err => {
         console.error(err.message);
       });
-  }, []);
+    }
+  }, [router]);
 
   if (loading) return <Loading size={60} height={120} />;
 

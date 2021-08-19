@@ -52,7 +52,6 @@ export default class MyDocument extends Document {
             <meta property="og:type" content="website" />
             <meta name="msapplication-TileColor" content="#da532c"/>
             <meta name="theme-color" content="#ffffff"/>
-¸
             <script src="static/facebook.js"></script>
             <noscript>
               <img height="1" width="1" src="https://www.facebook.com/tr?id=2699241636756946&ev=PageView&noscript=1"/>
