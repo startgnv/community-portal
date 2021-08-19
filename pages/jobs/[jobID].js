@@ -1,19 +1,19 @@
 import _ from 'lodash';
 import React, { useContext } from 'react';
-import { baseContentStyling } from '../../utils/mixins';
+import { baseContentStyling } from 'src/components/utils/mixins';
 import BusinessIcon from '@material-ui/icons/Business';
 import styled from 'styled-components/macro';
-import AppContext from '../../AppContext';
-import Header from './Header';
-import { Link, Redirect } from 'react-router-dom';
-import JobCategories from './JobCategories';
-import ApplyBtn from './ApplyBtn';
+import AppContext from 'src/components/AppContext';
+import Header from 'src/components/Site/Job/Header';
+import Link from 'src/components/Site/UI/Link';
+import JobCategories from 'src/components/Site/Job/JobCategories';
+import ApplyBtn from 'src/components/Site/Job/ApplyBtn';
 import { LinearProgress } from '@material-ui/core';
 import { Parser } from 'html-to-react';
 import { Helmet } from 'react-helmet';
-import CompanyCard from './CompanyCard';
-import { device } from '../../utils/device';
-import heart from '../../../assets/images/heart.svg';
+import CompanyCard from 'src/components/Site/Job/CompanyCard';
+import { device } from 'src/components/utils/device';
+import { useRouter } from 'next/router';
 
 const htmlParser = new Parser();
 
@@ -102,11 +102,11 @@ const InfoIcon = styled.img`
   margin: 0 16px;
 `;
 
-export const JobPage = ({
-  match: {
-    params: { jobID }
-  }
-}) => {
+export const JobPage = () => {
+
+  const router = useRouter();
+  const { jobID } = router.query;
+
   const { jobs, companies, jobsLoading, companiesLoading } = useContext(
     AppContext
   );
@@ -176,7 +176,7 @@ export const JobPage = ({
           <Sidebar>
             <ApplyBtn job={job} companyName={companyName} />
             <InfoBox>
-              <InfoIcon src={heart} alt="Heart" />
+              <InfoIcon src='/assets/images/heart.svg' alt="Heart" />
               <InfoBoxMessage>
                 Let them know you heard about the role from 'startGNV's Job
                 Board'.

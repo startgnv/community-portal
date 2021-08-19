@@ -1,15 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components/macro';
-import AppContext from '../../AppContext';
-import Hero from '../UI/Hero';
-import JobList from './JobList';
-import JobsFilter from './JobsFilter';
-import heroBG from '../../../assets/images/jobs-hero.jpg';
+import AppContext from 'src/components/AppContext';
+import Hero from 'src/components/Site/UI/Hero';
+import JobList from 'src/components/Site/Jobs/JobList';
+import JobsFilter from 'src/components/Site/Jobs/JobsFilter';
 import { Helmet } from 'react-helmet';
-import EmptyJobs from './EmptyJobs';
+import EmptyJobs from 'src/components/Site/Jobs/EmptyJobs';
 
 import { LinearProgress } from '@material-ui/core';
-import ProgressBar from '../UI/ProgressBar';
+import ProgressBar from 'src/components/Site/UI/ProgressBar';
 
 const JobsPageContent = styled.div`
   max-width: calc(${({ theme }) => theme.contentMaxWidth} + 60px);
@@ -85,7 +84,7 @@ export const JobsPage = () => {
 
       <ProgressBar />
 
-      <Hero bgImage={heroBG} title="Available Positions" size="medium" />
+      <Hero bgImage='assets/images/jobs-hero.jpg' title="Available Positions" size="medium" />
       <JobsPageContent>
         <FilterContainer>
           <JobsFilter
