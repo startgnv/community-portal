@@ -6,16 +6,15 @@ import { validate, Validators } from '../UI/validation/useValidation';
 import { db } from '../../../firebase';
 import PageContainer from '../UI/PageContainer';
 import Button from '../UI/Button';
-import dropdownArrow from '../../../assets/images/dropdown-arrow.svg';
 import { Editor } from 'react-draft-wysiwyg';
 import { ContentState, convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import { Link } from 'react-router-dom';
 import Checkbox from '../UI/Checkbox';
 import NewCompanyForm from '../Company/NewCompanyForm';
 import Field from '../UI/Form/Field';
 import FieldRow from '../UI/Form/FieldRow';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const CheckContainer = styled.div`
   display: flex;
@@ -59,7 +58,7 @@ const Select = styled(ValidatorSelect)`
   -webkit-appearance: none;
   appearance: none;
   // Sets a custom arrow icon
-  background-image: url(${dropdownArrow}),
+  background-image: url(${'/assets/images/dropdown-arrow.svg'}),
     linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
   background-repeat: no-repeat, repeat;
   background-position: right 0.9em top 50%, 0 0;

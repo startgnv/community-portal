@@ -268,7 +268,7 @@ const AboutPage = () => (
           <h3>Annual Partners</h3>
           {
             sponsors.map(({name, url})=>(
-            <CardContainer>
+            <CardContainer key={name}>
               <Card className="sponsor-card">
                 <CardMedia
                   className="sponsor-img"
@@ -283,7 +283,7 @@ const AboutPage = () => (
         <Programs>
           <h3>Programs</h3>
           {programs.map(program => (
-            <Program>
+            <Program key={program.title}>
               <h4>{program.title}</h4>
               <p>{program.description}</p>
             </Program>
@@ -292,7 +292,7 @@ const AboutPage = () => (
         <Board>
           <h3>Board Members</h3>
           {boardMembers.map(member => (
-            <BoardMember>
+            <BoardMember key={member.name}>
               <Avatar
                 className="board-avatar"
                 src={member.img}

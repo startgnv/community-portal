@@ -117,7 +117,7 @@ const Author = styled.h3`
   }
 `;
 
-const Excerpt = styled.p`
+const Excerpt = styled.div`
   margin-top: 25px;
 
   // Styling for downloaded html

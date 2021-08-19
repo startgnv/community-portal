@@ -226,9 +226,7 @@ const Card = styled.div`
   max-width: 460px;
 
   @media ${device.tablet}, ${device.mobile} {
-    &.tier {
-      width: 100%;
-    }
+    width: ${({tier})=>tier ? '100%':'auto'};
   }
 `;
 
@@ -511,7 +509,7 @@ const SponsorshipPage = () => {
         <Masonry style={{ alignItems: 'flex-end' }}>
           {
             masonry1.map(({alt, url}) => (
-              <MasonryImg>
+              <MasonryImg key={alt}>
                 <img src={url} alt={alt} />
               </MasonryImg>
             ))
@@ -521,7 +519,7 @@ const SponsorshipPage = () => {
         <Masonry style={{ alignItems: 'flex-start' }}>
           {
             masonry2.map(({alt, url}) => (
-              <MasonryImg>
+              <MasonryImg key={alt}>
                 <img src={url} alt={alt} />
               </MasonryImg>
             ))
@@ -552,7 +550,7 @@ const SponsorshipPage = () => {
 
       <Tier>
         <CardContainer>
-          <Card class="tier">
+          <Card tier>
             <SponsorshipTitle>Community Champion</SponsorshipTitle>
             <SponsorshipSummary>
               You're invested in Greater Gainesville's growth, and we're here to
@@ -650,7 +648,7 @@ const SponsorshipPage = () => {
           <img src={presentation} alt="CelebrateGNV" />
         </TierImg>
         <CardContainer>
-          <Card class="tier">
+          <Card tier>
             <SponsorshipTitle>Annual Partner</SponsorshipTitle>
             <SponsorshipSummary>
               Together, we can help the innovation ecosystem of Greater
@@ -727,7 +725,7 @@ const SponsorshipPage = () => {
 
       <Tier>
         <CardContainer>
-          <Card class="tier">
+          <Card tier>
             <SponsorshipTitle>Annual Supporter</SponsorshipTitle>
             <SponsorshipSummary>
               Whether you're in the lean and mean growth phase or just testing
