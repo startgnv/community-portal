@@ -1,16 +1,16 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components/macro';
-import { device } from '../../utils/device';
-import AppContext from '../../AppContext';
-import CompaniesList from './CompaniesList';
-import CompaniesMap from './CompaniesMap';
-import { SharedMapProvider } from './CompaniesMapContext';
-import Hero from '../UI/Hero';
+import { device } from '../../src/components/utils/device';
+import AppContext from '../../src/components/AppContext';
+import CompaniesList from '../../src/components/Site/Companies/CompaniesList';
+import CompaniesMap from '../../src/components/Site/Companies/CompaniesMap';
+import { SharedMapProvider } from '../../src/components/Site/Companies/CompaniesMapContext';
+import Hero from '../../src/components/Site/UI/Hero';
 import { Helmet } from 'react-helmet';
 import _ from 'lodash';
 
 import { LinearProgress } from '@material-ui/core';
-import CompaniesFilter from './CompaniesFilter';
+import CompaniesFilter from '../../src/components/Site/Companies/CompaniesFilter';
 
 const Container = styled.main``;
 

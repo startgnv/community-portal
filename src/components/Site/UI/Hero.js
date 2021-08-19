@@ -1,6 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import heroBG from '../../../assets/images/hero-bg.jpg';
+import styled from 'styled-components/macro';
 
 const heroSizes = {
   small: '120px',
@@ -9,7 +8,8 @@ const heroSizes = {
 };
 
 const HeroContainer = styled.div`
-  background-image: url(${({ bgImage }) => bgImage || heroBG});
+  background-image: url(${({ bgImage }) =>
+    bgImage || '/assets/images/hero-bg.jpg'});
   background-size: cover;
   background-position: center;
 `;
@@ -42,7 +42,7 @@ const Hero = ({
   title = '',
   maxWidth = ''
 }) => (
-  <HeroContainer bgImage={bgImage}>
+  <HeroContainer bgImage="/assets/images/hero-bg.jpg">
     <HeroContent size={size} maxWidth={maxWidth}>
       <HeroTitle>{title}</HeroTitle>
     </HeroContent>

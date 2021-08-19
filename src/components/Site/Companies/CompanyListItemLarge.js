@@ -2,12 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
 import { device } from '../../utils/device';
-import { Link } from 'react-router-dom';
+import Link from 'src/components/Site/UI/Link';
 import { storage } from '../../../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import StorageImg from '../UI/StorageImg';
 import Tooltip from '@material-ui/core/Tooltip';
-import sponsorBadge from '../../../assets/images/sponsorBadge.svg';
 
 const SponsorTooltip = withStyles(theme => ({
   tooltip: {
@@ -142,7 +141,7 @@ const CompanyListItemLarge = ({
             {isSponsor && (
               <SponsorTooltip title="Sponsor" placement="top" color="#218100">
                 <img
-                  src={sponsorBadge}
+                  src="/assets/images/sponsorBadge.svg"
                   width="24"
                   style={{
                     display: 'inline-block',

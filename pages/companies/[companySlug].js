@@ -1,18 +1,19 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
-import { db } from '../../../firebase';
+import { db } from 'src/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import AppContext from '../../AppContext';
-import Header from '../Job/Header';
-import JobList from '../Jobs/JobList';
-import MapContainer from '../UI/MapContainer';
-import MapPin from '../UI/MapPin';
+import AppContext from 'src/components/AppContext';
+import Header from 'src/components/Site/Job/Header';
+import JobList from 'src/components/Site/Jobs/JobList';
+import MapContainer from 'src/components/Site/UI/MapContainer';
+import MapPin from 'src/components/Site/UI/MapPin';
 import { Marker } from 'react-map-gl';
 import { Helmet } from 'react-helmet';
-import { Gallery } from './Gallery';
-import Instagram from './Instagram';
+import { Gallery } from 'src/components/Site/Company/Gallery';
+import Instagram from 'src/components/Site/Company/Instagram';
 import { LinearProgress } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
+import { useRouter } from 'next/router';
 
 const CompanyPageContainer = styled.div`
   background: ${({ theme }) => theme.uiBackground};
@@ -55,13 +56,13 @@ const MapWrap = styled.div`
   margin-top: 30px;
 `;
 
-export const CompanyPage = ({
-  match: {
-    params: { companySlug }
-  }
-}) => {
+export const CompanyPage = () => {
+
+  const router = useRouter();
+  const { companySlug } = router.query;
+
   const [companyValue, companyLoading, companyError] = useCollection(
-    db.collection('companies').where('slug', '==', companySlug)
+    db.collection('companies').where('slug', '==', companySlug || '')
   );
 
   const { jobs, jobsLoading } = useContext(AppContext);
