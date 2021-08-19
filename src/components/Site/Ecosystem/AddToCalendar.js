@@ -1,4 +1,3 @@
-import calendarIcon from '../../../assets/images/calendar.svg';
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
@@ -48,7 +47,7 @@ const AddToCalendar = ({ date, location, name }) => {
 
   return (
     <CalendarButton href={url} target="_blank" rel="noreferrer noopener">
-      <img src={calendarIcon} alt="Google Calendar" />
+      <img src="/assets/images/calendar.svg" alt="Google Calendar" />
       SAVE
     </CalendarButton>
   );

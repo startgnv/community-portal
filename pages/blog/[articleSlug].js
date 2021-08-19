@@ -1,12 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet';
-import { device } from '../../utils/device';
-import { blogApi } from './api';
+import { device } from 'src/components/utils/device';
+import { blogApi } from 'src/components/Site/Blog/api';
 import { Parser } from 'html-to-react';
-import RecentPosts from './RecentPosts';
-import Loading from './Loading';
-import { formatDate } from '../../utils';
+import RecentPosts from 'src/components/Site/Blog/RecentPosts';
+import Loading from 'src/components/Site/Blog/Loading';
+import { formatDate } from 'src/components/utils';
+import { useRouter } from 'next/router';
 
 const html = new Parser();
 
@@ -165,11 +166,11 @@ const mapPostToState = article => ({
   imageURL: article.feature_image
 });
 
-const Article = ({
-  match: {
-    params: { articleSlug }
-  }
-}) => {
+const Article = () => {
+
+  const router = useRouter();
+  const { articleSlug } = router.query;
+
   const [article, setArticle] = React.useState({
     title: '',
     subtitle: '',

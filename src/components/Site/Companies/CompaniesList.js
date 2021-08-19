@@ -3,7 +3,6 @@ import styled from 'styled-components/macro';
 import CompanyListItemLarge from './CompanyListItemLarge';
 import { SharedMapConsumer } from './CompaniesMapContext';
 import { device } from '../../utils/device';
-import CompaniesFilter from './CompaniesFilter';
 import Link from '../ui/Link';
 import Button from '../UI/Button';
 

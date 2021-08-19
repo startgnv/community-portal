@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import AppContext from '../../AppContext';
-import PageContainer from '../UI/PageContainer';
-import EcosystemFilter from './EcosystemFilter';
-import Hero from '../UI/Hero';
-import heroImg from '../../../assets/images/sparkgnv-101.jpg';
+import AppContext from 'src/components/AppContext';
+import PageContainer from 'src/components/Site/UI/PageContainer';
+import EcosystemFilter from 'src/components/Site/Ecosystem/EcosystemFilter';
+import Hero from 'src/components/Site/UI/Hero';
 import { Helmet } from 'react-helmet';
-import EcosystemCard from './EcosystemCard';
+import EcosystemCard from 'src/components/Site/Ecosystem/EcosystemCard';
 
 const PageDescription = styled.span`
   display: block;
@@ -93,7 +92,7 @@ const EcosystemPage = () => {
         <meta property="og:type" content="website" />
       </Helmet>
       <>
-        <Hero bgImage={heroImg} title="Ecosystem" />
+        <Hero bgImage='/assets/images/sparkgnv-101.jpg' title="Ecosystem" />
         <PageContainer>
           <PageDescription>
             A quick guide to the tech and startup organizations, meetups,

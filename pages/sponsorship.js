@@ -1,43 +1,50 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import Head from '../Header/Header';
-import hero from '../../../assets/images/sponsorship-hero.jpg';
-import fadeLine from '../../../assets/images/fade-line.svg';
+import Head from 'src/components/Site/Header/Header';
 
-// Icons
-import theme from '../../utils/theme';
-import send from '../../../assets/images/send.svg';
-import dash from '../../../assets/images/dash.svg';
-import tree from '../../../assets/images/tree.svg';
-import plant from '../../../assets/images/plant.svg';
-import seed from '../../../assets/images/seed.svg';
+import { device } from 'src/components/utils/device';
+
+//helper images
+const hero = '/assets/images/sponsorship-hero.jpg';
+const fadeLine = '/assets/images/fade-line.svg';
 
 // Sponsorship tiers
-import startupSprint from '../../../assets/images/startup-sprint.jpg';
-import presentation from '../../../assets/images/presentation.jpg';
-import ama from '../../../assets/images/ama.png';
+const startupSprint = '/assets/images/startup-sprint.jpg';
+const presentation = '/assets/images/presentation.jpg';
+const ama = '/assets/images/ama.png';
+
+// Icons
+const theme = 'src/components/utils/theme';
+const send = '/assets/images/send.svg';
+const dash = '/assets/images/dash.svg';
+const tree = '/assets/images/tree.svg';
+const plant = '/assets/images/plant.svg';
+const seed = '/assets/images/seed.svg';
 
 // Masonry
-import team from '../../../assets/images/masonry/team.jpg';
-import award from '../../../assets/images/masonry/award.jpg';
-import board from '../../../assets/images/masonry/board.jpg';
-import group from '../../../assets/images/masonry/group.jpg';
-import judge from '../../../assets/images/masonry/judge.jpg';
-import notes from '../../../assets/images/masonry/notes.jpg';
-import shine from '../../../assets/images/masonry/shine.jpg';
-import smile from '../../../assets/images/masonry/smile.jpg';
-import coffee from '../../../assets/images/masonry/coffee.jpg';
-import winner from '../../../assets/images/masonry/winner.jpg';
-import sprint from '../../../assets/images/masonry/startup-sprint.jpg';
-import fun from '../../../assets/images/masonry/fun.jpg';
-import food from '../../../assets/images/masonry/food.jpg';
-import celebrate from '../../../assets/images/masonry/celebrate.jpg';
-import smiles from '../../../assets/images/masonry/smiles.jpg';
-import feather from '../../../assets/images/masonry/feathr.jpg';
-import present from '../../../assets/images/masonry/present.jpg';
-import talk from '../../../assets/images/masonry/talk.jpg';
-import girls from '../../../assets/images/masonry/girls.jpg';
-import { device } from '../../utils/device';
+const masonry1 = [
+  {alt: 'team', url: '/assets/images/masonry/team.jpg'},
+  {alt: 'award', url: '/assets/images/masonry/award.jpg'},
+  {alt: 'board', url: '/assets/images/masonry/board.jpg'},
+  {alt: 'group', url: '/assets/images/masonry/group.jpg'},
+  {alt: 'judge', url: '/assets/images/masonry/judge.jpg'},
+  {alt: 'notes', url: '/assets/images/masonry/notes.jpg'},
+  {alt: 'shine', url: '/assets/images/masonry/shine.jpg'},
+  {alt: 'smile', url: '/assets/images/masonry/smile.jpg'},
+  {alt: 'coffee', url: '/assets/images/masonry/coffee.jpg'},
+  {alt: 'winner', url: '/assets/images/masonry/winner.jpg'}
+];
+const masonry2 =[
+  {alt: 'sprint', url: '/assets/images/masonry/startup-sprint.jpg'},
+  {alt: 'fun', url: '/assets/images/masonry/fun.jpg'},
+  {alt: 'food', url: '/assets/images/masonry/food.jpg'},
+  {alt: 'celebrate', url: '/assets/images/masonry/celebrate.jpg'},
+  {alt: 'smiles', url: '/assets/images/masonry/smiles.jpg'},
+  {alt: 'feather', url: '/assets/images/masonry/feathr.jpg'},
+  {alt: 'present', url: '/assets/images/masonry/present.jpg'},
+  {alt: 'talk', url: '/assets/images/masonry/talk.jpg'},
+  {alt: 'girls', url: '/assets/images/masonry/girls.jpg'}
+];
 
 const HeroContainer = styled.section`
   min-height: 100vh;
@@ -502,63 +509,23 @@ const SponsorshipPage = () => {
 
       <div style={{ overflow: 'hidden' }}>
         <Masonry style={{ alignItems: 'flex-end' }}>
-          <MasonryImg>
-            <img src={coffee} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={winner} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={sprint} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={fun} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={food} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={celebrate} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={smiles} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={feather} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={present} alt="Team" />
-          </MasonryImg>
+          {
+            masonry1.map(({alt, url}) => (
+              <MasonryImg>
+                <img src={url} alt={alt} />
+              </MasonryImg>
+            ))
+          }
         </Masonry>
 
         <Masonry style={{ alignItems: 'flex-start' }}>
-          <MasonryImg>
-            <img src={team} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={award} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={board} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={group} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={judge} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={notes} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={shine} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={talk} alt="Team" />
-          </MasonryImg>
-          <MasonryImg>
-            <img src={girls} alt="Team" />
-          </MasonryImg>
+          {
+            masonry2.map(({alt, url}) => (
+              <MasonryImg>
+                <img src={url} alt={alt} />
+              </MasonryImg>
+            ))
+          }
         </Masonry>
       </div>
 
@@ -665,7 +632,7 @@ const SponsorshipPage = () => {
             </SponsorshipPerks>
             <Divider />
             <SponsorButton
-              href="mailto:lauren.asmus@startgnv.com?subject=Community%20Champion%20Sponsorship"
+              href="mailto:team@startgnv.com?subject=Community%20Champion%20Sponsorship"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -748,7 +715,7 @@ const SponsorshipPage = () => {
             </SponsorshipPerks>
             <Divider />
             <SponsorButton
-              href="mailto:lauren.asmus@startgnv.com?subject=Annual%20Partner%20Sponsorship"
+              href="mailto:team@startgnv.com?subject=Annual%20Partner%20Sponsorship"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -816,7 +783,7 @@ const SponsorshipPage = () => {
             </SponsorshipPerks>
             <Divider />
             <SponsorButton
-              href="mailto:lauren.asmus@startgnv.com?subject=Annual%20Supporter%20Sponsorship"
+              href="mailto:team@startgnv.com?subject=Annual%20Supporter%20Sponsorship"
               target="_blank"
               rel="noopener noreferrer"
             >

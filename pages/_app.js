@@ -2,12 +2,12 @@ import React from 'react';
 import Head from "next/head";
 import Header from "src/components/Site/Header/Header";
 import theme from 'src/components/utils/theme';
-
 import { createGlobalStyle } from 'styled-components';
 import { ThemeProvider } from 'styled-components';
 import ReactGA from 'react-ga';
 import { AppProvider } from 'src/components/AppContext';
 import Footer from 'src/components/Site/Footer/Footer';
+import { useRouter } from 'next/router';
 
 ReactGA.initialize('UA-138572620-3');
 
@@ -126,9 +126,11 @@ const GlobalStyle = createGlobalStyle`
 
 
 function startGNV(props) {
-    const { Component, pageProps, router } = props;
-    const { user, roles } = pageProps;
-  
+    const { Component, pageProps } = props;
+    
+
+  const router = useRouter();
+
     return (
         <AppProvider>
             <ThemeProvider theme={{...theme}}>
@@ -136,7 +138,10 @@ function startGNV(props) {
                 <title>startGNV - Gainesville's Startup, Tech, and Biotech Community</title>
                 <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover, user-scalable=no' />
                 </Head>
-                <Header/>
+                {
+                  !/(?<=\/)sponsorship(\/)?$/.test(router.pathname) &&
+                  <Header/>
+                }
                 <Component {...pageProps} />
                 <Footer/>
                 <GlobalStyle />

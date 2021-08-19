@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import heroBG from '../../../assets/images/jobs-hero.jpg';
-import Hero from '../UI/Hero';
-import { blogApi } from './api';
-import Loading from './Loading';
-import { formatDate } from '../../utils';
-import { device } from '../../utils/device';
+import Hero from 'src/components/Site/UI/Hero';
+import { blogApi } from 'src/components/Site/Blog/api';
+import Loading from 'src/components/Site/Blog/Loading';
+import { formatDate } from 'src/components/utils';
+import { device } from 'src/components/utils/device';
 import { Parser } from 'html-to-react';
 const html = new Parser();
 
@@ -210,7 +209,7 @@ const Catalog = () => {
 
   return (
     <>
-      <Hero bgImage={heroBG} title="Articles" size="medium" />
+      <Hero bgImage='/assets/images/jobs-hero.jpg' title="Articles" size="medium" />
       <Container>
         {articles.map(article => (
           <Article key={article.slug}>

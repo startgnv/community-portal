@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { baseContentStyling } from '../../utils/mixins';
 import { Parser } from 'html-to-react';
 import moment from 'moment';
-import defaultThumbnail from '../../../assets/images/ecosystem-default-thumbnail.png';
 import AddToCalendar from './AddToCalendar';
 
 const html = new Parser();
@@ -126,7 +125,13 @@ const EcosystemCard = ({
 
   return (
     <EcoItem key={name}>
-      <EcoItemImg src={thumbnail ? thumbnail : defaultThumbnail}>
+      <EcoItemImg
+        src={
+          thumbnail
+            ? thumbnail
+            : '/assets/images/ecosystem-default-thumbnail.png'
+        }
+      >
         {time && <EcoItemTime>{time}</EcoItemTime>}
         {date && <EcoItemDate>{date}</EcoItemDate>}
         <ImgGradient />
