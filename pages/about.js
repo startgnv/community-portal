@@ -1,119 +1,104 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { clearFix } from 'polished';
-import PageContainer from '../UI/PageContainer';
-import Hero from '../UI/Hero';
+import PageContainer from 'src/components/Site/UI/PageContainer';
+import Hero from 'src/components/Site/UI/Hero';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { Helmet } from 'react-helmet';
-import { device } from '../../utils/device';
+import { device } from 'src/components/utils/device';
 
 //Sponsors
-import hutchison from '../../../assets/images/sponsors/HutchisonPLLC.png';
-import threeFiveTwo from '../../../assets/images/sponsors/ThreeFiveTwo.png';
-import opie from '../../../assets/images/sponsors/opiesoftware.jpg';
-import feathr from '../../../assets/images/sponsors/feathr.png';
-import infoTech from '../../../assets/images/sponsors/infotech.png';
-import santeFe from '../../../assets/images/sponsors/sante-fe.png';
-import trimark from '../../../assets/images/sponsors/trimark.png';
-import betterme from '../../../assets/images/sponsors/betterme.png';
-import ps27 from '../../../assets/images/sponsors/ps27.png';
-import alertTrace from '../../../assets/images/sponsors/AlertTrace.jpg';
-import fcu from '../../../assets/images/sponsors/fcu.jpg';
-import sharpspring from '../../../assets/images/sponsors/sharpspring.png';
-
-//Board Members
-import aidan from '../../../assets/images/board/aidan.jpeg';
-import elliot from '../../../assets/images/board/elliot.png';
-import james from '../../../assets/images/board/james.png';
-import lindsey from '../../../assets/images/board/lindsey.jpeg';
-import melissa from '../../../assets/images/board/melissa.jpeg';
-import seyi from '../../../assets/images/board/seyi.jpeg';
-import will from '../../../assets/images/board/will.jpeg';
-import aaron from '../../../assets/images/board/aarond.jpeg';
-import christine from '../../../assets/images/board/christinec.jpeg';
-import clara from '../../../assets/images/board/clara.jpeg';
-import jasmine from '../../../assets/images/board/jasmineb.jpeg';
-import keira from '../../../assets/images/board/keiras.jpeg';
-import matthew from '../../../assets/images/board/matthewl.jpeg';
-import michelle from '../../../assets/images/board/michelleb.jpeg';
-import steve from '../../../assets/images/board/steve.jpeg';
+const sponsors = [
+  { name: 'Hutchison, PLLC',  url: '/assets/images/sponsors/HutchisonPLLC.png'},
+  { name: 'Three Five Two, Inc',  url: '/assets/images/sponsors/ThreeFiveTwo.png'},
+  { name: 'OPIE Software',  url: '/assets/images/sponsors/opiesoftware.jpg'},
+  { name: 'Feathr',  url: '/assets/images/sponsors/feathr.png'},
+  { name: 'InfoTech',  url: '/assets/images/sponsors/infotech.png'},
+  { name: 'Interactive Resources',  url: '/assets/images/sponsors/sante-fe.png'},
+  { name: 'Trimark Properties',  url: '/assets/images/sponsors/trimark.png'},
+  { name: 'Betterme Productions',  url: '/assets/images/sponsors/betterme.png'},
+  { name: 'PS27 Ventures',  url: '/assets/images/sponsors/ps27.png'},
+  { name: 'AlertTrace',  url: '/assets/images/sponsors/AlertTrace.jpg'},
+  { name: 'fcu',  url: '/assets/images/sponsors/fcu.jpg'},
+  { name: 'Sharpspring',  url: '/assets/images/sponsors/sharpspring.png'},
+]
 
 const boardMembers = [
   {
     name: 'James Gibson',
-    img: james,
+    img: '/assets/images/board/james.png',
     linkedIn: 'https://www.linkedin.com/in/james-c-gibson/'
   },
   {
     name: 'Aidan Augustin',
-    img: aidan,
+    img: '/assets/images/board/aidan.jpeg',
     linkedIn: 'https://www.linkedin.com/in/aidanaugustin/'
   },
   {
     name: 'Lindsey Day',
-    img: lindsey,
+    img: '/assets/images/board/lindsey.jpeg',
     linkedIn: 'https://www.linkedin.com/in/magneticcareers/'
   },
   {
     name: 'Michelle Brownstein',
-    img: michelle,
+    img: '/assets/images/board/michelleb.jpeg',
     linkedIn: 'https://www.linkedin.com/in/michelle-brownstein/'
   },
   {
     name: 'Melissa White',
-    img: melissa,
+    img: '/assets/images/board/melissa.jpeg',
     linkedIn: 'https://www.linkedin.com/in/melissamaewhite/'
   },
   {
     name: 'Seyi Oluwaleimu',
-    img: seyi,
+    img: '/assets/images/board/seyi.jpeg',
     linkedIn: 'https://www.linkedin.com/in/oluwaseyi-oluwaleimu-307503142/'
   },
   {
     name: 'William Richardson',
-    img: will,
+    img: '/assets/images/board/will.jpeg',
     linkedIn: 'https://www.linkedin.com/in/williamrichardson1/'
   },
   {
     name: 'Aaron Dixon',
-    img: aaron,
+    img: '/assets/images/board/aarond.jpeg',
     linkedIn: 'https://www.linkedin.com/in/aaronbenjamindixon/'
   },
   {
     name: 'Christine Caven',
-    img: christine,
+    img: '/assets/images/board/christinec.jpeg',
     linkedIn: 'https://www.linkedin.com/in/christinecaven/'
   },
   {
     name: 'Jasmine Banks',
-    img: jasmine,
+    img: '/assets/images/board/jasmineb.jpeg',
     linkedIn: 'https://www.linkedin.com/in/jsbanks/'
   },
   {
     name: 'Clara Edwards',
-    img: clara,
+    img: '/assets/images/board/clara.jpeg',
     linkedIn: 'https://www.linkedin.com/in/clara-edwards-77161435/'
   },
   {
     name: 'Elliot Welker',
-    img: elliot,
+    img: '/assets/images/board/elliot.png',
     linkedIn: 'https://www.linkedin.com/in/elliottwelker/'
   },
   {
     name: 'Keira Simmonds',
-    img: keira,
+    img: '/assets/images/board/keiras.jpeg',
     linkedIn: 'https://www.linkedin.com/in/keirasimmonds/'
   },
   {
     name: 'Matthew Luedecke',
-    img: matthew,
+    img: '/assets/images/board/matthewl.jpeg',
     linkedIn: 'https://www.linkedin.com/in/matthew-luedecke/'
   },
   {
     name: 'Steve Shepard',
-    img: steve,
+    img: '/assets/images/board/steve.jpeg',
     linkedIn: 'https://www.linkedin.com/in/stephenshepherd/'
   }
 ];
@@ -281,106 +266,19 @@ const AboutPage = () => (
         </HeroContent>
         <Sponsors>
           <h3>Annual Partners</h3>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={hutchison}
-                title="Hutchinson, PLLC"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={threeFiveTwo}
-                title="Three Five Two, Inc"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={opie}
-                title="OPIE Software"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={feathr}
-                title="Feathr"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={infoTech}
-                title="InfoTech"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={santeFe}
-                title="Interactive Resources"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={trimark}
-                title="Trimark Properties"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={betterme}
-                title="Betterme Productions"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia className="sponsor-img" image={ps27} title="PS27" />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={alertTrace}
-                title="AlertTrace"
-              />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia className="sponsor-img" image={fcu} title="fcu" />
-            </Card>
-          </CardContainer>
-          <CardContainer>
-            <Card className="sponsor-card">
-              <CardMedia
-                className="sponsor-img"
-                image={sharpspring}
-                title="SharpSpring"
-              />
-            </Card>
-          </CardContainer>
+          {
+            sponsors.map(({name, url})=>(
+            <CardContainer>
+              <Card className="sponsor-card">
+                <CardMedia
+                  className="sponsor-img"
+                  image={url}
+                  title={name}
+                />
+              </Card>
+            </CardContainer>
+            ))
+          }
         </Sponsors>
         <Programs>
           <h3>Programs</h3>
