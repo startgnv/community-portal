@@ -12,7 +12,7 @@ const SettingsPage = () => {
 
   return (
     <FormCardPage title="Settings" onSubmit={onFormSubmit}>
-      <Grid container spacing={2} direction="column" justify="center">
+      <Grid container spacing={2} direction="column" justifyContent="center">
         <Expandable label={'Company Industries'}>
           <IndustryForm />
         </Expandable>

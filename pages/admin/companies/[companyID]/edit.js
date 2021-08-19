@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import firebase, { db, storage } from '../../../firebase';
+import firebase, { db, storage } from 'src/firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { useAdminContainer } from '../UI/PageContainer';
-import Form from './Form';
+import { useAdminContainer } from 'src/components/Admin/UI/PageContainer';
+import Form from 'src/components/Admin/Company/Form';
+import { useRouter } from 'next/router';
 
-const EditPageWrapper = ({
-  match: {
-    params: { companyID }
-  },
-  history
-}) => {
+const EditPageWrapper = () => {
+
+  const router = useRouter();
+
   const [company, setCompany] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const { companyID } = router.query;
     db.collection('companyDrafts')
       .doc(companyID)
       .get()
@@ -35,15 +35,16 @@ const EditPageWrapper = ({
       .catch(() => {
         setLoading(false);
       });
-  }, []);
+  }, [router]);
 
   if (loading) return <h1>Loading...</h1>;
 
-  return <EditPage company={company} history={history} />;
+  return <EditPage company={company}q />;
 };
 
-export const EditPage = ({ company, history }) => {
+export const EditPage = ({ company }) => {
   const [isDraft, setDraft] = useState(false);
+  const router = useRouter();
 
   const [industries = [], loadingIndustries] = useCollectionData(
     db.collection('companyCategories'),
@@ -313,7 +314,7 @@ export const EditPage = ({ company, history }) => {
       success={success}
       error={error}
       loading={loading || loadingIndustries}
-      onCancel={history.goBack}
+      onCancel={()=>router.back()}
       coverImg={coverImg.value}
       setCoverImg={updateCover}
       listingImg={listingImg.value}

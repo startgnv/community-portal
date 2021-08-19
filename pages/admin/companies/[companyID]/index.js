@@ -24,11 +24,11 @@ const useStyles = makeStyles({
   }
 });
 
-const CompanyPage = ({
-  match: {
-    params: { companyID }
-  }
-}) => {
+const CompanyPage = () => {
+
+  const router = useRouter();
+  const { companyID } = router.query;
+
   const [
     { name = 'UNNAMED COMPANY', coverPath = '', logoPath = '' } = {},
     loading
@@ -56,7 +56,7 @@ const CompanyPage = ({
   }
 
   return (
-    <Grid container justify="center">
+    <Grid container justifyContent="center">
       <Grid item md={8} xs={12}>
         <UploadCoverImage
           companyID={companyID}

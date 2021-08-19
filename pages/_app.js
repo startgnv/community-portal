@@ -7,18 +7,13 @@ import { ThemeProvider } from 'styled-components';
 import ReactGA from 'react-ga';
 import { AppProvider } from 'src/components/AppContext';
 import Footer from 'src/components/Site/Footer/Footer';
+import AdminPageContainer from 'src/components/Admin/UI/PageContainer';
+import { CssBaseline } from '@material-ui/core';
 import { useRouter } from 'next/router';
+import AdminRoute from 'src/components/AdminRoute';
 
 ReactGA.initialize('UA-138572620-3');
 
-// const ScrollToTop = withRouter(({ location: { pathname = '' }, children }) => {
-//   const prevPath = usePrevious(pathname);
-//   if (pathname !== prevPath && prevPath) {
-//     window.scrollTo(0, 0);
-//     ReactGA.pageview(window.location.pathname + window.location.search);
-//   }
-//   return children;
-// });
 
 export const usePrevious = value => {
   const ref = useRef();
@@ -126,28 +121,39 @@ const GlobalStyle = createGlobalStyle`
 
 
 function startGNV(props) {
-    const { Component, pageProps } = props;
-    
-
+  const { Component, pageProps } = props;
   const router = useRouter();
 
-    return (
-        <AppProvider>
-            <ThemeProvider theme={{...theme}}>
-                <Head>
-                <title>startGNV - Gainesville's Startup, Tech, and Biotech Community</title>
-                <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover, user-scalable=no' />
-                </Head>
-                {
-                  !/(?<=\/)sponsorship(\/)?$/.test(router.pathname) &&
-                  <Header/>
-                }
-                <Component {...pageProps} />
-                <Footer/>
-                <GlobalStyle />
-            </ThemeProvider>
-        </AppProvider>
-    );
+  if(/(?<=\/)admin(\/)?/.test(router.pathname)){
+    return(
+      <AppProvider>
+        <ThemeProvider theme={{...theme}}>
+          <AdminPageContainer>
+            <CssBaseline />
+              <AdminRoute component={Component} {...pageProps}/>
+          </AdminPageContainer>
+        </ThemeProvider>
+      </AppProvider>
+    )
+  }
+
+  return (
+    <AppProvider>
+        <ThemeProvider theme={{...theme}}>
+            <Head>
+            <title>startGNV - Gainesville's Startup, Tech, and Biotech Community</title>
+            <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover, user-scalable=no' />
+            </Head>
+            {
+              !(/(?<=\/)sponsorship(\/)?$/.test(router.pathname)) &&
+              <Header/>
+            }
+            <Component {...pageProps} />
+            <Footer/>
+            <GlobalStyle />
+        </ThemeProvider>
+    </AppProvider>
+  );
 };
 
 export default startGNV;

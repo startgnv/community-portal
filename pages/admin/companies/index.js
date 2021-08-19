@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'src/components/Site/UI/Link';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { makeStyles } from '@material-ui/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -8,13 +8,13 @@ import Container from '@material-ui/core/Container';
 import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
 
-import { useAdminContainer } from '../UI/PageContainer';
-import ListCard from './ListCard';
-import { db } from '../../../firebase';
-import ListFilter, { sortKeys } from '../UI/ListFilter';
+import { useAdminContainer } from 'src/components/Admin/UI/PageContainer';
+import ListCard from 'src/components/Admin/Companies/ListCard';
+import { db } from 'src/firebase';
+import ListFilter, { sortKeys } from 'src/components/Admin/UI/ListFilter';
 import List from '@material-ui/core/List';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import StorageAvatar from '../Jobs/StorageAvatar';
+import StorageAvatar from 'src/components/Admin/Jobs/StorageAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import DeleteIcon from '@material-ui/icons/Delete';

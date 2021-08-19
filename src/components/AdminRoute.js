@@ -1,9 +1,9 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocumentOnce } from 'react-firebase-hooks/firestore';
 import { LinearProgress } from '@material-ui/core';
+import { useRouter } from 'next/router';
 
 export const AdminRoute = ({ component: Component, ...rest }) => {
   const [user, initialising] = useAuthState(auth);
@@ -17,21 +17,11 @@ export const AdminRoute = ({ component: Component, ...rest }) => {
   if (user && (!value || !value.exists)) {
     return 'You are not an admin!';
   }
-
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        user ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{ pathname: '/admin/login', state: { from: props.location } }}
-          />
-        )
-      }
-    />
-  );
+  if (!user) {
+    useRouter().push('admin/login');
+    return null;
+  }
+  return <Component {...rest} />;
 };
 
 export default AdminRoute;

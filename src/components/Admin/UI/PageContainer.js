@@ -1,6 +1,6 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
-import { Link, NavLink } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import Link from '../../Site/UI/Link';
 import { makeStyles } from '@material-ui/core';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import Hidden from '@material-ui/core/Hidden';
@@ -90,10 +90,11 @@ const ListItemLink = ({ label, ...props }) => (
   </ListItem>
 );
 
-export const PageContainer = ({ children, location }) => {
+export const PageContainer = ({ children }) => {
   const classes = useStyles();
   const [backTo, setBackTo] = useState('');
   const [loading, setLoading] = useState(false);
+  const location = useRouter();
 
   return (
     <div className={classes.root}>
@@ -205,4 +206,4 @@ export const PageContainer = ({ children, location }) => {
   );
 };
 
-export default withRouter(PageContainer);
+export default PageContainer;

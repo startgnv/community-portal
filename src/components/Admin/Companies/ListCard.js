@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'src/components/Site/UI/Link';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -67,7 +67,7 @@ export const ListCard = ({
               <Grid item>
                 <Badge
                   color="secondary"
-                  overlap="circle"
+                  overlap="circular"
                   badgeContent="Draft"
                   invisible={!isDraft}
                 >

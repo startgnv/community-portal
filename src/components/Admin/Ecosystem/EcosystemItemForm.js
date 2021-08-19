@@ -184,7 +184,7 @@ export const EcosysteItemForm = ({
 
   return (
     <FormCardPage title="Ecosystem Item Details" onSubmit={onFormSubmit}>
-      <Grid container spacing={2} direction="column" justify="center">
+      <Grid container spacing={2} direction="column" justifyContent="center">
         <Grid item>
           <TextField
             required
@@ -210,7 +210,7 @@ export const EcosysteItemForm = ({
 
         <Grid item>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
+            <Grid container justifyContent="space-around">
               <KeyboardDatePicker
                 disabled={!isEvent}
                 format="MM/dd/yyyy"
@@ -323,7 +323,7 @@ export const EcosysteItemForm = ({
             />
           )}
         </Grid>
-        <Grid item container justify="flex-end">
+        <Grid item container justifyContent="flex-end">
           <Button
             variant="text"
             onClick={() => replace(backTo)}
