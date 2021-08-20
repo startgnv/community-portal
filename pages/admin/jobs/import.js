@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import React, { useState, useEffect } from 'react';
-import { db } from '../../../firebase';
-import { useAdminContainer } from '../UI/PageContainer';
+import React, { useState } from 'react';
+import { db } from 'src/firebase';
+import { useAdminContainer } from 'src/components/Admin/UI/PageContainer';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import stringSimilarity from 'string-similarity';
 import Container from '@material-ui/core/Container';
@@ -9,14 +9,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import StorageAvatar from './StorageAvatar';
+import StorageAvatar from 'src/components/Admin/Jobs/StorageAvatar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
 import Select from 'react-select';
 import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
-import TextField from '@material-ui/core/TextField';
 
 // Convert the Lever job type into our own job type
 const getLeverJobType = leverJob => {

@@ -92,7 +92,6 @@ const ListItemLink = ({ label, ...props }) => (
 
 export const PageContainer = ({ children }) => {
   const classes = useStyles();
-  console.log(classes);
   const [backTo, setBackTo] = useState('');
   const [loading, setLoading] = useState(false);
   const location = useRouter();
@@ -208,4 +207,4 @@ export const PageContainer = ({ children }) => {
   );
 };
 
-export default withStyles(useStyles)(PageContainer);
+export default PageContainer;

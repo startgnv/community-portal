@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { Link } from 'react-router-dom';
+import Link from 'src/components/Site/UI/Link';
 import { makeStyles } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
@@ -17,11 +17,11 @@ import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import DeleteDialog from '../UI/DeleteDialog';
+import DeleteDialog from 'src/components/Admin/UI/DeleteDialog';
 import Button from '@material-ui/core/Button';
 
-import { db } from '../../../firebase';
-import { useAdminContainer } from '../UI/PageContainer';
+import { db } from 'src/firebase';
+import { useAdminContainer } from 'src/components/Admin/UI/PageContainer';
 
 const sortKeys = {
   Updated: 'TSUpdated',
@@ -57,7 +57,7 @@ function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 
-export const AdminEcosystemPage = ({ match: { isExact } }) => {
+export const AdminEcosystemPage = () => {
   const classes = useStyles();
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState({ by: 'Updated', asc: false });

@@ -15,9 +15,10 @@ import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import { Tree } from 'antd';
 import 'antd/lib/tree/style/index.css';
-import { db } from '../../../firebase';
-import { useAdminContainer } from '../UI/PageContainer';
-import FormCardPage from '../UI/FormCardPage';
+import { db } from 'src/firebase';
+import { useAdminContainer } from 'src/components/Admin/UI/PageContainer';
+import FormCardPage from 'src/components/Admin/UI/FormCardPage';
+import { useRouter } from 'next/router';
 
 const wysiwygToolbar = {
   options: ['inline', 'blockType', 'list'],
@@ -32,12 +33,11 @@ const wysiwygToolbar = {
   }
 };
 
-const EditPageWrapper = ({
-  match: {
-    params: { jobID }
-  },
-  history
-}) => {
+const EditPageWrapper = () => {
+
+  const router = useRouter();
+  const { jobID } = router.query;
+
   const [draftJob, setDraftJob] = useState(null);
   const [job, setJob] = useState(null);
   const [loadingJob, setLoadingJob] = useState(true);
