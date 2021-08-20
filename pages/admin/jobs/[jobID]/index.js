@@ -3,7 +3,7 @@ import {
   useDocumentDataOnce,
   useCollectionData
 } from 'react-firebase-hooks/firestore';
-import { Link } from 'react-router-dom';
+import Link from 'src/components/Site/UI/Link';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import {
   makeStyles,
@@ -11,16 +11,17 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
-  IconButton
+  IconButton,
+  Button
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';
-import { db, storage } from '../../../firebase';
-import { useAdminContainer } from '../UI/PageContainer';
+import { db, storage } from 'src/firebase';
+import { useAdminContainer } from 'src/components/Admin/UI/PageContainer';
 import { Parser } from 'html-to-react';
 import moment from 'moment';
-import DeleteDialog from '../UI/DeleteDialog';
+import DeleteDialog from 'src/components/Admin/UI/DeleteDialog';
+import { useRouter } from 'next/router';
 
 const htmlParser = new Parser();
 
@@ -48,11 +49,11 @@ const JobSubHeader = ({
   </>
 );
 
-const DisplayPage = ({
-  match: {
-    params: { jobID }
-  }
-}) => {
+const DisplayPage = () => {
+
+  const router = useRouter();
+  const { jobID } = router.query;
+
   const classes = useStyles();
   const [publishedJob, setPublishedJob] = useState(null);
   const [draftJob, setDraftJob] = useState(null);
@@ -264,7 +265,7 @@ const DisplayPage = ({
           action={
             <>
               <IconButton
-                component={Link}
+                component={Button}
                 onClick={() => setConfirmDelete(true)}
               >
                 <DeleteIcon />

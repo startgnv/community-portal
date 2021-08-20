@@ -323,7 +323,7 @@ export const EcosysteItemForm = ({
             />
           )}
         </Grid>
-        <Grid item container justifyContent="flex-end">
+        <Grid item container justify="flex-end">
           <Button
             variant="text"
             onClick={() => replace(backTo)}

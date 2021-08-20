@@ -1,7 +1,7 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from '../../Site/UI/Link';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import Hidden from '@material-ui/core/Hidden';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -83,7 +83,7 @@ export const BottomNavigationLink = props => (
 );
 
 const ListItemLink = ({ label, ...props }) => (
-  <ListItem key={label} component={NavLink} {...props}>
+  <ListItem key={label} component={Link} {...props}>
     <ListItemText color="text.primary" fontWeight="200">
       {label}
     </ListItemText>
@@ -92,12 +92,13 @@ const ListItemLink = ({ label, ...props }) => (
 
 export const PageContainer = ({ children }) => {
   const classes = useStyles();
+  console.log(classes);
   const [backTo, setBackTo] = useState('');
   const [loading, setLoading] = useState(false);
   const location = useRouter();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{ display: 'flex' }}>
       <Hidden mdUp>
         <Header backTo={backTo} />
         <BottomNavigation
@@ -142,6 +143,7 @@ export const PageContainer = ({ children }) => {
           classes={{ paper: classes.drawer }}
           variant="permanent"
           anchor="left"
+          style={{ display: 'flex' }}
         >
           <div className={classes.toolbarBuffer} />
           <Divider />
@@ -183,7 +185,7 @@ export const PageContainer = ({ children }) => {
         </Drawer>
       </Hidden>
 
-      <div className={classes.content}>
+      <div className={classes.content} style={{ 'flex-grow': '1' }}>
         <Hidden mdUp>
           <div className={classes.toolbarBuffer} />
         </Hidden>
@@ -206,4 +208,4 @@ export const PageContainer = ({ children }) => {
   );
 };
 
-export default PageContainer;
+export default withStyles(useStyles)(PageContainer);

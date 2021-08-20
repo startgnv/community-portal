@@ -380,7 +380,7 @@ export const EditPage = ({
 
   return (
     <FormCardPage title="Job Details" onSubmit={onFormSubmit}>
-      <Grid container spacing={2} direction="column" justifyContent="center">
+      <Grid container spacing={2} direction="column" justify="center">
         <Grid item>
           <TextField
             data-test-id="field-title"
@@ -487,7 +487,7 @@ export const EditPage = ({
             treeData={tree}
           />
         </Grid>
-        <Grid item container justifyContent="flex-end">
+        <Grid item container justify="flex-end">
           <Button
             variant="text"
             onClick={() => replace(backTo)}

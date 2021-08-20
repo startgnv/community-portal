@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'src/components/Site/UI/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -9,10 +9,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 
-import { db, storage } from '../../../firebase';
-import { useAdminContainer } from '../UI/PageContainer';
-import UploadAvatar from './UploadAvatar';
-import UploadCoverImage from './UploadCoverImage';
+import { db, storage } from 'src/firebase';
+import { useAdminContainer } from 'src/components/Admin/UI/PageContainer';
+import UploadAvatar from 'src/components/Admin/Company/UploadAvatar';
+import UploadCoverImage from 'src/components/Admin/Company/UploadCoverImage';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles({
   avatar: {
@@ -56,7 +57,7 @@ const CompanyPage = () => {
   }
 
   return (
-    <Grid container justifyContent="center">
+    <Grid container justify="center">
       <Grid item md={8} xs={12}>
         <UploadCoverImage
           companyID={companyID}

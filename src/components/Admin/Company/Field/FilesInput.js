@@ -43,7 +43,7 @@ const FilesInput = ({ setFiles, setPhotosToDelete, defaultValues }) => {
 
   return (
     <>
-      <Grid item container justifyContent="center">
+      <Grid item container justify="center">
         <input
           accept="image/*"
           style={{ display: 'none' }}
@@ -59,7 +59,7 @@ const FilesInput = ({ setFiles, setPhotosToDelete, defaultValues }) => {
           </Button>
         </label>
       </Grid>
-      <Grid item container justifyContent="flex-end">
+      <Grid item container justify="flex-end">
         {filesBase64.length > 0 && (
           <Photos photoURLs={filesBase64 || []} onDelete={removePhoto} />
         )}

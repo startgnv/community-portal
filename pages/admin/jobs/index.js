@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { Link } from 'react-router-dom';
+import Link from 'src/components/Site/UI/Link';
 import { makeStyles } from '@material-ui/core';
 import moment from 'moment';
 import Container from '@material-ui/core/Container';
@@ -9,15 +9,15 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import StorageAvatar from './StorageAvatar';
+import StorageAvatar from 'src/components/Admin/Jobs/StorageAvatar';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AddIcon from '@material-ui/icons/Add';
 
-import { db } from '../../../firebase';
-import { useAdminContainer } from '../UI/PageContainer';
-import ListFilter, { sortKeys } from '../UI/ListFilter';
+import { db } from 'src/firebase';
+import { useAdminContainer } from 'src/components/Admin/UI/PageContainer';
+import ListFilter, { sortKeys } from 'src/components/Admin/UI/ListFilter';
 import Badge from '@material-ui/core/Badge';
 
 const useStyles = makeStyles(theme => ({
@@ -39,7 +39,7 @@ function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 
-export const JobsPage = ({ match: { isExact } }) => {
+export const JobsPage = () => {
   const classes = useStyles();
 
   // Published controls
