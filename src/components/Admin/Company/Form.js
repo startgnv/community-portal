@@ -225,7 +225,7 @@ const Form = ({
           setPhotosToDelete={setPhotosToDelete}
           defaultValues={photos}
         />
-        <Grid item container justify="flex-end">
+        <Grid item container justifyContent="flex-end">
           <Button
             disabled={success || loading}
             variant="text"

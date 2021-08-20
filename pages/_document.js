@@ -1,19 +1,22 @@
 import Document, { Html, NextScript, Head, Main } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
+import { ServerStyleSheets } from '@material-ui/core/styles';
 
 const APP_NAME = "startGNV";
 const APP_DESCRIPTION = "Gainesville's Startup, Tech, and Biotech Community";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    const sheet = new ServerStyleSheet();
+    const sheet = new ServerStyleSheet(), sheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
 
     try {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
-            sheet.collectStyles(<App {...props} />),
+            sheet.collectStyles(
+              sheets.collect(<App {...props} />)
+            ),
         });
 
       const initialProps = await Document.getInitialProps(ctx);
@@ -23,6 +26,7 @@ export default class MyDocument extends Document {
           <>
             {initialProps.styles}
             {sheet.getStyleElement()}
+            {sheets.getStyleElement()}
           </>
         ),
       };

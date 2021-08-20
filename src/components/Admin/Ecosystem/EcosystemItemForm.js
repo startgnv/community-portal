@@ -240,7 +240,6 @@ export const EcosystemItemForm = ({ ecoID }) => {
 
         <Grid item>
           <TextField
-            required
             variant="outlined"
             fullWidth
             label="Location"
@@ -323,7 +322,7 @@ export const EcosystemItemForm = ({ ecoID }) => {
             />
           )}
         </Grid>
-        <Grid item container justify="flex-end">
+        <Grid item container justifyContent="flex-end">
           <Button
             variant="text"
             onClick={() => replace(backTo)}

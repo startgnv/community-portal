@@ -84,7 +84,7 @@ export const UploadAvatar = ({
           <CircularProgress
             size={size}
             thickness={1}
-            color="black"
+            color="secondary"
             variant={
               progress < 100 && progress > 0 ? 'static' : 'indeterminate'
             }

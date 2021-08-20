@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import firebase, { db, storage } from '../../../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAdminContainer } from '../UI/PageContainer';
+import { useRouter } from 'next/router';
 import Form from './Form';
 
 export const CreatePage = ({ history }) => {
+  const router = useRouter();
   const [isDraft, setDraft] = useState(false);
 
   const [industries = [], loadingIndustries] = useCollectionData(
@@ -167,7 +169,7 @@ export const CreatePage = ({ history }) => {
         setSuccess(true);
         setLoading(false);
         setTimeout(() => {
-          history.goBack();
+          router.back();
         }, 800);
       })
       .catch(e => {
@@ -181,7 +183,7 @@ export const CreatePage = ({ history }) => {
       toggleDraft={toggleDraft}
       success={success}
       loading={loading || loadingIndustries}
-      onCancel={history.goBack}
+      onCancel={router.back}
       setCoverImg={setCoverImg}
       setListingImg={setListingImg}
       setLogoImg={setLogoImg}

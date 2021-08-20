@@ -290,7 +290,7 @@ export const EditPage = ({ company }) => {
         setSuccess(true);
         setLoading(false);
         setTimeout(() => {
-          history.goBack();
+          router.back();
         }, 800);
       });
   };

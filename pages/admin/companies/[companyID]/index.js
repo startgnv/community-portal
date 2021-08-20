@@ -57,7 +57,7 @@ const CompanyPage = () => {
   }
 
   return (
-    <Grid container justify="center">
+    <Grid container justifyContent="center">
       <Grid item md={8} xs={12}>
         <UploadCoverImage
           companyID={companyID}
