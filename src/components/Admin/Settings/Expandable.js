@@ -1,9 +1,9 @@
 import React from 'react';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Accordion from '@material-ui/core/Accordion';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -27,13 +27,13 @@ export const Expandable = ({ startExpanded, label, children }) => {
   };
 
   return (
-    <ExpansionPanel expanded={expanded} onChange={toggleExpanded}>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+    <Accordion expanded={expanded} onChange={toggleExpanded}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography className={classes.heading}>{label}</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails className={classes.details}>
+      </AccordionSummary>
+      <AccordionDetails className={classes.details}>
         {children}
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
   );
 };

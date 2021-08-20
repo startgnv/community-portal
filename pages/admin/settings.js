@@ -1,9 +1,9 @@
 import React from 'react';
-import FormCardPage from '../UI/FormCardPage';
+import FormCardPage from 'src/components/Admin/UI/FormCardPage';
 import Grid from '@material-ui/core/Grid';
-import { IndustryForm } from './IndustryForm';
-import { Expandable } from './Expandable';
-import { CategoryForm } from './CategoryForm';
+import { IndustryForm } from 'src/components/Admin/Settings/IndustryForm';
+import { Expandable } from 'src/components/Admin/Settings/Expandable';
+import { CategoryForm } from 'src/components/Admin/Settings/CategoryForm';
 
 const SettingsPage = () => {
   const onFormSubmit = () => {
