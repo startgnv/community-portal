@@ -2,5 +2,14 @@
   "projects": {
     "default": "startupgnv-39bca",
     "dev": "startgnv-dev"
+  },
+  "targets": {
+    "startgnv-dev": {
+      "hosting": {
+        "dev": [
+          "startgnv-dev"
+        ]
+      }
+    }
   }
 }

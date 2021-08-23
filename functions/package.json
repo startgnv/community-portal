@@ -1,7 +1,7 @@
 {
   "name": "functions",
   "scripts": {
-    "build": "cd ../ && yarn build && cp -r build functions/lib && cd functions && tsc",
+    "build": "tsc -p tsconfig.json",
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
@@ -19,7 +19,8 @@
     "express": "^4.17.1",
     "firebase": "^8.2.6",
     "firebase-admin": "^8.6.0",
-    "firebase-functions": "^3.3.0",
+    "firebase-functions": "^3.15.4",
+    "next": "^11.1.0",
     "path-parser": "^6.1.0"
   },
   "devDependencies": {

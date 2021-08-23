@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Head from "next/head";
 import Header from "src/components/Site/Header/Header";
 import theme from 'src/components/utils/theme';
@@ -120,7 +120,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 
-function startGNV(props) {
+function StartGNV(props) {
   const { Component, pageProps } = props;
   const router = useRouter();
 
@@ -156,4 +156,4 @@ function startGNV(props) {
   );
 };
 
-export default startGNV;
+export default StartGNV;
