@@ -31,3 +31,4 @@ firebase-debug.log
 .firebase
 .next
 firebase-config.json
+nextjs/**
