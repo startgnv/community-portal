@@ -12,8 +12,7 @@
     "getConfig": "firebase apps:sdkconfig web --json > ./firebase-config.json",
     "build-all": "npm run build-next && npm run build-firebase",
     "build-firebase": " cd \"functions\" && npm install && npm run build",
-    "build-next": "npm install && next build",
-    "predeploy": "npm run clean && npm run build-all"
+    "build-next": "npm install && next build"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "latest",

@@ -30,7 +30,6 @@
     "rules": "storage.rules"
   },
   "functions": {
-    "predeploy": "npm run build-all",
     "source": ".",
     "ignore":[
       "firebase.json",
@@ -39,14 +38,14 @@
       ".firebaserc",
       "firebase.indexes.json",
       "storage.rules",
-      "**/.*",
       "**/src/**",
       "**/.vscode/**",
       "**/node_modules/**",
       "**/public/**",
       "**/.next/cache/**",
       "**/cypress/**",
-      "pages/**"
+      "pages/**",
+      "build/**"
     ]
   }
 }
