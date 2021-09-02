@@ -71,6 +71,10 @@ const GlobalStyle = createGlobalStyle`
     border-spacing: 0;
   }
 
+  a{
+    text-decoration: none;
+  }
+
   html,
   body {
     margin: 0;
@@ -124,7 +128,7 @@ function StartGNV(props) {
   const { Component, pageProps } = props;
   const router = useRouter();
 
-  if(/(?<=\/)admin(\/)?/.test(router.pathname)){
+  if(/admin(\/)?/.test(router.pathname)){
     return(
       <AppProvider>
         <ThemeProvider theme={{...theme}}>
@@ -145,7 +149,7 @@ function StartGNV(props) {
             <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover, user-scalable=no' />
             </Head>
             {
-              !(/(?<=\/)sponsorship(\/)?$/.test(router.pathname)) &&
+              !(/sponsorship(\/)?$/.test(router.pathname)) &&
               <Header/>
             }
             <Component {...pageProps} />

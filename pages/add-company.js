@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import PageContainer from '../UI/PageContainer';
-import Button from '../UI/Button';
-import { db } from '../../../firebase';
-import ValidatorInput from '../UI/validation/ValidatorInput';
-import { validate, Validators } from '../UI/validation/useValidation';
-import ValidatorSelect from '../UI/validation/ValidatorSelect';
-import dropdownArrow from '../../../assets/images/dropdown-arrow.svg';
-import FieldRow from '../UI/Form/FieldRow';
-import Field from '../UI/Form/Field';
+import PageContainer from '../src/components/Site/UI/PageContainer';
+import Button from '../src/components/Site/UI/Button';
+import { db } from '../src/firebase';
+import ValidatorInput from '../src/components/Site/UI/validation/ValidatorInput';
+import { validate, Validators } from '../src/components/Site/UI/validation/useValidation';
+import ValidatorSelect from '../src/components/Site/UI/validation/ValidatorSelect';
+import FieldRow from '../src/components/Site/UI/Form/FieldRow';
+import Field from '../src/components/Site/UI/Form/Field';
 
 const Title = styled.h3`
   margin-bottom: 10px;
@@ -47,7 +46,7 @@ const Select = styled(ValidatorSelect)`
   -webkit-appearance: none;
   appearance: none;
   // Sets a custom arrow icon
-  background-image: url(${dropdownArrow}),
+  background-image: url('/assets/images/dropdown-arrow.svg'),
     linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
   background-repeat: no-repeat, repeat;
   background-position: right 0.9em top 50%, 0 0;

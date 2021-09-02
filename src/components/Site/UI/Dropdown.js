@@ -28,6 +28,7 @@ const Dropdown = ({
   };
   const onBtnClick = ev => {
     setAnchorEl(anchorEl ? null : ev.currentTarget);
+    ev.stopPropagation();
   };
   if (isOpen) {
     document.body.addEventListener('click', onBodyClick);

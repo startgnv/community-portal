@@ -57,7 +57,6 @@ const MapWrap = styled.div`
 `;
 
 export const CompanyPage = () => {
-
   const router = useRouter();
   const { companySlug } = router.query;
 
@@ -144,7 +143,7 @@ export const CompanyPage = () => {
           <MapWrap>
             <MapContainer viewport={viewport}>
               <Marker longitude={longitude} latitude={latitude}>
-                <MapPin size={36} />
+                <MapPin size={36} company={company}/>
               </Marker>
             </MapContainer>
           </MapWrap>

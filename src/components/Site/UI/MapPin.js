@@ -23,7 +23,12 @@ const PopupContainer = styled.div`
   z-index: 1000000;
 `;
 
-export const MapPin = ({ size = 36, active, linkTo = '', company }) => {
+export const MapPin = ({
+  size = 36,
+  active,
+  linkTo = 'javascript:;',
+  company
+}) => {
   const [visible, setVisible] = React.useState(false);
 
   const img = (
@@ -32,6 +37,7 @@ export const MapPin = ({ size = 36, active, linkTo = '', company }) => {
       active={active}
       src="/assets/images/map-pin2.svg"
       onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
       alt="pin"
     />
   );
