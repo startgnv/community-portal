@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Popper } from '@material-ui/core';
 import Button from './Button';
 
@@ -11,7 +11,6 @@ const Dropdown = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const popperEl = useRef(null);
-  const isOpen = Boolean(anchorEl);
   const popperHash =
     Math.random()
       .toString(36)
@@ -19,22 +18,27 @@ const Dropdown = ({
     Math.random()
       .toString(36)
       .substring(2, 15);
-  const elID = isOpen ? 'popper' + popperHash : undefined;
-  const onBodyClick = ev => {
+  const elID = anchorEl ? 'popper' + popperHash : undefined;
+
+  const onBodyClick = useCallback(ev => {
     if (popperEl && popperEl.current && popperEl.current.contains(ev.target)) {
       return false;
     }
     setAnchorEl(null);
-  };
+  }, []);
+
   const onBtnClick = ev => {
     setAnchorEl(anchorEl ? null : ev.currentTarget);
-    ev.stopPropagation();
   };
-  if (isOpen) {
-    document.body.addEventListener('click', onBodyClick);
-  } else {
-    document.body.removeEventListener('click', onBodyClick);
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      if (anchorEl) {
+        window.addEventListener('click', onBodyClick);
+      } else {
+        window.removeEventListener('click', onBodyClick);
+      }
+    }, 0);
+  });
   return (
     <>
       <Button
@@ -47,7 +51,7 @@ const Dropdown = ({
       <Popper
         style={{ zIndex: '1' }}
         id={elID}
-        open={isOpen}
+        open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         placement={placement}
         transition
