@@ -1,9 +1,7 @@
+import React from 'react';
 import Document, { Html, NextScript, Head, Main } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 import { ServerStyleSheets } from '@material-ui/core/styles';
-
-const APP_NAME = "startGNV";
-const APP_DESCRIPTION = "Gainesville's Startup, Tech, and Biotech Community";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -57,9 +55,6 @@ export default class MyDocument extends Document {
             <meta name="msapplication-TileColor" content="#da532c"/>
             <meta name="theme-color" content="#ffffff"/>
             <script src="static/facebook.js"></script>
-            <noscript>
-              <img height="1" width="1" src="https://www.facebook.com/tr?id=2699241636756946&ev=PageView&noscript=1"/>
-            </noscript>
             <script id="mcjs" src = "/static/mailchimp.js"></script>
             <script src="/static/hotjar.js"></script>
           </Head>
