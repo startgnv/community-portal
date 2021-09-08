@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { device } from '../../utils/device';
 import AppContext from '../../AppContext';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/dist/client/router';
 
 const NavContainer = styled.ul`
   text-align: right;
@@ -48,70 +49,65 @@ const NavContainer = styled.ul`
 
 const MainNav = ({ variant }) => {
   const { closeSidebar } = useContext(AppContext);
+  const router = useRouter();
+  const isActive = path => {
+    return path === router.pathname ? 'active' : '';
+  };
   return (
     <NavContainer variant={variant}>
       <li>
-        <NavLink
-          className="nav-link"
-          to="/companies"
-          activeClassName="active"
-          onClick={closeSidebar}
-        >
-          Companies
-        </NavLink>
+        <Link href="/companies">
+          <a
+            className={`nav-link ${isActive('/companies')}`}
+            onClick={closeSidebar}
+          >
+            Companies
+          </a>
+        </Link>
       </li>
       <li>
-        <NavLink
-          className="nav-link"
-          to="/jobs"
-          activeClassName="active"
-          exact
-          onClick={closeSidebar}
-        >
-          Jobs
-        </NavLink>
+        <Link href="/jobs">
+          <a className={`nav-link ${isActive('/jobs')}`} onClick={closeSidebar}>
+            Jobs
+          </a>
+        </Link>
       </li>
       <li>
-        <NavLink
-          className="nav-link"
-          to="/blog"
-          activeClassName="active"
-          exact
-          onClick={closeSidebar}
-        >
-          Blog
-        </NavLink>
+        <Link href="/blog">
+          <a className={`nav-link ${isActive('/blog')}`} onClick={closeSidebar}>
+            Blog
+          </a>
+        </Link>
       </li>
       <li>
-        <NavLink
-          className="nav-link"
-          to="/ecosystem"
-          activeClassName="active"
-          onClick={closeSidebar}
-        >
-          Ecosystem
-        </NavLink>
+        <Link href="/ecosystem">
+          <a
+            className={`nav-link ${isActive('/ecosystem')}`}
+            onClick={closeSidebar}
+          >
+            Ecosystem
+          </a>
+        </Link>
       </li>
       <li>
-        <NavLink
-          className="nav-link"
-          to="/sponsorship"
-          activeClassName="active"
-          onClick={closeSidebar}
-        >
-          Sponsorship
-        </NavLink>
+        <Link href="/sponsorship">
+          <a
+            className={`nav-link ${isActive('/sponsorship')}`}
+            onClick={closeSidebar}
+          >
+            Sponsorship
+          </a>
+        </Link>
       </li>
       <li>
-        <NavLink
-          className="nav-link"
-          to="/about"
-          activeClassName="active"
-          exact
-          onClick={closeSidebar}
-        >
-          About
-        </NavLink>
+        <Link href="/about">
+          <a
+            className={`nav-link ${isActive('/about')}`}
+            onClick={closeSidebar}
+          >
+            About
+          </a>
+        </Link>
       </li>
     </NavContainer>
   );

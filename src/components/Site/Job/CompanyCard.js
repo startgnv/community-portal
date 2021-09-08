@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { device } from '../../utils/device';
 import StorageImg from '../UI/StorageImg';
-import { Link } from 'react-router-dom';
+import Link from '../UI/Link';
 
 const Card = styled.div`
   margin-bottom: 30px;

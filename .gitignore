@@ -29,3 +29,7 @@ yarn-error.log*
 
 firebase-debug.log
 .firebase
+.next
+firebase-config.json
+nextjs/**
+**/node_modules/**

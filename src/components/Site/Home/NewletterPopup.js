@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { validate } from 'email-validator';
 import { functions } from '../../../firebase';
-import { useLocation } from 'react-router-dom';
 import { device } from '../../utils/device';
-import X from '../../../assets/images/x.svg';
+import { useRouter } from 'next/dist/client/router';
 
 const Container = styled.div`
   width: 100%;
@@ -124,17 +123,22 @@ const Subscribe = styled.button`
   }
 `;
 
-const addNewsletterSubscriber = functions.httpsCallable(
-  'addNewsletterSubscriber'
-);
-
 const NewsletterPopup = ({ canBeVisible }) => {
   const [input, setInput] = useState('');
   const [error, setError] = useState('');
   const [isHidden, setHideState] = useState(false);
-  const [scrollHeight, setScrollHeight] = useState(window.scrollY);
+  const [scrollHeight, setScrollHeight] = useState(null);
   const [isClosed, setClosed] = useState(false);
-  const { pathname } = useLocation();
+  const { pathname } = useRouter();
+
+  let addNewsletterSubscriber;
+
+  useEffect(() => {
+    if (!functions) return;
+    addNewsletterSubscriber = functions.httpsCallable(
+      'addNewsletterSubscriber'
+    );
+  });
 
   const submitInput = async e => {
     e.preventDefault();
@@ -172,6 +176,8 @@ const NewsletterPopup = ({ canBeVisible }) => {
   React.useEffect(() => {
     window.addEventListener('scroll', hidePopup);
 
+    if (!scrollHeight) setScrollHeight(window.scrollY || 0);
+
     return () => window.removeEventListener('scroll', hidePopup);
   });
 
@@ -194,7 +200,7 @@ const NewsletterPopup = ({ canBeVisible }) => {
       </Form>
 
       <Close onClick={close}>
-        <img src={X} alt="X" />
+        <img src={'/assets/images/x.svg'} alt="X" />
       </Close>
     </Container>
   );

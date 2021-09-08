@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { db, storage } from '../../../firebase';
+import { db, storage } from 'src/firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -21,10 +21,11 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers';
 
-import { useAdminContainer } from '../UI/PageContainer';
-import FormCardPage from '../UI/FormCardPage';
+import { useAdminContainer } from 'src/components/Admin/UI/PageContainer';
+import FormCardPage from 'src/components/Admin/UI/FormCardPage';
 import { Switch } from '@material-ui/core';
-import ThumbnailUpload from './ThumbnailUpload';
+import ThumbnailUpload from 'src/components/Admin/Ecosystem/ThumbnailUpload';
+import { useRouter } from 'next/router';
 
 const wysiwygToolbar = {
   options: ['inline', 'blockType', 'list'],
@@ -39,12 +40,11 @@ const wysiwygToolbar = {
   }
 };
 
-export const EcosysteItemForm = ({
-  match: {
-    params: { ecoID }
-  },
-  history: { replace = () => {}, push = () => {} }
-}) => {
+export const EcosystemItemForm = ({ ecoID }) => {
+  const router = useRouter();
+  const replace = path => router.push(path, undefined, { shallow: true });
+  const push = path => router.push(path);
+
   const [categories = [], loadingCategories] = useCollectionData(
     db.collection('ecosystemCategories').orderBy('name', 'asc'),
     { idField: 'id' }
@@ -184,7 +184,7 @@ export const EcosysteItemForm = ({
 
   return (
     <FormCardPage title="Ecosystem Item Details" onSubmit={onFormSubmit}>
-      <Grid container spacing={2} direction="column" justify="center">
+      <Grid container spacing={2} direction="column" justifyContent="center">
         <Grid item>
           <TextField
             required
@@ -210,7 +210,7 @@ export const EcosysteItemForm = ({
 
         <Grid item>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
+            <Grid container justifyContent="space-around">
               <KeyboardDatePicker
                 disabled={!isEvent}
                 format="MM/dd/yyyy"
@@ -240,7 +240,6 @@ export const EcosysteItemForm = ({
 
         <Grid item>
           <TextField
-            required
             variant="outlined"
             fullWidth
             label="Location"
@@ -323,7 +322,7 @@ export const EcosysteItemForm = ({
             />
           )}
         </Grid>
-        <Grid item container justify="flex-end">
+        <Grid item container justifyContent="flex-end">
           <Button
             variant="text"
             onClick={() => replace(backTo)}
@@ -348,4 +347,4 @@ export const EcosysteItemForm = ({
   );
 };
 
-export default EcosysteItemForm;
+export default EcosystemItemForm;

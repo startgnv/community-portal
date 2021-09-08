@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { device } from '../../utils/device';
-import { Link } from 'react-router-dom';
+import Link from 'src/components/Site/UI/Link';
 import { storage } from '../../../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import StorageImg from '../UI/StorageImg';

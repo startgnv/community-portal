@@ -56,9 +56,13 @@ const Form = ({
   setPhotos,
   setPhotosToDelete
 }) => {
-  const sizeOptions = ['<10', '10-50', '50-100', '100-500', '500+'].map(
-    opt => ({ label: opt, value: opt })
-  );
+  const sizeOptions = [
+    '<10',
+    '10-50',
+    '50-100',
+    '100-500',
+    '500+'
+  ].map(opt => ({ label: opt, value: opt }));
 
   return (
     <FormCardPage title="Company Details" onSubmit={onSubmit}>
@@ -221,7 +225,7 @@ const Form = ({
           setPhotosToDelete={setPhotosToDelete}
           defaultValues={photos}
         />
-        <Grid item container justify="flex-end">
+        <Grid item container justifyContent="flex-end">
           <Button
             disabled={success || loading}
             variant="text"

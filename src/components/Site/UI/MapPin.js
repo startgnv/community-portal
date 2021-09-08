@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import mapPin from '../../../assets/images/map-pin2.svg';
-import { Link } from 'react-router-dom';
+import Link from './Link';
 import CompanyListItem from '../Home/CompanyListItem';
 
 const PinContainer = styled.div`
@@ -24,22 +23,28 @@ const PopupContainer = styled.div`
   z-index: 1000000;
 `;
 
-export const MapPin = ({ size = 36, active, linkTo, company }) => {
+export const MapPin = ({
+  size = 36,
+  active,
+  linkTo = 'javascript:;',
+  company
+}) => {
   const [visible, setVisible] = React.useState(false);
 
   const img = (
     <PinImg
       size={size}
       active={active}
-      src={mapPin}
+      src="/assets/images/map-pin2.svg"
       onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
       alt="pin"
     />
   );
 
   return (
     <PinContainer active={active}>
-      {visible && (
+      {visible && company && (
         <PopupContainer onMouseLeave={() => setVisible(false)}>
           <CompanyListItem company={company} />
         </PopupContainer>

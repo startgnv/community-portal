@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { device } from '../../utils/device';
 import { validate } from 'email-validator';
@@ -66,14 +66,19 @@ const Description = styled.p`
   margin-top: 15px;
 `;
 
-const addNewsletterSubscriber = functions.httpsCallable(
-  'addNewsletterSubscriber'
-);
-
 const NewsletterForm = () => {
   const [input, setInput] = useState('');
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
+  let addNewsletterSubscriber;
+
+  useEffect(() => {
+    if (!functions) return;
+    addNewsletterSubscriber = functions.httpsCallable(
+      'addNewsletterSubscriber'
+    );
+  });
 
   const submitInput = async () => {
     if (!validate(input)) {

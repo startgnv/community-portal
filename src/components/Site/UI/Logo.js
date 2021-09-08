@@ -1,8 +1,6 @@
 import React from 'react';
-import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom';
-import logoDark from '../../../assets/images/startgnv-logo.png';
-import logoLight from '../../../assets/images/startgnv-logo-white.png';
+import styled from 'styled-components';
+import Link from 'next/link';
 
 const Container = styled.div`
   display: block;
@@ -20,10 +18,15 @@ const Img = styled.img`
   height: 100%;
 `;
 
+const logoDark = '/assets/images/startgnv-logo.png';
+const logoLight = '/assets/images/startgnv-logo-white.png';
+
 const Logo = ({ variant }) => (
   <Container>
-    <Link className="logo-link" to="/">
-      <Img src={variant === 'light' ? logoLight : logoDark} alt="startGNV" />
+    <Link href="/">
+      <a className="logo-link">
+        <Img src={variant === 'light' ? logoLight : logoDark} alt="startGNV" />
+      </a>
     </Link>
   </Container>
 );
