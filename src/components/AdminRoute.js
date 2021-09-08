@@ -10,6 +10,7 @@ export const AdminRoute = ({ component: Component, ...rest }) => {
   const [value, loading] = useDocumentOnce(
     user && user.email ? db.doc(`admins/${user.email}`) : null
   );
+  const router = useRouter;
 
   if (initialising || loading) {
     return <LinearProgress />;
@@ -18,7 +19,7 @@ export const AdminRoute = ({ component: Component, ...rest }) => {
     return 'You are not an admin!';
   }
   if (!user) {
-    useRouter().push('admin/login');
+    router.push('admin/login');
     return null;
   }
   return <Component {...rest} />;

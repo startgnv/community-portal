@@ -3,7 +3,7 @@
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
-  "hosting": {
+  "hosting": [{
       "public": "public/",
       "ignore": [
         "firebase.json",
@@ -26,6 +26,29 @@
       "site": "startgnv-dev",
       "cleanUrls": true
     },
+    {
+      "public": "public/",
+      "ignore": [
+        "firebase.json",
+        "firestore.rules",
+        "storage.rules",
+        "firebase.indexes.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/blog/prod-testing/*",
+          "function": "prerenderArticle"
+        },
+        {
+          "source": "**",
+          "function": "nextjs-server"
+        }
+      ],
+      "site": "startupgnv-39bca",
+      "cleanUrls": true
+    }],
   "storage": {
     "rules": "storage.rules"
   },

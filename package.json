@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start": "run-p -r serve next",
-    "start-dev": "run-p serve dev",
     "next": "next start",
     "dev": "next dev",
     "serve": "npm run getConfig && firebase serve",

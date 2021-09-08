@@ -184,7 +184,7 @@ export const PageContainer = ({ children }) => {
         </Drawer>
       </Hidden>
 
-      <div className={classes.content} style={{ 'flex-grow': '1' }}>
+      <div className={classes.content} style={{ flexGrow: '1' }}>
         <Hidden mdUp>
           <div className={classes.toolbarBuffer} />
         </Hidden>
