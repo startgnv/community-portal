@@ -23,6 +23,7 @@ const EcosystemFilter = ({ onChange = noop, sizeList, filteredCount }) => {
   const { ecosystemCategories, ecosystemCategoriesLoading } = useContext(
     AppContext
   );
+  const [selectedTypes, setSelectedTypes] = useState([]);
 
   if (ecosystemCategoriesLoading) {
     return false;
@@ -32,6 +33,10 @@ const EcosystemFilter = ({ onChange = noop, sizeList, filteredCount }) => {
     selectedCategories,
     setSelectedCategories,
     categories => onChange({ categories })
+  );
+
+  const onTypeChange = onFilterChange(selectedTypes, setSelectedTypes, types =>
+    onChange({ types })
   );
 
   let categoriesBtnLabel = 'Categories';
@@ -47,6 +52,17 @@ const EcosystemFilter = ({ onChange = noop, sizeList, filteredCount }) => {
         items={ecosystemCategories}
         selectedItems={selectedCategories}
         onChange={onCategoryChange}
+      />
+      <FilterItem
+        label="Type"
+        title="Ecosystem Type"
+        items={[
+          { name: 'Student', id: 'student' },
+          { name: 'Entrepreneur', id: 'entrepreneur' },
+          { name: 'Employee', id: 'employee' }
+        ]}
+        selectedItems={selectedTypes}
+        onChange={onTypeChange}
       />
       <FilterItemCustom>
         <SearchInput
