@@ -11,6 +11,8 @@ import AdminPageContainer from 'src/components/Admin/UI/PageContainer';
 import { CssBaseline } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import AdminRoute from 'src/components/AdminRoute';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from 'src/firebase';
 
 ReactGA.initialize('UA-138572620-3');
 
@@ -127,6 +129,9 @@ const GlobalStyle = createGlobalStyle`
 function StartGNV(props) {
   const { Component, pageProps } = props;
   const router = useRouter();
+  const [user] = useAuthState(auth);
+
+  if(/admin(\/)?/.test(router.pathname) && !user) return <AdminRoute component={Component} {...pageProps}/>;
 
   if(/admin(\/)?/.test(router.pathname)){
     return(
