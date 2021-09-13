@@ -1,16 +1,17 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import firebase, { auth } from '../../firebase';
+import firebase, { auth } from '../../src/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { LinearProgress } from '@material-ui/core';
+import { useRouter } from 'next/router';
 
-export const LoginPage = ({
-  location: { state: { from } = { from: { pathname: '/admin' } } }
-}) => {
+
+export const LoginPage = () => {
   const [user, initialising] = useAuthState(auth);
+  const router = useRouter();
 
   if (user) {
-    return <Redirect to={from} />;
+    router.push('/admin');
+    return null;
   }
 
   if (initialising) {
