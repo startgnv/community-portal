@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import Head from "next/head";
 import Header from "src/components/Site/Header/Header";
 import theme from 'src/components/utils/theme';
@@ -125,15 +125,13 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-
 function StartGNV(props) {
   const { Component, pageProps } = props;
   const router = useRouter();
-  const [user] = useAuthState(auth);
+  const [user, initializing] = useAuthState(auth);
 
-  if(/admin(\/)?/.test(router.pathname) && !user) return <AdminRoute component={Component} {...pageProps}/>;
-
-  if(/admin(\/)?/.test(router.pathname)){
+  
+  if(/admin(\/)?/.test(router.pathname) && !initializing && user){
     return(
       <AppProvider>
         <ThemeProvider theme={{...theme}}>
@@ -144,7 +142,9 @@ function StartGNV(props) {
         </ThemeProvider>
       </AppProvider>
     )
-  }
+  } else if(/admin(\/)?/.test(router.pathname)) {
+    return <AdminRoute component={Component} {...pageProps}/>;
+  };
 
   return (
     <AppProvider>

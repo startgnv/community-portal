@@ -11,17 +11,15 @@ export const AdminRoute = ({ component: Component, ...rest }) => {
     user && user.email ? db.doc(`admins/${user.email}`) : null
   );
   const router = useRouter();
-  useEffect(() => {
-    if (user && (!value || !value.exists)) {
-      return 'You are not an admin!';
-    }
-    if (!user) {
-      router.push('/admin/login');
-      return null;
-    }
-  }, [user, value, router]);
   if (initialising || loading) {
     return <LinearProgress />;
+  }
+  if (user && (!value || !value.exists)) {
+    return 'You are not an admin!';
+  }
+  if (!user && router.pathname !== '/admin/login') {
+    router.push('/admin/login');
+    return null;
   }
   return <Component {...rest} />;
 };
