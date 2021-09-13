@@ -1,7 +1,7 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from '../../Site/UI/Link';
-import { makeStyles, withStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import Hidden from '@material-ui/core/Hidden';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -19,7 +19,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Header from '../Header/Header';
 
 export const AdminContainerContext = createContext({
-  setBackTo: () => {}
+  setBackTo: () => {},
+  setLoading: () => {}
 });
 
 export const useAdminContainer = ({ backTo, loading }) => {
