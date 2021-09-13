@@ -43,7 +43,8 @@ const EcosystemPage = () => {
   } = useContext(AppContext);
   const [ecoFilter, setEcoFilter] = useState({
     search: '',
-    categories: []
+    categories: [],
+    types: []
   });
 
   const onFilterChange = filterChanged => {
@@ -61,8 +62,13 @@ const EcosystemPage = () => {
       ? _.intersection(ecoFilter.categories, ecoItem.categories).length
       : true;
 
+  const typeFilter = ecoItem =>
+    ecoFilter.types.length
+      ? ecoFilter.types.includes(ecoItem.type)
+      : true;
+
   const renderEcoItems = ecosystem
-    .filter(ecoItem => searchFilter(ecoItem) && categoryFilter(ecoItem))
+    .filter(ecoItem => searchFilter(ecoItem) && categoryFilter(ecoItem) && typeFilter(ecoItem))
     .sort((a, b) => a.description.length - b.description.length);
 
   const featuredEcoItems = renderEcoItems.filter(item => item.featured);
