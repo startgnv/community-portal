@@ -112,7 +112,11 @@ export const CompaniesPage = () => {
         <meta property="og:type" content="website" />
       </Helmet>
       <Container>
-        <Hero title="Tech Companies in GNV" size="medium" maxWidth="none" />
+        <Hero
+          title="Tech and Startup Companies in GNV"
+          size="medium"
+          maxWidth="none"
+        />
         <FilterContainer>
           <CompaniesFilter
             onChange={onFilterChange}
