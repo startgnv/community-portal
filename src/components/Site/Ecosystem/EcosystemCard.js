@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { baseContentStyling } from '../../utils/mixins';
 import { Parser } from 'html-to-react';
-import moment from 'moment';
-import AddToCalendar from './AddToCalendar';
 
 const html = new Parser();
 
@@ -12,15 +10,16 @@ const EcoItem = styled.div`
   background: white;
   box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.08);
   overflow: hidden;
-
-  position: relative;
+  height: 100px;
+  display: flex;
 `;
 
 const EcoItemImg = styled.div`
   background-image: url(${props => props.src});
-  height: 120px;
   background-size: cover;
-  position: relative;
+  background-position: center;
+  flex: 0 0 140px;
+  margin-right: 20px;
 
   display: flex;
   flex-flow: column nowrap;
@@ -66,26 +65,19 @@ const ImgGradient = styled.div`
 `;
 
 const EcoItemContent = styled.div`
-  padding: 16px 16px 0 16px;
-`;
-
-const EcoItemHead = styled.div`
-  margin-bottom: 10px;
-
-  display: grid;
-  grid-template-areas:
-    'header calendar'
-    'subheader calendar';
-
-  grid-template-columns: 4fr 1fr;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 0;
 `;
 
 const EcoItemHeader = styled.a`
   grid-area: header;
+  margin-bottom: 10px;
   font-family: WilliamsCaslonText, serif;
   font-size: 18px;
   color: ${props => props.theme.textDark};
-  width: 75%;
   text-decoration: none;
   cursor: pointer;
 
@@ -104,24 +96,20 @@ const EcoItemSubheader = styled.h4`
 
 const EcoItemDescription = styled.div`
   ${baseContentStyling()}
-
+  width: 95%;
   p {
-    color: ${props => props.theme.textDark};
-    opacity: 0.7;
-    line-height: 22px;
+    color: ${props => props.theme.textLight};
+    margin-bottom: 10px;
+    font-size: 1rem;
+    line-height: 1.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 
-const EcosystemCard = ({
-  name,
-  thumbnail,
-  location,
-  description,
-  eventDate,
-  link
-}) => {
-  const time = eventDate ? moment(eventDate).format('h:mm A') : null;
-  const date = eventDate ? moment(eventDate).format('dddd [/] D MMMM') : null;
+const EcosystemCard = ({ name, thumbnail, description, link }) => {
+  const firstParagraph = description.split('</p>');
 
   return (
     <EcoItem key={name}>
@@ -131,20 +119,12 @@ const EcosystemCard = ({
             ? thumbnail
             : '/assets/images/ecosystem-default-thumbnail.png'
         }
-      >
-        {time && <EcoItemTime>{time}</EcoItemTime>}
-        {date && <EcoItemDate>{date}</EcoItemDate>}
-        <ImgGradient />
-      </EcoItemImg>
+      ></EcoItemImg>
       <EcoItemContent>
-        <EcoItemHead>
-          <EcoItemHeader href={link}>{name}</EcoItemHeader>
-          {location && <EcoItemSubheader>{location}</EcoItemSubheader>}
-          <div style={{ gridArea: 'calendar' }}>
-            <AddToCalendar date={eventDate} location={location} name={name} />
-          </div>
-        </EcoItemHead>
-        <EcoItemDescription>{html.parse(description)}</EcoItemDescription>
+        <EcoItemHeader href={link}>{name}</EcoItemHeader>
+        <EcoItemDescription>
+          {html.parse(firstParagraph[0] + '</p>')}
+        </EcoItemDescription>
       </EcoItemContent>
     </EcoItem>
   );
