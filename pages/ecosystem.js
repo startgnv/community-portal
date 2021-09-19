@@ -142,12 +142,11 @@ const EcosystemPage = () => {
               </ItemGrid>
             </>
           )}
-
-          {featuredEcoItems.length > 0 && (
-            <SectionHeader>All Ecosystem</SectionHeader>
-          )}
-          <ItemGrid>
-            {renderEcoItems.map(
+          {ecosystemCategories.map(category =>{
+            return(
+              <><SectionHeader>{category.name}</SectionHeader>
+              <ItemGrid>
+                {renderEcoItems.filter(item => item.categories.includes(category.id)).map(
               ({
                 name,
                 description,
@@ -177,7 +176,9 @@ const EcosystemPage = () => {
                 );
               }
             )}
-          </ItemGrid>
+              </ItemGrid></>
+            );
+          })}
         </PageContainer>
       </>
     </>
