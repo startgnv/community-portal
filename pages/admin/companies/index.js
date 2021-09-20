@@ -177,6 +177,7 @@ export const CompaniesPage = () => {
               sort={sort}
               setSearch={setSearch}
               setSort={setSort}
+              searchLabel="Search for a Company"
             />
           </Grid>
           {publishedCompanies
