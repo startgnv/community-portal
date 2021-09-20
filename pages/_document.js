@@ -53,7 +53,7 @@ export default class MyDocument extends Document {
               property="og:description"
               content="startGNV is an initiative by startupGNV to promote and grow the Gainesville startup, tech, and biotech communities."
             />
-            <meta name="og:image" property="og:image" content="https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/home-hero.jpg?alt=media&token=29ee21af-5f63-4bb6-8198-dd29d48769f2" />
+            <meta name="og:image" property="og:image" content="https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/startgnv-home.jpg?alt=media&token=29ee21af-5f63-4bb6-8198-dd29d48769f2" />
             <meta property="og:type" content="website" />
             <meta name="msapplication-TileColor" content="#da532c"/>
             <meta name="theme-color" content="#ffffff"/>
