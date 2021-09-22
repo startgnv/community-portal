@@ -28,7 +28,7 @@ const HomeHero = styled.div`
 const HeroImage = styled.div`
   position: relative;
   flex: 1;
-  background-image: url("/assets/images/home-hero.jpg");
+  background-image: url("/assets/images/startgnv-home.jpg");
   background-size: cover;
   background-position: center;
 
