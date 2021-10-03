@@ -12,6 +12,10 @@ const EcoItem = styled.div`
   overflow: hidden;
   height: 100px;
   display: flex;
+  @media screen and (max-width: 600px) {
+    min-height: 100px;
+    height: auto;
+  }
 `;
 
 const EcoItemImg = styled.div`

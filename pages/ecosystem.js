@@ -22,6 +22,8 @@ const SectionHeader = styled.h2`
   color: ${props => props.theme.textDark};
   margin-bottom: 20px;
   margin-top: 50px;
+  padding-bottom: 10px;
+  border-bottom: solid 3px ${props => props.theme.uiBorder};
 `;
 
 const ItemGrid = styled.div`
@@ -46,12 +48,16 @@ const EcosystemPage = () => {
     categories: [],
     types: []
   });
+  const [sliceEnd, setSliceEnd] = useState(3);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const onFilterChange = filterChanged => {
     setEcoFilter({
       ...ecoFilter,
       ...filterChanged
     });
+    setSliceEnd(3);
+    setSelectedCategory("");
   };
 
   const searchFilter = ecoItem =>
@@ -67,6 +73,11 @@ const EcosystemPage = () => {
       ? ecoFilter.types.includes(ecoItem.type)
       : true;
 
+  const changeShow = category => {
+    setSliceEnd(sliceEnd > 0 ? -1 : 3);
+    setSelectedCategory(selectedCategory == "" ? category : "" );
+  }
+    
   const renderEcoItems = ecosystem
     .filter(ecoItem => searchFilter(ecoItem) && categoryFilter(ecoItem) && typeFilter(ecoItem))
     .sort((a, b) => a.description.length - b.description.length);
@@ -119,12 +130,6 @@ const EcosystemPage = () => {
                     eventDate,
                     thumbnail
                   }) => {
-                    const renderCategories = _.filter(
-                      ecosystemCategories,
-                      category => {
-                        return categories.indexOf(category.id) > -1;
-                      }
-                    );
 
                     return (
                       <EcosystemCard
@@ -143,42 +148,39 @@ const EcosystemPage = () => {
             </>
           )}
           {ecosystemCategories.map(category =>{
-            return(
-              <><SectionHeader>{category.name}</SectionHeader>
-              <ItemGrid>
-                {renderEcoItems.filter(item => item.categories.includes(category.id)).map(
-              ({
-                name,
-                description,
-                categories,
-                link,
-                location,
-                eventDate,
-                thumbnail
-              }) => {
-                const renderCategories = _.filter(
-                  ecosystemCategories,
-                  category => {
-                    return categories.indexOf(category.id) > -1;
-                  }
-                );
+            if((ecoFilter.categories.length == 0 || ecoFilter.categories.includes(category.id)) && (selectedCategory == "" || category.id == selectedCategory)){
+              return(
+                <><SectionHeader>{category.name}</SectionHeader>
+                <ItemGrid>
+              {renderEcoItems.filter(item => item.categories.includes(category.id)).slice(0,sliceEnd > 0 ? sliceEnd : renderEcoItems.length).map(
+                ({
+                  name,
+                  description,
+                  categories,
+                  link,
+                  location,
+                  eventDate,
+                  thumbnail
+                }) => {
 
-                return (
-                  <EcosystemCard
-                    key={name}
-                    name={name}
-                    description={description}
-                    link={link}
-                    location={location}
-                    eventDate={eventDate}
-                    thumbnail={thumbnail}
-                  />
-                );
-              }
-            )}
-              </ItemGrid></>
-            );
-          })}
+                  return (
+                    <EcosystemCard
+                      key={name}
+                      name={name}
+                      description={description}
+                      link={link}
+                      location={location}
+                      eventDate={eventDate}
+                      thumbnail={thumbnail}
+                    />
+                  );
+                }
+              )}
+                <p onClick = {() => changeShow(category.id)}>{sliceEnd > 0 ? "Show More..." : "Show Less..." }</p>
+                </ItemGrid></>
+              );
+            }
+        })}
         </PageContainer>
       </>
     </>
