@@ -7,6 +7,7 @@ import EcosystemFilter from 'src/components/Site/Ecosystem/EcosystemFilter';
 import Hero from 'src/components/Site/UI/Hero';
 import { Helmet } from 'react-helmet';
 import EcosystemCard from 'src/components/Site/Ecosystem/EcosystemCard';
+import EcosystemGrid from 'src/components/Site/Ecosystem/EcosystemGrid';
 
 const PageDescription = styled.span`
   display: block;
@@ -48,16 +49,12 @@ const EcosystemPage = () => {
     categories: [],
     types: []
   });
-  const [sliceEnd, setSliceEnd] = useState(3);
-  const [selectedCategory, setSelectedCategory] = useState("");
 
   const onFilterChange = filterChanged => {
     setEcoFilter({
       ...ecoFilter,
       ...filterChanged
     });
-    setSliceEnd(3);
-    setSelectedCategory("");
   };
 
   const searchFilter = ecoItem =>
@@ -73,10 +70,6 @@ const EcosystemPage = () => {
       ? ecoFilter.types.includes(ecoItem.type)
       : true;
 
-  const changeShow = category => {
-    setSliceEnd(sliceEnd > 0 ? -1 : 3);
-    setSelectedCategory(selectedCategory == "" ? category : "" );
-  }
     
   const renderEcoItems = ecosystem
     .filter(ecoItem => searchFilter(ecoItem) && categoryFilter(ecoItem) && typeFilter(ecoItem))
@@ -148,37 +141,14 @@ const EcosystemPage = () => {
             </>
           )}
           {ecosystemCategories.map(category =>{
-            if((ecoFilter.categories.length == 0 || ecoFilter.categories.includes(category.id)) && (selectedCategory == "" || category.id == selectedCategory)){
+            if(((ecoFilter.categories.length == 0 || ecoFilter.categories.includes(category.id)) && renderEcoItems.filter(item => item.categories.includes(category.id)).length > 0)){
+
               return(
                 <><SectionHeader>{category.name}</SectionHeader>
-                <ItemGrid>
-              {renderEcoItems.filter(item => item.categories.includes(category.id)).slice(0,sliceEnd > 0 ? sliceEnd : renderEcoItems.length).map(
-                ({
-                  name,
-                  description,
-                  categories,
-                  link,
-                  location,
-                  eventDate,
-                  thumbnail
-                }) => {
-
-                  return (
-                    <EcosystemCard
-                      key={name}
-                      name={name}
-                      description={description}
-                      link={link}
-                      location={location}
-                      eventDate={eventDate}
-                      thumbnail={thumbnail}
-                    />
-                  );
-                }
-              )}
-                <p onClick = {() => changeShow(category.id)}>{sliceEnd > 0 ? "Show More..." : "Show Less..." }</p>
-                </ItemGrid></>
+                <EcosystemGrid ecosystems={renderEcoItems.filter(item => item.categories.includes(category.id))}/>
+                </>
               );
+              
             }
         })}
         </PageContainer>
