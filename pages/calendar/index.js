@@ -1,36 +1,3 @@
-// import React from 'react';
-// import { ThemeProvider } from 'styled-components';
-// import { ReactEmbeddedGoogleCalendar } from 'react-embedded-google-calendar';
-// import styled from "styled-components";
-
-// const CalendarWrapper = styled.div`
-//     margin-right: auto;
-//     margin-left: auto;
-
-//     max-width: 960px;
-
-//     padding-right: 10px;
-//     padding-left: 10px;
-
-// `;
-
-
-
-// const theme = {
-//     font: "Calibri",  
-// }
-
-// const CalendarView = () =>(
-//     <ThemeProvider theme={theme}>
-//         <CalendarWrapper>
-//             <ReactEmbeddedGoogleCalendar publicUrl="https://calendar.google.com/calendar/embed?src=pemisin.toyo%40gmail.com&ctz=America%2FNew_York" height= '400px'/>
-//         </CalendarWrapper>
-//     </ThemeProvider> 
-// );
-
-// export default CalendarView ;
-
-
 import {Calendar, dateFnsLocalizer} from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
@@ -39,7 +6,8 @@ import getDay from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"
+import "react-datepicker/dist/react-datepicker.css";
+import { getEvents } from './gcal';
 
 const locales = {
     "en-US": require("date-fns/locale/en-US")
@@ -52,31 +20,33 @@ const localizer = dateFnsLocalizer({
     locales
 })
 
-const events= [
-    {
-        title: "Big Meeting",
-        allDay: true,
-        start: new Date(2021, 8, 28),
-        end: new Date(2021, 8, 28)
-    },
-    {
-        title: "Vacation",
-        start: new Date(2021, 8, 28),
-        end: new Date(2021, 8, 30)
-    },
-    {
-        title: "Conference",
-        start: new Date(2021, 8, 28),
-        end: new Date(2021, 8, 28)
-    },
-]
+// const events= [
+//     {
+//         title: "Big Meeting",
+//         allDay: true,
+//         start: new Date(2021, 8, 28),
+//         end: new Date(2021, 8, 28)
+//     },
+//     {
+//         title: "Vacation",
+//         start: new Date(2021, 8, 28),
+//         end: new Date(2021, 8, 30)
+//     },
+//     {
+//         title: "Conference",
+//         start: new Date(2021, 8, 28),
+//         end: new Date(2021, 8, 28)
+//     },
+//]
 
 function CalendarView(){
   const [newevent, setNewEvent] = useState({title: "", start: "", end:""})
-  const [allevents, setAllEvents] = useState(events)
-
+  const [allevents, setAllEvents] = useState([])
+  
+  getEvents();
+  
   const handleAddEvent = () =>{
-    setAllEvents([...events, newevent])
+    setAllEvents([...allevents, newevent])
 }
 
     return(
