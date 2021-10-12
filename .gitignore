@@ -28,8 +28,10 @@ yarn-debug.log*
 yarn-error.log*
 
 firebase-debug.log
+firestore-debug.log
 .firebase
 .next
 firebase-config.json
 nextjs/**
 **/node_modules/**
+ui-debug.log
