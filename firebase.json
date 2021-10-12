@@ -23,8 +23,8 @@
           "function": "nextjs-server"
         }
       ],
-      "site": "startgnv-dev",
-      "cleanUrls": true
+      "cleanUrls": true,
+      "target": "dev"
     },
     {
       "public": "public/",
@@ -46,8 +46,8 @@
           "function": "nextjs-server"
         }
       ],
-      "site": "startupgnv-39bca",
-      "cleanUrls": true
+      "cleanUrls": true,
+      "target": "default"
     }],
   "storage": {
     "rules": "storage.rules"
@@ -65,7 +65,6 @@
       "**/.vscode/**",
       "**/node_modules/**",
       "**/public/**",
-      "**/.next/cache/**",
       "**/cypress/**",
       "pages/**",
       "build/**"

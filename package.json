@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "run-p -r serve next",
+    "start": "next",
     "next": "next start",
     "dev": "next dev",
     "serve": "npm run getConfig && firebase serve",
@@ -11,8 +11,10 @@
     "getConfig": "firebase apps:sdkconfig web --json > ./firebase-config.json",
     "build-all": "npm run build-next && npm run build-firebase",
     "build-firebase": " cd \"functions\" && npm install && npm run build",
-    "build-next": "npm install && next build",
-    "deploy": "npm run getConfig  && npm run build-next && firebase deploy"
+    "build-next": "next build",
+    "deploy": "firebase use default && npm run getConfig && npm run build-next && firebase deploy --only hosting:default && firebase deploy --only functions:default",
+    "deploy-dev": "firebase use dev && npm run getConfig && npm run build-next && firebase deploy --only hosting:dev && firebase deploy --only functions:dev"
+
   },
   "devDependencies": {
     "babel-plugin-styled-components": "latest",
