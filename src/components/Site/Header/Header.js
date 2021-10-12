@@ -15,6 +15,8 @@ const HeaderContainer = styled.div`
 
 const NavContainer = styled.div`
   flex: 1;
+  max-width: fit-content;
+  margin-left: 60px;
 
   @media ${device.tabletPort}, ${device.mobile} {
     display: none;
@@ -27,15 +29,19 @@ const HeaderContent = styled.div`
   height: ${({ theme }) => theme.headerHeight};
   align-items: center;
   align-content: space-between;
-  max-width: 960px;
+  /* max-width: 960px; */
   margin: 0 auto;
   padding: 0 20px;
   text-align: center;
   z-index: 9999;
+  justify-content: center;
   position: fixed;
   box-sizing: border-box;
   background-color: ${({ variant }) =>
     variant === 'light' ? 'rgb(0 0 0 / 20%)' : 'white'};
+  @media ${device.tabletPort}, ${device.mobile} {
+    justify-content: space-between;
+  }
 `;
 
 const HamburgerContainer = styled.div`
