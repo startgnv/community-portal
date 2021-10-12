@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import AdminRoute from 'src/components/AdminRoute';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from 'src/firebase';
+import Sidebar from 'src/components/Site/UI/Sidebar';
 
 ReactGA.initialize('UA-138572620-3');
 
@@ -158,6 +159,7 @@ function StartGNV(props) {
               <Header/>
             }
             <Component {...pageProps} />
+            <Sidebar/>
             <Footer/>
             <GlobalStyle />
         </ThemeProvider>

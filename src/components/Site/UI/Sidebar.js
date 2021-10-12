@@ -7,7 +7,8 @@ import MainNav from './MainNav';
 const SidebarContainer = styled.div`
   position: fixed;
   width: 300px;
-  top: ${({ theme }) => theme.headerHeight};
+  top: 0;
+  padding-top: ${({ theme }) => theme.headerHeight};
   bottom: 0;
   right: ${({ isOpen }) =>
     isOpen && (device.mobile || device.tabletPort) ? '0' : '-300px'};
@@ -15,7 +16,7 @@ const SidebarContainer = styled.div`
   box-sizing: border-box;
   overflow: auto;
   transition: 250ms;
-  z-index: 99999999;
+  z-index: 9998;
 `;
 
 export const Sidebar = () => {
