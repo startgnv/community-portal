@@ -31,6 +31,11 @@ const HeaderContent = styled.div`
   margin: 0 auto;
   padding: 0 20px;
   text-align: center;
+  z-index: 9999;
+  position: fixed;
+  box-sizing: border-box;
+  background-color: ${({ variant }) =>
+    variant === 'light' ? 'rgb(0 0 0 / 20%)' : 'white'};
 `;
 
 const HamburgerContainer = styled.div`
@@ -49,7 +54,8 @@ const HamburgerContainer = styled.div`
 
 const Hamburger = styled.div`
   height: 2px;
-  background-color: ${({ theme }) => theme.textDark};
+  background-color: ${({ variant, theme }) =>
+    variant === 'light' ? theme.textLight : theme.textDark};
 
   &:before,
   &:after {
@@ -59,7 +65,8 @@ const Hamburger = styled.div`
     height: 2px;
     width: 100%;
     top: 11px;
-    background-color: ${({ theme }) => theme.textDark};
+    background-color: ${({ variant, theme }) =>
+      variant === 'light' ? theme.textLight : theme.textDark};
   }
 
   &:after {
@@ -71,13 +78,13 @@ export const Header = ({ className, transparent }) => {
   const { sidebarOpen, openSidebar, closeSidebar } = useContext(AppContext);
   return (
     <HeaderContainer className={className}>
-      <HeaderContent>
+      <HeaderContent variant={transparent ? 'light' : 'dark'}>
         <Logo variant={transparent ? 'light' : 'dark'} />
         <NavContainer>
           <MainNav variant={transparent ? 'light' : 'dark'} />
         </NavContainer>
         <HamburgerContainer onClick={sidebarOpen ? closeSidebar : openSidebar}>
-          <Hamburger />
+          <Hamburger variant={transparent ? 'light' : 'dark'} />
         </HamburgerContainer>
       </HeaderContent>
     </HeaderContainer>
