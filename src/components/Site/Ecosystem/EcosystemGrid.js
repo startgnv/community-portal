@@ -48,7 +48,7 @@ const EcosystemGrid = ({ ecosystems }) => {
         )}
 
       {ecosystems.length > 3 ? (
-        <p onClick={() => changeShow()}>
+        <p style={{ cursor: 'pointer' }} onClick={() => changeShow()}>
           {sliceEnd > 0 ? 'Show More...' : 'Show Less...'}
         </p>
       ) : (
