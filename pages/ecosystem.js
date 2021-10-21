@@ -7,6 +7,7 @@ import EcosystemFilter from 'src/components/Site/Ecosystem/EcosystemFilter';
 import Hero from 'src/components/Site/UI/Hero';
 import { Helmet } from 'react-helmet';
 import EcosystemCard from 'src/components/Site/Ecosystem/EcosystemCard';
+import EcosystemGrid from 'src/components/Site/Ecosystem/EcosystemGrid';
 
 const PageDescription = styled.span`
   display: block;
@@ -22,11 +23,13 @@ const SectionHeader = styled.h2`
   color: ${props => props.theme.textDark};
   margin-bottom: 20px;
   margin-top: 50px;
+  padding-bottom: 10px;
+  border-bottom: solid 3px ${props => props.theme.uiBorder};
 `;
 
 const ItemGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 30px;
 
   @media screen and (max-width: 600px) {
@@ -67,6 +70,7 @@ const EcosystemPage = () => {
       ? ecoFilter.types.includes(ecoItem.type)
       : true;
 
+    
   const renderEcoItems = ecosystem
     .filter(ecoItem => searchFilter(ecoItem) && categoryFilter(ecoItem) && typeFilter(ecoItem))
     .sort((a, b) => a.description.length - b.description.length);
@@ -119,12 +123,6 @@ const EcosystemPage = () => {
                     eventDate,
                     thumbnail
                   }) => {
-                    const renderCategories = _.filter(
-                      ecosystemCategories,
-                      category => {
-                        return categories.indexOf(category.id) > -1;
-                      }
-                    );
 
                     return (
                       <EcosystemCard
@@ -142,42 +140,17 @@ const EcosystemPage = () => {
               </ItemGrid>
             </>
           )}
+          {ecosystemCategories.map(category =>{
+            if(((ecoFilter.categories.length == 0 || ecoFilter.categories.includes(category.id)) && renderEcoItems.filter(item => item.categories.includes(category.id)).length > 0)){
 
-          {featuredEcoItems.length > 0 && (
-            <SectionHeader>All Ecosystem</SectionHeader>
-          )}
-          <ItemGrid>
-            {renderEcoItems.map(
-              ({
-                name,
-                description,
-                categories,
-                link,
-                location,
-                eventDate,
-                thumbnail
-              }) => {
-                const renderCategories = _.filter(
-                  ecosystemCategories,
-                  category => {
-                    return categories.indexOf(category.id) > -1;
-                  }
-                );
-
-                return (
-                  <EcosystemCard
-                    key={name}
-                    name={name}
-                    description={description}
-                    link={link}
-                    location={location}
-                    eventDate={eventDate}
-                    thumbnail={thumbnail}
-                  />
-                );
-              }
-            )}
-          </ItemGrid>
+              return(
+                <><SectionHeader>{category.name}</SectionHeader>
+                <EcosystemGrid ecosystems={renderEcoItems.filter(item => item.categories.includes(category.id))}/>
+                </>
+              );
+              
+            }
+        })}
         </PageContainer>
       </>
     </>
