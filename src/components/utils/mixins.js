@@ -37,4 +37,8 @@ export const baseContentStyling = props => `
   ol li {
     list-style: decimal;
   }
+
+  strong{
+    font-weight: 900;
+  }
 `;
