@@ -23,33 +23,55 @@ const localizer = dateFnsLocalizer({
   locales,
 })
 
-const EventCalendar = props => (
-  <div>
-      <Calendar
-      style={{height: '420px'}}
-      localizer={localizer}
-      startAccessor="start"
-      endAccessor="end"
-      events={props.eventList}
-      />
-  </div>
-)
+const EventCalendar = props => {
+  let {eventList} = props;
 
-
-const CalendarView = () => {
-  const [allEvents, setEvents] = useState([])
-  useEffect(()=>{
-    if(!allEvents.length) getEvents(async(events) => {
-      setEvents([...allEvents, ...events])
-    })
-  })
-  useEffect(()=>{
-    console.log(allEvents) 
-  },[allEvents])
+  eventList = eventList.map(event => ({
+    ...event,
+    start: JSON.parse(event.start),
+    end: JSON.parse(event.end)
+  }));
 
   return(
-    <EventCalendar eventList={allEvents}/>
+    <div>
+        <Calendar
+        style={{height: '420px'}}
+        localizer={localizer}
+        startAccessor="start"
+        endAccessor="end"
+        events={eventList}
+        />
+    </div>
   )
+}
+
+
+const CalendarView = ({initialEvents}) => {
+  // const [allEvents, setEvents] = useState(initialEvents ? initialEvents : []);
+  // useEffect(()=>{
+  //   if(!allEvents.length) getEvents(async(events) => {
+  //     if(events?.length)
+  //       setEvents([...allEvents, ...events])
+  //   })
+  // })
+  // useEffect(()=>{
+  //   console.log(process.env) 
+  // },[allEvents])
+
+  return(
+    <EventCalendar eventList={initialEvents || []}/>
+  )
+}
+
+export async function getStaticProps(){
+  let initialEvents;
+   await getEvents(async(val) => {
+     initialEvents = val;
+  })
+  return {
+    props: { initialEvents },
+    revalidate: 1
+  }
 }
 
 export default CalendarView
