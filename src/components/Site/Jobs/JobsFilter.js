@@ -19,6 +19,7 @@ const JobsFilter = ({
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
+  const [selectedExperiences, setSelectedExperiences] = useState([]);
 
   const renderCategories = categories.reduce(categoriesToTree, []);
 
@@ -95,6 +96,12 @@ const JobsFilter = ({
     onChange({ types })
   );
 
+  const onExperienceChange = onFilterChange(
+    selectedExperiences,
+    setSelectedExperiences,
+    experiences => onChange({ experiences })
+  );
+
   let categoriesBtnLabel = 'Categories';
   if (selectedCategories.length) {
     categoriesBtnLabel += ` (${selectedCategories.length})`;
@@ -129,10 +136,25 @@ const JobsFilter = ({
         title="Job Type"
         items={[
           { name: 'Full Time', id: 'fullTime' },
-          { name: 'Part Time', id: 'partTime' }
+          { name: 'Part Time', id: 'partTime' },
+          { name: 'Internship', id: 'internship' },
+          { name: 'Contract', id: 'contract' },
+          { name: 'Remote', id: 'remote' }
         ]}
         selectedItems={selectedTypes}
         onChange={onTypeChange}
+      />
+
+      <FilterItem
+        label="Experience"
+        title="Experience Type"
+        items={[
+          { name: 'Entry Level', id: 'entryLevel' },
+          { name: 'Mid Level', id: 'midLevel' },
+          { name: 'Senior Level', id: 'seniorLevel' }
+        ]}
+        selectedItems={selectedExperiences}
+        onChange={onExperienceChange}
       />
 
       <FilterItemCustom>

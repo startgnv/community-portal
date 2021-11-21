@@ -34,7 +34,8 @@ export const JobsPage = () => {
     search: '',
     categories: [],
     companies: [],
-    types: []
+    types: [],
+    experiences: []
   });
 
   const [featuredJobsCount, setFeaturedJobCount] = useState(0);
