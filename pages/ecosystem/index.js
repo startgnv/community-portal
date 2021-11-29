@@ -76,7 +76,7 @@ const EcosystemPage = () => {
     .sort((a, b) => a.description.length - b.description.length);
 
   const featuredEcoItems = renderEcoItems.filter(item => item.featured);
-
+  console.log(renderEcoItems);
   if (ecosystemLoading || ecosystemCategoriesLoading) {
     return false;
   }
@@ -118,6 +118,7 @@ const EcosystemPage = () => {
                     name,
                     description,
                     categories,
+                    id,
                     link,
                     location,
                     eventDate,
@@ -133,6 +134,7 @@ const EcosystemPage = () => {
                         location={location}
                         eventDate={eventDate}
                         thumbnail={thumbnail}
+                        slug={id}
                       />
                     );
                   }

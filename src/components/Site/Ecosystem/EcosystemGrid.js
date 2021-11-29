@@ -29,6 +29,7 @@ const EcosystemGrid = ({ ecosystems }) => {
             description,
             categories,
             link,
+            id,
             location,
             eventDate,
             thumbnail
@@ -42,6 +43,7 @@ const EcosystemGrid = ({ ecosystems }) => {
                 location={location}
                 eventDate={eventDate}
                 thumbnail={thumbnail}
+                slug={id}
               />
             );
           }

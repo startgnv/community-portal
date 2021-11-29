@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { baseContentStyling } from '../../utils/mixins';
 import { Parser } from 'html-to-react';
+import Link from 'src/components/Site/UI/Link';
 
 const html = new Parser();
 
@@ -15,6 +16,10 @@ const EcoItem = styled.div`
   @media screen and (max-width: 600px) {
     min-height: 100px;
     height: auto;
+  }
+
+  .container-link {
+    text-decoration: none;
   }
 `;
 
@@ -112,8 +117,15 @@ const EcoItemDescription = styled.div`
   }
 `;
 
-const EcosystemCard = ({ name, thumbnail, description, link }) => {
-  const firstParagraph = description.split('</p>');
+const EcosystemCard = ({
+  name,
+  thumbnail,
+  location,
+  description,
+  link,
+  slug = ''
+}) => {
+  const firstParagraph = description?.split('</p>');
 
   return (
     <EcoItem key={name}>
@@ -125,10 +137,12 @@ const EcosystemCard = ({ name, thumbnail, description, link }) => {
         }
       ></EcoItemImg>
       <EcoItemContent>
-        <EcoItemHeader href={link}>{name}</EcoItemHeader>
-        <EcoItemDescription>
-          {html.parse(firstParagraph[0] + '</p>')}
-        </EcoItemDescription>
+        <Link className="container-link" to={'/ecosystem/' + slug}>
+          <EcoItemHeader>{name}</EcoItemHeader>
+          <EcoItemDescription>
+            {html.parse(firstParagraph?.[0])}
+          </EcoItemDescription>
+        </Link>
       </EcoItemContent>
     </EcoItem>
   );

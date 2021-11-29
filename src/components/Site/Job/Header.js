@@ -59,13 +59,14 @@ export const Header = ({
   title = '',
   coverPath,
   logoPath,
+  url,
   coverHeight = 200,
   mainImgSize = 120,
   children = false
 }) => {
   const [coverURL] = useDownloadURL(coverPath ? storage.ref(coverPath) : '');
   return (
-    <Container coverURL={coverURL} mainImgSize={mainImgSize}>
+    <Container coverURL={url ? url : coverURL} mainImgSize={mainImgSize}>
       <HeaderInner coverHeight={coverHeight}>
         {title && <Title mainImgSize={mainImgSize}>{title}</Title>}
       </HeaderInner>
