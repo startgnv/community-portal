@@ -39,21 +39,29 @@ const Form = styled.li`
 
 const forms = [
     {
-        name: "Cox \"Community Impact\" Award Application Form",
+        name: "Cox \"Community Impact\" Award Application Form (Company Award)",
         link: "https://docs.google.com/forms/d/e/1FAIpQLScDLVXG5yAsBMZ8pWqISi3ZVYJI5IaelwiemosRZPMEP4iC7Q/viewform"
     },
     {
-        name: "Cox \"Tech Employer of the Year\" Award Application Form",
+        name: "Cox \"Tech Employer of the Year\" Award Application Form (Company Award)",
         link: "https://docs.google.com/forms/d/e/1FAIpQLSeuYLYLCnYNiNgGWMUz6FdjfOUQD8H7RUWomWvU9pvLA4C03g/viewform"
     },
     {
-        name: "Cox \"Ecosystem Hidden Gem\" Award Nomination Form",
+        name: "Cox \"Rising Star\" Startup Award Application Form ($5,000 Company Award)",
+        link: "https://docs.google.com/forms/d/e/1FAIpQLSePfDRdH-f68csdYyoVSHRCCEWpXuzOGODlunm6ghFU0lXVbw/viewform"
+    },
+    {
+        name: "Cox \"Ecosystem Hidden Gem\" Award Nomination Form (Individual Award)",
         link: "https://docs.google.com/forms/d/e/1FAIpQLScl0kcPJJqi6NyWlOjk8sQcS2Gx7qXgQBdu7q_hxpiF5Y-cNw/viewform"
     },
     {
-        name: "Cox Startup Mentor of the Year Award Nomination Form",
+        name: "Cox Startup Mentor of the Year Award Nomination Form (Individual Award)",
         link: "https://docs.google.com/forms/d/e/1FAIpQLScQpHsb3kytCFw-b8kCg55NFZ_SbYRM8TGywLHxtG0I4r1VhA/viewform"
-    }
+    },
+    {
+        name: "Cox \"Professional Mentor of the Year\" Award Nomination Form (Individual Award)",
+        link: "https://docs.google.com/forms/d/e/1FAIpQLSc6TXdWQnZNeY5U7YpZm3gVqJROtOnRfMK4oSZ0K7kU9nG0bQ/viewform"
+    },
 ];
 
 
@@ -72,7 +80,7 @@ const Awards = () => {
                 <ul>
                     {
                         forms.map(form => (
-                            <Form>
+                            <Form key={form.name}>
                                 <a href={form.link}>{form.name}</a>
                             </Form>
                         ))  
