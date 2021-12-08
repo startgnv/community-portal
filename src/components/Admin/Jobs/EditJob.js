@@ -140,6 +140,7 @@ export const EditPage = ({
   );
   const [applyUrl, setApplyUrl] = useState(job.applyUrl || '');
   const [type, setType] = useState(job.type || 'fullTime');
+  const [experience, setExperience] = useState(job.type || 'entryLevel');
   const [featured, setFeatured] = useState(!!job.featured);
 
   // Editor state
@@ -191,6 +192,7 @@ export const EditPage = ({
         companyID,
         applyUrl,
         type,
+        experience,
         featured,
         TSUpdated: Date.now()
       };
@@ -322,6 +324,33 @@ export const EditPage = ({
     {
       value: 'partTime',
       label: 'Part Time'
+    },
+    {
+      value: 'internship',
+      label: 'Internship'
+    },
+    {
+      value: 'contract',
+      label: 'Contract'
+    },
+    {
+      value: 'remote',
+      label: 'Remote'
+    }
+  ];
+
+  const experienceOptions = [
+    {
+      value: 'entryLevel',
+      label: 'Entry Level'
+    },
+    {
+      value: 'midLevel',
+      label: 'Mid Level'
+    },
+    {
+      value: 'seniorLevel',
+      label: 'Senior Level'
     }
   ];
 
@@ -444,6 +473,18 @@ export const EditPage = ({
             value={typeOptions.find(({ value }) => type === value)}
             onChange={({ value }) => {
               setType(value);
+            }}
+          />
+        </Grid>
+        <Grid item>
+          <FormLabel>Experience Level</FormLabel>
+          <Select
+            data-test-id="field-job-experience"
+            label="Experience"
+            options={experienceOptions}
+            value={experienceOptions.find(({ value }) => experience === value)}
+            onChange={({ value }) => {
+              setExperience(value);
             }}
           />
         </Grid>

@@ -54,7 +54,8 @@ export const JobList = ({
     search: '',
     categories: [],
     companies: [],
-    types: []
+    types: [],
+    experiences: []
   },
   variant = '',
   setJobCount,
@@ -95,12 +96,18 @@ export const JobList = ({
   const typeFilter = job =>
     filter.types.length ? filter.types.includes(job.type) : true;
 
+  const experienceFilter = job =>
+    filter.experiences.length
+      ? filter.experiences.includes(job.experience)
+      : true;
+
   let displayJobs = jobs.filter(
     job =>
       searchFilter(job) &&
       categoryFilter(job) &&
       companyFilter(job) &&
-      typeFilter(job)
+      typeFilter(job) &&
+      experienceFilter(job)
   );
 
   if (companies && companies.length) {
