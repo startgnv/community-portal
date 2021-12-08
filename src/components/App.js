@@ -187,6 +187,11 @@ export const App = () => (
               />
               <Route exact path="/add-company" component={AddCompanyPage} />
               <Route exact path="/ecosystem" component={EcosystemPage} />
+              <Route
+                exact
+                path="/ecosystem/:ecosystemSlug"
+                component={EcosystemPage}
+              />
               <Route exact path="/blog" component={Catalog} />
               <Route exact path="/blog/:articleSlug" component={Article} />
               <Route
