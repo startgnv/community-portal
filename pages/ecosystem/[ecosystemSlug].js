@@ -1,19 +1,16 @@
 import { useRouter } from 'next/router';
 import { baseContentStyling } from 'src/components/utils/mixins';
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
 import firebase, { db } from 'src/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import AppContext from 'src/components/AppContext';
 import { LinearProgress } from '@material-ui/core';
 import { Helmet } from 'react-helmet';
 import { device } from 'src/components/utils/device';
 import LinkIcon from '@material-ui/icons/Link';
 import Header from 'src/components/Site/Job/Header';
-import Link from 'src/components/Site/UI/Link';
 import BusinessIcon from '@material-ui/icons/Business';
 import { Parser } from 'html-to-react';
-import EcosystemCard from 'src/components/Site/Ecosystem/EcosystemCard';
 import JobCategories from 'src/components/Site/Job/JobCategories';
 
 const html = new Parser();
@@ -66,7 +63,6 @@ const EcoItemDescription = styled.div`
     margin-bottom: 10px;
     font-size: 1rem;
     line-height: 1.3rem;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -95,9 +91,10 @@ const InfoBox = styled.div`
   border-left: 3px solid #709dae;
   box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.15);
   background-color: white;
-  padding: 12px 30px 12px 0;
+  padding: 12px 12px 12px 0;
   box-sizing: border-box;
   margin-bottom: 10px;
+  margin-right: 10px;
 `;
 
 const InfoBoxMessage = styled.p`
@@ -105,10 +102,8 @@ const InfoBoxMessage = styled.p`
   font-size: 13px;
   font-weight: 400;
   line-height: 20px;
+  margin: 0 16px;
   color: #709dae;
-`;
-const Description = styled.div`
-  ${baseContentStyling()}
 `;
 const EcosystemLink = styled.span`
   display: inline-block;
@@ -126,19 +121,16 @@ const EcosystemLink = styled.span`
     text-decoration: none;
   }
 `;
-const InfoIcon = styled.img`
-  margin: 0 16px;
-`;
 //ecosystem slug logic goes here 
 
 const EcosystemPage = () => {
     const router = useRouter();
     const { ecosystemSlug } = router.query;
 
-    const [ecosystemValue, ecosystemLoading, ecosystemError] = ecosystemSlug ? useCollection(
+    const [ecosystemValue, ecosystemLoading, ecosystemError] = useCollection(
         db.collection('ecosystem').where(firebase.firestore.FieldPath.documentId()
-        , '==', ecosystemSlug || '')
-      ) : [] ;
+        , '==', ecosystemSlug || 'nah')
+      );
     
       const ecosystem = {
         id: ecosystemValue?.docs[0]?.id,
@@ -146,16 +138,12 @@ const EcosystemPage = () => {
       };
 
       const{
-        id,
         name,
         categories,
         location,
-        logoPath: companyLogoPath = '',
-        coverPath: companyCoverPath = '',
         thumbnail,
         description = '',
         link,
-        slug = ''
       } = ecosystem;
     if (ecosystemLoading) {
         return <LinearProgress />;
@@ -207,15 +195,11 @@ const EcosystemPage = () => {
                   <EcoItemDescription>{html.parse(description)}</EcoItemDescription> 
               </ContentContainer>
               <Sidebar>
-                <EcosystemCard
-                name={name}
-                logo={thumbnail}
-                link = {link}
-                location = {location}
-                summary={description}
-                slug={ecosystemSlug}
-                />
-                
+                <InfoBox>
+                  <InfoBoxMessage>
+                    Want even more local tech and startup news and events sent to your inbox? Sign up for our newsletter in the footer!
+                  </InfoBoxMessage>
+                </InfoBox>                
           </Sidebar>
             </Main>
           </EcosystemPageContainer>
