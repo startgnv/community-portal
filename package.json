@@ -89,9 +89,7 @@
       "pre-commit": "lint-staged"
     }
   },
-  "proxy": "http://localhost:5000",
   "engines": {
-    "node": "14"
-  },
-  "main": "server.js"
+    "node": "16"
+  }
 }
