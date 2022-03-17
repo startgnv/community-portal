@@ -11,30 +11,43 @@ import { device } from 'src/components/utils/device';
 
 //Sponsors
 const sponsors = [
-  { name: 'Hutchison, PLLC',  url: '/assets/images/sponsors/HutchisonPLLC.png'},
-  { name: 'Three Five Two, Inc',  url: '/assets/images/sponsors/ThreeFiveTwo.png'},
-  { name: 'OPIE Software',  url: '/assets/images/sponsors/opiesoftware.jpg'},
-  { name: 'Feathr',  url: '/assets/images/sponsors/feathr.png'},
-  { name: 'InfoTech',  url: '/assets/images/sponsors/infotech.png'},
-  { name: 'Interactive Resources',  url: '/assets/images/sponsors/sante-fe.png'},
-  { name: 'Trimark Properties',  url: '/assets/images/sponsors/trimark.png'},
-  { name: 'Betterme Productions',  url: '/assets/images/sponsors/betterme.png'},
-  { name: 'PS27 Ventures',  url: '/assets/images/sponsors/ps27.png'},
-  { name: 'AlertTrace',  url: '/assets/images/sponsors/AlertTrace.jpg'},
-  { name: 'fcu',  url: '/assets/images/sponsors/fcu.jpg'},
-  { name: 'Sharpspring',  url: '/assets/images/sponsors/sharpspring.png'},
-]
+  { name: 'Cox Business', url: '/assets/images/sponsors/cox.jpg' },
+  { name: 'Hutchison, PLLC', url: '/assets/images/sponsors/HutchisonPLLC.png' },
+  {
+    name: 'Three Five Two, Inc',
+    url: '/assets/images/sponsors/ThreeFiveTwo.png'
+  },
+  { name: 'OPIE Software', url: '/assets/images/sponsors/opiesoftware.jpg' },
+  { name: 'Feathr', url: '/assets/images/sponsors/feathr.png' },
+  { name: 'InfoTech', url: '/assets/images/sponsors/infotech.png' },
+  {
+    name: 'Interactive Resources',
+    url: '/assets/images/sponsors/sante-fe.png'
+  },
+  { name: 'Trimark Properties', url: '/assets/images/sponsors/trimark.png' },
+  { name: 'Betterme Productions', url: '/assets/images/sponsors/betterme.png' },
+  { name: 'PS27 Ventures', url: '/assets/images/sponsors/ps27.png' },
+  { name: 'AlertTrace', url: '/assets/images/sponsors/AlertTrace.jpg' },
+  { name: 'fcu', url: '/assets/images/sponsors/fcu.jpg' },
+  { name: 'Sharpspring', url: '/assets/images/sponsors/sharpspring.png' },
+  { name: 'UF Real Estate', url: '/assets/images/sponsors/ufrealestate.png' },
+  {
+    name: 'San Felasco Tech City',
+    url: '/assets/images/sponsors/San-Felasco-Tech-City-Logo.jpg'
+  },
+  { name: 'Admiral', url: '/assets/images/sponsors/Admiral.png' },
+  { name: 'James Moore', url: '/assets/images/sponsors/JamesMoore.jpg' },
+  {
+    name: 'Guide to Greater Gainesville',
+    url: '/assets/images/sponsors/guidetogreatergainesville.png'
+  }
+];
 
 const boardMembers = [
   {
     name: 'James Gibson',
     img: '/assets/images/board/james.png',
     linkedIn: 'https://www.linkedin.com/in/james-c-gibson/'
-  },
-  {
-    name: 'Aidan Augustin',
-    img: '/assets/images/board/aidan.jpeg',
-    linkedIn: 'https://www.linkedin.com/in/aidanaugustin/'
   },
   {
     name: 'Lindsey Day',
@@ -57,11 +70,6 @@ const boardMembers = [
     linkedIn: 'https://www.linkedin.com/in/oluwaseyi-oluwaleimu-307503142/'
   },
   {
-    name: 'William Richardson',
-    img: '/assets/images/board/will.jpeg',
-    linkedIn: 'https://www.linkedin.com/in/williamrichardson1/'
-  },
-  {
     name: 'Aaron Dixon',
     img: '/assets/images/board/aarond.jpeg',
     linkedIn: 'https://www.linkedin.com/in/aaronbenjamindixon/'
@@ -70,11 +78,6 @@ const boardMembers = [
     name: 'Christine Caven',
     img: '/assets/images/board/christinec.jpeg',
     linkedIn: 'https://www.linkedin.com/in/christinecaven/'
-  },
-  {
-    name: 'Jasmine Banks',
-    img: '/assets/images/board/jasmineb.jpeg',
-    linkedIn: 'https://www.linkedin.com/in/jsbanks/'
   },
   {
     name: 'Clara Edwards',
@@ -87,19 +90,39 @@ const boardMembers = [
     linkedIn: 'https://www.linkedin.com/in/elliottwelker/'
   },
   {
-    name: 'Keira Simmonds',
-    img: '/assets/images/board/keiras.jpeg',
-    linkedIn: 'https://www.linkedin.com/in/keirasimmonds/'
+    name: 'Joanna Barousse',
+    img: '/assets/images/board/joanna.jpg',
+    linkedIn: 'https://www.linkedin.com/in/joanna-barousse/'
   },
   {
-    name: 'Matthew Luedecke',
-    img: '/assets/images/board/matthewl.jpeg',
-    linkedIn: 'https://www.linkedin.com/in/matthew-luedecke/'
+    name: 'Joe Manglardi',
+    img: '/assets/images/board/joe.jpg',
+    linkedIn: 'https://www.linkedin.com/in/joe-manglardi/'
   },
   {
-    name: 'Steve Shepard',
-    img: '/assets/images/board/steve.jpeg',
-    linkedIn: 'https://www.linkedin.com/in/stephenshepherd/'
+    name: 'Jon Church',
+    img: '/assets/images/board/jon.jpg',
+    linkedIn: 'https://www.linkedin.com/in/jon-church-85490025/'
+  },
+  {
+    name: 'Julia Thomas',
+    img: '/assets/images/board/julia.jpg',
+    linkedIn: 'https://www.linkedin.com/in/juliathomasmktg/'
+  },
+  {
+    name: 'Sarah Ryals',
+    img: '/assets/images/board/sarah.jpg',
+    linkedIn: 'https://www.linkedin.com/in/sarah-ryals/'
+  },
+  {
+    name: 'Stacy Burrell',
+    img: '/assets/images/board/stacy.jpg',
+    linkedIn: 'https://www.linkedin.com/in/stacyburrell/'
+  },
+  {
+    name: 'Scott Schroeder',
+    img: '/assets/images/board/scott.jpg',
+    linkedIn: 'https://www.linkedin.com/in/schroederscott/'
   }
 ];
 
@@ -266,19 +289,13 @@ const AboutPage = () => (
         </HeroContent>
         <Sponsors>
           <h3>Annual Partners</h3>
-          {
-            sponsors.map(({name, url})=>(
+          {sponsors.map(({ name, url }) => (
             <CardContainer key={name}>
               <Card className="sponsor-card">
-                <CardMedia
-                  className="sponsor-img"
-                  image={url}
-                  title={name}
-                />
+                <CardMedia className="sponsor-img" image={url} title={name} />
               </Card>
             </CardContainer>
-            ))
-          }
+          ))}
         </Sponsors>
         <Programs>
           <h3>Programs</h3>
