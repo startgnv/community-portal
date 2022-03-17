@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { render } from 'react-dom'
-import moment from 'moment'
-import "react-big-calendar/lib/css/react-big-calendar.css"
-import { getEvents } from './gcal'
-
-import { Calendar, momentLocalizer} from 'react-big-calendar'
-import format from 'date-fns/format'
-import parse from 'date-fns/parse'
-import startOfWeek from 'date-fns/startOfWeek'
-import getDay from 'date-fns/getDay'
-import enUS from 'date-fns/locale/en-US'
+import React from 'react';
+import moment from 'moment';
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import { getEvents } from '../../src/components/Site/Calendar/gcal';
+import styled from 'styled-components/macro';
+import { Calendar, momentLocalizer} from 'react-big-calendar';
 
 // Add padding to the calendar and altering the colors and font to match the rest of the site.
 const eventStyleGetter = (event, start, end, isSelected) =>{
@@ -32,15 +26,9 @@ const eventStyleGetter = (event, start, end, isSelected) =>{
 const calendarStyle = {
   height: '800px',
   padding: ' 0.5rem 0',
+  // width: '60vw',
+  margin: '20px',
 }
-
-// const ColoredDateCellWrapper = ({ children }) =>
-//   React.cloneElement(React.Children.only(children), {
-//     style: {
-//       color: 'red',
-//     },
-//   })
-
 
 const localizer = momentLocalizer(moment)
 
@@ -67,21 +55,31 @@ const EventCalendar = props => {
   )
 }
 
+const CalendarContainer = styled.div`
+  /* display: flex; */
+`;
+const SideBarContainer = styled.ul`
+flex-grow: 1;
+  width: auto;
+  height: 100%;
+`;
+
+const Sidebar = ({initialEvents}) => {
+  console.log(initialEvents);
+ return( 
+   <SideBarContainer>
+
+   </SideBarContainer>
+ )
+}
+
 
 const CalendarView = ({initialEvents}) => {
-  // const [allEvents, setEvents] = useState(initialEvents ? initialEvents : []);
-  // useEffect(()=>{
-  //   if(!allEvents.length) getEvents(async(events) => {
-  //     if(events?.length)
-  //       setEvents([...allEvents, ...events])
-  //   })
-  // })
-  // useEffect(()=>{
-  //   console.log(process.env) 
-  // },[allEvents])
-
   return(
-    <EventCalendar eventList={initialEvents || []}/>
+    <CalendarContainer>
+      <EventCalendar eventList={initialEvents || []}/>
+      {/* <Sidebar eventList={initialEvents || []}/> */}
+    </CalendarContainer>
   )
 }
 
