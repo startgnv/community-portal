@@ -1,8 +1,5 @@
 import firebase from 'firebase';
-import firebaseConfig from 'firebase-config.json';
 import 'firebase/storage';
-
-const CLIENT_CONFIG = firebaseConfig.result.sdkConfig;
 
 if (!firebase.apps.length) {
   let config = {
