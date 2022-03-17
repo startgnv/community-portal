@@ -11,117 +11,193 @@ import { device } from 'src/components/utils/device';
 
 //Sponsors
 const sponsors = [
-  { name: 'Cox Business', url: '/assets/images/sponsors/cox.jpg' },
-  { name: 'Hutchison, PLLC', url: '/assets/images/sponsors/HutchisonPLLC.png' },
+  {
+    name: 'Cox Business',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fcox.jpg?alt=media'
+  },
+  {
+    name: 'Hutchison, PLLC',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FHutchisonPLLC.png?alt=media'
+  },
   {
     name: 'Three Five Two, Inc',
-    url: '/assets/images/sponsors/ThreeFiveTwo.png'
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FThreeFiveTwo.png?alt=media'
   },
-  { name: 'OPIE Software', url: '/assets/images/sponsors/opiesoftware.jpg' },
-  { name: 'Feathr', url: '/assets/images/sponsors/feathr.png' },
-  { name: 'InfoTech', url: '/assets/images/sponsors/infotech.png' },
+  {
+    name: 'OPIE Software',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fopiesoftware.jpg?alt=media'
+  },
+  {
+    name: 'Feathr',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Ffeathr.png?alt=media'
+  },
+  {
+    name: 'InfoTech',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Finfotech.png?alt=media'
+  },
   {
     name: 'Interactive Resources',
-    url: '/assets/images/sponsors/sante-fe.png'
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fsante-fe.png?alt=media'
   },
-  { name: 'Trimark Properties', url: '/assets/images/sponsors/trimark.png' },
-  { name: 'Betterme Productions', url: '/assets/images/sponsors/betterme.png' },
-  { name: 'PS27 Ventures', url: '/assets/images/sponsors/ps27.png' },
-  { name: 'AlertTrace', url: '/assets/images/sponsors/AlertTrace.jpg' },
-  { name: 'fcu', url: '/assets/images/sponsors/fcu.jpg' },
-  { name: 'Sharpspring', url: '/assets/images/sponsors/sharpspring.png' },
-  { name: 'UF Real Estate', url: '/assets/images/sponsors/ufrealestate.png' },
+  {
+    name: 'Trimark Properties',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Ftrimark.png?alt=media'
+  },
+  {
+    name: 'Betterme Productions',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fbetterme.png?alt=media'
+  },
+  {
+    name: 'PS27 Ventures',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fps27.png?alt=media'
+  },
+  {
+    name: 'AlertTrace',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FAlertTrace.jpg?alt=media'
+  },
+  {
+    name: 'fcu',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Ffcu.jpg?alt=media'
+  },
+  {
+    name: 'Sharpspring',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fsharpspring.png?alt=media'
+  },
+  {
+    name: 'UF Real Estate',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fufrealestate.png?alt=media'
+  },
   {
     name: 'San Felasco Tech City',
-    url: '/assets/images/sponsors/San-Felasco-Tech-City-Logo.jpg'
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FSan-Felasco-Tech-City-Logo.jpg?alt=media'
   },
-  { name: 'Admiral', url: '/assets/images/sponsors/Admiral.png' },
-  { name: 'James Moore', url: '/assets/images/sponsors/JamesMoore.jpg' },
+  {
+    name: 'Admiral',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FAdmiral.png?alt=media'
+  },
+  {
+    name: 'James Moore',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FJamesMoore.jpg?alt=media'
+  },
   {
     name: 'Guide to Greater Gainesville',
-    url: '/assets/images/sponsors/guidetogreatergainesville.png'
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fguidetogreatergainesville.png?alt=media'
   }
 ];
 
 const boardMembers = [
   {
     name: 'James Gibson',
-    img: '/assets/images/board/james.png',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fjames.png?alt=media',
     linkedIn: 'https://www.linkedin.com/in/james-c-gibson/'
   },
   {
     name: 'Lindsey Day',
-    img: '/assets/images/board/lindsey.jpeg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Flindsey.jpeg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/magneticcareers/'
   },
   {
     name: 'Michelle Brownstein',
-    img: '/assets/images/board/michelleb.jpeg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fmichelleb.jpeg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/michelle-brownstein/'
   },
   {
     name: 'Melissa White',
-    img: '/assets/images/board/melissa.jpeg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fmelissa.jpeg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/melissamaewhite/'
   },
   {
     name: 'Seyi Oluwaleimu',
-    img: '/assets/images/board/seyi.jpeg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fseyi.jpeg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/oluwaseyi-oluwaleimu-307503142/'
   },
   {
     name: 'Aaron Dixon',
-    img: '/assets/images/board/aarond.jpeg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Faarond.jpeg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/aaronbenjamindixon/'
   },
   {
     name: 'Christine Caven',
-    img: '/assets/images/board/christinec.jpeg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fchristinec.jpeg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/christinecaven/'
   },
   {
     name: 'Clara Edwards',
-    img: '/assets/images/board/clara.jpeg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fclara.jpeg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/clara-edwards-77161435/'
   },
   {
     name: 'Elliot Welker',
-    img: '/assets/images/board/elliot.png',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Felliot.png?alt=media',
     linkedIn: 'https://www.linkedin.com/in/elliottwelker/'
   },
   {
     name: 'Joanna Barousse',
-    img: '/assets/images/board/joanna.jpg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fjoanna.jpg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/joanna-barousse/'
   },
   {
     name: 'Joe Manglardi',
-    img: '/assets/images/board/joe.jpg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fjoe.jpg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/joe-manglardi/'
   },
   {
     name: 'Jon Church',
-    img: '/assets/images/board/jon.jpg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fjon.jpg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/jon-church-85490025/'
   },
   {
     name: 'Julia Thomas',
-    img: '/assets/images/board/julia.jpg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fjulia.jpg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/juliathomasmktg/'
   },
   {
     name: 'Sarah Ryals',
-    img: '/assets/images/board/sarah.jpg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fsarah.jpg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/sarah-ryals/'
   },
   {
     name: 'Stacy Burrell',
-    img: '/assets/images/board/stacy.jpg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fstacy.jpg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/stacyburrell/'
   },
   {
     name: 'Scott Schroeder',
-    img: '/assets/images/board/scott.jpg',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fscott.jpg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/schroederscott/'
   }
 ];
