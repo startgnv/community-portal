@@ -11,7 +11,7 @@
     "getConfig": "firebase apps:sdkconfig web --json > ./firebase-config.json",
     "build-all": "npm run build-next && npm run build-firebase",
     "build-firebase": " cd \"functions\" && npm install && npm run build",
-    "build-next": "next build",
+    "build": "next build",
     "deploy": "firebase use default && npm run getConfig && npm run build-next && firebase deploy --only hosting:default && firebase deploy --only functions:default",
     "deploy-dev": "firebase use dev && npm run getConfig && npm run build-next && firebase deploy --only hosting:dev && firebase deploy --only functions:dev"
 

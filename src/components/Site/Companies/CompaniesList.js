@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import CompanyListItemLarge from './CompanyListItemLarge';
 import { SharedMapConsumer } from './CompaniesMapContext';
 import { device } from '../../utils/device';
-import Link from '../ui/Link';
+import Link from '../UI/Link';
 import Button from '../UI/Button';
 
 const Container = styled.div`
