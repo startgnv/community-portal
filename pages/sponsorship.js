@@ -23,27 +23,27 @@ const seed = '/assets/images/seed.svg';
 
 // Masonry
 const masonry1 = [
-  {alt: 'team', url: '/assets/images/masonry/team.jpg'},
-  {alt: 'award', url: '/assets/images/masonry/award.jpg'},
-  {alt: 'board', url: '/assets/images/masonry/board.jpg'},
-  {alt: 'group', url: '/assets/images/masonry/group.jpg'},
-  {alt: 'judge', url: '/assets/images/masonry/judge.jpg'},
-  {alt: 'notes', url: '/assets/images/masonry/notes.jpg'},
-  {alt: 'shine', url: '/assets/images/masonry/shine.jpg'},
-  {alt: 'smile', url: '/assets/images/masonry/smile.jpg'},
-  {alt: 'coffee', url: '/assets/images/masonry/coffee.jpg'},
-  {alt: 'winner', url: '/assets/images/masonry/winner.jpg'}
+  { alt: 'team', url: '/assets/images/masonry/team.jpg' },
+  { alt: 'award', url: '/assets/images/masonry/award.jpg' },
+  { alt: 'board', url: '/assets/images/masonry/board.jpg' },
+  { alt: 'group', url: '/assets/images/masonry/group.jpg' },
+  { alt: 'judge', url: '/assets/images/masonry/judge.jpg' },
+  { alt: 'notes', url: '/assets/images/masonry/notes.jpg' },
+  { alt: 'shine', url: '/assets/images/masonry/shine.jpg' },
+  { alt: 'smile', url: '/assets/images/masonry/smile.jpg' },
+  { alt: 'coffee', url: '/assets/images/masonry/coffee.jpg' },
+  { alt: 'winner', url: '/assets/images/masonry/winner.jpg' }
 ];
-const masonry2 =[
-  {alt: 'sprint', url: '/assets/images/masonry/startup-sprint.jpg'},
-  {alt: 'fun', url: '/assets/images/masonry/fun.jpg'},
-  {alt: 'food', url: '/assets/images/masonry/food.jpg'},
-  {alt: 'celebrate', url: '/assets/images/masonry/celebrate.jpg'},
-  {alt: 'smiles', url: '/assets/images/masonry/smiles.jpg'},
-  {alt: 'feather', url: '/assets/images/masonry/feathr.jpg'},
-  {alt: 'present', url: '/assets/images/masonry/present.jpg'},
-  {alt: 'talk', url: '/assets/images/masonry/talk.jpg'},
-  {alt: 'girls', url: '/assets/images/masonry/girls.jpg'}
+const masonry2 = [
+  { alt: 'sprint', url: '/assets/images/masonry/startup-sprint.jpg' },
+  { alt: 'fun', url: '/assets/images/masonry/fun.jpg' },
+  { alt: 'food', url: '/assets/images/masonry/food.jpg' },
+  { alt: 'celebrate', url: '/assets/images/masonry/celebrate.jpg' },
+  { alt: 'smiles', url: '/assets/images/masonry/smiles.jpg' },
+  { alt: 'feather', url: '/assets/images/masonry/feathr.jpg' },
+  { alt: 'present', url: '/assets/images/masonry/present.jpg' },
+  { alt: 'talk', url: '/assets/images/masonry/talk.jpg' },
+  { alt: 'girls', url: '/assets/images/masonry/girls.jpg' }
 ];
 
 const HeroContainer = styled.section`
@@ -226,19 +226,20 @@ const Card = styled.div`
   max-width: 460px;
 
   @media ${device.tablet}, ${device.mobile} {
-    width: ${({tier})=>tier ? '100%':'auto'};
+    width: ${({ tier }) => (tier ? '100%' : 'auto')};
   }
 `;
 
-const Button = styled.button`
+const CTA = styled.p`
   background: rgba(0, 180, 150, 0.08);
-  border: none;
   border-radius: 5px;
   color: #00b496;
   font-family: Montserrat, sans-serif;
   font-weight: 300;
   padding: 12px 20px;
   margin-top: 25px;
+  text-align: center;
+  font-size: 14px;
 `;
 
 const Tier = styled.section`
@@ -470,7 +471,7 @@ const Line = styled.img`
 
 const SponsorshipPage = () => {
   const linkRef = React.useRef(null);
-  const scroll = () => window.scrollTo(0, linkRef.current.offsetTop);
+  const scroll = () => window.scrollTo(0, linkRef?.current?.offsetTop);
 
   return (
     <main style={{ overflow: 'hidden' }}>
@@ -507,23 +508,19 @@ const SponsorshipPage = () => {
 
       <div style={{ overflow: 'hidden' }}>
         <Masonry style={{ alignItems: 'flex-end' }}>
-          {
-            masonry1.map(({alt, url}) => (
-              <MasonryImg key={alt}>
-                <img src={url} alt={alt} />
-              </MasonryImg>
-            ))
-          }
+          {masonry1.map(({ alt, url }) => (
+            <MasonryImg key={alt}>
+              <img src={url} alt={alt} />
+            </MasonryImg>
+          ))}
         </Masonry>
 
         <Masonry style={{ alignItems: 'flex-start' }}>
-          {
-            masonry2.map(({alt, url}) => (
-              <MasonryImg key={alt}>
-                <img src={url} alt={alt} />
-              </MasonryImg>
-            ))
-          }
+          {masonry2.map(({ alt, url }) => (
+            <MasonryImg key={alt}>
+              <img src={url} alt={alt} />
+            </MasonryImg>
+          ))}
         </Masonry>
       </div>
 
@@ -544,7 +541,7 @@ const SponsorshipPage = () => {
               bonds in the community.
             </Summary>
           </Card>
-          <Button onClick={scroll}>See Sponsorship Package Comparison</Button>
+          <CTA onClick={scroll}>See Sponsorship Package Comparison ↓</CTA>
         </HeadContainer>
       </SponsorOurMission>
 
@@ -559,9 +556,9 @@ const SponsorshipPage = () => {
               engage with the innovation ecosystem and to build brand trust
               within our community.
             </SponsorshipSummary>
-            <SponsorshipPrice>
+            {/* <SponsorshipPrice>
               $11,000<span>/yr</span>
-            </SponsorshipPrice>
+            </SponsorshipPrice> */}
             <SponsorshipPerks>
               <PerkColumn>
                 <SponsorshipPerk>
@@ -655,9 +652,9 @@ const SponsorshipPage = () => {
               Gainesville grow in leaps and bounds! Let us position and promote
               you as a key partner in all startGNV efforts.
             </SponsorshipSummary>
-            <SponsorshipPrice>
+            {/* <SponsorshipPrice>
               $6,500<span>/yr</span>
-            </SponsorshipPrice>
+            </SponsorshipPrice> */}
             <SponsorshipPerks>
               <PerkColumn>
                 <SponsorshipPerk>
@@ -733,9 +730,9 @@ const SponsorshipPage = () => {
               our community. Our team is here to go the extra mile to show
               gratitude and love to companies like you!
             </SponsorshipSummary>
-            <SponsorshipPrice>
+            {/* <SponsorshipPrice>
               $2,250<span>/yr</span>
-            </SponsorshipPrice>
+            </SponsorshipPrice> */}
             <SponsorshipPerks>
               <PerkColumn>
                 <SponsorshipPerk>

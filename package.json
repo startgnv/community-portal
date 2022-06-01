@@ -12,7 +12,7 @@
     "build-all": "npm run build-next && npm run build-firebase",
     "build-firebase": " cd \"functions\" && npm install && npm run build",
     "build": "next build",
-    "deploy": "firebase use default && npm run getConfig && npm run build-next && firebase deploy --only hosting:default && firebase deploy --only functions:default",
+    "deploy": "firebase use default && npm run getConfig && npm run build-next && firebase deploy --only hosting:default && firebase deploy --only functions:nextjs-server",
     "deploy-dev": "firebase use dev && npm run getConfig && npm run build-next && firebase deploy --only hosting:dev && firebase deploy --only functions:dev"
 
   },
@@ -91,5 +91,6 @@
   },
   "engines": {
     "node": "14"
-  }
+  },
+  "main": "server.js"
 }

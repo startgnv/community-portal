@@ -28,7 +28,7 @@ const Article = styled.article``;
 
 const Banner = styled.img`
   width: 100%;
-  height: 200px;
+  height: 350px;
   object-fit: cover;
   border-radius: 3px;
   box-shadow: 3px 0 13px 0 rgba(0, 0, 0, 0.15);
@@ -209,7 +209,11 @@ const Catalog = () => {
 
   return (
     <>
-      <Hero bgImage='/assets/images/jobs-hero.jpg' title="Articles" size="medium" />
+      <Hero
+        bgImage="/assets/images/jobs-hero.jpg"
+        title="Articles"
+        size="medium"
+      />
       <Container>
         {articles.map(article => (
           <Article key={article.slug}>

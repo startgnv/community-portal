@@ -111,12 +111,6 @@ const boardMembers = [
     linkedIn: 'https://www.linkedin.com/in/james-c-gibson/'
   },
   {
-    name: 'Lindsey Day',
-    img:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Flindsey.jpeg?alt=media',
-    linkedIn: 'https://www.linkedin.com/in/magneticcareers/'
-  },
-  {
     name: 'Michelle Brownstein',
     img:
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fmichelleb.jpeg?alt=media',
@@ -145,12 +139,6 @@ const boardMembers = [
     img:
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fchristinec.jpeg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/christinecaven/'
-  },
-  {
-    name: 'Clara Edwards',
-    img:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fclara.jpeg?alt=media',
-    linkedIn: 'https://www.linkedin.com/in/clara-edwards-77161435/'
   },
   {
     name: 'Elliot Welker',
@@ -199,6 +187,12 @@ const boardMembers = [
     img:
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fscott.jpg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/schroederscott/'
+  },
+  {
+    name: 'Neil Israel',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fneil.jpeg?alt=media',
+    linkedIn: 'https://www.linkedin.com/in/neilisrael/'
   }
 ];
 
