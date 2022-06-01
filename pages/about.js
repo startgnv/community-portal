@@ -105,6 +105,11 @@ const sponsors = [
 
 const boardMembers = [
   {
+    name: 'Tammy Dygert',
+    img: '/assets/images/tammy.jpg',
+    linkedIn: 'https://www.linkedin.com/in/tamerindygert/'
+  },
+  {
     name: 'James Gibson',
     img:
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fjames.png?alt=media',
@@ -229,6 +234,11 @@ const AboutPageContainer = styled.div`
     background-size: 80%;
     height: 200px;
   }
+  @media ${device.mobile} {
+    .sponsor-img {
+      height: 140px;
+    }
+  }
 `;
 
 const HeroHeadline = styled.h2`
@@ -249,17 +259,14 @@ const HeroContent = styled.div`
 `;
 
 const Sponsors = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   margin: 0 -30px 60px 0;
   ${clearFix()}
 
   h3 {
+    flex-basis: 100%;
     margin-bottom: 20px;
-  }
-
-  @media ${device.mobile} {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
 `;
 
@@ -291,10 +298,13 @@ const Program = styled.div`
 
 const Board = styled.div`
   margin-right: -30px;
-  ${clearFix()}
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 
   h3 {
     margin-bottom: 20px;
+    flex-basis: 100%;
   }
 `;
 
@@ -305,8 +315,8 @@ const CardContainer = styled.div`
   box-sizing: border-box;
 
   @media ${device.mobile} {
-    padding-right: 0;
-    width: 100%;
+    padding-right: 10px;
+    width: 50%;
   }
 `;
 
@@ -326,6 +336,10 @@ const BoardMember = styled.div`
   .member-name {
     font-size: 1.4rem;
     color: #131516;
+  }
+  @media ${device.mobile} {
+    width: 30%;
+    padding 0 10px 10px 0;
   }
 `;
 
