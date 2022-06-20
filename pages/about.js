@@ -103,9 +103,9 @@ const sponsors = [
   }
 ];
 
-const boardMembers = [
+const staff = [
   {
-    name: 'Tammy Dygert',
+    name: 'Tammy Dygert - Director',
     img: '/assets/images/tammy.jpg',
     linkedIn: 'https://www.linkedin.com/in/tamerindygert/'
   },
@@ -126,12 +126,6 @@ const boardMembers = [
     img:
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fmelissa.jpeg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/melissamaewhite/'
-  },
-  {
-    name: 'Seyi Oluwaleimu',
-    img:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fseyi.jpeg?alt=media',
-    linkedIn: 'https://www.linkedin.com/in/oluwaseyi-oluwaleimu-307503142/'
   },
   {
     name: 'Aaron Dixon',
@@ -391,8 +385,8 @@ const AboutPage = () => (
           ))}
         </Programs>
         <Board>
-          <h3>Board Members</h3>
-          {boardMembers.map(member => (
+          <h3>Staff</h3>
+          {staff.map(member => (
             <BoardMember key={member.name}>
               <Avatar
                 className="board-avatar"
