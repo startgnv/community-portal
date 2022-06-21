@@ -385,7 +385,7 @@ const AboutPage = () => (
           ))}
         </Programs>
         <Board>
-          <h3>Staff</h3>
+          <h3>Staff and Board</h3>
           {staff.map(member => (
             <BoardMember key={member.name}>
               <Avatar
