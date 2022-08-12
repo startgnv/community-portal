@@ -16,7 +16,7 @@
     "deploy-dev": "firebase use dev && npm run getConfig && npm run build-next && firebase deploy --only hosting:dev && firebase deploy --only functions:dev"
   },
   "devDependencies": {
-    "babel-plugin-styled-components": "latest",
+    "babel-plugin-styled-components": "^2.0.7",
     "cypress": "^4.12.1",
     "cypress-firebase": "^1.4.3",
     "env-cmd": "^10.1.0",
