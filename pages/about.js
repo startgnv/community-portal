@@ -164,12 +164,6 @@ const staff = [
     linkedIn: 'https://www.linkedin.com/in/jon-church-85490025/'
   },
   {
-    name: 'Julia Thomas',
-    img:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fjulia.jpg?alt=media',
-    linkedIn: 'https://www.linkedin.com/in/juliathomasmktg/'
-  },
-  {
     name: 'Sarah Ryals',
     img:
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fsarah.jpg?alt=media',
