@@ -556,9 +556,6 @@ const SponsorshipPage = () => {
               engage with the innovation ecosystem and to build brand trust
               within our community.
             </SponsorshipSummary>
-            {/* <SponsorshipPrice>
-              $11,000<span>/yr</span>
-            </SponsorshipPrice> */}
             <SponsorshipPerks>
               <PerkColumn>
                 <SponsorshipPerk>
@@ -652,9 +649,6 @@ const SponsorshipPage = () => {
               Gainesville grow in leaps and bounds! Let us position and promote
               you as a key partner in all startGNV efforts.
             </SponsorshipSummary>
-            {/* <SponsorshipPrice>
-              $6,500<span>/yr</span>
-            </SponsorshipPrice> */}
             <SponsorshipPerks>
               <PerkColumn>
                 <SponsorshipPerk>
@@ -730,9 +724,6 @@ const SponsorshipPage = () => {
               our community. Our team is here to go the extra mile to show
               gratitude and love to companies like you!
             </SponsorshipSummary>
-            {/* <SponsorshipPrice>
-              $2,250<span>/yr</span>
-            </SponsorshipPrice> */}
             <SponsorshipPerks>
               <PerkColumn>
                 <SponsorshipPerk>
