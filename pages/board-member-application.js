@@ -28,48 +28,42 @@ const Form = styled.li`
     transform: scale(1.04);
     transform-origin: center;
   }
-  >a{
-      width: 100%;
-      height: 100%;
-      &:visited{
-          color: black;
-      }
+  > a {
+    width: 100%;
+    height: 100%;
+    &:visited {
+      color: black;
+    }
   }
 `;
 
 const forms = [
-    {
-        name: "Board Application Form",
-        link: "https://docs.google.com/forms/d/e/1FAIpQLSdYRr1PkiBeodVY7gihjN-o9SRP0znmoD-_odHD-N3i1ulBBg/viewform"
-    }
+  {
+    name: 'Board Application Form',
+    link: 'https://forms.gle/YvF5BwKGKnji7aABA'
+  }
 ];
 
-
 const Awards = () => {
-    return(
-        <>
-            <Hero>
-            </Hero>
-            <PageContainer>
-                <HeroContent>
-                <h3>Board Application Form</h3>
-                <p>
-                    Below is the board member application!
-                </p>
-                </HeroContent>
-                <ul>
-                    {
-                        forms.map(form => (
-                            <Form key={form.name}>
-                                <a href={form.link}>{form.name}</a>
-                            </Form>
-                        ))  
-                    }
-                </ul>
-            </PageContainer>
-        </>
-    );
+  return (
+    <>
+      <Hero></Hero>
+      <PageContainer>
+        <HeroContent>
+          <h3>Board Application Form</h3>
+          <p>Below is the board member application!</p>
+        </HeroContent>
+        <ul>
+          {forms.map(form => (
+            <Form key={form.name}>
+              <a href={form.link}>{form.name}</a>
+            </Form>
+          ))}
+        </ul>
+      </PageContainer>
+    </>
+  );
 };
 
-
 export default Awards;
+
