@@ -48,7 +48,8 @@ const sponsors = [
   },
   {
     name: 'Trajector',
-    url: 'https://placeholder.com/500x500'
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FTrajector.png?alt=media'
   },
   {
     name: 'PS27 Ventures',
@@ -87,7 +88,8 @@ const sponsors = [
   },
   {
     name: 'Liquid Creative',
-    url: 'https://placeholder.com/500x500'
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FLiquidCreative_Logo_2017.webp?alt=media'
   }
 ];
 
