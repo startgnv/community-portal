@@ -17,24 +17,9 @@ const sponsors = [
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fcox.jpg?alt=media'
   },
   {
-    name: 'Hutchison, PLLC',
+    name: 'Sharpspring',
     url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FHutchisonPLLC.png?alt=media'
-  },
-  {
-    name: 'Three Five Two, Inc',
-    url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FThreeFiveTwo.png?alt=media'
-  },
-  {
-    name: 'OPIE Software',
-    url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fopiesoftware.jpg?alt=media'
-  },
-  {
-    name: 'Feathr',
-    url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Ffeathr.png?alt=media'
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fsharpspring.png?alt=media'
   },
   {
     name: 'InfoTech',
@@ -42,54 +27,14 @@ const sponsors = [
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Finfotech.png?alt=media'
   },
   {
-    name: 'Interactive Resources',
+    name: 'Santa Fe College',
     url:
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fsante-fe.png?alt=media'
   },
   {
-    name: 'Trimark Properties',
+    name: 'Hutchison, PLLC',
     url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Ftrimark.png?alt=media'
-  },
-  {
-    name: 'Betterme Productions',
-    url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fbetterme.png?alt=media'
-  },
-  {
-    name: 'PS27 Ventures',
-    url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fps27.png?alt=media'
-  },
-  {
-    name: 'AlertTrace',
-    url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FAlertTrace.jpg?alt=media'
-  },
-  {
-    name: 'fcu',
-    url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Ffcu.jpg?alt=media'
-  },
-  {
-    name: 'Sharpspring',
-    url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fsharpspring.png?alt=media'
-  },
-  {
-    name: 'UF Real Estate',
-    url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fufrealestate.png?alt=media'
-  },
-  {
-    name: 'San Felasco Tech City',
-    url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FSan-Felasco-Tech-City-Logo.jpg?alt=media'
-  },
-  {
-    name: 'Admiral',
-    url:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FAdmiral.png?alt=media'
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FHutchisonPLLC.png?alt=media'
   },
   {
     name: 'James Moore',
@@ -97,9 +42,54 @@ const sponsors = [
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FJamesMoore.jpg?alt=media'
   },
   {
+    name: 'OPIE Software',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fopiesoftware.jpg?alt=media'
+  },
+  {
+    name: 'Trajector',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FTrajector.png?alt=media'
+  },
+  {
+    name: 'PS27 Ventures',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fps27.png?alt=media'
+  },
+  {
+    name: 'UF Real Estate',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fufrealestate.png?alt=media'
+  },
+  {
+    name: 'Feathr',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Ffeathr.png?alt=media'
+  },
+  {
+    name: 'Admiral',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FAdmiral.png?alt=media'
+  },
+  {
+    name: 'San Felasco Tech City',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FSan-Felasco-Tech-City-Logo.jpg?alt=media'
+  },
+  {
     name: 'Guide to Greater Gainesville',
     url:
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2Fguidetogreatergainesville.png?alt=media'
+  },
+  {
+    name: 'AlertTrace',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FAlertTrace.jpg?alt=media'
+  },
+  {
+    name: 'Liquid Creative',
+    url:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/sponsorLogos%2FLiquidCreative_Logo_2017.webp?alt=media'
   }
 ];
 
@@ -108,12 +98,6 @@ const staff = [
     name: 'Tammy Dygert - Director',
     img: '/assets/images/tammy.jpg',
     linkedIn: 'https://www.linkedin.com/in/tamerindygert/'
-  },
-  {
-    name: 'James Gibson',
-    img:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fjames.png?alt=media',
-    linkedIn: 'https://www.linkedin.com/in/james-c-gibson/'
   },
   {
     name: 'Michelle Brownstein',
