@@ -378,7 +378,7 @@ const AboutPage = () => (
                 src={member.img}
                 alt={member.name}
               />
-              <a className="member-name" href={member.linkedIn}>
+              <a className="member-name" target="_blank" href={member.linkedIn}>
                 {member.name}
               </a>
             </BoardMember>
