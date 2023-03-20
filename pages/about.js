@@ -165,7 +165,7 @@ const staff = [
   },
   {
     name: 'Laila Fakhoury',
-    img: '/assets/images/laila1.jpg',
+    img: '/assets/images/Laila1.jpg',
     linkedIn: 'https://www.linkedin.com/in/laila-fakhoury-b9903554/'
   },
   {
