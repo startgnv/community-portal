@@ -100,18 +100,6 @@ const staff = [
     linkedIn: 'https://www.linkedin.com/in/tamerindygert/'
   },
   {
-    name: 'Michelle Brownstein',
-    img:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fmichelleb.jpeg?alt=media',
-    linkedIn: 'https://www.linkedin.com/in/michelle-brownstein/'
-  },
-  {
-    name: 'Melissa White',
-    img:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fmelissa.jpeg?alt=media',
-    linkedIn: 'https://www.linkedin.com/in/melissamaewhite/'
-  },
-  {
     name: 'Aaron Dixon',
     img:
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Faarond.jpeg?alt=media',
@@ -128,18 +116,6 @@ const staff = [
     img:
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Felliot.png?alt=media',
     linkedIn: 'https://www.linkedin.com/in/elliottwelker/'
-  },
-  {
-    name: 'Joanna Barousse',
-    img:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fjoanna.jpg?alt=media',
-    linkedIn: 'https://www.linkedin.com/in/joanna-barousse/'
-  },
-  {
-    name: 'Joe Manglardi',
-    img:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fjoe.jpg?alt=media',
-    linkedIn: 'https://www.linkedin.com/in/joe-manglardi/'
   },
   {
     name: 'Jon Church',
@@ -170,6 +146,37 @@ const staff = [
     img:
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fneil.jpeg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/neilisrael/'
+  },
+  {
+    name: 'Angelica Suarez',
+    img: '',
+    linkedIn: 'https://www.linkedin.com/in/angelica-suarez-9437a51a/',
+    img: '/assets/images/angelica.png'
+  },
+  {
+    name: 'Rebecca Smith',
+    img: '/assets/images/rebecca.png',
+    linkedIn: 'https://www.linkedin.com/in/rebecca-smith-pmp-cmap-a0a598119/'
+  },
+  {
+    name: 'Andrew Espejo',
+    img: '/assets/images/andrew.jpg',
+    linkedIn: 'https://www.linkedin.com/in/andrew-espejo-4a21a0106/'
+  },
+  {
+    name: 'Laila Fakhoury',
+    img: '/assets/images/laila1.jpg',
+    linkedIn: 'https://www.linkedin.com/in/laila-fakhoury-b9903554/'
+  },
+  {
+    name: 'India Sugar',
+    img: '/assets/images/india.jpeg',
+    linkedIn: 'https://www.linkedin.com/in/indiasugar/'
+  },
+  {
+    name: 'Michael Selvester',
+    img: '/assets/images/michael.jpg',
+    linkedIn: 'https://www.linkedin.com/in/michael-selvester-gvillejd/'
   }
 ];
 
@@ -371,7 +378,7 @@ const AboutPage = () => (
                 src={member.img}
                 alt={member.name}
               />
-              <a className="member-name" href={member.linkedIn}>
+              <a className="member-name" target="_blank" href={member.linkedIn}>
                 {member.name}
               </a>
             </BoardMember>
