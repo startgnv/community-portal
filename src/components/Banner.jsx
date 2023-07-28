@@ -4,12 +4,14 @@ import { device } from './utils/device';
 
 const BannerDiv = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${({theme}) => theme.green };
+  background-color: ${({theme}) => theme.blue};
   padding: 16px;
-  margin-top: 20px;
+  margin-bottom: 20px;
   font-size: 20px;
+  color: #fff;
   
   @media ${device.tabletPort} {
     font-size: 16px;
@@ -17,15 +19,22 @@ const BannerDiv = styled.div`
   }
 `;
 
+const Message = styled.p`
+  color: #fff
+`
 const BannerLink = styled.a`
-  color: #000;
+  color: #fff;
+  text-decoration: underline;
 `
 
-export const Banner = ({link, text}) => {
+export const Banner = ({externalHref, description, callToActionText}) => {
   return (
     <BannerDiv>
-      <BannerLink href={link} target="_blank" rel="noopener noreferrer">
-       {text}
+      <Message>
+        {description}
+      </Message>
+      <BannerLink href={externalHref} target="_blank" rel="noopener noreferrer">
+        {callToActionText}
       </BannerLink>
     </BannerDiv>
   )

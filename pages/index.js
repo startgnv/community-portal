@@ -10,6 +10,7 @@ import CompanyList from 'src/components/Site/Home/CompanyList';
 import { Helmet } from 'react-helmet';
 import { LinearProgress } from '@material-ui/core';
 import Link from 'src/components/Site/UI/Link';
+import { Banner } from 'src/components/Banner';
 
 
 const HomePageContainer = styled.div``;
@@ -224,6 +225,12 @@ const HomePage = () => {
       </Helmet>
 
       <HomePageContainer>
+      { new Date() < new Date('2023-08-20') 
+        && <Banner 
+        externalHref={'#'} 
+        description={"Tech Battle of the Bands is August 18th"} 
+        callToActionText={'Buy tickets Now!'}/> 
+      }
         <HomeHero>
           <HeroImage>
             <CircleText src={"/assets/images/circle-text.png"} />

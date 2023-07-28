@@ -15,6 +15,7 @@ export default {
   lightGreen: '#dcebd7',
   orange: '#f35b1a',
   lightBlue: '#ccdee5',
+  blue: '#007BFF',
 
   // structure
   headerHeight: '80px',
