@@ -227,7 +227,7 @@ const HomePage = () => {
       <HomePageContainer>
       { new Date() < new Date('2023-08-20') 
         && <Banner 
-        externalHref={'#'} 
+        externalHref={'https://fundraise.givesmart.com/e/cr8yXQ?vid=zs7kh'} 
         description={"Tech Battle of the Bands is August 18th"} 
         callToActionText={'Buy tickets Now!'}/> 
       }
