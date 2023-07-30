@@ -112,7 +112,6 @@ const staff = [
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Felliot.png?alt=media',
     linkedIn: 'https://www.linkedin.com/in/elliottwelker/'
   },
-  ,
   {
     name: 'Sarah Ryals',
     img:
@@ -360,7 +359,7 @@ const AboutPage = () => (
           ))}
         </Programs>
         <Board>
-          <h3>Staff and Board</h3>
+          <h3>Board of Directors</h3>
           {staff.map(member => (
             <BoardMember key={member.name}>
               <Avatar
