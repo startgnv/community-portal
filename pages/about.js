@@ -95,15 +95,10 @@ const sponsors = [
 
 const staff = [
   {
-    name: 'Tammy Dygert - Director',
-    img: '/assets/images/tammy.jpg',
-    linkedIn: 'https://www.linkedin.com/in/tamerindygert/'
-  },
-  {
-    name: 'Aaron Dixon',
+    name: 'Jon Church',
     img:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Faarond.jpeg?alt=media',
-    linkedIn: 'https://www.linkedin.com/in/aaronbenjamindixon/'
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fjon.jpg?alt=media',
+    linkedIn: 'https://www.linkedin.com/in/jon-church-85490025/'
   },
   {
     name: 'Christine Caven',
@@ -117,17 +112,18 @@ const staff = [
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Felliot.png?alt=media',
     linkedIn: 'https://www.linkedin.com/in/elliottwelker/'
   },
-  {
-    name: 'Jon Church',
-    img:
-      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fjon.jpg?alt=media',
-    linkedIn: 'https://www.linkedin.com/in/jon-church-85490025/'
-  },
+  ,
   {
     name: 'Sarah Ryals',
     img:
       'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Fsarah.jpg?alt=media',
     linkedIn: 'https://www.linkedin.com/in/sarah-ryals/'
+  },
+  {
+    name: 'Aaron Dixon',
+    img:
+      'https://firebasestorage.googleapis.com/v0/b/startupgnv-39bca.appspot.com/o/boardMembers%2Faarond.jpeg?alt=media',
+    linkedIn: 'https://www.linkedin.com/in/aaronbenjamindixon/'
   },
   {
     name: 'Stacy Burrell',
@@ -149,7 +145,6 @@ const staff = [
   },
   {
     name: 'Angelica Suarez',
-    img: '',
     linkedIn: 'https://www.linkedin.com/in/angelica-suarez-9437a51a/',
     img: '/assets/images/angelica.png'
   },
@@ -195,11 +190,6 @@ const programs = [
     title: 'celebrateGNV',
     description:
       "Celebrate the successes of startGNV and the local innovation community over dinner and drinks. Recognize early stage startups that compete in Cox's pitch competition Startup Showcase."
-  },
-  {
-    title: "Founders' Dinner Series",
-    description:
-      'Late and early stage founders get together over dinner to talk about their successes, failures, and how they can help each other and startGNV grow the innovation community.'
   },
   {
     title: 'Barcamp',
