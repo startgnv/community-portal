@@ -27,6 +27,13 @@ export const addNewsletterSubscriber = functions.https.onCall((data: NewsletterS
     }).then(result => {
         console.log(result);
     }).catch(err => {
+        if (err.response) {
+            console.error(`Failed to add subscriber. Status code: ${err.response.status}. Response data: ${err.response.data}`);
+        } else {
+            // If the error is due to network issues or other non-API related problems
+            console.error(`Failed to add subscriber. Error: ${err.message}`);
+        }
         console.error(err);
+        throw(new Error("Something unexpected happened!"))
     })
 });
