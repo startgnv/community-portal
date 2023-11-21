@@ -40,7 +40,7 @@ const Form = styled.li`
 const forms = [
   {
     name: 'Board Application Form',
-    link: 'https://forms.gle/YvF5BwKGKnji7aABA'
+    link: 'https://forms.gle/bqRot3d6mmUX5MaD8'
   }
 ];
 
